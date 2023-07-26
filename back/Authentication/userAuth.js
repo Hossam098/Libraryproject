@@ -1,0 +1,129 @@
+import express from "express";
+import query from '../Database/DBConnection.js';
+import { body, validationResult } from "express-validator";
+import e from "express";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+
+const userAuth = express();
+userAuth.use(express.Router());
+
+const key = "secretkey";
+
+
+userAuth.post('/register',
+    body('email').notEmpty().withMessage('Email is required').isEmail().withMessage('Email is invalid'),
+    body('password').notEmpty().withMessage('Password is required').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+    body('checkpassword').notEmpty().withMessage('checkpassword is required').isLength({ min: 8 }).withMessage('checkpassword must be at least 8 characters'),
+    body('name').notEmpty().withMessage('Name is required'),
+    body('phone').notEmpty().withMessage('Phone is required'),
+    body('national_id').notEmpty().withMessage('National ID is required'),
+    body('nationality').notEmpty().withMessage('Nationality is required'),
+    body('university').notEmpty().withMessage('University is required'),
+    body('faculity').notEmpty().withMessage('faculity is required'),
+
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+                    
+            if (req.body.password !== req.body.checkpassword) {
+                error.push("Password doesn't match");
+                return res.status(400).json({ message: error });
+            }
+
+            const sqlSelect = "SELECT * FROM users WHERE email = ? AND national_id = ?";
+            const result = await query(sqlSelect, [req.body.email, req.body.national_id]);
+            if (result.length > 0) {
+                error.push("User already exists");
+                return res.status(400).json({ message: error});
+            }
+
+            const user = {
+                name: req.body.name,
+                email: req.body.email,
+                password: await bcrypt.hash(req.body.password, 10),
+                phone: req.body.phone,
+                national_id: req.body.national_id,
+                nationality: req.body.nationality,
+                university: req.body.university,
+                faculity: req.body.faculity
+            }
+
+            const sqlInsert = "INSERT INTO users SET ?";
+            const result2 = await query(sqlInsert, user);
+
+            if (result2.affectedRows > 0) {
+                return res.status(201).json({ message: "User registered successfully" });
+            } else {
+                error.push("User registration failed");
+                return res.status(400).json({ message: error });
+            }
+
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message:error });
+        }
+
+});
+
+userAuth.post('/login',
+    body('email').notEmpty().withMessage('Email is required').isEmail().withMessage('Email is invalid'),
+    body('password').notEmpty().withMessage('Password is required').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            const sqlSelect = "SELECT * FROM users WHERE email = ?";
+            const result = await query(sqlSelect, [req.body.email]);
+            if (result.length > 0) {
+                const match = await bcrypt.compare(req.body.password, result[0].password);
+                if (match) {
+                    const payload = {
+                        id: result[0].id,
+                        national_id: result[0].national_id,
+                        name: result[0].name,
+                        email: result[0].email,
+                    };
+                    const token =jwt.sign(payload, key);
+                    req.session.token ="Bearer "+ token;
+                    return res.status(200).json({ login: true, token: token });
+
+                } else {
+                    error.push("Password is incorrect");
+                    return res.status(400).json({ message: error });
+                }
+            } else {
+                error.push("User doesn't exist");
+                return res.status(400).json({ message: error });
+            }
+
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+});
+
+userAuth.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.status(200).json({ message: "User logged out successfully" });
+});
+
+
+
+
+export default userAuth;
