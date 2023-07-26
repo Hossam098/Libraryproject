@@ -1,0 +1,11 @@
+.input-login-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-login-container> .input{
+    width: 70%;
+    margin: 1rem auto;
+}

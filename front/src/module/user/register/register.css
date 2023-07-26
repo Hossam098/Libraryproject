@@ -1,0 +1,76 @@
+.main .main-content .main-content-logo{
+    width: 100%;
+
+}
+.main .main-content .main-content-logo img{
+    width:30%;
+}
+.main-content-form{
+    width: 90%;
+}
+.main-content-form h3{
+    color: #003C70;
+}
+.main-content-form input[type=submit]{
+    background: #003C70;
+    color: #fff;
+    width: 50%;
+    height: 2.5rem;
+    border-radius: 10px;
+    
+}
+
+.input-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 .5rem;
+}
+
+
+.input p{
+    line-height: 25px;
+    font-size: 20px;
+}
+
+ form .input{
+    margin: 5px;
+    direction: ltr;
+    margin-bottom: 2rem;
+}
+
+.input input,
+.input select{
+    width: 100%;
+    height: 2.5rem;
+    padding: 0 3PX;
+    border: 1px solid ;
+    border-radius: 5px;
+}
+
+.input input:focus{
+    border: 1px solid green;
+    outline: none;
+}
+
+.passwordcontainer{
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    padding: 0 3PX;
+    border-radius: 5px;
+}
+.passwordcontainer input{
+    border: none;
+}
+.passwordcontainer input:focus{
+    border: none;
+    outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .input-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: .5rem;
+    }
+  }

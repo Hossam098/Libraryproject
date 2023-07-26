@@ -1,0 +1,8 @@
+.toggle-lang{
+    font-size: 2rem;
+    padding: .3rem .5rem;
+    border-radius: 10px;
+    border: 2px solid;
+    color: white;
+    background-color: #003C70;
+}
