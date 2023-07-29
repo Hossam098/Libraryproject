@@ -15,9 +15,8 @@ const Contact = () => {
           <div className="content">
             <h2>{t('contact')}</h2>
             <div className="contacts" id="#ContactUs" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}>
-              <h4>   {t('con-ul-1')} </h4>
-              <h4> <a href="http://postgraduate.helwan.edu.eg/?p=126" target='_blank'>{t('con-ul-2')}</a></h4>
-              <h4> <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVFyreEMKM7hX9NsuTSt-zpf5qUta_09ONs0SHpON5oG9a_Q/viewform?pli=1" target='_blank'>{t('con-ul-3')}</a></h4>
+              {/* <h4>   {t('con-ul-1')} </h4> */}
+              
             </div>
           </div>
         

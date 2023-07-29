@@ -39,7 +39,7 @@ const Register = () => {
     if (Object.keys(errors).length === 0 ) {
       axios.defaults.withCredentials = true
       try{
-        axios.post(API_URL +'/auth/register',user, { withCredentials: true })
+        axios.post('http://localhost:5000/auth/register',user, { withCredentials: true })
         .then((res)=>{
           console.log("logged")
           console.log(res)

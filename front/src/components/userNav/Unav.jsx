@@ -34,7 +34,7 @@ const Unav = () => {
                     <li>
                         <a href="#" onClick={toggleServices}>
                             {showServices?<AiOutlineDown/>:<AiOutlineRight/>}
-                             Services
+                             {t('Services')}
                         </a>
                         {showServices && (
                             <ul className="dropdown">
