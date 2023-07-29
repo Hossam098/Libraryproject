@@ -1,0 +1,12 @@
+.out{
+    height: 10;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pageContainer{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

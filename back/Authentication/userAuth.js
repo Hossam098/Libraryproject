@@ -4,11 +4,12 @@ import { body, validationResult } from "express-validator";
 import e from "express";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import cors from 'cors';
 
 
 const userAuth = express();
 userAuth.use(express.Router());
-
+userAuth.use(cors())
 const key = "secretkey";
 
 

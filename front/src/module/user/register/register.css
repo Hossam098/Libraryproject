@@ -3,13 +3,15 @@
 
 }
 .main .main-content .main-content-logo img{
-    width:30%;
+    width:25%;
 }
 .main-content-form{
     width: 90%;
+    padding: 1rem 0;
 }
 .main-content-form h3{
     color: #003C70;
+    font-size: 2rem;
 }
 .main-content-form input[type=submit]{
     background: #003C70;
@@ -31,11 +33,18 @@
     line-height: 25px;
     font-size: 20px;
 }
+.input label{
+    color: #AD8700;
+}
+input{
+    font-size: 1.4rem;
+}
 
  form .input{
     margin: 5px;
     direction: ltr;
     margin-bottom: 2rem;
+    font-size: 1.5rem;
 }
 
 .input input,
@@ -72,5 +81,8 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: .5rem;
+    }
+    .main .main-content .main-content-logo img{
+        width: 50%;
     }
   }
