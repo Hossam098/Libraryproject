@@ -11,6 +11,17 @@ import userAuth from './Authentication/userAuth.js';
 
 
 const app = express();
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with the origin of your client-side app
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  
+    next();
+});
+  
 app.use(cors({
     origin: ['http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
