@@ -39,12 +39,24 @@ userAuth.post('/register',
                 return res.status(400).json({ message: error });
             }
 
+            if (req.body.university == "0" && req.body.other_uni == "") {
+                error.push("University is required");
+                return res.status(400).json({ message: error });
+            }
+
             const sqlSelect = "SELECT * FROM users WHERE email = ? AND national_id = ?";
             const result = await query(sqlSelect, [req.body.email, req.body.national_id]);
             if (result.length > 0) {
                 error.push("User already exists");
                 return res.status(400).json({ message: error});
             }
+            let uni = req.body.university;
+            if (req.body.university == "0" && req.body.other_uni != "") {
+                uni = req.body.other_uni;
+            }else {
+                uni = req.body.university;
+            }
+
 
             const user = {
                 name: req.body.name,
@@ -53,7 +65,7 @@ userAuth.post('/register',
                 phone: req.body.phone,
                 national_id: req.body.national_id,
                 nationality: req.body.nationality,
-                university: req.body.university,
+                university: uni,
                 faculity: req.body.faculity
             }
 
