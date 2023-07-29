@@ -9,8 +9,14 @@
     overflow: hidden;
 }
 
+.content{
+    padding: 1rem;
+}
+
 .content h2 {
     font-size: 2rem;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .contacts h4 {

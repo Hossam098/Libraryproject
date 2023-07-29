@@ -37,5 +37,7 @@
     "re-pass-err" :"this field is required!", 
     "pass-match-err" :"password does not match",
     "other-uni": " Other University ",
-    "helwan-uni": " Helwan University  "
+    "helwan-uni": " Helwan University  ", 
+    "contact": " contact ",
+    "Services": " contact "
 }
