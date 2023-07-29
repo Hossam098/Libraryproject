@@ -1,0 +1,51 @@
+.contact-container {
+    width: 70%;
+    margin: 0 auto;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    direction: rtl;
+    overflow: hidden;
+}
+
+.content h2 {
+    font-size: 2rem;
+}
+
+.contacts h4 {
+    font-size: 1.15rem;
+    margin-bottom: .8rem;
+}
+
+.contacts h4 a {
+    text-decoration: none;
+    color: black;
+}
+
+.contact-container .image {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.image img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1140px) {
+    .contact-container {
+        width: 90%;
+        
+    }
+}
+@media only screen and (max-width: 576px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        
+    }
+}
