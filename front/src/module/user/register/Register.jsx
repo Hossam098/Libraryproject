@@ -6,13 +6,17 @@ import { useTranslation } from 'react-i18next';
 import { API_URL } from '../../../config';
 import axios from 'axios'
 import { use } from 'i18next';
+import { useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
 
+  const navigate = useNavigate();
   const [t] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [errors2, setErrors2] = useState('');
 
   const [user, setUser] = useState({
     name: "",
@@ -21,7 +25,7 @@ const Register = () => {
     checkpassword: "",
     national_id: "",
     phone: "",
-    natinality: "",
+    nationality: "",
     university: "",
     other_uni: "",
     faculity: "",
@@ -39,14 +43,16 @@ const Register = () => {
     if (Object.keys(errors).length === 0 ) {
       axios.defaults.withCredentials = true
       try{
-        axios.post('http://localhost:5000/auth/register',user, { withCredentials: true })
+        axios.post(`${API_URL}/auth/register`,user, { withCredentials: true })
         .then((res)=>{
           console.log("logged")
           console.log(res)
+          navigate('/login')
         })
         .catch((err)=>{
-          console.log(err)
-          
+          console.log(err.response.data.message[0])
+          setErrors2(err.response.data.message[0])
+
         })
 
         
@@ -101,8 +107,8 @@ const Register = () => {
     if (!values.phone) {
       errors.phone = `${t('phone-err')}`
     }
-    if (!values.natinality) {
-      errors.natinality = `${t('nation-err')}`
+    if (!values.nationality) {
+      errors.nationality = `${t('nation-err')}`
     }
     if (!values.university) {
       errors.university = `${t('uni-err')}`
@@ -215,12 +221,12 @@ const Register = () => {
                   <input
                     style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
                     type="text"
-                    className={errors.natinality ? 'error-in' : ''}
+                    className={errors.nationality ? 'error-in' : ''}
                     placeholder={t('e-nation')}
-                    value={user.natinality}
-                    onChange={(e) => { setUser({ ...user, natinality: e.target.value }) }}
+                    value={user.nationality}
+                    onChange={(e) => { setUser({ ...user, nationality: e.target.value }) }}
                   />
-                  <p className='error'>{errors.natinality}</p>
+                  <p className='error'>{errors.nationality}</p>
                 </div>
 
 

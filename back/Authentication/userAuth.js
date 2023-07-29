@@ -9,7 +9,6 @@ import cors from 'cors';
 
 const userAuth = express();
 userAuth.use(express.Router());
-userAuth.use(cors())
 const key = "secretkey";
 
 
@@ -34,6 +33,11 @@ userAuth.post('/register',
                 });
                 return res.status(400).json({ message: error });
             }
+
+            
+
+
+
                     
             if (req.body.password !== req.body.checkpassword) {
                 error.push("Password doesn't match");
@@ -45,7 +49,7 @@ userAuth.post('/register',
                 return res.status(400).json({ message: error });
             }
 
-            const sqlSelect = "SELECT * FROM users WHERE email = ? AND national_id = ?";
+            const sqlSelect = "SELECT * FROM users WHERE email = ? OR national_id = ?";
             const result = await query(sqlSelect, [req.body.email, req.body.national_id]);
             if (result.length > 0) {
                 error.push("User already exists");

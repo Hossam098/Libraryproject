@@ -3,9 +3,15 @@ import { HiEye, HiEyeOff } from 'react-icons/hi';
 import Toggle from '../../../components/togglrLang/Toggle';
 import { useTranslation } from 'react-i18next';
 import './login.css'
+import axios from 'axios';
+import { API_URL } from '../../../config';
+import { useNavigate } from 'react-router-dom';
+
 const Login = () => {
 
   const [t] = useTranslation();
+  const [errors2, setErrors2] = useState('');
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
@@ -21,8 +27,30 @@ const Login = () => {
   const handleSubmit = (e) =>{
     e.preventDefault();
     setErrors(validate(user));
-    if(errors.length === 0){
-      //axios here
+    if (Object.keys(errors).length === 0 ) {
+      axios.defaults.withCredentials = true
+      try{
+        axios.post(`${API_URL}/auth/login`,user, { withCredentials: true })
+        .then((res)=>{
+          console.log("logged")
+          if(res.data.login == true){
+            localStorage.setItem('token', res.data.token)
+            navigate('/user')
+          }
+        })
+        .catch((err)=>{
+          console.log(err.response.data.message[0])
+          setErrors2(err.response.data.message[0])
+
+        })
+
+        
+      }catch(err){
+        console.log(err)
+      }
+      
+    }else{
+      console.log(errors)
     }
     // setIsSubmit(true);
   }

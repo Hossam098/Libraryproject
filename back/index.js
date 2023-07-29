@@ -9,6 +9,7 @@ import user from './Router/userCRUD.js';
 import userAuth from './Authentication/userAuth.js';
 
 const app = express();
+app.use(express.json());
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -17,22 +18,24 @@ app.use(cors({
   maxAge: 1 * 24 * 60 * 60 * 1000,
   optionsSuccessStatus: 200
 }));
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: false,
-  }
+    key: 'user',
+    secret: 'secret',
+    resave: false,
+    // saveUninitialized: false,
+    cookie: {
+        secure: false,
+        httpOnly: false,
+
+    }
 }));
 
 dotenv.config({ path: './.env' });
 
-app.use(express.json());
-app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public/imgs'));
 
 app.use('/auth', userAuth);
