@@ -9,3 +9,11 @@
     margin: auto;
 
 }
+
+@media only screen and (max-width: 600px) {
+    .Cont-Serv .ImageService{
+        width: 70%;
+        margin: auto;
+    
+    }
+  }

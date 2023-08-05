@@ -81,10 +81,20 @@ main{
     height: 100%;
     color: #fff;
     padding: 0 1rem;
+    animation: fade-in 1s ease-in;
 }
-.services__container{
-    
-}
+
+@keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
 @media screen and (max-width:1024px){
     .services__container{
         grid-template-columns: 1fr 1fr;

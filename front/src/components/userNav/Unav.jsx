@@ -7,7 +7,9 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { API_URL } from '../../config'
 import profileimg from '../../images/Ellipse 1.png'
-
+import {RxAvatar} from 'react-icons/rx'
+import {TbLanguage} from 'react-icons/tb'
+import {FiLogOut} from 'react-icons/fi'
 
 const Unav = () => {
 
@@ -46,9 +48,9 @@ const Unav = () => {
                     </a>
                     {showServices && (
                         <ul className="dropdown">
-                            <li><Link to='/profile'>profile</Link></li>
-                            <li><a href="#">language</a></li>
-                            <li onClick={handleLogout}>logout</li>
+                            <li><RxAvatar/><Link to='/profile'>profile</Link></li>
+                            <li><TbLanguage/> <Toggle/></li>
+                            <li onClick={handleLogout}><FiLogOut/> logout</li>
                         </ul>
                     )}
                 </li>

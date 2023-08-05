@@ -31,8 +31,14 @@ li{
     width: fit-content;
     list-style: none;
 }
+.dropdown li{
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    border-bottom: 1px solid #003C70;
+}
 .dropdown li:hover{
-    background-color: #012e55;
+    border-bottom: 1px solid;
 }
 
 .dropdown {
