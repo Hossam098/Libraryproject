@@ -1,0 +1,39 @@
+.req{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.input{
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+}
+.input > div{
+    margin: 0 auto;
+}
+
+.select-img{
+    border: 2px gray dashed;
+    padding: .5rem;
+    width: 40%;
+}
+.upload-image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.upload-image .img-icom{
+    font-size: 3rem;
+}
+.upload-image p{
+    font-size: .8rem;
+}
+.title-upload{
+    font-size: .8rem;
+}

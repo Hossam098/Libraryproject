@@ -1,0 +1,103 @@
+main{
+   height: 40rem;
+   background-image: linear-gradient(180deg, #003C70, rgba(255,0,0,0) 70.71%),url("../../../images/landingBG.jpg");
+   background-position: center;
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+}
+
+
+/* service */
+
+.services__container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.services{
+    background: #4db5ff;
+    border-radius: 2rem 2rem;
+    border: 1px solid #4db5ff;
+    height: fit-content;
+    transition: all 400ms ease;
+}
+/* .services:hover{
+    background: transparent;
+    border-color: #2c2c6c;
+    cursor: default;
+} */
+#services h2{
+    width: 100%;
+    text-align: center;
+
+}
+#services{
+    padding: 1rem .3rem;
+}
+.service__head{
+    background: rgb(44, 44, 109);
+    padding: 2rem;
+    border-radius:  2rem 2rem ;
+    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);
+}
+.service__head h3{
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+}
+.service__list{
+    padding: 2rem;
+}
+
+.service__list li{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    
+}
+.bttn{
+    width: 100%;
+    display: grid;
+    place-content: center;
+}
+.service__list-icon{
+    color: #4db5ff;
+    margin-top: 2px;
+}
+.service__list p{
+    font-size: .9rem;
+}
+.enroll{
+    margin: 0 auto;
+}
+
+.intro-txt{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #fff;
+    padding: 0 1rem;
+}
+.services__container{
+    
+}
+@media screen and (max-width:1024px){
+    .services__container{
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    .services{
+        height: auto;
+    }
+  }
+  
+@media screen and (max-width:600PX){
+    .services__container{
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}

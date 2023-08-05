@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {AiOutlineDown, AiOutlineRight} from 'react-icons/ai'
+import { AiOutlineDown, AiOutlineRight } from 'react-icons/ai'
 import './unav.css'
 import Toggle from '../togglrLang/Toggle'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { API_URL } from '../../config'
+import profileimg from '../../images/Ellipse 1.png'
 
 
 const Unav = () => {
@@ -18,18 +19,18 @@ const Unav = () => {
     };
 
     const handleLogout = () => {
-        try{
+        try {
             axios.get(`${API_URL}/auth/logout`, { withCredentials: true })
-            .then((res)=>{
-                console.log(res)
-                localStorage.removeItem('token')
-                window.location.href = '/login'
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
+                .then((res) => {
+                    console.log(res)
+                    localStorage.removeItem('token')
+                    window.location.href = '/login'
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
 
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -37,13 +38,20 @@ const Unav = () => {
     return (
         <nav>
             <div className="right">
-                <Link to={"/user/profile"}>
-                    <div className="profile-image">
-                        <img src="./assets/Ellipse 1.png" alt="" />
-                    </div>
-                </Link>
-                <div className="logout" onClick={()=>{handleLogout()}}>{t('logout')}</div>
-                <Toggle />
+                <li>
+                    <a href="#" onClick={toggleServices}>
+                        <div className="profile-image">
+                            <img src={profileimg} alt="" />
+                        </div>
+                    </a>
+                    {showServices && (
+                        <ul className="dropdown">
+                            <li><Link to='/profile'>profile</Link></li>
+                            <li><a href="#">language</a></li>
+                            <li onClick={handleLogout}>logout</li>
+                        </ul>
+                    )}
+                </li>
             </div>
             <div className="left">
                 <ul className="left">
@@ -51,17 +59,10 @@ const Unav = () => {
                         <Link>{t('contact')}</Link>
                     </li>
                     <li>
-                        <a href="#" onClick={toggleServices}>
-                            {showServices?<AiOutlineDown/>:<AiOutlineRight/>}
-                             {t('Services')}
-                        </a>
-                        {showServices && (
-                            <ul className="dropdown">
-                                <li><a href="#">extracting a statement that the title of the thesis plan is not previously registered</a></li>
-                                <li><a href="#">Service 2</a></li>
-                                <li><a href="#">Service 3</a></li>
-                            </ul>
-                        )}
+                        <Link>{t('about')}</Link>
+                    </li>
+                    <li>
+                        <Link>{t('services')}</Link>
                     </li>
                 </ul>
             </div>

@@ -7,6 +7,7 @@ import { API_URL } from '../../../config';
 import axios from 'axios'
 import { use } from 'i18next';
 import { useNavigate } from 'react-router-dom';
+import PopupError from '../../../components/error/PopupError';
 
 
 const Register = () => {
@@ -15,7 +16,7 @@ const Register = () => {
   const [t] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors2, setErrors2] = useState('');
 
   const [user, setUser] = useState({
@@ -36,53 +37,33 @@ const Register = () => {
     setShowPassword((prevState) => !prevState);
   }
 
+  const handleCloseError = () => {
+    setErrors2('');
+  };
+
+  
+  
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && isSubmitting) {
+      axios.defaults.withCredentials = true;
+      axios.post(`${API_URL}/auth/register`, user, { withCredentials: true })
+        .then((res) => {
+          console.log("logged");
+          console.log(res);
+          navigate('/login');
+        })
+        .catch((err) => {
+          console.log(err.response.data.message[0]);
+          setErrors2(err.response.data.message[0]);
+        });
+    }
+  }, [errors]);
   
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validate(user));
-    if (Object.keys(errors).length === 0 ) {
-      axios.defaults.withCredentials = true
-      try{
-        axios.post(`${API_URL}/auth/register`,user, { withCredentials: true })
-        .then((res)=>{
-          console.log("logged")
-          console.log(res)
-          navigate('/login')
-        })
-        .catch((err)=>{
-          console.log(err.response.data.message[0])
-          setErrors2(err.response.data.message[0])
-
-        })
-
-        
-      }catch(err){
-        console.log(err)
-      }
-      
-    }else{
-      console.log(errors)
-    }
-    // setIsSubmit(true);
-  }
-
-
-  // axios.defaults.withCredentials = true
-
-  // const handleLogin = (e) => {
-  //     e.preventDefault()
-  //     try {
-  //         axios.post('http://localhost:5000/login', loginData, { withCredentials: true })
-  //             .then((res) => {
-  //                 navigate('/profile')
-  //             }).catch((error) => {
-  //                 setError(error.response.data.errors[0].msg)
-  //             })
-
-  //     } catch (error) {
-  //         console.log(error)
-  //     }
-  // }
+    setIsSubmitting(true);
+  };
 
 
   const validate = (values) => {
@@ -131,17 +112,14 @@ const Register = () => {
 
     return errors;
   }
-
-  // useEffect(()=>{
-  //   console.log(errors)
-  //   if(Object.keys(errors).length === 0 && isSubmit){
-  //     console.log("valid")
-  //   }
-
-  // },[errors])
-
   return (
     <div className="main">
+      {errors2 && (
+        <PopupError
+          message={errors2}
+          onClose={handleCloseError}
+        />
+      )}
       <div className="main-image">
         <img src="./assets/uni-logo.png" alt="" />
       </div>
