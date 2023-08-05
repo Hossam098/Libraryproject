@@ -3,17 +3,40 @@ import query from '../Database/DBConnection.js';
 import { body, validationResult } from "express-validator";
 import e from "express";
 import checkUser from "../MiddleWare/checkUser.js";
+import upload from "../MiddleWare/Uplodeimgs.js";
 
 
 const user = express();
 user.use(express.Router());
 
+
+user.get('/getAllServices', 
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM services";
+            const result = await query(sqlSelect);
+            if (result.length > 0) {
+                return res.status(200).json(result);
+            } else {
+                error.push("No services found");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
 user.post('/payment',
     checkUser,
+    upload.single('photo_college_letter'),
     body('level').notEmpty().withMessage('Level is required'),
-    body('photo_college_letter').notEmpty().withMessage('Photo of college letter is required'),
     body('service_id').notEmpty().withMessage('Service ID is required'),
     async (req, res) => {
+        console.log(req.body);
+
         let error = [];
         try {
             const errors = validationResult(req);
@@ -24,9 +47,15 @@ user.post('/payment',
                 return res.status(400).json({ message: error });
             }
 
+            if (!req.file) {
+                error.push("Photo college letter is required");
+                return res.status(400).json({ message: error });
+            }
+
+
             const reg = {
                 level: req.body.level,
-                photo_college_letter: req.body.photo_college_letter,
+                photo_college_letter: req.file.filename,
                 service_id: req.body.service_id,
                 user_id: req.id,
                 status: 0

@@ -15,17 +15,17 @@ app.use(cors({
   origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-  maxAge: 1 * 24 * 60 * 60 * 1000,
+  maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
   optionsSuccessStatus: 200
 }));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(session({
     key: 'user',
     secret: 'secret',
     resave: false,
-    // saveUninitialized: false,
+    saveUninitialized: false,
     cookie: {
         secure: false,
         httpOnly: false,

@@ -41,7 +41,7 @@ const Login = () => {
               console.log("logged")
               if(res.data.login == true){
                 localStorage.setItem('token', res.data.token)
-                navigate('/user')
+                navigate('/')
               }
             })
             .catch((err)=>{

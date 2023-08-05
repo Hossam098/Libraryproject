@@ -7,14 +7,17 @@ const key = "secretkey";
 
 const checkUser = async (req, res, next) => {
     try {
+        let error = [];
         let token = req.session.token
         if (!token) {
-            return res.status(401).json({ user: false, msg: "Unauthorized" });
+            error.push({user: false, msg: "Unauthorized"});
+            return res.status(401).json(error);
         } else {
             token = token.split(" ")[1];
             jwt.verify(token, key, (err, decoded) => {
                 if (err) {
-                    return res.status(401).json({ user: true, msg: err});
+                    error.push({user: true, msg: err});
+                    return res.status(401).json(error);
                 }
                 req.id = decoded.id;
                 req.name = decoded.name;
