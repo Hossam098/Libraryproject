@@ -37,3 +37,19 @@
 .title-upload{
     font-size: .8rem;
 }
+.req input[type=submit]{
+    background-color: #AD8700;
+    color: #fff;
+    padding: .4rem;
+    border: none;
+    border-radius: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    .input{
+        grid-template-columns: 1fr;
+    }
+    input[type=submit]{
+        margin-top: 2rem;
+    }
+  }
