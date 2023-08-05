@@ -8,9 +8,10 @@ nav,
 nav{
     width: 100%;
     justify-content: space-between;
-    padding: .3rem .6rem;
+    padding: .5rem 1rem;
     background-color: #003C70;
     color: #fff;
+
 }
 .right,
 .left{
@@ -24,9 +25,11 @@ a{
 ul
 {
     list-style: none;
+
 }
 li{
     width: fit-content;
+    list-style: none;
 }
 .dropdown li:hover{
     background-color: #012e55;
@@ -34,16 +37,18 @@ li{
 
 .dropdown {
     position: absolute;
-    right: 30px;
     background-color: #003c70;
     padding: 0.5rem;
+    margin:.5rem .8rem;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     white-space: nowrap;
   }
   
   .dropdown li {
     margin: 0.5rem 0;
+    width: 100%;
+    padding: 0.5rem;
   }
   
   .dropdown li a {
@@ -62,8 +67,6 @@ li{
     align-items: center;
 }
 .profile-image{
-    width: 50px;
-    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,6 +74,9 @@ li{
     overflow: hidden;
 }
 .profile-image img{
+    width: 40px;
+    height: 40px;
+    aspect-ratio: 1;
     object-fit: cover;
     object-position: center;
     width: 100%;

@@ -6,7 +6,9 @@ import Landing from "./module/user/landing/Landing.jsx";
 import Login from "./module/user/login/Login.jsx";
 import Upage from "./module/user/userpage/Upage.jsx";
 import Contact from "./components/contact/Contact.jsx";
-import Profile from "./components/profile/Profile.jsx";
+import Profile from "./module/user/profile/Profile.jsx";
+import Home from "./module/user/home/Home.jsx";
+import Service from "./module/user/service/Service.jsx";
   
   const Router = createBrowserRouter([
     {
@@ -15,7 +17,21 @@ import Profile from "./components/profile/Profile.jsx";
       children:[
         {
          path: "",
-         element: <Landing/>, 
+         element: <Upage/>,
+         children:[
+          {
+            path:"",
+            element: <Home/>
+          },
+          {
+            path:"/profile",
+            element: <Profile/>
+          },
+          {
+            path:"/service/:id",
+            element: <Service/>
+          }
+         ] 
         },
         {
          path: "/regester",
@@ -24,21 +40,7 @@ import Profile from "./components/profile/Profile.jsx";
         {
          path: "/login",
          element: <Login/>, 
-        },
-        {
-         path: "/user",
-         element: <Upage/>, 
-         children:[
-          {
-            path:"",
-            element: <Contact/>
-          },
-          {
-            path:"/user/profile",
-            element: <Profile/>
-          }
-         ]
-        },
+        }
       ]
     },
   

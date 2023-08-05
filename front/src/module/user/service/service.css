@@ -1,0 +1,11 @@
+.Cont-Serv{
+    width: 100%;
+    min-height: 70vh;
+    display: grid;
+    padding: 1rem 0;
+}
+.Cont-Serv .ImageService{
+    width: 50%;
+    margin: auto;
+
+}

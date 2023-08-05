@@ -6,6 +6,8 @@ import './login.css'
 import axios from 'axios';
 import { API_URL } from '../../../config';
 import { useNavigate } from 'react-router-dom';
+import PopupError from '../../../components/error/PopupError';
+
 
 const Login = () => {
 
@@ -14,6 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: ""
@@ -23,37 +26,47 @@ const Login = () => {
   function togglePasswordVisibility() {
     setShowPassword((prevState) => !prevState);
   }
+  const handleCloseError = () => {
+    setErrors2('');
+  };
 
-  const handleSubmit = (e) =>{
+
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && isSubmitting) {
+          axios.defaults.withCredentials = true
+          try{
+            axios.post(`${API_URL}/auth/login`,user, { withCredentials: true })
+            .then((res)=>{
+              console.log("logged")
+              if(res.data.login == true){
+                localStorage.setItem('token', res.data.token)
+                navigate('/user')
+              }
+            })
+            .catch((err)=>{
+              console.log(err.response.data.message[0])
+              setErrors2(err.response.data.message[0])
+    
+            })
+    
+            
+          }catch(err){
+            console.log(err)
+          }
+          
+        }else{
+          console.log(errors)
+        }
+  }, [errors]);
+
+
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validate(user));
-    if (Object.keys(errors).length === 0 ) {
-      axios.defaults.withCredentials = true
-      try{
-        axios.post(`${API_URL}/auth/login`,user, { withCredentials: true })
-        .then((res)=>{
-          console.log("logged")
-          if(res.data.login == true){
-            localStorage.setItem('token', res.data.token)
-            navigate('/user')
-          }
-        })
-        .catch((err)=>{
-          console.log(err.response.data.message[0])
-          setErrors2(err.response.data.message[0])
-
-        })
-
-        
-      }catch(err){
-        console.log(err)
-      }
-      
-    }else{
-      console.log(errors)
-    }
-    // setIsSubmit(true);
-  }
+    setIsSubmitting(true);
+  };
 
   const validate = (values) => {
     const errors = {};
@@ -77,6 +90,12 @@ const Login = () => {
 
   return (
     <div className="main">
+      {errors2 && (
+        <PopupError
+          message={errors2}
+          onClose={handleCloseError}
+        />
+      )}
       <div className="main-image">
         <img src="./assets/uni-logo.png" alt="" />
       </div>

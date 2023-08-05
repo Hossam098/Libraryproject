@@ -9,19 +9,15 @@ const Upage = () => {
   useEffect(() => {
     try{
       if(!localStorage.getItem('token')){
-        window.location.href = '/login'
+        
       }
     }catch(err){
       console.log(err)
     }
   }, [])
   return (
-    <div className='pageContainer'>
-        <Unav/>
-        <div className="out">
-          <Outlet/>
-        </div>
-        
+    <div className='pageContainer'>       
+      <Outlet/>     
     </div>
   )
 }
