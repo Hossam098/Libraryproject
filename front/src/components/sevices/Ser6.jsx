@@ -35,6 +35,7 @@ const Ser6 = () => {
           if (err && err.response && err.response.data && err.response.data[0]) {
             if (!err.response.data[0].user && err.response.data[0].user != undefined) {
               navigate('/login')
+              navigate(`/pay/${id}`)
             }
           }
         })

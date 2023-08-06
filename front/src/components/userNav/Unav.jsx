@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineDown, AiOutlineRight } from 'react-icons/ai'
 import './unav.css'
@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { API_URL } from '../../config'
 import profileimg from '../../images/Ellipse 1.png'
-import {RxAvatar} from 'react-icons/rx'
-import {TbLanguage} from 'react-icons/tb'
-import {FiLogIn, FiLogOut} from 'react-icons/fi'
+import { RxAvatar } from 'react-icons/rx'
+import { TbLanguage } from 'react-icons/tb'
+import { FiLogIn, FiLogOut } from 'react-icons/fi'
 
 const Unav = () => {
 
@@ -23,16 +23,16 @@ const Unav = () => {
     const [logged, setLogged] = useState('')
 
     useEffect(() => {
-        try{
-          if(!localStorage.getItem('token')){
-            setLogged(false)
-          }else{
-            setLogged(true)
-          }
-        }catch(err){
-          console.log(err)
+        try {
+            if (!localStorage.getItem('token')) {
+                setLogged(false)
+            } else {
+                setLogged(true)
+            }
+        } catch (err) {
+            console.log(err)
         }
-      }, [])
+    }, [])
 
     const handleLogout = () => {
         try {
@@ -57,7 +57,7 @@ const Unav = () => {
     return (
         <nav>
             <div className="right">
-                {logged?(<li>
+                {logged ? (<li>
                     <a href="#" onClick={toggleServices}>
                         <div className="profile-image">
                             <img src={profileimg} alt="" />
@@ -65,17 +65,20 @@ const Unav = () => {
                     </a>
                     {showServices && (
                         <ul className="dropdown">
-                            <li><Link to='/profile'><RxAvatar/> profile</Link></li>
-                            <li><TbLanguage/> <Toggle/></li>
-                            <li onClick={handleLogout}><FiLogOut/> logout</li>
+                            <li><Link to='/profile'><RxAvatar /> profile</Link></li>
+                            <li><TbLanguage /> <Toggle /></li>
+                            <li onClick={handleLogout}><FiLogOut /> logout</li>
                         </ul>
                     )}
-                </li>):(
-                    <li><li onClick={handleLogin}><FiLogIn/>login</li></li>
+                </li>) : (
+                    <li><li onClick={handleLogin}><FiLogIn />login</li></li>
                 )}
             </div>
             <div className="left">
                 <ul className="left">
+                    <li>
+                        <Link to="/Myservices">my services</Link>
+                    </li>
                     <li>
                         <Link>{t('contact')}</Link>
                     </li>
@@ -85,6 +88,7 @@ const Unav = () => {
                     <li>
                         <Link>{t('services')}</Link>
                     </li>
+
                 </ul>
             </div>
         </nav>

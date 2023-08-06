@@ -10,6 +10,8 @@ import Profile from "./module/user/profile/Profile.jsx";
 import Home from "./module/user/home/Home.jsx";
 import Service from "./module/user/service/Service.jsx";
 import Instructons from "./module/user/instructions/Instructons.jsx";
+import Paymentcode from "./module/user/payment/Paymentcode.jsx";
+import Myser from "./module/user/myser/Myser.jsx";
   
   const Router = createBrowserRouter([
     {
@@ -29,12 +31,20 @@ import Instructons from "./module/user/instructions/Instructons.jsx";
             element: <Profile/>
           },
           {
+            path:"/Myservices",
+            element: <Myser/>
+          },
+          {
             path:"/service/:id",
             element: <Service/>
           },
           {
             path:"/instructions/:id",
             element: <Instructons/>
+          },
+          {
+            path:"/pay/:id",
+            element: <Paymentcode/>
           }
          ] 
         },
