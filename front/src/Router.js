@@ -9,6 +9,7 @@ import Contact from "./components/contact/Contact.jsx";
 import Profile from "./module/user/profile/Profile.jsx";
 import Home from "./module/user/home/Home.jsx";
 import Service from "./module/user/service/Service.jsx";
+import Instructons from "./module/user/instructions/Instructons.jsx";
   
   const Router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ import Service from "./module/user/service/Service.jsx";
           {
             path:"/service/:id",
             element: <Service/>
+          },
+          {
+            path:"/instructions/:id",
+            element: <Instructons/>
           }
          ] 
         },
