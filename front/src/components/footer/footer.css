@@ -4,6 +4,7 @@ footer{
     background: #003C70;
     color: #fff;
     height: 300px;
+    width: 100%;
 }
 footer > div{
     padding: 2rem 3rem;

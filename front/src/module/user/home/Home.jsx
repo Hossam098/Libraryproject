@@ -59,7 +59,7 @@ const Home = () => {
                                         </p>
                                     </li>
                                     <li className='bttn'>
-                                        <Link to={`/service/${service.id}`}>enroll</Link>
+                                        <Link to={`/instructions/${service.id}`}>enroll</Link>
                                     </li>
                                 </ul>
                             </article>

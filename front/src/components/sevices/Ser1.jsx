@@ -50,7 +50,7 @@ const Ser1 = () => {
 
     return (
         <div className='req'>
-            <div className="input">
+            <div className="inputt">
                 <select
                     name=""
                     id=""

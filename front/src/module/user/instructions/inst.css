@@ -1,0 +1,19 @@
+.inst-container{
+    display: flex;
+    height: 90vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.inst-container .isntructions li{
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+.inst-container > button{
+    background-color: #AD8700;
+    color: #fff;
+    padding: 0.4rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.5rem;
+}

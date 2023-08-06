@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineDown, AiOutlineRight } from 'react-icons/ai'
 import './unav.css'
@@ -9,7 +9,7 @@ import { API_URL } from '../../config'
 import profileimg from '../../images/Ellipse 1.png'
 import {RxAvatar} from 'react-icons/rx'
 import {TbLanguage} from 'react-icons/tb'
-import {FiLogOut} from 'react-icons/fi'
+import {FiLogIn, FiLogOut} from 'react-icons/fi'
 
 const Unav = () => {
 
@@ -19,6 +19,20 @@ const Unav = () => {
     const toggleServices = () => {
         setShowServices(!showServices);
     };
+
+    const [logged, setLogged] = useState('')
+
+    useEffect(() => {
+        try{
+          if(!localStorage.getItem('token')){
+            setLogged(false)
+          }else{
+            setLogged(true)
+          }
+        }catch(err){
+          console.log(err)
+        }
+      }, [])
 
     const handleLogout = () => {
         try {
@@ -36,11 +50,14 @@ const Unav = () => {
             console.log(err)
         }
     }
+    const handleLogin = () => {
+        window.location.href = '/login'
+    }
 
     return (
         <nav>
             <div className="right">
-                <li>
+                {logged?(<li>
                     <a href="#" onClick={toggleServices}>
                         <div className="profile-image">
                             <img src={profileimg} alt="" />
@@ -48,12 +65,14 @@ const Unav = () => {
                     </a>
                     {showServices && (
                         <ul className="dropdown">
-                            <li><RxAvatar/><Link to='/profile'>profile</Link></li>
+                            <li><Link to='/profile'><RxAvatar/> profile</Link></li>
                             <li><TbLanguage/> <Toggle/></li>
                             <li onClick={handleLogout}><FiLogOut/> logout</li>
                         </ul>
                     )}
-                </li>
+                </li>):(
+                    <li><li onClick={handleLogin}><FiLogIn/>login</li></li>
+                )}
             </div>
             <div className="left">
                 <ul className="left">

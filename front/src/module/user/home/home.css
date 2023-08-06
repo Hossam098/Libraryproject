@@ -81,10 +81,10 @@ main{
     height: 100%;
     color: #fff;
     padding: 0 1rem;
-    animation: fade-in 1s ease-in;
+    animation: fade-iin 1s ease-in;
 }
 
-@keyframes fade-in {
+@keyframes fade-iin {
     from {
       opacity: 0;
       transform: scale(0);
