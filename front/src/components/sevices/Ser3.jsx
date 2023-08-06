@@ -27,6 +27,7 @@ const Ser3 = () => {
         .then((res) => {
           console.log(res.data)
           alert("done")
+          navigate(`/pay/${id}`)
         })
         .catch((err) => {
           if (err && err.response && err.response.data && err.response.data[0]) {
