@@ -55,7 +55,28 @@ const Unav = () => {
     }
 
     return (
-        <nav>
+        <nav style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}>
+            
+            <div className="left">
+                <ul className="left">
+                    <li>
+                        <Link to="/">{t('Home')}</Link>
+                    </li>
+                    <li>
+                        <Link>{t('contact')}</Link>
+                    </li>
+                    <li>
+                        <Link>{t('about-us')}</Link>
+                    </li>
+                    <li>
+                        <Link>{t('services')}</Link>
+                    </li>
+                    <li>
+                        <Link to="/Myservices">{t('services-status')}</Link>
+                    </li>
+
+                </ul>
+            </div>
             <div className="right">
                 {logged ? (<li>
                     <a href="#" onClick={toggleServices}>
@@ -64,32 +85,16 @@ const Unav = () => {
                         </div>
                     </a>
                     {showServices && (
-                        <ul className="dropdown">
-                            <li><Link to='/profile'><RxAvatar /> profile</Link></li>
-                            <li><TbLanguage /> <Toggle /></li>
-                            <li onClick={handleLogout}><FiLogOut /> logout</li>
+                        <ul className="dropdown" style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}>
+                            <li><Link to='/profile'><RxAvatar /> {t('profile')}</Link></li>
+                            <li><Toggle /></li>
+                            <hr />
+                            <li onClick={handleLogout} className='logout'><FiLogOut /> {t('logout')}</li>
                         </ul>
                     )}
                 </li>) : (
-                    <li><li onClick={handleLogin}><FiLogIn />login</li></li>
+                    <li><li onClick={handleLogin}><FiLogIn />{t('Login')}</li></li>
                 )}
-            </div>
-            <div className="left">
-                <ul className="left">
-                    <li>
-                        <Link to="/Myservices">my services</Link>
-                    </li>
-                    <li>
-                        <Link>{t('contact')}</Link>
-                    </li>
-                    <li>
-                        <Link>{t('about')}</Link>
-                    </li>
-                    <li>
-                        <Link>{t('services')}</Link>
-                    </li>
-
-                </ul>
             </div>
         </nav>
     )

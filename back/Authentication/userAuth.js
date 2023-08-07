@@ -22,7 +22,7 @@ userAuth.post('/register',
     body('nationality').notEmpty().withMessage('Nationality is required'),
     body('university').notEmpty().withMessage('University is required'),
     body('faculity').notEmpty().withMessage('faculity is required'),
-
+    body('department').notEmpty().withMessage('department is required'),
     async (req, res) => {
         let error = [];
         try {
@@ -61,7 +61,7 @@ userAuth.post('/register',
             }else {
                 uni = req.body.university;
             }
-
+            
 
             const user = {
                 name: req.body.name,
@@ -71,7 +71,8 @@ userAuth.post('/register',
                 national_id: req.body.national_id,
                 nationality: req.body.nationality,
                 university: uni,
-                faculity: req.body.faculity
+                faculity: req.body.faculity,
+                department: req.body.department,
             }
 
             const sqlInsert = "INSERT INTO users SET ?";

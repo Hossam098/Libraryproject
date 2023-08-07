@@ -102,13 +102,13 @@ const Login = () => {
 
       <div className="main-content">
         <div className="main-content-logo">
-          <img src="./assets/mini-logo.png" alt="" />
+          <img src="./assets/mini-logo.png" alt="" className='im' />
         </div>
         <div class="main-content">
           <div class="main-content-form">
             <h3 style={{marginBottom:"1rem"}}>{t('Login')}</h3>
             <form onSubmit={handleSubmit}>
-              <div className="input-login-container">
+              <div className="input-login-container" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" , textAlign:"right"} : { direction: "ltr" , textAlign:"left"}}>
       
                 <div class="input" >
                   <label >{t('email')} </label>
@@ -139,7 +139,7 @@ const Login = () => {
                     />
                     
                     <span onClick={togglePasswordVisibility}>
-                      {showPassword ? <HiEyeOff /> : <HiEye />}
+                      {showPassword ? <HiEyeOff style={{color:"#003C70"}}/> : <HiEye style={{color:"#003C70"}}/>}
                     </span>
                   </div>
                   <p className='error'>{errors.password}</p>
@@ -149,7 +149,7 @@ const Login = () => {
 
 
               </div>
-              <input type="submit" value={t('next')} />
+              <input type="submit" value={t('Login')} />
             </form>
 
           </div>
