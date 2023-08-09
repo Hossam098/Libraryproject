@@ -1,7 +1,18 @@
 import React from 'react';
 import './PopupError.css';
+import { useTranslation } from 'react-i18next';
 
 const PopupError = ({ message, onClose }) => {
+
+
+  const [t] = useTranslation();
+
+
+  const handleLogin = () => {
+    onClose();
+    window.location.href = '/login';
+  };
+  
   return (
     <div className="popup-error">
       <div className="popup-error-content">
@@ -9,6 +20,9 @@ const PopupError = ({ message, onClose }) => {
         <div className="popup-error-close" onClick={onClose}>
           &#10006;
         </div>
+        <button className="popup-login-button" onClick={handleLogin} style={{width: '100%'}}>
+        {t('Login')}
+        </button>
       </div>
     </div>
   );

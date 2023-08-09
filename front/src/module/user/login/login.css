@@ -18,3 +18,10 @@
     font-weight: bold;
 }
 
+.link{
+    color: #003C70;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+

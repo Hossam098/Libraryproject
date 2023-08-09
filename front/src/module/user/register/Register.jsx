@@ -8,6 +8,7 @@ import axios from 'axios'
 import { use } from 'i18next';
 import { useNavigate } from 'react-router-dom';
 import PopupError from '../../../components/error/PopupError';
+import { Link } from 'react-router-dom';
 
 
 const Register = () => {
@@ -322,8 +323,11 @@ const Register = () => {
                 </div>
 
               </div>
-              <input type="submit" value={t('create')} />
+              <input type="submit" value={t('create')} style={{marginBottom:"1rem"}}/>
             </form>
+
+            <Link to="/login" className="link">{t('login-link')}</Link>
+
 
           </div>
         </div>

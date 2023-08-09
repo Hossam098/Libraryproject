@@ -21,7 +21,7 @@ const Ser8 = () => {
         console.log(data)
 
         try {
-            axios.post(`${API_URL}/user/payment`, data, { withCredentials: true })
+            axios.post(`${API_URL}/payment`, data, { withCredentials: true })
                 .then((res) => {
                     console.log(res.data)
                     alert("done")

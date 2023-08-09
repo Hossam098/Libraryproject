@@ -79,7 +79,7 @@ const Home = () => {
                 <button className='more-Services'>{t('more')}</button>
 
             </section>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

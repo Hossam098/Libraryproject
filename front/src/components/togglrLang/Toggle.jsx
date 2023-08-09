@@ -16,7 +16,7 @@ const Toggle = () => {
 
 
     return (
-        <button className="toggle-lang" onClick={handleClick}>{localStorage.getItem('i18nextLng') == "en" ? (<><TbLanguage /> <p>عربي </p></>) : (<><TbLanguage /><p>English</p></>)}</button>
+        <button className="toggle-lang" onClick={handleClick}>{localStorage.getItem('i18nextLng') == "en" ? (<><p>عربي </p></>) : (<><p>English</p></>)}</button>
     )
 }
 

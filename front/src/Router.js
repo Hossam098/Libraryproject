@@ -49,7 +49,7 @@ import Myser from "./module/user/myser/Myser.jsx";
          ] 
         },
         {
-         path: "/regester",
+         path: "/register",
          element: <Register/>, 
         },
         {

@@ -7,6 +7,7 @@ import axios from 'axios';
 import { API_URL } from '../../../config';
 import { useNavigate } from 'react-router-dom';
 import PopupError from '../../../components/error/PopupError';
+import { Link } from 'react-router-dom';
 
 
 const Login = () => {
@@ -96,12 +97,12 @@ const Login = () => {
           onClose={handleCloseError}
         />
       )}
-      <div className="main-image">
+      <div className="main-image" style={{height:"100%"}}>
         <img src="./assets/uni-logo.png" alt="" />
       </div>
 
       <div className="main-content">
-        <div className="main-content-logo">
+        <div className="main-content-logo" >
           <img src="./assets/mini-logo.png" alt="" className='im' />
         </div>
         <div class="main-content">
@@ -149,9 +150,10 @@ const Login = () => {
 
 
               </div>
-              <input type="submit" value={t('Login')} />
+              <input type="submit" value={t('Login')} style={{marginBottom:"1rem"}}/>
             </form>
 
+            <Link to="/register" className="link">{t('register-link')}</Link>
           </div>
         </div>
       </div>

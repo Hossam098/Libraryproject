@@ -22,7 +22,7 @@ const Ser5 = () => {
       formData.append('service_id', data.service_id);
 
       try {
-          axios.post(`${API_URL}/user/payment`, formData, { withCredentials: true })
+          axios.post(`${API_URL}/payment`, formData, { withCredentials: true })
               .then((res) => {
                   console.log(res.data)
                   alert("done")

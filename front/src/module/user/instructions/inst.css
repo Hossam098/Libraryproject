@@ -18,6 +18,7 @@
     font-size: 1.5rem;
 } */
 
+
 .inst-container .information-service{
     display: flex;
     flex-direction: row-reverse;
@@ -25,6 +26,7 @@
     align-items: flex-start;
     width: 100%;
     justify-content: space-evenly;
+
 }
 .inst-container .information-service img{
     width: 35%;
@@ -43,8 +45,10 @@
     gap: 3rem;
     border-radius: 10px;
     padding: 1rem;
-    margin: 2rem auto;
-    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);
+    margin: 1rem auto;
+    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.3);
+    animation: fade-iin .7s ease-in-out;
+
 }
 
 .inst-container .information-service .information-service_body h1{

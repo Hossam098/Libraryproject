@@ -1,10 +1,11 @@
 import express from "express";
 import query from '../Database/DBConnection.js';
-import { body, validationResult } from "express-validator";
+import { body, check, validationResult } from "express-validator";
 import e from "express";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
+import checkUser from "../MiddleWare/checkUser.js";
 
 
 const userAuth = express();
@@ -134,6 +135,26 @@ userAuth.post('/login',
             error.push(errors);
             return res.status(500).json({ message: error });
         }
+});
+
+userAuth.get('/check', 
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM users WHERE id = ?";
+            const result = await query(sqlSelect, [req.id]);
+            if (result.length > 0) {
+                return res.status(200).json({ login: true });
+            } else {
+                error.push("User doesn't exist");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    
 });
 
 userAuth.get('/logout', (req, res) => {
