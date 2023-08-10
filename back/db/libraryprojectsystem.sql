@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2023 at 05:33 AM
+-- Generation Time: Aug 10, 2023 at 04:39 AM
 -- Server version: 10.4.27-MariaDB
--- PHP Version: 8.1.2
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -52,6 +52,8 @@ CREATE TABLE `best_message_service` (
   `status` tinyint(1) DEFAULT NULL,
   `response_text` varchar(255) DEFAULT NULL,
   `response_pdf` varchar(255) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -61,8 +63,8 @@ CREATE TABLE `best_message_service` (
 -- Dumping data for table `best_message_service`
 --
 
-INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response_text`, `response_pdf`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, '10_124406.jpg_1691550820009.jpg', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 3, 6, NULL);
+INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response_text`, `response_pdf`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(1, '10_124406.jpg_1691550820009.jpg', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 6, NULL);
 
 -- --------------------------------------------------------
 
@@ -84,6 +86,8 @@ CREATE TABLE `formation_service` (
   `status` int(11) DEFAULT NULL,
   `response_pdf` varchar(255) DEFAULT NULL,
   `response_text` varchar(255) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -93,8 +97,8 @@ CREATE TABLE `formation_service` (
 -- Dumping data for table `formation_service`
 --
 
-INSERT INTO `formation_service` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `message_word_ar`, `message_pdf_ar`, `message_word_en`, `message_pdf_en`, `quote_check_form`, `status`, `response_pdf`, `response_text`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, 0, 0, NULL, 'نادر ممدوح_124423.jpg_1691538652865.jpg', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 3, 2, NULL);
+INSERT INTO `formation_service` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `message_word_ar`, `message_pdf_ar`, `message_word_en`, `message_pdf_en`, `quote_check_form`, `status`, `response_pdf`, `response_text`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(1, 0, 0, NULL, 'نادر ممدوح_124423.jpg_1691538652865.jpg', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -112,6 +116,8 @@ CREATE TABLE `grant_service` (
   `status` tinyint(1) DEFAULT NULL,
   `response_text` varchar(255) DEFAULT NULL,
   `response_pdf` varchar(255) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -128,6 +134,10 @@ CREATE TABLE `knowledge_bank_service` (
   `subscription_status` tinyint(1) NOT NULL COMMENT 'حاله الاشتراك \r\nمش مشترك =0\r\nتفعيل =1\r\nافاده او اثبات انه مشترك =2',
   `proof_of_subscription` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL,
+  `response_text` varchar(255) DEFAULT NULL,
+  `response_pdf` varchar(255) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -165,6 +175,8 @@ CREATE TABLE `magazine_checking_service` (
   `status` tinyint(1) DEFAULT NULL,
   `response_text` varchar(255) DEFAULT NULL,
   `response_pdf` int(11) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -174,9 +186,9 @@ CREATE TABLE `magazine_checking_service` (
 -- Dumping data for table `magazine_checking_service`
 --
 
-INSERT INTO `magazine_checking_service` (`id`, `photo_college_letter`, `research_title`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response_text`, `response_pdf`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, 'نادر ممدوح_124423.jpg_1691543292974.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 3, 4, NULL),
-(2, '10_124423.jpg_1691548098620.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 3, 4, NULL);
+INSERT INTO `magazine_checking_service` (`id`, `photo_college_letter`, `research_title`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response_text`, `response_pdf`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(1, 'نادر ممدوح_124423.jpg_1691543292974.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, '2023-08-10', '2023-08-10', 3, 4, NULL),
+(2, '10_124423.jpg_1691548098620.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -207,6 +219,7 @@ INSERT INTO `manager` (`id`, `name`, `email`, `password`, `service_id`) VALUES
 
 CREATE TABLE `personal_examination_service` (
   `id` int(11) NOT NULL,
+  `photo_college_letter` varchar(255) DEFAULT NULL,
   `payment_code` int(11) DEFAULT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL,
   `research1_image_pdf` varchar(255) DEFAULT NULL,
@@ -226,7 +239,10 @@ CREATE TABLE `personal_examination_service` (
   `research8_image_pdf` varchar(255) DEFAULT NULL,
   `research8_image_word` varchar(255) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
-  `response` varchar(255) DEFAULT NULL,
+  `response_pdf` varchar(255) DEFAULT NULL,
+  `response_text` varchar(255) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -236,8 +252,9 @@ CREATE TABLE `personal_examination_service` (
 -- Dumping data for table `personal_examination_service`
 --
 
-INSERT INTO `personal_examination_service` (`id`, `payment_code`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 3, 3, NULL);
+INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `payment_code`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response_pdf`, `response_text`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 3, NULL),
+(2, '10_124423.jpg_1691603028396.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -259,6 +276,8 @@ CREATE TABLE `registration_services` (
   `status` tinyint(1) DEFAULT NULL,
   `response_text` varchar(255) DEFAULT NULL,
   `response_pdf` varchar(255) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -268,10 +287,10 @@ CREATE TABLE `registration_services` (
 -- Dumping data for table `registration_services`
 --
 
-INSERT INTO `registration_services` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`, `status`, `response_text`, `response_pdf`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(4, 1, 0, 'ddddddddd', 'ddddd', 'ddddddddddd', '', '', '', '', 0, '', '', 1, 1, 1),
-(5, 0, NULL, NULL, 'نادر ممدوح_124423.jpg_1691463031156.jpg', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 3, 1, NULL),
-(6, 1, NULL, NULL, 'نادر ممدوح_124509.jpg_1691464990500.jpg', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 3, 1, NULL);
+INSERT INTO `registration_services` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`, `status`, `response_text`, `response_pdf`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(4, 1, 0, 'ddddddddd', 'ddddd', 'ddddddddddd', '', '', '', '', 0, '', '', '2023-08-10', '2023-08-10', 1, 1, 1),
+(5, 0, NULL, NULL, 'نادر ممدوح_124423.jpg_1691463031156.jpg', NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, '2023-08-10', '2023-08-10', 3, 1, NULL),
+(6, 1, NULL, NULL, 'نادر ممدوح_124509.jpg_1691464990500.jpg', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -337,6 +356,8 @@ CREATE TABLE `upgrade_service` (
   `status` tinyint(1) DEFAULT NULL,
   `response_text` varchar(255) DEFAULT NULL,
   `response_pdf` varchar(255) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -518,7 +539,7 @@ ALTER TABLE `manager`
 -- AUTO_INCREMENT for table `personal_examination_service`
 --
 ALTER TABLE `personal_examination_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `registration_services`
