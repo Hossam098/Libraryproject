@@ -85,7 +85,9 @@ const Unav = () => {
                         <Link>{t('about-us')}</Link>
                     </li>
                     <li>
-                        <Link>{t('services')}</Link>
+                        <Link to="/allServices">
+                        {t('services')}
+                        </Link>
                     </li>
                     <li>
                         <Link to="/Myservices">{t('services-status')}</Link>

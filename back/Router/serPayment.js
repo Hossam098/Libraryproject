@@ -24,6 +24,25 @@ const handleDeleteFile = (req) => {
     )
 }
 
+async function SELECTWaitingCode(params, req, res, level = true) {
+    let sqlSelect = ``
+    if (level) {
+        sqlSelect = `SELECT ${params}.level ,${params}.status, ${params}.photo_college_letter ,services.* , users.* FROM ${params} INNER JOIN services ON ${params}.service_id = services.id INNER JOIN users ON ${params}.user_id = users.id WHERE  (${params}.status = 0 OR ${params}.status = 1 OR ${params}.status = 2 OR ${params}.status = 3) AND ${params}.user_id = ?`;
+    } else {
+        sqlSelect = `SELECT ${params}.photo_college_letter , ${params}.status ,services.* , users.* FROM ${params} INNER JOIN services ON ${params}.service_id = services.id INNER JOIN users ON ${params}.user_id = users.id WHERE (${params}.status = 0 OR ${params}.status = 1 OR ${params}.status = 2 OR ${params}.status = 3) AND ${params}.user_id = ?`;
+    }
+    const result = await query(sqlSelect, req.id);
+    if (result.length > 0) {
+        delete result[0].password;
+        delete result[0].img;
+        delete result[0].id;
+        return res.status(200).json(result);
+    } else {
+        error.push("No services found");
+        return res.status(400).json({ message: error });
+    }
+}
+
 serPayment.get('/getAllServices',
     async (req, res) => {
         let error = [];
@@ -136,8 +155,14 @@ serPayment.post('/payment',
 
                 }
             } else if (req.body.service_id == 3) {
+                if (!req.file) {
+                    error.push("Photo college letter is required");
+                    return res.status(400).json({ message: error });
+                }
+
 
                 const personal_examination_service = {
+                    photo_college_letter: req.file.filename,
                     service_id: req.body.service_id,
                     user_id: req.id,
                     status: 0
@@ -217,6 +242,115 @@ serPayment.post('/payment',
     }
 );
 
+serPayment.get('/getallwaitingofregistration',
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            SELECTWaitingCode('registration_services', req, res);
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
+serPayment.get('/getallwaitingofformation',
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            SELECTWaitingCode('formation_service', req, res);
+
+
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
+serPayment.get('/getallwaitingofpersonal',
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            SELECTWaitingCode('personal_examination_service', req, res , false);
+
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
+serPayment.get('/getallwaitingofmagazine',
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            SELECTWaitingCode('magazine_checking_service', req, res , false);
+
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
+serPayment.get('/getallwaitingofbestmessage',
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            SELECTWaitingCode('best_message_service', req, res , false);
+
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
 
 export default serPayment;
 

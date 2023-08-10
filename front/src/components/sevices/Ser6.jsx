@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { BiImageAdd } from 'react-icons/bi'
 import './ser.css'
 import axios from 'axios'
@@ -59,7 +59,7 @@ const Ser6 = () => {
                             navigate('/login')
                         }
                     }
-                    
+
                 })
         } catch (err) {
             console.log(err)
@@ -81,13 +81,13 @@ const Ser6 = () => {
                     <div className="information-service_body">
                         <h1>{t('service6-name')}</h1>
                         <hr style={{ width: "60%" }} />
-                        <img src={Serimg} alt="" className='ImageService'/>
+                        <img src={Serimg} alt="" className='ImageService' />
 
                         <div className="inputt" style={{ gridTemplateColumns: '1fr' }}>
 
                             <div className="select-img">
                                 <span className="title-upload">
-                                {t('service1-step1')}
+                                    {t('service1-step1')}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image">
                                     <BiImageAdd className='img-icom' />
@@ -125,7 +125,7 @@ const Ser6 = () => {
                 </select>
                 <div className="select-img">
                     <span className="title-upload">
-                        Graduate letter
+                        {t('service1-step1')}
                     </span>
                     <label className='upload-image' htmlFor="upload-image">
                         <BiImageAdd className='img-icom' />

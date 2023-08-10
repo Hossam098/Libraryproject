@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { BiImageAdd } from 'react-icons/bi'
 import './ser.css'
 import axios from 'axios'
@@ -15,10 +15,8 @@ const Ser3 = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
-
     useEffect(() => {
         axios.defaults.withCredentials = true
-
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
@@ -35,6 +33,7 @@ const Ser3 = () => {
     }, [])
 
     const [data, setData] = useState({
+        photo_college_letter: '',
         service_id: id
     })
 
@@ -42,7 +41,6 @@ const Ser3 = () => {
         axios.defaults.withCredentials = true
         console.log(data)
         const formData = new FormData();
-        formData.append('level', data.level);
         formData.append('photo_college_letter', data.photo_college_letter);
         formData.append('service_id', data.service_id);
 
@@ -61,7 +59,7 @@ const Ser3 = () => {
                             navigate('/login')
                         }
                     }
-                    
+
                 })
         } catch (err) {
             console.log(err)
@@ -81,9 +79,33 @@ const Ser3 = () => {
                 <div className="information-service">
                     <img src="../assets/mini-logo.png" alt="" />
                     <div className="information-service_body">
-                        <h1>{t('service2-name')}</h1>
+                        <h1>{t('service3-name')}</h1>
                         <hr style={{ width: "60%" }} />
-                        <img src={Serimg} alt="" className='ImageService'/>
+                        <img src={Serimg} alt="" className='ImageService' />
+
+                        <div className="inputt" style={{ gridTemplateColumns: '1fr' }}>
+
+                            <div className="select-img">
+                                <span className="title-upload">
+                                    {t('service1-step1')}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image">
+                                    <BiImageAdd className='img-icom' />
+                                    <p>{t('click-here')}</p>
+                                </label>
+                                <input type="file"
+                                    hidden
+                                    id='upload-image'
+                                    name='upload-image'
+                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                />
+                                {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                            </div>
+                        </div>
+                        {error != '' && <h2 style={{ color: '#AD8700' }}>
+                            **** {error} ****
+                        </h2>
+                        }
 
                         <button onClick={handleSubmit} className='sub-now'>{t('pay-code')}</button>
                     </div>
@@ -103,7 +125,7 @@ const Ser3 = () => {
                 </select>
                 <div className="select-img">
                     <span className="title-upload">
-                        Graduate letter
+                        {t('service1-step1')}
                     </span>
                     <label className='upload-image' htmlFor="upload-image">
                         <BiImageAdd className='img-icom' />

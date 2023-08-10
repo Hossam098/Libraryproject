@@ -8,11 +8,11 @@ import React from 'react';
 
 function App() {
 
-  const [t, i18n] = useTranslation();
-  React.useEffect(() => {
-    localStorage.setItem('i18nextLng', 'ar');
-    i18n.changeLanguage(localStorage.getItem('i18nextLng'));
-  }, [i18n]);
+  // const [t, i18n] = useTranslation();
+  // React.useEffect(() => {
+  //   localStorage.setItem('i18nextLng', 'ar');
+  //   i18n.changeLanguage(localStorage.getItem('i18nextLng'));
+  // }, [i18n]);
     
   return (
     <div className="App">
