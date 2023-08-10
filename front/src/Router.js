@@ -12,6 +12,8 @@ import Service from "./module/user/service/Service.jsx";
 import Instructons from "./module/user/instructions/Instructons.jsx";
 import Paymentcode from "./module/user/payment/Paymentcode.jsx";
 import Myser from "./module/user/myser/Myser.jsx";
+import AllService from "./module/user/AllService/AllService.jsx";
+
   
   const Router = createBrowserRouter([
     {
@@ -29,6 +31,10 @@ import Myser from "./module/user/myser/Myser.jsx";
           {
             path:"/profile",
             element: <Profile/>
+          },
+          {
+            path:"/allServices",
+            element: <AllService/>
           },
           {
             path:"/Myservices",
@@ -49,7 +55,7 @@ import Myser from "./module/user/myser/Myser.jsx";
          ] 
         },
         {
-         path: "/regester",
+         path: "/register",
          element: <Register/>, 
         },
         {

@@ -1,7 +1,8 @@
 main{
-   height: 40rem;
-   background-image: linear-gradient(180deg, #003C70, rgba(255,0,0,0) 70.71%),url("../../../images/landingBG.jpg");
+   height: 47rem;
+   /* background-image: linear-gradient(180deg, #003C70, rgba(255,0,0,0) 70.71%),url("../../../images/124406.jpg"); */
    background-position: center;
+   background-image: url("../../../images/124509.jpg");
    background-size: cover;
    background-repeat: no-repeat;
    background-attachment: fixed;
@@ -17,11 +18,15 @@ main{
 }
 
 .services{
-    background: #4db5ff;
-    border-radius: 2rem 2rem;
-    border: 1px solid #4db5ff;
+    /* background: #003C70; */
+    border-radius: 2rem;
+    background-color: #f9f9f9;
+    /* border: 1px solid #4db5ff; */
     height: fit-content;
     transition: all 400ms ease;
+    box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.2);
+    animation: fade-iin .7s ease-in-out;
+
 }
 /* .services:hover{
     background: transparent;
@@ -31,20 +36,25 @@ main{
 #services h2{
     width: 100%;
     text-align: center;
+    font-size: 3rem;
+    color: #003C70;
+    margin: 2rem auto;
 
 }
 #services{
     padding: 1rem .3rem;
+    margin: 0 1rem;
+    /* background: #EFF2FF; */
 }
 .service__head{
-    background: rgb(44, 44, 109);
+    /* background: #AD8700; */
     padding: 2rem;
-    border-radius:  2rem 2rem ;
-    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);
+    border-radius:  2rem ;
+    /* box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1); */
 }
-.service__head h3{
-    color: #fff;
-    font-size: 1rem;
+.service__head h1{
+    color: #000;
+    font-size: 1.2rem;
     text-align: center;
 }
 .service__list{
@@ -55,19 +65,38 @@ main{
     display: flex;
     gap: 1rem;
     margin-bottom: 0.8rem;
+    align-items: center;
     
 }
 .bttn{
     width: 100%;
     display: grid;
     place-content: center;
+    margin-bottom: 0 !important;
+}
+.bttn a{
+    background: #AD8700;
+    font-size: 1.5rem;
+    margin: 1rem auto 0 auto;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+}
+.bttn a:hover{
+    cursor: pointer;
+    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    transition: all 0.3s ease-in-out;
 }
 .service__list-icon{
-    color: #4db5ff;
+    color: #AD8700;
     margin-top: 2px;
+    font-size: 1.5rem;
+    border: 2px solid;
+    border-radius: 50%;
 }
 .service__list p{
-    font-size: .9rem;
+    font-size: 1.1rem;
+    color: #000;
 }
 .enroll{
     margin: 0 auto;
@@ -77,11 +106,46 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: end;
     height: 100%;
     color: #fff;
     padding: 0 1rem;
     animation: fade-iin 1s ease-in;
+    gap: 1rem;
+}
+.intro-txt h1{
+    font-size: 3.5rem;
+    font-weight: bolder;
+}
+.intro-txt h2{
+    font-size: 2.5rem;
+    font-weight: bolder;
+}
+.intro-txt h3{
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
+
+#services .more-Services{
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 2rem auto;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.5rem;
+    background: #003C70;
+    color: #fff;
+
+}
+#services .more-Services:hover{
+    cursor: pointer;
+    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    transition: all 0.3s ease-in-out;
+
 }
 
 @keyframes fade-iin {

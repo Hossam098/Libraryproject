@@ -1,10 +1,11 @@
-.req{
+.req {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.inputt{
+
+.inputt {
     width: 80%;
     margin: 0 auto;
     display: grid;
@@ -15,35 +16,53 @@
     gap: 1rem;
 
 }
-.inputt > div{
+
+.inputt>div {
     margin: 0 auto;
+    text-align: center;
+    width: 100%;
 }
 
-.select-img{
-    border: 2px gray dashed;
+.select-img {
+    /* border: 2px #AD8700 dashed; */
     padding: .5rem;
-    width: 200px;
-    height: 200px;
+    width: 350px;
+    height: 120px;
     display: grid;
     place-content: center;
-    
+
 }
-.upload-image{
+
+.upload-image {
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
 }
-.upload-image .img-icom{
+.value {
+    padding: 1rem;
+    font-size: 1.3rem;
+    color: #AD8700;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    margin: 0 10px 
+}
+
+.upload-image .img-icom {
     font-size: 3rem;
 }
-.upload-image p{
-    font-size: .8rem;
+
+.upload-image p {
+    font-size: 1.3rem;
 }
-.title-upload{
-    font-size: .8rem;
+
+.title-upload {
+    font-size: 1.5rem;
+    padding: 10px;
 }
-.req input[type=submit]{
+
+.req input[type=submit] {
     background-color: #AD8700;
     color: #fff;
     padding: .4rem;
@@ -51,16 +70,21 @@
     border-radius: 15px;
     margin-top: 1rem;
 }
-.req  select{
- height: 3rem;
-    
+
+.req select {
+    height: 3rem;
+    background-color: #ddd;
+    font-size: 1.3rem;
+    border-radius: 10px;
+
 }
 
 @media only screen and (max-width: 600px) {
-    .inputt{
+    .inputt {
         grid-template-columns: 1fr;
     }
-    input[type=submit]{
+
+    input[type=submit] {
         margin-top: 2rem;
     }
-  }
+}

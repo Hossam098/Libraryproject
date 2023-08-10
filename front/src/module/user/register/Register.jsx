@@ -8,6 +8,7 @@ import axios from 'axios'
 import { use } from 'i18next';
 import { useNavigate } from 'react-router-dom';
 import PopupError from '../../../components/error/PopupError';
+import { Link } from 'react-router-dom';
 
 
 const Register = () => {
@@ -30,6 +31,7 @@ const Register = () => {
     university: "",
     other_uni: "",
     faculity: "",
+    department: "",
   })
 
 
@@ -102,6 +104,9 @@ const Register = () => {
     if (!values.faculity) {
       errors.faculity = `${t('fac-err')}`
     }
+    if (!values.department) {
+      errors.department = `${t('dep-err')}`
+    }
     if (!values.checkpassword) {
       errors.checkpassword = `${t('re-pass-err')}`
     } else if ((values.checkpassword !== values.password)) {
@@ -132,7 +137,7 @@ const Register = () => {
           <div class="main-content-form">
             <h3>{t('cerate')}</h3>
             <form onSubmit={handleSubmit}>
-              <div className="input-container">
+              <div className="input-container" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" , textAlign:"right"} : { direction: "ltr" , textAlign:"left"}}>
 
 
                 <div class="input">
@@ -267,6 +272,19 @@ const Register = () => {
                   <p className='error'>{errors.faculity}</p>
                 </div>
 
+                <div class="input">
+                  <label>{t('dep')} </label>
+                  <input
+                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    type="text"
+                    className={errors.department ? 'error-in' : ''}
+                    placeholder={t('e-dep')}
+                    value={user.department}
+                    onChange={(e) => { setUser({ ...user, department: e.target.value }) }}
+                  />
+                  <p className='error'>{errors.department}</p>
+                </div>
+
 
                 <div class="input">
                   <label>{t('pass')} </label>
@@ -284,7 +302,7 @@ const Register = () => {
                     />
 
                     <span onClick={togglePasswordVisibility}>
-                      {showPassword ? <HiEyeOff /> : <HiEye />}
+                      {showPassword ? <HiEyeOff style={{color:"#003C70"}} /> : <HiEye style={{color:"#003C70"}}/>}
                     </span>
                   </div>
                   <p className='error'>{errors.password}</p>
@@ -305,8 +323,11 @@ const Register = () => {
                 </div>
 
               </div>
-              <input type="submit" value={t('next')} />
+              <input type="submit" value={t('create')} style={{marginBottom:"1rem"}}/>
             </form>
+
+            <Link to="/login" className="link">{t('login-link')}</Link>
+
 
           </div>
         </div>

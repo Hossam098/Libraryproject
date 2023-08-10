@@ -7,6 +7,7 @@ import axios from 'axios';
 import { API_URL } from '../../../config';
 import { Link, useNavigate } from 'react-router-dom';
 import PopupError from '../../../components/error/PopupError';
+import { Link } from 'react-router-dom';
 
 
 const Login = () => {
@@ -96,19 +97,19 @@ const Login = () => {
           onClose={handleCloseError}
         />
       )}
-      <div className="main-image">
+      <div className="main-image" style={{height:"100%"}}>
         <img src="./assets/uni-logo.png" alt="" />
       </div>
 
       <div className="main-content">
-        <div className="main-content-logo">
-          <img src="./assets/mini-logo.png" alt="" />
+        <div className="main-content-logo" >
+          <img src="./assets/mini-logo.png" alt="" className='im' />
         </div>
         <div class="main-content">
           <div class="main-content-form">
             <h3 style={{marginBottom:"1rem"}}>{t('Login')}</h3>
             <form onSubmit={handleSubmit}>
-              <div className="input-login-container">
+              <div className="input-login-container" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" , textAlign:"right"} : { direction: "ltr" , textAlign:"left"}}>
       
                 <div class="input" >
                   <label >{t('email')} </label>
@@ -139,7 +140,7 @@ const Login = () => {
                     />
                     
                     <span onClick={togglePasswordVisibility}>
-                      {showPassword ? <HiEyeOff /> : <HiEye />}
+                      {showPassword ? <HiEyeOff style={{color:"#003C70"}}/> : <HiEye style={{color:"#003C70"}}/>}
                     </span>
                   </div>
                   <p className='error'>{errors.password}</p>
@@ -149,10 +150,17 @@ const Login = () => {
 
 
               </div>
+<<<<<<< HEAD
               <input type="submit" value={t('next')} />
               <Link style={{color:"black", marginTop:"2rem",display:"block"}}>forget password</Link>
             </form>
             
+=======
+              <input type="submit" value={t('Login')} style={{marginBottom:"1rem"}}/>
+            </form>
+
+            <Link to="/register" className="link">{t('register-link')}</Link>
+>>>>>>> 9eec7fa8d6a6181f9f908301cf807ad64e299d5e
           </div>
         </div>
       </div>

@@ -1,11 +1,11 @@
-.inst-container{
+/* .inst-container{
     display: flex;
     height: 90vh;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-.inst-container .isntructions li{
+} */
+/* .inst-container .isntructions li{
     margin-bottom: 1rem;
     font-size: 2rem;
 }
@@ -16,4 +16,72 @@
     border: none;
     border-radius: 15px;
     font-size: 1.5rem;
+} */
+
+
+.inst-container .information-service{
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: space-evenly;
+
+}
+.inst-container .information-service img{
+    width: 35%;
+}
+
+.inst-container .information-service .information-service_body{
+    background: #003C70;
+    color: #fff;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 2rem;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem auto;
+    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.3);
+    animation: fade-iin .7s ease-in-out;
+
+}
+
+.inst-container .information-service .information-service_body h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.inst-container .information-service .information-service_body .list-steps{
+    width: 100%;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    padding: 0 5rem;
+}
+
+.inst-container .information-service .sub-now{
+    width: 70%;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.2rem;
+    background-color: #AD8700;
+    color: #fff;
+    cursor: pointer;
+}
+
+.inst-container .information-service .sub-now:hover{
+    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+    transition: all 0.3s ease-in-out;
+
 }

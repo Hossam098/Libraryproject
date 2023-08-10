@@ -3,23 +3,29 @@
 
 }
 .main .main-content .main-content-logo img{
-    width:25%;
+    width:20%;
 }
 .main-content-form{
-    width: 90%;
+    width: 95%;
     padding: 1rem 0;
 }
 .main-content-form h3{
-    color: #003C70;
+    color: #AD8700;
     font-size: 2rem;
 }
 .main-content-form input[type=submit]{
-    background: #003C70;
+    background: #AD8700;
     color: #fff;
     width: 50%;
     height: 2.5rem;
     border-radius: 10px;
-    
+    border: none;   
+    cursor: pointer;
+}
+
+.main-content-form input[type=submit]:hover{
+    box-shadow: 0 0 15px #000;
+    transition: 0.5s;
 }
 
 .input-container{
@@ -34,16 +40,19 @@
     font-size: 20px;
 }
 .input-container .input label{
-    color: #AD8700;
+    color: #003C70;
+    padding: 5px;
+    font-weight: bold;
 }
-input{
+input,
+.input select{
     font-size: 1.4rem;
 }
 
- form .input{
+ form .input {
     margin: 5px;
     direction: ltr;
-    margin-bottom: 2rem;
+    margin-bottom: .5rem;
     font-size: 1.5rem;
 }
 
@@ -52,8 +61,12 @@ input{
     width: 100%;
     height: 2.5rem;
     padding: 0 3PX;
-    border: 1px solid ;
-    border-radius: 5px;
+    border: none;
+    /* border-radius: 5px; */
+    margin: 5px auto;
+    background: #f5f5f5;
+    border-radius: 10px;
+
 }
 
 .input input:focus{
@@ -64,7 +77,7 @@ input{
 .passwordcontainer{
     display: flex;
     align-items: center;
-    border: 1px solid black;
+    border: none;
     padding: 0 3PX;
     border-radius: 5px;
 }
@@ -83,6 +96,6 @@ input{
         gap: .5rem;
     }
     .main .main-content .main-content-logo img{
-        width: 50%;
+        width: 50% !important;
     }
   }

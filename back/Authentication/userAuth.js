@@ -1,10 +1,11 @@
 import express from "express";
 import query from '../Database/DBConnection.js';
-import { body, validationResult } from "express-validator";
+import { body, check, validationResult } from "express-validator";
 import e from "express";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
+import checkUser from "../MiddleWare/checkUser.js";
 
 
 const userAuth = express();
@@ -22,7 +23,7 @@ userAuth.post('/register',
     body('nationality').notEmpty().withMessage('Nationality is required'),
     body('university').notEmpty().withMessage('University is required'),
     body('faculity').notEmpty().withMessage('faculity is required'),
-
+    body('department').notEmpty().withMessage('department is required'),
     async (req, res) => {
         let error = [];
         try {
@@ -61,7 +62,7 @@ userAuth.post('/register',
             }else {
                 uni = req.body.university;
             }
-
+            
 
             const user = {
                 name: req.body.name,
@@ -71,7 +72,8 @@ userAuth.post('/register',
                 national_id: req.body.national_id,
                 nationality: req.body.nationality,
                 university: uni,
-                faculity: req.body.faculity
+                faculity: req.body.faculity,
+                department: req.body.department,
             }
 
             const sqlInsert = "INSERT INTO users SET ?";
@@ -133,6 +135,26 @@ userAuth.post('/login',
             error.push(errors);
             return res.status(500).json({ message: error });
         }
+});
+
+userAuth.get('/check', 
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM users WHERE id = ?";
+            const result = await query(sqlSelect, [req.id]);
+            if (result.length > 0) {
+                return res.status(200).json({ login: true });
+            } else {
+                error.push("User doesn't exist");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    
 });
 
 userAuth.get('/logout', (req, res) => {

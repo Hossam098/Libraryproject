@@ -7,9 +7,11 @@ import session from 'express-session';
 import query from './Database/DBConnection.js';
 import user from './Router/userCRUD.js';
 import userAuth from './Authentication/userAuth.js';
+import serPayment from './Router/serPayment.js';
 
 const app = express();
 app.use(express.json());
+
 
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -38,10 +40,13 @@ dotenv.config({ path: './.env' });
 app.use(bodyParser.json());
 app.use(express.static('public/imgs'));
 
+app.use('', serPayment);
+
 app.use('/auth', userAuth);
 app.use('/user', user);
 
 const PORT = process.env.PORT || 5000;
+
 
 app.listen(PORT, () => {
   console.log("Server is running on port 5000");
