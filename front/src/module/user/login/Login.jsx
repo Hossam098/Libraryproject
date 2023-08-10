@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import './login.css'
 import axios from 'axios';
 import { API_URL } from '../../../config';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PopupError from '../../../components/error/PopupError';
 
 
@@ -150,8 +150,9 @@ const Login = () => {
 
               </div>
               <input type="submit" value={t('next')} />
+              <Link style={{color:"black", marginTop:"2rem",display:"block"}}>forget password</Link>
             </form>
-
+            
           </div>
         </div>
       </div>
