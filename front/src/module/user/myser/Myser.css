@@ -8,6 +8,15 @@
     width: 50%;
     cursor: pointer;
 }
+.information-service_body .contiue .code{
+    width: 80%;
+}
+.information-service_body .contiue a{
+    width: 50%;
+}
+.information-service_body .contiue {
+    width: 100%;
+}
 
 .waitbtn-edit:hover {
     box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);

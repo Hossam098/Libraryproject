@@ -23,7 +23,10 @@ footer > div{
     width: 80%;
     margin: 0 auto;
     padding-left: 1rem;
-}@media only screen and (max-width: 600px) {
+}
+
+
+@media only screen and (max-width: 600px) {
     footer{
         grid-template-columns: 1fr;
         height: 100%;

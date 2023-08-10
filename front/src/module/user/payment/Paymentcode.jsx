@@ -20,7 +20,7 @@ const Paymentcode = () => {
 
     return (
         <div>
-            <Unav />
+           
             <div className="Cont-Serv">
                 <img src={payimg} alt="" className='ImageService' />
                 <div className="cont">

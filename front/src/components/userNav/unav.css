@@ -26,7 +26,7 @@ nav {
     gap: 5px;
 }
 
-a {
+nav a {
     text-decoration: none;
     color: #fff;
 }
