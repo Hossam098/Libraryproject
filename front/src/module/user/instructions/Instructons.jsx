@@ -56,7 +56,7 @@ const Instructons = () => {
           onClose={handleCloseError}
         />
       )}
-      <Unav />
+      
       {id == 1 ?
 
         <div className="inst-container">

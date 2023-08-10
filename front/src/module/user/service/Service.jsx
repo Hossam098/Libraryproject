@@ -71,7 +71,7 @@ const Service = () => {
 
     return (
         <div>
-            <Unav />
+            
             <div className="Cont-Serv">
                 {/* <img src={Serimg} alt="" className='ImageService'/> */}
                 {Service(id)}

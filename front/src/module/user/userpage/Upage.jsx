@@ -16,7 +16,8 @@ const Upage = () => {
     }
   }, [])
   return (
-    <div className='pageContainer'>       
+    <div className='pageContainer'>  
+      <Unav/>     
       <Outlet/>     
     </div>
   )

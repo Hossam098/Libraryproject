@@ -21,6 +21,11 @@ const Unav = () => {
     };
 
     const [logged, setLogged] = useState('')
+    const [reg, setReg] = useState([])
+    const [formation, setFormation] = useState([])
+    const [personal, setPersonal] = useState([])
+    const [magazine, setMagazine] = useState([])
+    const [bestMessage, setBestMessage] = useState([])
 
     useEffect(() => {
         try {
@@ -45,10 +50,56 @@ const Unav = () => {
                     setLogged(false)
                 })
 
+
+
+                axios.get(`${API_URL}/getallwaitingofregistration`, { withCredentials: true })
+                .then((res) => {
+                    console.log(res.data)
+                    setReg(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+
+            axios.get(`${API_URL}/getallwaitingofformation`, { withCredentials: true })
+                .then((res) => {
+                    console.log(res.data)
+                    setFormation(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            axios.get(`${API_URL}/getallwaitingofpersonal`, { withCredentials: true })
+                .then((res) => {
+                    console.log(res.data)
+                    setPersonal(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            axios.get(`${API_URL}/getallwaitingofmagazine`, { withCredentials: true })
+                .then((res) => {
+                    console.log(res.data)
+                    setMagazine(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            axios.get(`${API_URL}/getallwaitingofbestmessage`, { withCredentials: true })
+                .then((res) => {
+                    console.log(res.data)
+                    setBestMessage(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+
         } catch (err) {
             console.log(err)
         }
+
     }, [])
+    // console.log(counter)
 
     const handleLogout = () => {
         try {
@@ -89,9 +140,18 @@ const Unav = () => {
                         {t('services')}
                         </Link>
                     </li>
+                    {logged&&(
+
+                    
                     <li>
-                        <Link to="/Myservices">{t('services-status')}</Link>
+                        {(bestMessage.length == 0 && magazine.length == 0 && personal.length == 0&& formation.length == 0 && reg.length == 0)?
+                            <p style={{color:'gray', cursor:"not-allowed"}}>{t('services-status')}</p>
+                        :
+                            
+                            <Link to="/Myservices">{t('services-status')}</Link>
+                        }  
                     </li>
+                    )}
 
                 </ul>
             </div>

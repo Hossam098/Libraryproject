@@ -37,7 +37,7 @@ const AllService = () => {
 
     return (
         <div>
-                <Unav />
+        
             <section id='services' style={localStorage.getItem('i18nextLng') == 'en' ? {direction: 'ltr'} : {direction: 'rtl'}}>
                 <h2>{t('services-title')}</h2>
                 <h2 style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.5', width: '80%', textAlign: 'center' , opacity: '0.8'}}>

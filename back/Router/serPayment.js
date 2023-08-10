@@ -11,7 +11,7 @@ import fs from "fs";
 const serPayment = express();
 serPayment.use(express.Router());
 const handleDeleteFile = (req) => {
-
+    
     const img = req.file.filename;
     const path = `./public/imgs/${req.national_id}/${img}`;
 
@@ -25,12 +25,9 @@ const handleDeleteFile = (req) => {
 }
 
 async function SELECTWaitingCode(params, req, res, level = true) {
-    let sqlSelect = ``
-    if (level) {
-        sqlSelect = `SELECT ${params}.level ,${params}.status, ${params}.photo_college_letter ,services.* , users.* FROM ${params} INNER JOIN services ON ${params}.service_id = services.id INNER JOIN users ON ${params}.user_id = users.id WHERE  (${params}.status = 0 OR ${params}.status = 1 OR ${params}.status = 2 OR ${params}.status = 3) AND ${params}.user_id = ?`;
-    } else {
-        sqlSelect = `SELECT ${params}.photo_college_letter , ${params}.status ,services.* , users.* FROM ${params} INNER JOIN services ON ${params}.service_id = services.id INNER JOIN users ON ${params}.user_id = users.id WHERE (${params}.status = 0 OR ${params}.status = 1 OR ${params}.status = 2 OR ${params}.status = 3) AND ${params}.user_id = ?`;
-    }
+    
+    const sqlSelect = `SELECT ${params}.* ,services.* , users.* FROM ${params} INNER JOIN services ON ${params}.service_id = services.id INNER JOIN users ON ${params}.user_id = users.id WHERE  (${params}.status = 0 OR ${params}.status = 1 OR ${params}.status = 2 OR ${params}.status = 3) AND ${params}.user_id = ?`;
+
     const result = await query(sqlSelect, req.id);
     if (result.length > 0) {
         delete result[0].password;
@@ -38,8 +35,8 @@ async function SELECTWaitingCode(params, req, res, level = true) {
         delete result[0].id;
         return res.status(200).json(result);
     } else {
-        error.push("No services found");
-        return res.status(400).json({ message: error });
+
+        return res.status(400).json({ message: false });
     }
 }
 

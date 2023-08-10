@@ -46,7 +46,7 @@ const Home = () => {
     return (
         <div>
             <main>
-                <Unav />
+                
                 <div className="intro-txt" style={localStorage.getItem('i18nextLng') == 'en' ? { alignItems: 'flex-start'} : { alignItems: 'flex-end' , textAlign: 'right'}}>
                     <h1>{t('lib')}</h1>
                     <h2>{t('helwan-uni')}</h2>
