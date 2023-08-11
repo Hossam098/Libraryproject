@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './profile.css'
 import { Link } from 'react-router-dom'
 import profileimg from '../../../images/Ellipse 1.png'
-import { RiUserSettingsLine } from 'react-icons/ri'
+import { MdOutlineModeEdit } from 'react-icons/md'
 import { GrAdd } from 'react-icons/gr'
 import Unav from '../../../components/userNav/Unav'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +15,7 @@ const Profile = () => {
   const { t, i18n } = useTranslation()
   const [user, setUser] = useState([])
   const [showPersonal, setShowPersonal] = useState(true)
+  const [selectedImage, setSelectedImage] = useState();
   const [reg, setReg] = useState([])
   const [formation, setFormation] = useState([])
   const [personal, setPersonal] = useState([])
@@ -95,7 +96,23 @@ const Profile = () => {
           user.map((item, index) => {
             return (
               <div className="subnav">
-                <img src={user.img == "" || user.img == null ? profileimg : user.img} alt="profile" />
+                <div className="p-img-container">
+                  <img src={user.img == "" || user.img == null ? profileimg : user.img} alt="profile" />
+                  <div className="editbutton">
+
+                    <label For="p-image">
+                      <MdOutlineModeEdit />
+                    </label>
+                    <input 
+                      type="file"
+                      hidden
+                      id='p-image'
+                      name='p-image'
+                      onChange={(e)=>{setSelectedImage(e.target.files[0])}}
+                    />
+                    
+                  </div>
+                </div>
                 <h1>{item.name}</h1>
                 <div className="subnav-header">
                   <button
@@ -137,8 +154,8 @@ const Profile = () => {
                             </tr>
                           )
                         })}
-                        
-                        </tbody>
+
+                      </tbody>
 
                     </table>
                   </div>
