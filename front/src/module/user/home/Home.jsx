@@ -8,6 +8,7 @@ import axios from 'axios'
 import { API_URL } from '../../../config'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import Coplaints from '../../../components/complains/Coplaints'
 
 const Home = () => {
     const id = "1";
@@ -90,6 +91,7 @@ const Home = () => {
                 <button className='more-Services' onClick={handleNavegate}>{t('more')}</button>
 
             </section>
+            <Coplaints/>
             {/* <Footer /> */}
         </div>
     )
