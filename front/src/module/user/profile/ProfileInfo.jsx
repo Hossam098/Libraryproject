@@ -28,8 +28,8 @@ const ProfileInfo = (props) => {
                 <h3>{t('n-id')}</h3>
                 <input
                     type="text"
-                    value={props.user.nationl_id}
-                    onChange={(e) => { props.setUser({ ...props.user, nationl_id: e.target.value }) }}
+                    value={props.user.national_id}
+                    onChange={(e) => { props.setUser({ ...props.user, national_id: e.target.value }) }}
                 />
             </div>
             <div className='subnav-content-item'>
@@ -44,35 +44,38 @@ const ProfileInfo = (props) => {
                 <h3>{t('nation')}</h3>
                 <input
                     type="text"
-                    value={props.user.nationlity}
-                    onChange={(e) => { props.setUser({ ...props.user, nationlity: e.target.value }) }}    
+                    value={props.user.nationality}
+                    onChange={(e) => { props.setUser({ ...props.user, nationality: e.target.value }) }}    
                 />
             </div>
             <div className='subnav-content-item'>
                 <h3>{t('uni')}</h3>
                 <input
                     type="text"
-                    value={props.user.univerity}
-                    onChange={(e) => { props.setUser({ ...props.user, univerity: e.target.value }) }}
+                    value={props.user.university}
+                    onChange={(e) => { props.setUser({ ...props.user, university: e.target.value }) }}
                 />
             </div>
             <div className='subnav-content-item'>
                 <h3>{t('fac')}</h3>
                 <input
                     type="text"
-                    value={props.user.faculiy}
-                    onChange={(e) => { props.setUser({ ...props.user, faculiy: e.target.value }) }}
+                    value={props.user.faculity}
+                    onChange={(e) => { props.setUser({ ...props.user, faculity: e.target.value }) }}
                 />
             </div>
             <div className='subnav-content-item'>
                 <h3>{t('dep')}</h3>
                 <input
                     type="text"
-                    value={props.user.departent}
-                    onChange={(e) => { props.setUser({ ...props.user, departent: e.target.value }) }}
+                    value={props.user.department}
+                    onChange={(e) => { props.setUser({ ...props.user, department: e.target.value }) }}
                 />
             </div>
-            <button className="waitbtn-edit">
+            <button 
+                className="waitbtn-edit"
+                onClick={props.edituser}
+            >
                 {t('edit-btn')}
             </button>
         </div>

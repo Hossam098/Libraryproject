@@ -86,9 +86,19 @@ const Profile = () => {
     }
   }, [])
 
-  const edituser () =>{
+  const edituser = () =>{
+    const formData = new FormData()
+    formData.append('name', user.name)
+    formData.append('email', user.email)
+    formData.append('national_id', user.national_id)
+    formData.append('phone', user.phone)
+    formData.append('nationality', user.nationality)
+    formData.append('university', user.university)
+    formData.append('faculity', user.faculity)
+    formData.append('department', user.department)
+    formData.append('img', user.img)
     try {
-      axios.get(`${API_URL}/user/`, { withCredentials: true })
+      axios.put(`${API_URL}/user/updateuser`,formData ,{ withCredentials: true })
         .then((res) => {
           console.log(res.data)
           setUser(res.data)
@@ -99,7 +109,10 @@ const Profile = () => {
           }
           console.log(err)
         })
+  }catch(err){
+    console.log(err)
   }
+}
 
 
 
@@ -123,7 +136,7 @@ const Profile = () => {
                       hidden
                       id='p-image'
                       name='p-image'
-                      onChange={(e)=>{setSelectedImage(e.target.files[0])}}
+                      onChange={(e)=>{setUser({...user, img: e.target.files[0]})}}
                     />
                     
                   </div>
@@ -148,6 +161,7 @@ const Profile = () => {
                   <ProfileInfo
                     user={user}
                     setUser={setUser}
+                    edituser={edituser}
                   />
                   :
                     <ServiceInfo/>
