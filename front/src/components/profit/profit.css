@@ -1,3 +1,39 @@
 .profit h1{
     font-size: 2.5rem;
 }
+
+.icons-cont{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: baseline;
+    justify-content: space-around;
+    padding: 0 3rem;
+}
+.icon-cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.icon-cont p{
+    text-align: center;
+}
+.icon{
+    font-size: 5rem;
+    margin: .5rem;
+    background-color: #003C70;
+    padding: 1.1rem;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    overflow: visible;
+    transition: all .3s ease-in-out;
+}
+.icon:hover{
+    background-color:  #AD8700 ;
+}
+
+@media(max-width: 760px) {
+    .icons-cont{
+    grid-template-columns: repeat(2, 1fr);
+    }
+}
