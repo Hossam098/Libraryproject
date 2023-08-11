@@ -9,11 +9,13 @@ import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { API_URL } from '../../../config'
 import { use } from 'i18next'
+import ProfileInfo from './ProfileInfo'
+import ServiceInfo from './ServiceInfo'
 
 const Profile = () => {
 
   const { t, i18n } = useTranslation()
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState({})
   const [showPersonal, setShowPersonal] = useState(true)
   const [selectedImage, setSelectedImage] = useState();
   const [reg, setReg] = useState([])
@@ -21,6 +23,7 @@ const Profile = () => {
   const [personal, setPersonal] = useState([])
   const [magazine, setMagazine] = useState([])
   const [bestMessage, setBestMessage] = useState([])
+
 
   useEffect(() => {
     axios.defaults.withCredentials = true
@@ -83,6 +86,20 @@ const Profile = () => {
     }
   }, [])
 
+  const edituser () =>{
+    try {
+      axios.get(`${API_URL}/user/`, { withCredentials: true })
+        .then((res) => {
+          console.log(res.data)
+          setUser(res.data)
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            window.location.href = "/"
+          }
+          console.log(err)
+        })
+  }
 
 
 
@@ -92,9 +109,7 @@ const Profile = () => {
   return (
     <>
       <div className="profile-container" style={{ direction: i18n.language == "ar" ? "rtl" : "ltr", backgroundColor: '#f5f5f5' }}>
-        {Array.isArray(user) ? (
-          user.map((item, index) => {
-            return (
+
               <div className="subnav">
                 <div className="p-img-container">
                   <img src={user.img == "" || user.img == null ? profileimg : user.img} alt="profile" />
@@ -113,7 +128,7 @@ const Profile = () => {
                     
                   </div>
                 </div>
-                <h1>{item.name}</h1>
+                <h1>{user.name}</h1>
                 <div className="subnav-header">
                   <button
                     className={showPersonal ? 'btn-subnav-header active' : 'btn-subnav-header'}
@@ -130,40 +145,15 @@ const Profile = () => {
                 </div>
 
                 {showPersonal ?
-                  personalInformation(t, item)
+                  <ProfileInfo
+                    user={user}
+                    setUser={setUser}
+                  />
                   :
-                  <div className="subnav-content">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>{t('ser-name')}</th>
-                          <th>{t('ser-type')}</th>
-                          <th>{t('ser-date')}</th>
-                          <th>{t('ser-status')}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {reg.map((item, index) => {
-                          return (
-                            <tr>
-                              <td>{item.name}</td>
-                              <td>{item.response_text}</td>
-                              <td>{item.response_pdf}</td>
-                              <td>{item.submit_date}</td>
-                              <td>{item.status == 0 ? t('waiting') : item.status == 1 ? t('accepted') : t('rejected')}</td>
-                            </tr>
-                          )
-                        })}
-
-                      </tbody>
-
-                    </table>
-                  </div>
+                    <ServiceInfo/>
                 }
               </div>
-            )
-          })
-        ) : null}
+           
       </div>
     </>
   )
@@ -171,43 +161,3 @@ const Profile = () => {
 
 export default Profile
 
-function personalInformation(t, item) {
-  return <div className="subnav-content">
-    <div className="subnav-content-item">
-      <h3>{t('name')}</h3>
-      <input type="text" value={item.name} />
-    </div>
-    <div className='subnav-content-item'>
-      <h3>{t('email')}</h3>
-      <input type="text" value={item.email} />
-    </div>
-    <div className='subnav-content-item'>
-      <h3>{t('n-id')}</h3>
-      <input type="text" value={item.national_id} />
-    </div>
-    <div className='subnav-content-item'>
-      <h3>{t('phone')}</h3>
-      <input type="text" value={item.phone} />
-    </div>
-    <div className='subnav-content-item'>
-      <h3>{t('nation')}</h3>
-      <input type="text" value={item.nationality} />
-    </div>
-    <div className='subnav-content-item'>
-      <h3>{t('uni')}</h3>
-      <input type="text" value={item.university} />
-    </div>
-    <div className='subnav-content-item'>
-      <h3>{t('fac')}</h3>
-      <input type="text" value={item.faculity} />
-    </div>
-    <div className='subnav-content-item'>
-      <h3>{t('dep')}</h3>
-      <input type="text" value={item.department} />
-    </div>
-    <button className="waitbtn-edit">
-      {t('edit-btn')}
-
-    </button>
-  </div>
-}

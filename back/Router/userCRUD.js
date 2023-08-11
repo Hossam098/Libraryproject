@@ -38,7 +38,7 @@ user.get('/getuser',
             const result = await query(sqlSelect, [req.id]);
             if (result.length > 0) {
                 delete result[0].password;
-                return res.status(200).json(result);
+                return res.status(200).json(result[0]);
             } else {
                 error.push("No user found");
                 return res.status(400).json({ message: error });
