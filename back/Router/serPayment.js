@@ -78,6 +78,11 @@ serPayment.post('/payment',
 
             /****     check file type pdf or img      ****/
 
+            if (!req.file) {
+                error.push("Photo college letter is required");
+                return res.status(400).json({ message: error });
+            }
+
             if (req.file) {
                 const file = req.file;
                 const ext = file.mimetype.split('/')[1];
@@ -90,19 +95,15 @@ serPayment.post('/payment',
 
 
             if (req.body.service_id == 1) {
-                if (!req.file) {
-                    error.push("Photo college letter is required");
-                    return res.status(400).json({ message: error });
-                }
 
-                if (req.body.level == '') {
-                    error.push("Level is required");
-                    handleDeleteFile(req);
-                    return res.status(400).json({ message: error });
-                }
+                // if (req.body.level == '') {
+                //     error.push("Level is required");
+                //     handleDeleteFile(req);
+                //     return res.status(400).json({ message: error });
+                // }
 
                 const reg = {
-                    level: req.body.level,
+                    // level: req.body.level,
                     photo_college_letter: req.file.filename,
                 }
 
@@ -136,7 +137,173 @@ serPayment.post('/payment',
                     return res.status(400).json({ message: error });
 
                 }
+            } else if (req.body.service_id == 2) {
+
+                // if (req.body.level == '') {
+                //     error.push("Level is required");
+                //     handleDeleteFile(req);
+                //     return res.status(400).json({ message: error });
+                // }
+
+                const form = {
+                    photo_college_letter: req.file.filename,
+                }
+
+                const sqlInsert = "INSERT INTO formation_service SET ?";
+                const result = await query(sqlInsert, form);
+
+                if (result.affectedRows > 0) {
+                    const sqlSelect = "SELECT * FROM formation_service WHERE id = ?";
+                    const result2 = await query(sqlSelect, result.insertId);
+                    const ser_formation = result2[0].id;
+                    const submitData = {
+                        ser_formation: ser_formation,
+                        status: 0,
+                        user_id: req.id,
+                        service_id: req.body.service_id,
+                    }
+
+                    const sqlInsert2 = "INSERT INTO submit SET ?";
+                    const result3 = await query(sqlInsert2, submitData);
+                    if (result3.affectedRows > 0) {
+                        return res.status(201).json({ message: "Payment successful" });
+                    } else {
+                        error.push("Payment failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("Payment failed");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+
+            } else if (req.body.service_id == 3) {
+
+                const personal = {
+                    photo_college_letter: req.file.filename,
+                }
+
+                const sqlInsert = "INSERT INTO personal_examination_service SET ?";
+                const result = await query(sqlInsert, personal);
+
+                if (result.affectedRows > 0) {
+                    const submitData = {
+                        ser_personal: result.insertId,
+                        status: 0,
+                        user_id: req.id,
+                        service_id: req.body.service_id,
+                    }
+
+                    const sqlInsert2 = "INSERT INTO submit SET ?";
+                    const result3 = await query(sqlInsert2, submitData);
+                    if (result3.affectedRows > 0) {
+                        return res.status(200).json({ message: "Payment successful" });
+                    } else {
+                        error.push("Payment failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("Payment failed");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            } else if (req.body.service_id == 4) {
+
+                const magazine = {
+                    photo_college_letter: req.file.filename,
+                }
+
+                const sqlInsert = "INSERT INTO magazine_checking_service SET ?";
+                const result = await query(sqlInsert, magazine);
+
+                if (result.affectedRows > 0) {
+                    const submitData = {
+                        ser_magazine: result.insertId,
+                        status: 0,
+                        user_id: req.id,
+                        service_id: req.body.service_id,
+                    }
+
+                    const sqlInsert2 = "INSERT INTO submit SET ?";
+                    const result3 = await query(sqlInsert2, submitData);
+                    if (result3.affectedRows > 0) {
+                        return res.status(200).json({ message: "Payment successful" });
+                    } else {
+                        error.push("Payment failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("Payment failed");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            } else if (req.body.service_id == 5) {
+
+                const update = {
+                    photo_college_letter: req.file.filename,
+                }
+
+                const sqlInsert = "INSERT INTO upgrade_service SET ?";
+                const result = await query(sqlInsert, update);
+
+                if (result.affectedRows > 0) {
+                    const submitData = {
+                        ser_upgrade: result.insertId,
+                        status: 0,
+                        user_id: req.id,
+                        service_id: req.body.service_id,
+                    }
+
+                    const sqlInsert2 = "INSERT INTO submit SET ?";
+                    const result3 = await query(sqlInsert2, submitData);
+                    if (result3.affectedRows > 0) {
+                        return res.status(200).json({ message: "Payment successful" });
+                    } else {
+                        error.push("Payment failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("Payment failed");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            } else if (req.body.service_id == 6) {
+
+                const best = {
+                    photo_college_letter: req.file.filename,
+                }
+
+                const sqlInsert = "INSERT INTO best_message_service SET ?";
+                const result = await query(sqlInsert, best);
+
+                if (result.affectedRows > 0) {
+                    const submitData = {
+                        ser_best: result.insertId,
+                        status: 0,
+                        user_id: req.id,
+                        service_id: req.body.service_id,
+                    }
+
+                    const sqlInsert2 = "INSERT INTO submit SET ?";
+                    const result3 = await query(sqlInsert2, submitData);
+                    if (result3.affectedRows > 0) {
+                        return res.status(200).json({ message: "Payment successful" });
+                    } else {
+                        error.push("Payment failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("Payment failed");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
             }
+
 
         } catch (errors) {
             error.push(errors);
