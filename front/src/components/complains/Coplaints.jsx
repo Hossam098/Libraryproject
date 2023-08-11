@@ -21,6 +21,9 @@ const Coplaints = () => {
         <button className="c-button">
             أضغط هنا    
         </button>
+        <div className="icons-cont">
+            
+        </div>
     </div>
   )
 }
