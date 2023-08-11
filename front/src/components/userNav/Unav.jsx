@@ -28,17 +28,7 @@ const Unav = () => {
     const [bestMessage, setBestMessage] = useState([])
 
     useEffect(() => {
-        try {
-            if (!localStorage.getItem('token')) {
-                setLogged(false)
-            } else {
-                setLogged(true)
-            }
-        } catch (err) {
-            console.log(err)
-        }
         axios.defaults.withCredentials = true
-
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {

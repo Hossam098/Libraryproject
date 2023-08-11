@@ -88,244 +88,33 @@ const Myser = () => {
 
                 {reg.map((service) => {
                     return (
-                        <div className="inst-container">
-                            <div className="information-service">
-                                <div className="information-service_body" style={{ backgroundColor: '#f9f9f9', color: '#000', width: '60%' }}>
-                                    <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
-                                    <hr style={{ width: "60%" }} />
-                                    <img src={service.status == 1 ? codeIMG : img} alt="" style={{ width: '50%' }} />
-
-                                    {service.status == 0 ?
-                                        <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                            <GiSandsOfTime />
-                                            {t('service1-step3')}
-                                        </h2>
-                                        : service.status == 1 ?
-                                            <>
-                                                <div className="contiue">
-                                                    <span>payment code </span>
-                                                    <div className="code wait-txt">
-                                                        {service.payment_code}
-                                                    </div>
-                                                    <Link to className="waitbtn-edit">cotinue</Link>
-                                                </div>
-                                            </>
-                                            : service.status == 2 ?
-                                                <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                                    <GiSandsOfTime />
-                                                    {t('wait-res')}
-                                                </h2>
-                                                : service.status == 3 ?
-                                                    <>
-                                                        <h2 className='wait-txt'>
-                                                            <GiSandsOfTime />
-                                                            {service.response_text}
-                                                        </h2>
-                                                        <button className="waitbtn-edit">
-                                                            <Link to={``}>
-                                                                {t('wait-edit')}
-                                                            </Link>
-                                                        </button>
-                                                    </>
-                                                    : null
-                                    }
-
-
-                                </div>
-                            </div>
-                        </div>
+                        serviesStatus(getTranslatedServiceName, service, t)
 
                     )
                 })}
 
                 {formation.map((service) => {
                     return (
-                        <div className="inst-container">
-                            <div className="information-service">
-                                <div className="information-service_body" style={{ backgroundColor: '#f9f9f9', color: '#000', width: '60%' }}>
-                                    <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
-                                    <hr style={{ width: "60%" }} />
-                                    <img src={img} alt="" style={{ width: '50%' }} />
-
-                                    {service.status == 0 ?
-                                        <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                            <GiSandsOfTime />
-                                            {t('service1-step3')}
-                                        </h2>
-                                        : service.status == 2 ?
-                                            <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                                <GiSandsOfTime />
-                                                {t('wait-res')}
-                                            </h2>
-                                            : service.status == 3 ?
-                                                <>
-                                                    <h2 className='wait-txt'>
-                                                        <GiSandsOfTime />
-                                                        {service.response_text}
-                                                    </h2>
-                                                    <button className="waitbtn-edit">
-                                                        <Link to={``}>
-                                                            {t('wait-edit')}
-                                                        </Link>
-                                                    </button>
-                                                </>
-                                                : null
-                                    }
-
-
-                                </div>
-                            </div>
-                        </div>
+                        serviesStatus(getTranslatedServiceName, service, t)
 
                     )
                 })}
                 {personal.map((service) => {
                     return (
-                        <div className="inst-container">
-                            <div className="information-service">
-                                <div className="information-service_body" style={{ backgroundColor: '#f9f9f9', color: '#000', width: '60%' }}>
-                                    <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
-                                    <hr style={{ width: "60%" }} />
-                                    <img src={img} alt="" style={{ width: '50%' }} />
-
-                                    {service.status == 0 ?
-                                        <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                            <GiSandsOfTime />
-                                            {t('service1-step3')}
-                                        </h2>
-                                        : service.status == 2 ?
-                                            <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                                <GiSandsOfTime />
-                                                {t('wait-res')}
-                                            </h2>
-                                            : service.status == 3 ?
-                                                <>
-                                                    <h2 className='wait-txt'>
-                                                        <GiSandsOfTime />
-                                                        {service.response_text}
-                                                    </h2>
-                                                    <button className="waitbtn-edit">
-                                                        <Link to={``}>
-                                                            {t('wait-edit')}
-                                                        </Link>
-                                                    </button>
-                                                </>
-                                                : null
-                                    }
-
-
-                                </div>
-                            </div>
-                        </div>
-
+                        serviesStatus(getTranslatedServiceName, service, t)
                     )
                 })}
                 {magazine.map((service) => {
                     return (
-                        <div className="inst-container">
-                            <div className="information-service">
-                                <div className="information-service_body" style={{ backgroundColor: '#f9f9f9', color: '#000', width: '60%' }}>
-                                    <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
-                                    <hr style={{ width: "60%" }} />
-                                    <img src={img} alt="" style={{ width: '50%' }} />
-
-                                    {service.status == 0 ?
-                                        <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                            <GiSandsOfTime />
-                                            {t('service1-step3')}
-                                        </h2>
-                                        : service.status == 2 ?
-                                            <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                                <GiSandsOfTime />
-                                                {t('wait-res')}
-                                            </h2>
-                                            : service.status == 3 ?
-                                                <>
-                                                    <h2 className='wait-txt'>
-                                                        <GiSandsOfTime />
-                                                        {service.response_text}
-                                                    </h2>
-                                                    <button className="waitbtn-edit">
-                                                        <Link to={``}>
-                                                            {t('wait-edit')}
-                                                        </Link>
-                                                    </button>
-                                                </>
-                                                : null
-                                    }
-
-
-                                </div>
-                            </div>
-                        </div>
-
+                        serviesStatus(getTranslatedServiceName, service, t)
                     )
                 })}
                 {bestMessage.map((service) => {
                     return (
-                        <div className="inst-container">
-                            <div className="information-service">
-                                <div className="information-service_body" style={{ backgroundColor: '#f9f9f9', color: '#000', width: '60%' }}>
-                                    <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
-                                    <hr style={{ width: "60%" }} />
-                                    <img src={img} alt="" style={{ width: '50%' }} />
-
-                                    {service.status == 0 ?
-                                        <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                            <GiSandsOfTime />
-                                            {t('service1-step3')}
-                                        </h2>
-                                        : service.status == 2 ?
-                                            <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                                <GiSandsOfTime />
-                                                {t('wait-res')}
-                                            </h2>
-                                            : service.status == 3 ?
-                                                <>
-                                                    <h2 className='wait-txt'>
-                                                        <GiSandsOfTime />
-                                                        {service.response_text}
-                                                    </h2>
-                                                    <button className="waitbtn-edit">
-                                                        <Link to={``}>
-                                                            {t('wait-edit')}
-                                                        </Link>
-                                                    </button>
-                                                </>
-                                                : null
-                                    }
-
-
-                                </div>
-                            </div>
-                        </div>
-
+                        serviesStatus(getTranslatedServiceName, service, t)
                     )
                 })}
 
-                {/* <div className="services__container">
-                    {Array.isArray(services) && services.map((service) => {
-                        return (
-                            <article className='services'>
-                                <div className="service__head">
-                                <h3>{getTranslatedServiceName(service)}</h3>                                
-                                </div>
-                                <ul className="service__list">
-                                    <li>
-                                        <BiCheck className='service__list-icon' />
-                                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        </p>
-                                    </li>
-                                    <li className='bttn'>
-                                        <Link to={`/pay/${service.id}`}>enroll</Link>
-                                    </li>
-                                </ul>
-                            </article>
-                        )
-                    })
-                    }
-
-                </div> */}
             </section>
             {/* <Footer /> */}
         </div>
@@ -333,3 +122,51 @@ const Myser = () => {
 }
 
 export default Myser
+function serviesStatus(getTranslatedServiceName, service, t) {
+    return <div className="inst-container">
+        <div className="information-service">
+            <div className="information-service_body" style={{ backgroundColor: '#f9f9f9', color: '#000', width: '60%' }}>
+                <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
+                <hr style={{ width: "60%" }} />
+                <img src={service.status == 1 ? codeIMG : img} alt="" style={{ width: '50%' }} />
+
+                {service.status == 0 ?
+                    <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
+                        <GiSandsOfTime />
+                        {t('service1-step3')}
+                    </h2>
+                    : service.status == 1 ?
+                        <>
+                            <div className="contiue">
+                                <span>payment code </span>
+                                <div className="code wait-txt">
+                                    {service.payment_code}
+                                </div>
+                                <Link to className="waitbtn-edit">cotinue</Link>
+                            </div>
+                        </>
+                        : service.status == 2 ?
+                            <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
+                                <GiSandsOfTime />
+                                {t('wait-res')}
+                            </h2>
+                            : service.status == 3 ?
+                                <>
+                                    <h2 className='wait-txt'>
+                                        <GiSandsOfTime />
+                                        {service.response_text}
+                                    </h2>
+                                    <button className="waitbtn-edit">
+                                        <Link to={``} style={{ color: '#fff' }}>
+                                            {t('wait-edit')}
+                                        </Link>
+                                    </button>
+                                </>
+                                : null}
+
+
+            </div>
+        </div>
+    </div>
+}
+
