@@ -9,6 +9,7 @@ import { API_URL } from '../../../config'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Coplaints from '../../../components/complains/Coplaints'
+import Profit from '../../../components/profit/Profit'
 
 const Home = () => {
     const id = "1";
@@ -91,7 +92,9 @@ const Home = () => {
                 <button className='more-Services' onClick={handleNavegate}>{t('more')}</button>
 
             </section>
+            <Profit/>
             <Coplaints/>
+            
             {/* <Footer /> */}
         </div>
     )
