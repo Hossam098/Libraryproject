@@ -19,12 +19,16 @@ const Profile = () => {
   const { t, i18n } = useTranslation()
   const [user, setUser] = useState({})
   const [showPersonal, setShowPersonal] = useState(true)
+
+
+
   const [selectedImage, setSelectedImage] = useState();
   const [reg, setReg] = useState([])
   const [formation, setFormation] = useState([])
   const [personal, setPersonal] = useState([])
   const [magazine, setMagazine] = useState([])
   const [bestMessage, setBestMessage] = useState([])
+
 
 
   useEffect(() => {
