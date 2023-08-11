@@ -16,8 +16,23 @@
     margin: 3rem auto;
 
 }
-.profile-container .subnav img{
-    /* width: 15%; */
+.p-img-container{
+    width: 10%;
+}
+.p-i-c{
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    object-fit: contain;
+}
+.p-img-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .profile-container .subnav .subnav-header{
@@ -96,6 +111,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 5;
 }
 .p-img-container{
     position:relative;

@@ -172,7 +172,6 @@ const Unav = () => {
                 )}
             </div>
             <div className="left">
-
                 <ul className={showMenu?" open left":"left"}>
                     <li>
                         <NavLink to="/" onClick={()=>{setShowMenu(false); setShowServices(false) }}>{t('Home')}</NavLink>
@@ -189,8 +188,6 @@ const Unav = () => {
                         </NavLink>
                     </li>
                     {logged && (
-
-
                         <li>
                             {(bestMessage.length == 0 && magazine.length == 0 && personal.length == 0 && formation.length == 0 && reg.length == 0) ?
                                 <p style={{ color: 'gray', cursor: "not-allowed" }}>{t('services-status')}</p>
@@ -200,11 +197,8 @@ const Unav = () => {
                             }
                         </li>
                     )}
-
                 </ul>
-
             </div>
-            
         </nav>
     )
 }
