@@ -59,20 +59,20 @@ user.put('/updateuser',
             const sqlSelect = "SELECT * FROM users WHERE id = ?";
             const result = await query(sqlSelect, [req.id]);
             if (result.length > 0) {
-                let image = result[0].image;
+                let image = result[0].img;
                 if (req.file) {
                     image = req.file.filename;
                 }
                 const userDate = {
                     name: req.body.name,
                     email: req.body.email,
-                    image: image,
+                    img: image,
                     phone: req.body.phone,
                     national_id: req.body.national_id,
-                    uni: req.body.uni,
-                    faculty: req.body.faculty,
+                    university: req.body.university,
+                    faculity: req.body.faculity,
                     department: req.body.department,
-                    nationalaty: req.body.nationalaty,
+                    nationality: req.body.nationality,
                 }
                 const sqlUpdate = "UPDATE users SET ? WHERE id = ?";
                 const resultUpdate = await query(sqlUpdate, [userDate, req.id]);
