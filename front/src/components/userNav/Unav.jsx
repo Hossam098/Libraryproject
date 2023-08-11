@@ -26,11 +26,7 @@ const Unav = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [logged, setLogged] = useState('')
-    const [reg, setReg] = useState([])
-    const [formation, setFormation] = useState([])
-    const [personal, setPersonal] = useState([])
-    const [magazine, setMagazine] = useState([])
-    const [bestMessage, setBestMessage] = useState([])
+    const [services, setServices] = useState([])
 
     const menuRef = useRef(null);
 
@@ -68,47 +64,15 @@ const Unav = () => {
 
 
 
-            axios.get(`${API_URL}/getallwaitingofregistration`, { withCredentials: true })
+            axios.get(`${API_URL}/getallwaiting`, { withCredentials: true })
                 .then((res) => {
                     console.log(res.data)
-                    setReg(res.data)
+                    setServices(res.data)
                 })
                 .catch((err) => {
                     console.log(err)
                 })
 
-            axios.get(`${API_URL}/getallwaitingofformation`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data)
-                    setFormation(res.data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            axios.get(`${API_URL}/getallwaitingofpersonal`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data)
-                    setPersonal(res.data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            axios.get(`${API_URL}/getallwaitingofmagazine`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data)
-                    setMagazine(res.data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            axios.get(`${API_URL}/getallwaitingofbestmessage`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data)
-                    setBestMessage(res.data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
 
         } catch (err) {
             console.log(err)
@@ -189,7 +153,7 @@ const Unav = () => {
                     </li>
                     {logged && (
                         <li>
-                            {(bestMessage.length == 0 && magazine.length == 0 && personal.length == 0 && formation.length == 0 && reg.length == 0) ?
+                            {(services.length == 0) ?
                                 <p style={{ color: 'gray', cursor: "not-allowed" }}>{t('services-status')}</p>
                                 :
 
