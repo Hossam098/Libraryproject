@@ -11,9 +11,11 @@ import { API_URL } from '../../../config'
 import { use } from 'i18next'
 import ProfileInfo from './ProfileInfo'
 import ServiceInfo from './ServiceInfo'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
 
+  const navigate = useNavigate()
   const { t, i18n } = useTranslation()
   const [user, setUser] = useState({})
   const [showPersonal, setShowPersonal] = useState(true)
@@ -101,7 +103,7 @@ const Profile = () => {
       axios.put(`${API_URL}/user/updateuser`,formData ,{ withCredentials: true })
         .then((res) => {
           console.log(res.data)
-          setUser(res.data)
+          window.location.reload()
         })
         .catch((err) => {
           if (err.response.status === 401) {
@@ -125,7 +127,7 @@ const Profile = () => {
 
               <div className="subnav">
                 <div className="p-img-container">
-                  <img src={user.img == "" || user.img == null ? profileimg : user.img} alt="profile" />
+                  <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${user.img}`} alt="profile" />
                   <div className="editbutton">
 
                     <label For="p-image">

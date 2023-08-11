@@ -52,7 +52,7 @@ user.get('/getuser',
 
 user.put('/updateuser',
     checkUser,
-    upload.single('image'),
+    upload.single('img'),
     async (req, res) => {
         let error = [];
         try {

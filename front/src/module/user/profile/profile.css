@@ -58,6 +58,7 @@
     border-radius: 10px;
     color: #fff;
     padding: 3rem 1rem;
+    animation: fade-iin .7s ease-in-out;
 }
 
 .profile-container .subnav .subnav-content .subnav-content-item{
