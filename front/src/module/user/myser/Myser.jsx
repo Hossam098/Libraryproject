@@ -16,59 +16,21 @@ const Myser = () => {
 
 
     const id = "1";
-    const [reg, setReg] = useState([])
-    const [formation, setFormation] = useState([])
-    const [personal, setPersonal] = useState([])
-    const [magazine, setMagazine] = useState([])
-    const [bestMessage, setBestMessage] = useState([])
-
+    const [services, setServices] = useState([])
 
     const { t } = useTranslation();
-    //هتغير ال ا بى اى ده و هتخليه يرجع الخدمات الى هيكملها
     useEffect(() => {
         axios.defaults.withCredentials = true
         try {
-            axios.get(`${API_URL}/getallwaitingofregistration`, { withCredentials: true })
+            axios.get(`${API_URL}/getallwaiting`, { withCredentials: true })
                 .then((res) => {
                     console.log(res.data)
-                    setReg(res.data)
+                    setServices(res.data)
                 })
                 .catch((err) => {
                     console.log(err)
                 })
 
-            axios.get(`${API_URL}/getallwaitingofformation`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data)
-                    setFormation(res.data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            axios.get(`${API_URL}/getallwaitingofpersonal`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data)
-                    setPersonal(res.data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            axios.get(`${API_URL}/getallwaitingofmagazine`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data)
-                    setMagazine(res.data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            axios.get(`${API_URL}/getallwaitingofbestmessage`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res.data)
-                    setBestMessage(res.data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
 
         } catch (err) {
             console.log(err)
@@ -86,32 +48,10 @@ const Myser = () => {
             <section id='services'>
                 <h2>{t("waiting-list")}</h2>
 
-                {reg.map((service) => {
+                {services.map((service) => {
                     return (
                         serviesStatus(getTranslatedServiceName, service, t)
 
-                    )
-                })}
-
-                {formation.map((service) => {
-                    return (
-                        serviesStatus(getTranslatedServiceName, service, t)
-
-                    )
-                })}
-                {personal.map((service) => {
-                    return (
-                        serviesStatus(getTranslatedServiceName, service, t)
-                    )
-                })}
-                {magazine.map((service) => {
-                    return (
-                        serviesStatus(getTranslatedServiceName, service, t)
-                    )
-                })}
-                {bestMessage.map((service) => {
-                    return (
-                        serviesStatus(getTranslatedServiceName, service, t)
                     )
                 })}
 
