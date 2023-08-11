@@ -90,7 +90,6 @@ serPayment.post('/payment',
 
 
             if (req.body.service_id == 1) {
-
                 if (!req.file) {
                     error.push("Photo college letter is required");
                     return res.status(400).json({ message: error });
@@ -111,11 +110,11 @@ serPayment.post('/payment',
                 const result = await query(sqlInsert, reg);
 
                 if (result.affectedRows > 0) {
-                    sqlSelect = "SELECT * FROM registration_services WHERE id = ?";
+                    const sqlSelect = "SELECT * FROM registration_services WHERE id = ?";
                     const result2 = await query(sqlSelect, result.insertId);
                     const reg_id = result2[0].id;
                     const submitData = {
-                        ser_reg: 1,
+                        ser_reg: reg_id,
                         status: 0,
                         user_id: req.id,
                         service_id: req.body.service_id,
@@ -137,120 +136,12 @@ serPayment.post('/payment',
                     return res.status(400).json({ message: error });
 
                 }
-            } else if (req.body.service_id == 2) {
-                if (!req.file) {
-                    error.push("Photo college letter is required");
-                    return res.status(400).json({ message: error });
-                }
-                if (req.body.level == '') {
-                    error.push("Level is required");
-                    handleDeleteFile(req);
-                    return res.status(400).json({ message: error });
-                }
-
-                const formation = {
-                    level: req.body.level,
-                    photo_college_letter: req.file.filename,
-                    service_id: req.body.service_id,
-                    user_id: req.id,
-                    status: 0
-                }
-
-                const sqlInsert = "INSERT INTO formation_service SET ?";
-                const result = await query(sqlInsert, formation);
-
-                if (result.affectedRows > 0) {
-                    return res.status(201).json({ message: "Payment successful" });
-                } else {
-                    error.push("Payment failed");
-                    handleDeleteFile(req);
-                    return res.status(400).json({ message: error });
-
-                }
-            } else if (req.body.service_id == 3) {
-                if (!req.file) {
-                    error.push("Photo college letter is required");
-                    return res.status(400).json({ message: error });
-                }
-
-
-                const personal_examination_service = {
-                    photo_college_letter: req.file.filename,
-                    service_id: req.body.service_id,
-                    user_id: req.id,
-                    status: 0
-                }
-
-                const sqlInsert = "INSERT INTO personal_examination_service SET ?";
-                const result = await query(sqlInsert, personal_examination_service);
-
-                if (result.affectedRows > 0) {
-                    return res.status(201).json({ message: "Payment successful" });
-                } else {
-                    error.push("Payment failed");
-                    return res.status(400).json({ message: error });
-
-                }
-            } else if (req.body.service_id == 4) {
-
-                if (!req.file) {
-                    error.push("Photo college letter is required");
-                    return res.status(400).json({ message: error });
-                }
-
-                const magazine_checking_service = {
-                    photo_college_letter: req.file.filename,
-                    service_id: req.body.service_id,
-                    user_id: req.id,
-                    status: 0
-                }
-
-                const sqlInsert = "INSERT INTO magazine_checking_service SET ?";
-                const result = await query(sqlInsert, magazine_checking_service);
-
-                if (result.affectedRows > 0) {
-                    return res.status(200).json({ message: "Payment successful" });
-                }
-                else {
-                    error.push("Payment failed");
-                    handleDeleteFile(req);
-                    return res.status(400).json({ message: error });
-
-                }
-            } else if (req.body.service_id == 5) {
-
-            } else if (req.body.service_id == 6) {
-
-                if (!req.file) {
-                    error.push("Photo college letter is required");
-                    return res.status(400).json({ message: error });
-                }
-
-                const best_message_service = {
-                    photo_college_letter: req.file.filename,
-                    service_id: req.body.service_id,
-                    user_id: req.id,
-                    status: 0
-                }
-
-                const sqlInsert = "INSERT INTO best_message_service SET ?";
-                const result = await query(sqlInsert, best_message_service);
-
-                if (result.affectedRows > 0) {
-                    return res.status(200).json({ message: "Payment successful" });
-                }
-                else {
-                    error.push("Payment failed");
-                    handleDeleteFile(req);
-                    return res.status(400).json({ message: error });
-                }
             }
-
 
         } catch (errors) {
             error.push(errors);
             handleDeleteFile(req);
-            return res.status(500).json({ message: error });
+            return res.status(500).json(errors);
         }
     }
 );
