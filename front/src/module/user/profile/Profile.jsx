@@ -127,7 +127,9 @@ const Profile = () => {
 
               <div className="subnav">
                 <div className="p-img-container">
+                  <div className="p-i-c">
                   <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${user.img}`} alt="profile" />
+                  </div>
                   <div className="editbutton">
 
                     <label For="p-image">
