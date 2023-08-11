@@ -1,5 +1,10 @@
 import React from 'react'
 import './profit.css'
+import {FaUserGraduate} from "react-icons/fa"
+import {FaUserTie} from "react-icons/fa"
+import {FaRegNewspaper} from "react-icons/fa"
+import {ImOffice} from "react-icons/im"
+
 const Profit = () => {
   return (
     <div className='profit'>
@@ -17,6 +22,24 @@ const Profit = () => {
              التعليمية. وكذلك المجلات والدوريات 
             العلمية داخل الجامعة وخارجها. 
             </p>
+        </div>
+        <div className="icons-cont">
+            <div className="icon-cont">                
+                <FaUserGraduate className='icon'/>
+                <p>طلاب الدراسات العليا والباحثون</p>
+            </div>
+            <div className="icon-cont">                
+                <FaRegNewspaper className='icon'/>
+                <p>المجلات والدوريات العلمية</p>
+            </div>
+            <div className="icon-cont">                
+                <ImOffice className='icon'/>
+                <p>الجامعات والمعاهد الخاصة والأهلية</p>
+            </div>
+            <div className="icon-cont">                
+                <FaUserTie className='icon'/>
+                <p>أعضاء هيئة التدريس</p>
+            </div>
         </div>
     </div>
   )
