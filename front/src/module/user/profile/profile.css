@@ -17,7 +17,7 @@
 
 }
 .profile-container .subnav img{
-    width: 15%;
+    /* width: 15%; */
 }
 
 .profile-container .subnav .subnav-header{
@@ -83,4 +83,26 @@
 .profile-container .subnav .subnav-content button{
     background-color: #AD8700 !important;
     width: 70%;
+}
+.editbutton{
+    position: absolute;
+    top: 0;
+    border-radius: 50%;
+    background-color: #003c70;
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.p-img-container{
+    position:relative;
+}
+
+@media(max-width: 640px){
+    .profile-container .subnav .subnav-content{
+        width: 90%;
+    }
+
 }

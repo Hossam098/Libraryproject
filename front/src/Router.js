@@ -5,7 +5,6 @@ import Register from "./module/user/register/Register.jsx";
 import Landing from "./module/user/landing/Landing.jsx";
 import Login from "./module/user/login/Login.jsx";
 import Upage from "./module/user/userpage/Upage.jsx";
-import Contact from "./components/contact/Contact.jsx";
 import Profile from "./module/user/profile/Profile.jsx";
 import Home from "./module/user/home/Home.jsx";
 import Service from "./module/user/service/Service.jsx";
@@ -13,6 +12,8 @@ import Instructons from "./module/user/instructions/Instructons.jsx";
 import Paymentcode from "./module/user/payment/Paymentcode.jsx";
 import Myser from "./module/user/myser/Myser.jsx";
 import AllService from "./module/user/AllService/AllService.jsx";
+import About from "./module/user/about/About.jsx"
+import Contact from "./module/user/contact/Contact.jsx"
 
   
   const Router = createBrowserRouter([
@@ -27,6 +28,14 @@ import AllService from "./module/user/AllService/AllService.jsx";
           {
             path:"",
             element: <Home/>
+          },
+          {
+            path:"/about",
+            element: <About/>
+          },
+          {
+            path:"/contact",
+            element: <Contact/>
           },
           {
             path:"/profile",
