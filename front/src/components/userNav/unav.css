@@ -151,17 +151,14 @@ nav .menu span{
         flex-direction: column;
         width: 100%; 
     }
-    
-
     nav{
         flex-direction: column;
         align-items: start;
     }
     .dropdown {
-        margin: .5rem 1rem;
+        margin: 1rem .5rem;
     }
     ul.open{
         display: flex;
     }
-
 }

@@ -78,6 +78,7 @@ const Ser2 = () => {
     }
 
     return (
+        <div className="inst">
         <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
             <div className="inst-container">
                 <div className="information-service">
@@ -127,6 +128,7 @@ const Ser2 = () => {
                     </div>
 
                 </div>
+            </div>
             </div>
             {/* <div className="inputt">
                 <select

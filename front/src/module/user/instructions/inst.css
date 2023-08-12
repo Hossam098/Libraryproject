@@ -17,31 +17,80 @@
     border-radius: 15px;
     font-size: 1.5rem;
 } */
-
-
-.inst-container .information-service{
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+.inst{
     width: 100%;
-    justify-content: space-evenly;
+    display: grid;
+    background-color: #fff;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+.inst img{
+    width: 200px;
 
 }
-.inst-container .information-service img{
-    width: 35%;
-}
+.inst-container{
 
-.inst-container .information-service .information-service_body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.inst  .information-service_body{
     background: #003C70;
     color: #fff;
-    width: 55%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: center;
-    flex-wrap: nowrap;
+    gap: 2rem;
+    border-radius: 10px;
+    padding: 1rem;
+    margin:  1rem;
+    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.3);
+    animation: fade-iin .7s ease-in-out;
+
+}
+.inst h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+}
+/* 
+.inst-container{
+    display: grid;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.inst-container .information-service{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    width: 95%;
+    justify-content: space-evenly;
+    margin: 0 auto; 
+
+}
+.inst-container .information-service img{
+    width: 200px;
+    left: 0;
+    position: absolute;
+}
+
+.inst-container .information-service .information-service_body{
+    background: #003C70;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     gap: 2rem;
     border-radius: 10px;
     padding: 1rem;
@@ -51,14 +100,14 @@
 
 }
 
-.inst-container .information-service .information-service_body h1{
+.inst h1{
     font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
     margin-top: 1rem;
 }
-
-.inst-container .information-service .information-service_body .list-steps{
+*/
+.inst .list-steps{
     width: 100%;
     font-size: 1.5rem;
     display: flex;
@@ -68,7 +117,7 @@
     padding: 0 5rem;
 }
 
-.inst-container .information-service .sub-now{
+  .sub-now{
     width: 70%;
     padding: 1rem;
     border-radius: 10px;
@@ -79,9 +128,15 @@
     cursor: pointer;
 }
 
-.inst-container .information-service .sub-now:hover{
+ .sub-now:hover{
     box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.2);
     transform: translateY(-1px);
     transition: all 0.3s ease-in-out;
 
 }
+
+@media (max-width:910px) {
+    .inst  .information-service_body{
+        width: 90%;
+    }
+} 

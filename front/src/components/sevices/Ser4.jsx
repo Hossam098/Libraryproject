@@ -74,6 +74,7 @@ const Ser4 = () => {
     }
 
     return (
+        <div className="inst">
         <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
             <div className="inst-container">
                 <div className="information-service">
@@ -144,6 +145,7 @@ const Ser4 = () => {
                 value="submit now"
                 onClick={() => handleSubmit()}
             /> */}
+        </div>
         </div>
     )
 }
