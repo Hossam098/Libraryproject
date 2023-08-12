@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import './profile.css'
+import axios from 'axios'
+import { API_URL } from '../../../config'
 
 const ServiceInfo = () => {
 
-    const [t] = useTranslation()
+    const [services, setServices] = useState([])
+    const { t } = useTranslation();
+
+    useEffect(() => {
+        axios.defaults.withCredentials = true
+        try {
+            axios.get(`${API_URL}/user/`, { withCredentials: true })
+                .then((res) => {
+                    console.log(res.data)
+                    setServices(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        } catch (err) {
+            console.log(err)
+        }
+    }, [])
 
   return (
-    <div className="subnav-content">
+    <div className="subnav-contentt">
     <table>
       <thead>
         <tr>
@@ -17,13 +37,17 @@ const ServiceInfo = () => {
         </tr>
       </thead>
       <tbody>
-            <tr>
-              <td>item.name</td>
-              <td>item.response_text</td>
-              <td>item.response_pdf</td>
-              <td>item.submit_date</td>
-              <td>{0 == 0 ? t('waiting') : 0 == 1 ? t('accepted') : t('rejected')}</td>
-            </tr>
+        {services.map((ser)=>{
+           <tr>
+           <td>ser.name</td>
+           <td>ser.response_text</td>
+           <td>ser.response_pdf</td>
+           <td>ser.submit_date</td>
+           <td>{0 == 0 ? t('waiting') : 0 == 1 ? t('accepted') : t('rejected')}</td>
+         </tr>
+        })
+        }
+           
       </tbody>
 
     </table>

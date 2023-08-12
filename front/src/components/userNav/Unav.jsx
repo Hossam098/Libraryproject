@@ -131,7 +131,7 @@ const Unav = () => {
                 </li>) : (
                     <>
                         <li><Toggle /></li>
-                        <li><li onClick={handleLogin} style={{ fontSize: '1.5rem', cursor: "pointer" }}><FiLogIn />{t('Login')}</li></li>
+                        <li><li onClick={()=>handleLogin} style={{ fontSize: '1.5rem', cursor: "pointer" }}><FiLogIn />{t('Login')}</li></li>
                     </>
                 )}
             </div>
