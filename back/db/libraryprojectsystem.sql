@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2023 at 04:39 AM
+-- Generation Time: Aug 12, 2023 at 02:29 AM
 -- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,23 +48,15 @@ CREATE TABLE `best_message_service` (
   `research7_image_pdf` varchar(255) DEFAULT NULL,
   `research7_image_word` varchar(255) DEFAULT NULL,
   `research8_image_pdf` varchar(255) DEFAULT NULL,
-  `research8_image_word` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `response_text` varchar(255) DEFAULT NULL,
-  `response_pdf` varchar(255) DEFAULT NULL,
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) DEFAULT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `sub_manager_id` int(11) DEFAULT NULL
+  `research8_image_word` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `best_message_service`
 --
 
-INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response_text`, `response_pdf`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, '10_124406.jpg_1691550820009.jpg', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 6, NULL);
+INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
+(1, '10_124406.jpg_1691550820009.jpg', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -82,23 +74,16 @@ CREATE TABLE `formation_service` (
   `message_pdf_ar` varchar(255) DEFAULT NULL,
   `message_word_en` varchar(255) DEFAULT NULL,
   `message_pdf_en` varchar(255) DEFAULT NULL,
-  `quote_check_form` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `response_pdf` varchar(255) DEFAULT NULL,
-  `response_text` varchar(255) DEFAULT NULL,
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) DEFAULT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `sub_manager_id` int(11) DEFAULT NULL
+  `quote_check_form` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `formation_service`
 --
 
-INSERT INTO `formation_service` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `message_word_ar`, `message_pdf_ar`, `message_word_en`, `message_pdf_en`, `quote_check_form`, `status`, `response_pdf`, `response_text`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, 0, 0, NULL, 'نادر ممدوح_124423.jpg_1691538652865.jpg', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 2, NULL);
+INSERT INTO `formation_service` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `message_word_ar`, `message_pdf_ar`, `message_word_en`, `message_pdf_en`, `quote_check_form`) VALUES
+(1, 0, 0, NULL, 'نادر ممدوح_124423.jpg_1691538652865.jpg', NULL, NULL, NULL, NULL, NULL),
+(2, 0, 0, NULL, '10_124423.jpg_1691785956961.jpg', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -112,15 +97,7 @@ CREATE TABLE `grant_service` (
   `message_word_en` varchar(255) NOT NULL,
   `message_pdf_ar` varchar(255) NOT NULL,
   `message_word_ar` varchar(255) NOT NULL,
-  `decision_of_the_Judgment_and_discussion_committee` varchar(255) NOT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `response_text` varchar(255) DEFAULT NULL,
-  `response_pdf` varchar(255) DEFAULT NULL,
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) DEFAULT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `sub_manager_id` int(11) DEFAULT NULL
+  `decision_of_the_Judgment_and_discussion_committee` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -132,15 +109,7 @@ CREATE TABLE `grant_service` (
 CREATE TABLE `knowledge_bank_service` (
   `id` int(11) NOT NULL,
   `subscription_status` tinyint(1) NOT NULL COMMENT 'حاله الاشتراك \r\nمش مشترك =0\r\nتفعيل =1\r\nافاده او اثبات انه مشترك =2',
-  `proof_of_subscription` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `response_text` varchar(255) DEFAULT NULL,
-  `response_pdf` varchar(255) DEFAULT NULL,
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) DEFAULT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `sub_manager_id` int(11) DEFAULT NULL
+  `proof_of_subscription` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -171,24 +140,17 @@ CREATE TABLE `magazine_checking_service` (
   `research7_image_pdf` varchar(255) DEFAULT NULL,
   `research7_image_word` varchar(255) DEFAULT NULL,
   `research8_image_pdf` varchar(255) DEFAULT NULL,
-  `research8_image_word` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `response_text` varchar(255) DEFAULT NULL,
-  `response_pdf` int(11) DEFAULT NULL,
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) DEFAULT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `sub_manager_id` int(11) DEFAULT NULL
+  `research8_image_word` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `magazine_checking_service`
 --
 
-INSERT INTO `magazine_checking_service` (`id`, `photo_college_letter`, `research_title`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response_text`, `response_pdf`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, 'نادر ممدوح_124423.jpg_1691543292974.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, '2023-08-10', '2023-08-10', 3, 4, NULL),
-(2, '10_124423.jpg_1691548098620.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 4, NULL);
+INSERT INTO `magazine_checking_service` (`id`, `photo_college_letter`, `research_title`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
+(1, 'نادر ممدوح_124423.jpg_1691543292974.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, '10_124423.jpg_1691548098620.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, '10_124423.jpg_1691785963139.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -237,24 +199,15 @@ CREATE TABLE `personal_examination_service` (
   `research7_image_pdf` varchar(255) DEFAULT NULL,
   `research7_image_word` varchar(255) DEFAULT NULL,
   `research8_image_pdf` varchar(255) DEFAULT NULL,
-  `research8_image_word` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `response_pdf` varchar(255) DEFAULT NULL,
-  `response_text` varchar(255) DEFAULT NULL,
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) DEFAULT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `sub_manager_id` int(11) DEFAULT NULL
+  `research8_image_word` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `personal_examination_service`
 --
 
-INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `payment_code`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `status`, `response_pdf`, `response_text`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 3, NULL),
-(2, '10_124423.jpg_1691603028396.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 3, NULL);
+INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `payment_code`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
+(3, '10_124423.jpg_1691785959903.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -272,25 +225,21 @@ CREATE TABLE `registration_services` (
   `research_plan_ar_word` varchar(255) DEFAULT NULL,
   `research_plan_en_pdf` varchar(255) DEFAULT NULL,
   `research_plan_en_word` varchar(255) DEFAULT NULL,
-  `translation_paper` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `response_text` varchar(255) DEFAULT NULL,
-  `response_pdf` varchar(255) DEFAULT NULL,
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) DEFAULT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `sub_manager_id` int(11) DEFAULT NULL
+  `translation_paper` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `registration_services`
 --
 
-INSERT INTO `registration_services` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`, `status`, `response_text`, `response_pdf`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(4, 1, 0, 'ddddddddd', 'ddddd', 'ddddddddddd', '', '', '', '', 0, '', '', '2023-08-10', '2023-08-10', 1, 1, 1),
-(5, 0, NULL, NULL, 'نادر ممدوح_124423.jpg_1691463031156.jpg', NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, '2023-08-10', '2023-08-10', 3, 1, NULL),
-(6, 1, NULL, NULL, 'نادر ممدوح_124509.jpg_1691464990500.jpg', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-10', '2023-08-10', 3, 1, NULL);
+INSERT INTO `registration_services` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`) VALUES
+(7, 1, NULL, NULL, '10_124423.jpg_1691783190100.jpg', NULL, NULL, NULL, NULL, NULL),
+(8, 1, NULL, NULL, '10_124423.jpg_1691783235123.jpg', NULL, NULL, NULL, NULL, NULL),
+(9, 1, NULL, NULL, '10_124423.jpg_1691783263783.jpg', NULL, NULL, NULL, NULL, NULL),
+(10, 1, NULL, NULL, '10_124423.jpg_1691783331435.jpg', NULL, NULL, NULL, NULL, NULL),
+(11, 1, NULL, NULL, '10_124423.jpg_1691783360058.jpg', NULL, NULL, NULL, NULL, NULL),
+(12, 1, NULL, NULL, '10_124423.jpg_1691783391807.jpg', NULL, NULL, NULL, NULL, NULL),
+(13, 0, NULL, NULL, '10_124423.jpg_1691785950620.jpg', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -321,6 +270,43 @@ INSERT INTO `services` (`id`, `service_name`, `service_name_ar`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `submit`
+--
+
+CREATE TABLE `submit` (
+  `id` int(11) NOT NULL,
+  `ser_reg` int(11) DEFAULT NULL,
+  `ser_formation` int(11) DEFAULT NULL,
+  `ser_grant` int(11) DEFAULT NULL,
+  `ser_personal` int(11) DEFAULT NULL,
+  `ser_upgrade` int(11) DEFAULT NULL,
+  `ser_knowledge` int(11) DEFAULT NULL,
+  `ser_magazine` int(11) DEFAULT NULL,
+  `ser_best` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `response_text` int(11) DEFAULT NULL,
+  `response_pdf` int(11) DEFAULT NULL,
+  `submit_date` date NOT NULL DEFAULT current_timestamp(),
+  `edit_date` date NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  `sub_manager_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `submit`
+--
+
+INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `status`, `response_text`, `response_pdf`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(1, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 1, NULL),
+(2, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 1, NULL),
+(3, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 2, NULL),
+(4, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 3, NULL),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 4, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sub_manager`
 --
 
@@ -328,17 +314,15 @@ CREATE TABLE `sub_manager` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `service_id` int(11) NOT NULL,
-  `manager_id` int(11) NOT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sub_manager`
 --
 
-INSERT INTO `sub_manager` (`id`, `name`, `email`, `password`, `service_id`, `manager_id`) VALUES
-(1, 'fff', 'ffff', 'fff', 1, 1);
+INSERT INTO `sub_manager` (`id`, `name`, `email`, `password`) VALUES
+(1, 'fff', 'ffff', 'fff');
 
 -- --------------------------------------------------------
 
@@ -352,15 +336,7 @@ CREATE TABLE `upgrade_service` (
   `academic_degree_to_which_its_ promoted` varchar(255) NOT NULL,
   `photo_college_letter` varchar(255) NOT NULL,
   `payment_code` int(11) DEFAULT NULL,
-  `photo_payment_receipt` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT NULL,
-  `response_text` varchar(255) DEFAULT NULL,
-  `response_pdf` varchar(255) DEFAULT NULL,
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
-  `user_id` int(11) DEFAULT NULL,
-  `service_id` int(11) DEFAULT NULL,
-  `sub_manager_id` int(11) DEFAULT NULL
+  `photo_payment_receipt` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -390,7 +366,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `national_id`, `phone`, `nationality`, `university`, `faculity`, `department`, `img`) VALUES
 (1, 'nader', 'das@info.com', '5531', '56165606', 68165, 'klnklmk', 'cscsd', 'dsc', '', ''),
 (2, 'v', 'dscsd@csc.css', '$2b$10$G7JMtmC/OcOJHenwtDhLruV3fprBbfZYO8iGR0Y3ySe7siDDIYe52', '452452', 45451, 'zdc', 'dcs', 'casc', '', ''),
-(3, 'نادر ممدوح', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 10, 'مصري', '1', 'ري', 'يرر', '');
+(3, 'نادر ممدوحm', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_photo_2022-08-13_01-41-51.jpg_1691789304421.jpg');
 
 --
 -- Indexes for dumped tables
@@ -400,46 +376,31 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `national_id`, `phone`, 
 -- Indexes for table `best_message_service`
 --
 ALTER TABLE `best_message_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user-best` (`user_id`),
-  ADD KEY `ser-best` (`service_id`),
-  ADD KEY `sub-best` (`sub_manager_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `formation_service`
 --
 ALTER TABLE `formation_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_ser` (`user_id`),
-  ADD KEY `two_ser` (`service_id`),
-  ADD KEY `sub_mana` (`sub_manager_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `grant_service`
 --
 ALTER TABLE `grant_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_grant` (`user_id`),
-  ADD KEY `service-grant` (`service_id`),
-  ADD KEY `sub-grant` (`sub_manager_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `knowledge_bank_service`
 --
 ALTER TABLE `knowledge_bank_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user-knowl` (`user_id`),
-  ADD KEY `ser-know` (`service_id`),
-  ADD KEY `sub-know` (`sub_manager_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `magazine_checking_service`
 --
 ALTER TABLE `magazine_checking_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fourser-servs` (`service_id`),
-  ADD KEY `user_sers` (`user_id`),
-  ADD KEY `sub_man` (`sub_manager_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `manager`
@@ -452,19 +413,13 @@ ALTER TABLE `manager`
 -- Indexes for table `personal_examination_service`
 --
 ALTER TABLE `personal_examination_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `threeser-servs` (`service_id`),
-  ADD KEY `user-servie` (`user_id`),
-  ADD KEY `sub_manager` (`sub_manager_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `registration_services`
 --
 ALTER TABLE `registration_services`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `oneser-servs` (`service_id`),
-  ADD KEY `user-servies` (`user_id`),
-  ADD KEY `sub_manager_id` (`sub_manager_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `services`
@@ -473,21 +428,33 @@ ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `submit`
+--
+ALTER TABLE `submit`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reg` (`ser_reg`),
+  ADD KEY `form` (`ser_formation`),
+  ADD KEY `grant` (`ser_grant`),
+  ADD KEY `knowledge` (`ser_knowledge`),
+  ADD KEY `magazine` (`ser_magazine`),
+  ADD KEY `per` (`ser_personal`),
+  ADD KEY `upgrade` (`ser_upgrade`),
+  ADD KEY `best` (`ser_best`),
+  ADD KEY `user` (`user_id`),
+  ADD KEY `ser` (`service_id`),
+  ADD KEY `sub` (`sub_manager_id`);
+
+--
 -- Indexes for table `sub_manager`
 --
 ALTER TABLE `sub_manager`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `ser-sub` (`service_id`),
-  ADD KEY `manger-sub` (`manager_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `upgrade_service`
 --
 ALTER TABLE `upgrade_service`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user-se` (`user_id`),
-  ADD KEY `sub-ser` (`sub_manager_id`),
-  ADD KEY `ser-ser` (`service_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -509,7 +476,7 @@ ALTER TABLE `best_message_service`
 -- AUTO_INCREMENT for table `formation_service`
 --
 ALTER TABLE `formation_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `grant_service`
@@ -527,7 +494,7 @@ ALTER TABLE `knowledge_bank_service`
 -- AUTO_INCREMENT for table `magazine_checking_service`
 --
 ALTER TABLE `magazine_checking_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `manager`
@@ -539,19 +506,25 @@ ALTER TABLE `manager`
 -- AUTO_INCREMENT for table `personal_examination_service`
 --
 ALTER TABLE `personal_examination_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `registration_services`
 --
 ALTER TABLE `registration_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `submit`
+--
+ALTER TABLE `submit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sub_manager`
@@ -576,81 +549,20 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `best_message_service`
+-- Constraints for table `submit`
 --
-ALTER TABLE `best_message_service`
-  ADD CONSTRAINT `ser-best` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sub-best` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user-best` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `formation_service`
---
-ALTER TABLE `formation_service`
-  ADD CONSTRAINT `sub_mana` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `two_ser` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_ser` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `grant_service`
---
-ALTER TABLE `grant_service`
-  ADD CONSTRAINT `service-grant` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sub-grant` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_grant` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `knowledge_bank_service`
---
-ALTER TABLE `knowledge_bank_service`
-  ADD CONSTRAINT `ser-know` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sub-know` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user-knowl` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `magazine_checking_service`
---
-ALTER TABLE `magazine_checking_service`
-  ADD CONSTRAINT `fourser-servs` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sub_man` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_sers` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `manager`
---
-ALTER TABLE `manager`
-  ADD CONSTRAINT `ser-man` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `personal_examination_service`
---
-ALTER TABLE `personal_examination_service`
-  ADD CONSTRAINT `sub_manager` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `threeser-servs` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user-servie` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `registration_services`
---
-ALTER TABLE `registration_services`
-  ADD CONSTRAINT `oneser-servs` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sub_manager_id` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user-servies` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `sub_manager`
---
-ALTER TABLE `sub_manager`
-  ADD CONSTRAINT `manger-sub` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ser-sub` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `upgrade_service`
---
-ALTER TABLE `upgrade_service`
-  ADD CONSTRAINT `ser-ser` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`),
-  ADD CONSTRAINT `sub-ser` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`),
-  ADD CONSTRAINT `user-se` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `submit`
+  ADD CONSTRAINT `best` FOREIGN KEY (`ser_best`) REFERENCES `best_message_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `form` FOREIGN KEY (`ser_formation`) REFERENCES `formation_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `grant` FOREIGN KEY (`ser_grant`) REFERENCES `grant_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `knowledge` FOREIGN KEY (`ser_knowledge`) REFERENCES `knowledge_bank_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `magazine` FOREIGN KEY (`ser_magazine`) REFERENCES `magazine_checking_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `per` FOREIGN KEY (`ser_personal`) REFERENCES `personal_examination_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reg` FOREIGN KEY (`ser_reg`) REFERENCES `registration_services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ser` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sub` FOREIGN KEY (`sub_manager_id`) REFERENCES `sub_manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `upgrade` FOREIGN KEY (`ser_upgrade`) REFERENCES `upgrade_service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
