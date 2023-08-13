@@ -12,7 +12,7 @@ const ServiceInfo = () => {
     useEffect(() => {
         axios.defaults.withCredentials = true
         try {
-            axios.get(`${API_URL}/user/`, { withCredentials: true })
+            axios.get(`${API_URL}/getallwaiting`, { withCredentials: true })
                 .then((res) => {
                     console.log(res.data)
                     setServices(res.data)
