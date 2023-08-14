@@ -20,7 +20,7 @@ main{
 .services{
     /* background: #003C70; */
     border-radius: 2rem;
-    background-color: #f9f9f9;
+    background-color: #fff;
     /* border: 1px solid #4db5ff; */
     height: fit-content;
     transition: all 400ms ease;

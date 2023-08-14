@@ -39,6 +39,10 @@ const Home = () => {
         const currentLanguage = localStorage.getItem('i18nextLng');
         return currentLanguage == 'en' ? service.service_name : service.service_name_ar;
       };
+    const getTranslatedServicePref = (service) => {
+        const currentLanguage = localStorage.getItem('i18nextLng');
+        return currentLanguage == 'en' ? service.pref : service.pref_ar;
+      };
 
     const handleNavegate = () => {
         navigate('/allServices')
@@ -75,7 +79,8 @@ const Home = () => {
                                 <ul className="service__list">
                                     <li>
                                         <BiCheck className='service__list-icon' />
-                                        <p>{getTranslatedServiceName(service)}
+                                        <p>
+                                            {getTranslatedServicePref(service)}
                                         </p>
                                     </li>
                                     <li className='bttn'>

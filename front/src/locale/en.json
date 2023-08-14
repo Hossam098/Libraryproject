@@ -30,6 +30,7 @@
     "name-err" :"Name is required", 
     "email-err" :"Email is required!", 
     "email-v-err" :"This is not a valid email form!", 
+    "email-t-err":"Please use the university email",
     "pass-err" :"Password is required!", 
     "pass-err-min" :"Password must be at least 8 characters long", 
     "n-id-err" :"National_id is required!", 
@@ -72,11 +73,11 @@
     "wait-edit": "You must edit your attachaments press here to edit",
     "service1-name" :"The service of extracting a statement that the title of the thesis plan is not previously registered in any of the Egyptian universities",
     "service-steps" : "Service steps",
-    "service1-step1" : "A copy of the college letter, signed and sealed, with a recent date not exceeding 15 working days",
+    "service1-step1" : "The letter addressed to the Director of the Digital Library; By requesting the issuance of a statement for registration for a master’s or doctoral degree to verify whether or not the title of the research plan exists in Egyptian universities, accredited and dated with a recent date from the Department of Postgraduate Studies in the college to which the postgraduate student is affiliated, stating the following: full name of the researcher – college – department – full title of the research plan in the language Arabic and English Language - MA or PhD).",
     "service1-step2" : "Choose level of study (Master - PhD)",
     "service1-step3" : "Wait for payment code",
     "service1-step4" : "A copy of the payment receipt",
-    "service1-step5" : "Research plan Arabic and English WORD and PDF",
+    "service1-step5" : "The research outline in Arabic and English, if any (complete from the first cover to the sources and references in one combined file in Word and PDF format)",
     "service1-step6" : "A copy of the Translation paper for the research plan", 
     "service2-name" :"Examination of citation of scientific theses for the purpose of formation",
     "service2-step5" : "The thesis is complete without deleting any parts of it in (WORD && PDF) formats that can be copied for all colleges except Colleges of Science, Pharmacy and Home Economics The (methods && materials) are deleted",
@@ -86,8 +87,13 @@
     "service3-step5" : "A copy of the  research in PDF & Word format ",
     "service4-name" :"Examination of scientific research for the purpose of publication in scientific journals",
     "service5-name" :"Examination of scientific research for the purpose of promotion",
-    "service6-name" :"Examination of the best scientific thesis"
-    
+    "service6-name" :"Examination of the best scientific thesis",
+    "service1-pay" : "The code is directed to the nearest or possible Masary branch, mail, or any place that accepts the code, except for immediate payment of the fees for this service, which is (100 pounds) for researchers enrolled inside the university, while the service fees for gentlemen incoming researchers and Egyptian researchers from outside Helwan University are (150 EGP), and as for a replacement for the lost one or issuing an amended statement with its title, the fees are (50 EGP).",
+    "service-worning" : "Important note",
+    "service1-w": {
+        "1": "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him via e-mail within three working days and printed for signature and seal by the Vice Dean for Postgraduate Studies in the college he is affiliated with.",
+        "2": "For any other inquiries, please contact us via the complaints link on the home page."
+    }
 
     
 }

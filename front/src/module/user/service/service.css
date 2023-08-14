@@ -3,6 +3,7 @@
     min-height: 63vh;
     display: grid;
     padding: 1rem 0;
+    background-color: #fff;
 }
 .Cont-Serv .ImageService{
     width: 50%;

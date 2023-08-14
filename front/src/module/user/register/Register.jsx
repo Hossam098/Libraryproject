@@ -78,7 +78,9 @@ const Register = () => {
       errors.email = `${t('email-err')}`
     } else if (!regex.test(values.email)) {
       errors.email = `${t('email-v-err')}`
-    }
+    }else if (!regex.test(values.email) || !values.email.includes('.edu')) {
+      errors.email = `${t('email-t-err')}`;
+    }  
     if (!values.password) {
       errors.password = `${t('pass-err')}`
     } else if (values.password.length < 8) {

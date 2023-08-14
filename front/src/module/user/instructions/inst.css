@@ -20,7 +20,7 @@
 .inst{
     width: 100%;
     display: grid;
-    background-color: #fff;
+    /* background-color: #fff; */
     /* justify-content: center; */
     justify-content: center;
     align-items: center;
@@ -40,7 +40,7 @@
 .inst  .information-service_body{
     background: #003C70;
     color: #fff;
-    width: 60%;
+    width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,11 +63,11 @@
 
 .inst .information-service{
     display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     width: 95%;
-    justify-content: space-evenly;
-    margin: 0 auto; 
+    justify-content: center;
+    margin: 0 auto;
 
 }
 
