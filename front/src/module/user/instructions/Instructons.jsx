@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Unav from '../../../components/userNav/Unav'
 import PopupError from '../../../components/error/PopupError';
 import { useTranslation } from 'react-i18next';
@@ -62,39 +62,82 @@ const Instructons = () => {
         <div className="information-service_body">
           <h1>{t(`service${id}-name`)}</h1>
           <hr style={{ width: "60%" }} />
-          <h2 style={localStorage.getItem('i18nextLng') == 'ar' ? { textAlign: 'right', width: "100%" } : { textAlign: 'left', width: "100%" }}>
+          <h2 style={localStorage.getItem('i18nextLng') == 'ar' ? { textAlign: 'right', width: "100%", color: "#ad8700" } : { textAlign: 'left', width: "100%", color: "#ad8700" }}>
             {t('service-steps')}
           </h2>
           <ul className='list-steps' style={localStorage.getItem('i18nextLng') == 'ar' ? { direction: 'rtl', width: '100%' } : { direction: 'ltr', width: '100%' }}>
-            <li>1- {t(`service${id}-step1`)}</li>
-            {id == 1 || id == 2 || id == 5 || id == 7 || id == 8 ?
+          {id == 1 || id == 2 || id == 3 || id == 4 || id == 5 || id == 6 ?
+          <>
+            <li>
+              1- {t(`service${id}-step1`)}
+              {id == 5 && <Link to='https://sso.scu.eg/' style={{ color: "#ad8700",textDecoration:"underline",fontWeight:"bolder" }}>  https://sso.scu.eg</Link>}
+            </li>
+            
+            {id == 5 ?
+              <>
+                <li>2- {t('service5-step2')}</li>
+                <li>3- {t('service3-step1')}</li>
+                <li>4- {t('service5-step3')}</li>
+              </>
+              : null
+
+            }
+            {id == 3 && <li>2- {t('service3-step2')}</li>}
+            {id == 1 || id == 2 || id == 7 || id == 8 ?
               <li>2- {t('service1-step2')}</li>
               : null
             }
             <p>*** {t('service1-step3')} ***</p>
+            </>
+            : null
+            }
             {id == 1 ?
               <>
                 <li>3- {t('service1-step4')}</li>
-
-                <li>4- {t('service1-step4')}</li>
-                <li>5- {t('service1-step5')}</li>
-                <li>6- {t('service1-step6')}</li>
+                <li>4- {t('service1-step5')}</li>
+                <li>5- {t('service1-step6')}</li>
               </> : id == 2 ?
                 <>
                   <li>3- {t('service1-step4')}</li>
-
                   <li>4- {t('service2-step5')}</li>
                   <li>5- {t('service2-step6')}</li>
                 </> : id == 3 ?
                   <>
-                    <li>2- {t('service1-step4')}</li>
-                    <li>3- {t('service3-step5')}</li>
-                    <li>4- {t('service3-step4')}</li>
+                    <li>3- {t('service1-step4')}</li>
+                    <li>4- {t('service3-step5')}</li>
+                    <li>5- {t('service3-step4')}</li>
                   </> : id == 4 ?
                     <>
                       <li>2- {t('service1-step4')}</li>
                       <li>3- {t('service3-step5')}</li>
-                    </> : null
+                    </> : id == 5 ?
+                      <>
+                        <li>5- {t('service1-step4')}</li>
+                        <li>6- {t('service5-step5')}</li>
+                        <li>7- {t('service5-step6')}</li>
+                        <li>8- {t('service5-step7')}</li>
+                        
+                        </> : id == 6 ?
+                        <>
+                          <li>2- {t('service1-step4')}</li>
+                          <li>3- {t('service3-step5')}</li>
+                        </> : id == 7 ?
+                        <>
+                          <li>1- {t('service3-step2')}</li>
+                          <li>2- {t('service1-step2')}</li>
+                          <li>3- {t('service7-step3')}</li>
+
+                          </> : id == 8 ?
+                          <>
+                            <li>1- {t('service3-step2')}</li>
+                            <li>2- {t('service8-step2')}</li>
+                            <li>3- {t('service8-step3')}</li>
+                            </>
+                          : null
+                          
+
+
+
 
             }
           </ul>
