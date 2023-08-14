@@ -89,7 +89,7 @@ const Instructons = () => {
                   <>
                     <li>2- {t('service1-step4')}</li>
                     <li>3- {t('service3-step5')}</li>
-                    <li>4- {t('service4-step4')}</li>
+                    <li>4- {t('service3-step4')}</li>
                   </> : null
             }
           </ul>
