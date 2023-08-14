@@ -62,36 +62,54 @@ const Instructons = () => {
         <div className="information-service_body">
           <h1>{t(`service${id}-name`)}</h1>
           <hr style={{ width: "60%" }} />
-          <h2 style={{ color: "#d3cccc" }}>{t(`service${id}-pay`)}</h2>
           <h2 style={localStorage.getItem('i18nextLng') == 'ar' ? { textAlign: 'right', width: "100%" } : { textAlign: 'left', width: "100%" }}>
             {t('service-steps')}
           </h2>
           <ul className='list-steps' style={localStorage.getItem('i18nextLng') == 'ar' ? { direction: 'rtl', width: '100%' } : { direction: 'ltr', width: '100%' }}>
-            <li>1- {t('service1-step1')}</li>
+            <li>1- {t(`service${id}-step1`)}</li>
             {id == 1 || id == 2 || id == 5 || id == 7 || id == 8 ?
               <li>2- {t('service1-step2')}</li>
               : null
             }
             <p>*** {t('service1-step3')} ***</p>
-            <li>3- {t('service1-step4')}</li>
-            <li>4- {t('service1-step5')}</li>
-            <li>5- {t('service1-step6')}</li>
+            {id == 1 ?
+              <>
+                <li>3- {t('service1-step4')}</li>
+
+                <li>4- {t('service1-step4')}</li>
+                <li>5- {t('service1-step5')}</li>
+                <li>6- {t('service1-step6')}</li>
+              </> : id == 2 ?
+                <>
+                  <li>3- {t('service1-step4')}</li>
+
+                  <li>4- {t('service2-step5')}</li>
+                  <li>5- {t('service2-step6')}</li>
+                </> : id == 3 ?
+                  <>
+                    <li>2- {t('service1-step4')}</li>
+                    <li>3- {t('service3-step5')}</li>
+                    <li>4- {t('service4-step4')}</li>
+                  </> : null
+            }
           </ul>
-          <h2 style={localStorage.getItem('i18nextLng') == 'ar' ? { textAlign: 'right', width: "100%"   ,  color: "#ad8700"} : { textAlign: 'left', width: "100%"  ,  color: "#ad8700"}}>
+          <h2 style={localStorage.getItem('i18nextLng') == 'ar' ? { textAlign: 'right', width: "100%", color: "#ad8700" } : { textAlign: 'left', width: "100%", color: "#ad8700" }}>
             {t('service-worning')}
           </h2>
-          <ul className='list-steps' style={localStorage.getItem('i18nextLng') == 'ar' ? { direction: 'rtl', width: '100%'  ,  color: "#ad8700"} : { direction: 'ltr', width: '100%' ,  color: "#ad8700" }}>
+          <ul className='list-steps' style={localStorage.getItem('i18nextLng') == 'ar' ? { direction: 'rtl', width: '100%', color: "#ad8700" } : { direction: 'ltr', width: '100%', color: "#ad8700" }}>
 
             <li>
-              1- {t(`service${id}-w.1`)}
+              1- {t(`service${id}-w1`)}
             </li>
             <li>
-              2- {t(`service${id}-w.2`)} 
+              2- {t(`service${id}-w2`)}
             </li>
 
 
 
           </ul>
+          <h2 style={{ color: "#d3cccc" }}>{t(`service${id}-pay`)}</h2>
+
           <button onClick={handleNext} className='sub-now'>{t('sub-now')}</button>
         </div>
       </div>
