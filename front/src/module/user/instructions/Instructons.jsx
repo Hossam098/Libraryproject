@@ -90,7 +90,12 @@ const Instructons = () => {
                     <li>2- {t('service1-step4')}</li>
                     <li>3- {t('service3-step5')}</li>
                     <li>4- {t('service3-step4')}</li>
-                  </> : null
+                  </> : id == 4 ?
+                    <>
+                      <li>2- {t('service1-step4')}</li>
+                      <li>3- {t('service3-step5')}</li>
+                    </> : null
+
             }
           </ul>
           <h2 style={localStorage.getItem('i18nextLng') == 'ar' ? { textAlign: 'right', width: "100%", color: "#ad8700" } : { textAlign: 'left', width: "100%", color: "#ad8700" }}>
