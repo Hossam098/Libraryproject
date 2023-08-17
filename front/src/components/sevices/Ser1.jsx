@@ -81,7 +81,7 @@ const Ser1 = () => {
         <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
             <div className="inst-container">
                     <img src="../assets/mini-logo.png" alt="" />
-                    <div className="information-service_body">
+                    <div className="information-service_body" style={{ width: '100%' }}>
                         <h1>{t('service1-name')}</h1>
                         <hr style={{ width: "60%" }} />
                         <img src={Serimg} alt="" className='ImageService' />

@@ -1,52 +1,51 @@
-.Cont-Serv{
-    width: 100%;
-    min-height: 63vh;
-    display: grid;
-    padding: 1rem 0;
-    background-color: #fff;
-}
-.Cont-Serv .ImageService{
-    width: 50%;
+.ImageService {
+    width: 50% !important;
     margin: auto;
 
 }
-.Cont-Serv .cont{
+
+.cont {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
 }
-.wait{
-    color:#fff;
+
+.wait {
+    color: #fff;
     background-color: #AD8700;
     padding: 1rem;
     border-radius: 15px;
     font-size: 1.1rem;
 }
-.contiue{
+
+.contiue {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: .6rem;
 }
-.contiue .code{
+
+.contiue .code {
     background-color: gray;
     padding: .5rem;
     width: 100%;
     text-align: center;
 }
-.contiue a{
-    background-color:  #003C70;
+
+.contiue a {
+    background-color: #003C70;
     padding: .5rem;
     width: 100%;
     text-align: center;
 }
+
 @media only screen and (max-width: 600px) {
-    .Cont-Serv .ImageService{
+    .ImageService {
         width: 70%;
         margin: auto;
-    
+
     }
-  }
+}

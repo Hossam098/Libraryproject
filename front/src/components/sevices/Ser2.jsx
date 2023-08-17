@@ -83,7 +83,7 @@ const Ser2 = () => {
             <div className="inst-container">
                 <div className="information-service">
                     <img src="../assets/mini-logo.png" alt="" />
-                    <div className="information-service_body">
+                    <div className="information-service_body" style={{ width: '100%' }}>
                         <h1>{t('service2-name')}</h1>
                         <hr style={{ width: "60%" }} />
                         <img src={Serimg} alt="" className='ImageService' />

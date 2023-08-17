@@ -70,7 +70,7 @@ const Service = () => {
     }
 
     return (
-        <div>
+        <div style={{backgroundColor:'#fff'}}>
             
             {/* <div className="Cont-Serv"> */}
                 {/* <img src={Serimg} alt="" className='ImageService'/> */}
