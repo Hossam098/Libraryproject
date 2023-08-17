@@ -51,8 +51,8 @@ const Myser = () => {
                     services.map((service) => {
                         return(
                         <div className="inst"><div className="inst-container">
-                            <div className="information-service">
-                                <div className="information-service_body" style={{ backgroundColor: '#fff', color: '#000' }}>
+                            <div className="information-service" style={{ width: '100%' }}>
+                                <div className="information-service_body" style={{ backgroundColor: '#fff', color: '#000' , width: '100%'}}>
                                     <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
                                     <hr style={{ width: "60%" }} />
                                     <img src={service.status == 1 ? codeIMG : img} alt="" style={{ width: '50%' }} />

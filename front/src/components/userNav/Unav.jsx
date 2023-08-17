@@ -27,6 +27,7 @@ const Unav = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [logged, setLogged] = useState('')
     const [services, setServices] = useState([])
+    const [user, setUser] = useState({})
 
     const menuRef = useRef(null);
 
@@ -56,6 +57,8 @@ const Unav = () => {
                 .then((res) => {
                     console.log(res)
                     setLogged(true)
+                    setUser(res.data.user)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -117,7 +120,7 @@ const Unav = () => {
                 {logged ? (<li>
                     <a href="#" onClick={()=>{toggleServices(); setShowMenu(false);}}>
                         <div className="profile-image">
-                            <img src={profileimg} alt="" />
+                            <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${user.img}`} alt="" />
                         </div>
                     </a>
                     {showServices && (

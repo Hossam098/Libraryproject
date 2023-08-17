@@ -56,8 +56,8 @@ const AllService = () => {
                                 </div>
                                 <hr />
                                 <ul className="service__list">
-                                    <li>
-                                        {/* <BiCheck className='service__list-icon' /> */}
+                                    <li className='li-article'>
+                                        <BiCheck className='service__list-icon' />
                                         <p>
                                         {getTranslatedServicePref(service)}
                                         </p>

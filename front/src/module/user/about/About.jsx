@@ -1,98 +1,74 @@
 import React from 'react'
 import './about.css'
 import Coplaints from '../../../components/complains/Coplaints'
+import { useTranslation } from 'react-i18next'
 
 const About = () => {
+
+  const { t } = useTranslation()
+
+
   return (
     <div className='about'>
       <div className='intro-text'>
-        <h1>عن المكتبة الرقمية</h1>
-        <h3>من المعرفة إلى الابتكار</h3>
-        <p>باهتمامٍ بالغٍ وخطواتٍ
-          مدروسةٍ تسعى جامعة الإسكندرية
-          للارتقاء بمكتبات الجامعة للقيام بدورها
-          الريادي في دعم المعرفة والبحث العلمي
-          ورفع كفاءة الخدمات المقدمة من خلالها.
-        </p>
+        <h1>{t('aboutus.title')}</h1>
+        <h3>{t('aboutus.h3')}</h3>
+        <h4>{t('aboutus.p')}</h4>
       </div>
       <section className='grid-3'>
         <div className="about-cont"
           style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' ,textAlign:"right"} : { direction: 'ltr' ,textAlign:"left"}}
         >
           <span></span>
-          <h2>من نحن</h2>
+          <h2>{t('aboutus.us')}</h2>
+          <p>{t('aboutus.us-p')}</p>
+        </div>
+        <div className="about-cont"
+          style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' ,textAlign:"right"} : { direction: 'ltr' ,textAlign:"left"}}
+        >
+          <span></span>
+          <h2>{t('aboutus.our-message')}</h2>
           <p>
-            أحد
-            مشاريع تطوير التعليم داخل الجامعة
-            بهدف ميكنة مكتبات الجامعة وتطوير
-            العمل بها واتاحة جميع
-            مقتنيات وخدمات المكتبات في صورة
-            رقمية، وذلك في إطار مشروع تطوير
-            التعليم العالي في
-            جمهورية مصر العربية، حيث تم بناء
-            اتحاد المكتبات الجامعية المصرية EULC
-            في بداية عام 2006م والذي تشرف عليه وحدة
-            المكتبات الرقمية بالمجلس الأعلى
-            للجامعات، كأحد الوحدات
-            التابعة لمركز الخدمات الإلكترونية
-            والمعرفية بالمجلس الأعلى للجامعات.
+            <span>{t('aboutus.our-vision')}:</span>
+            {t('aboutus.our-vision-p')}
+          </p>
+          <p>
+            <span>{t('aboutus.our-message')} : </span>
+            {t('aboutus.our-message-p')}
           </p>
         </div>
         <div className="about-cont"
           style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' ,textAlign:"right"} : { direction: 'ltr' ,textAlign:"left"}}
         >
           <span></span>
-          <h2>رسالتنا</h2>
-          <p>
-            <span>الرؤية:</span>
-            التطلع نحو ريادة عالمية في
-            إتاحة مصادر وخدمات المعلومات ودعم
-            مجتمع البحث العلمي بما يتناسب مع
-            متطلبات البيئة الرقمية الجديدة
-            وتحديات القرن الواحد والعشرين.
-          </p>
-          <p>
-            <span>الرسالة: </span>
-            التكامل مع مؤسسات
-            المعلومات بالتعليم العالي تحت مظلة المكتبة
-            الرقمية بالمجلس الأعلى للجامعات من خلال توحيد
-            سياسات العمل بالمكتبات الجامعية وتوفير
-            قناة موحدة لتقديم كافة الخدمات المعلوماتية
-            لمجتمع المستفيدين بمنظومة التعليم العالي.
-          </p>
-        </div>
-        <div className="about-cont"
-          style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' ,textAlign:"right"} : { direction: 'ltr' ,textAlign:"left"}}
-        >
-          <span></span>
-          <h2>أهدافنا</h2>
+          <h2>{t('aboutus.our-goals')}</h2>
           <ol>
             <li>
-              مشاركة المصادر الرقمية وإتاحتها.
+              {t('aboutus.our-goals-1')}
             </li>
             <li>
-              رقمنة المصادر الورقية التي تنتجها الجامعة.
+              {t('aboutus.our-goals-2')}
             </li>
             <li>
-              مساندة منظومة التعليم والبحث بالجامعة.
+              {t('aboutus.our-goals-3')}
             </li>
             <li>
-              الارتقاء بمستوى البحث العلمي بالجامعة.
+              {t('aboutus.our-goals-4')}
             </li>
             <li>
-              تعزيز النزاهة الأكاديمية وتجنب الانتحال.
+              {t('aboutus.our-goals-5')}
             </li>
             <li>
-              بناء بيئة رقمية تواكب التطورات التقنية.
+              {t('aboutus.our-goals-6')}
             </li>
             <li>
-              تعزيز الوعي المعلوماتي والوصول الحر.
+              {t('aboutus.our-goals-7')}
             </li>
             <li>
-              نشر ثقافة الاستدامة وربطها بالبحث.
+              {t('aboutus.our-goals-8')}
             </li>
             <li>
-              تنفيذ قرارات المجلس الأعلى المتعلقة بالمكتبات الرقمية.
+              {t('aboutus.our-goals-9')}
             </li>
           </ol>
         </div>

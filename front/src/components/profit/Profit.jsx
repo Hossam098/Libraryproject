@@ -8,11 +8,11 @@ import {ImOffice} from "react-icons/im"
 const Profit = () => {
   return (
     <div className='profit'>
-        <div className="intro-text">
-            <h1>
+        <div className="intro-text" style={{paddingTop: '0'}} >
+            <h1 className='title-profit' >
             مجتمع المستفيدين
             </h1>
-            <p>
+            <h2 style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.5', textAlign: 'center' , opacity: '0.8' , color: '#003c70'}}>
             تخدم المكتبة قطاع كبير من 
             المستفيدين كأعضاء
              هيئة التدريس وطلاب الدراسات العليا
@@ -21,7 +21,7 @@ const Profit = () => {
              مثل الجامعات الخاصة والأهلية والمعاهد
              التعليمية. وكذلك المجلات والدوريات 
             العلمية داخل الجامعة وخارجها. 
-            </p>
+            </h2>
         </div>
         <div className="icons-cont">
             <div className="icon-cont">                

@@ -1,25 +1,24 @@
 import React from 'react'
 import './coplains.css'
 import QR from '../../images/QR.png'
+import { useTranslation } from 'react-i18next'
 const Coplaints = () => {
+
+  const { t } = useTranslation()
+
   return (
-    <div className='contnaier'>
+    <div className='contnaier' style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' ,textAlign:"right"} : { direction: 'ltr' ,textAlign:"left"}}>
         <h2>
-            هل لديك استفسار أو شكوى أو اقتراح؟  
+            {t('complains.title')} 
         </h2>
         <div className="flex-row">
             <p>
-            في حال إذا ما كان
-             لديك استفسار أو شكوى أو حتى اقتراح 
-            لتحسين العمل في وحدة المكتبة الرقمية، 
-            وذلك بهدف تحسين العمل في الوحدة
-             وتطوير الأداء وتقويمه وذلك للوصول
-             إلى مستوى خدمة نموذجي ومتميز.
+                {t('complains.p')}
             </p>
             <img src={QR} alt="" className='QR'/>
         </div>
         <button className="c-button">
-            أضغط هنا    
+            {t('click-here')}   
         </button>
         <div className="icons-cont">
             

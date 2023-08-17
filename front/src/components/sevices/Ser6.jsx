@@ -87,7 +87,7 @@ const Ser6 = () => {
 
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('service1-step1')}
+                                {t('letter')}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image">
                                     <BiImageAdd className='img-icom' />

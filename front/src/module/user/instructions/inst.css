@@ -20,10 +20,11 @@
 .inst{
     width: 100%;
     display: grid;
-    /* background-color: #fff; */
-    /* justify-content: center; */
+    background-color: #fff;
+    justify-content: center;
     justify-content: center;
     align-items: center;
+    justify-items: center;
 }
 .inst img{
     width: 200px;

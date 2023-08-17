@@ -12,9 +12,11 @@
 }
 
 .intro-text h1,
-.intro-text p,
+.intro-text h4,
+.intro-text h2 ,
 .intro-text h3 {
     text-align: center;
+    padding: .3rem 0;
 }
 
 .about-cont {
@@ -43,18 +45,20 @@
 .about-cont span {
     color: #003C70;
     font-weight: bold;
+    font-size: 1.3rem;
 }
 
 .about-cont p,
 .about ol {
     margin: 1rem 0;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     line-height: 2rem;
 }
 
 .about ol li {
     list-style: decimal;
     list-style-position: inside;
+    font-size: 1.2rem;
 }
 
 .about {

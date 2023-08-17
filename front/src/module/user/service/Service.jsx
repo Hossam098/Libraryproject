@@ -72,10 +72,10 @@ const Service = () => {
     return (
         <div>
             
-            <div className="Cont-Serv">
+            {/* <div className="Cont-Serv"> */}
                 {/* <img src={Serimg} alt="" className='ImageService'/> */}
                 {Service(id)}
-            </div>
+            {/* </div> */}
             {/* <Footer /> */}
         </div>
     )

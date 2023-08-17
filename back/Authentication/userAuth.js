@@ -145,7 +145,7 @@ userAuth.get('/check',
             const sqlSelect = "SELECT * FROM users WHERE id = ?";
             const result = await query(sqlSelect, [req.id]);
             if (result.length > 0) {
-                return res.status(200).json({ login: true });
+                return res.status(200).json({ login: true , user: result[0]});
             } else {
                 error.push("User doesn't exist");
                 return res.status(400).json({ message: error });

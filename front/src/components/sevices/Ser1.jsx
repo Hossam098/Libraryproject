@@ -80,7 +80,6 @@ const Ser1 = () => {
         <div className="inst">
         <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
             <div className="inst-container">
-                <div className="information-service">
                     <img src="../assets/mini-logo.png" alt="" />
                     <div className="information-service_body">
                         <h1>{t('service1-name')}</h1>
@@ -103,7 +102,7 @@ const Ser1 = () => {
 
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('service1-step1')}
+                                    {t('letter')}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image">
                                     <BiImageAdd className='img-icom' />
@@ -128,39 +127,7 @@ const Ser1 = () => {
 
                 </div>
             </div>
-            </div>
-            {/* <div className="inputt">
-                <select
-                    name=""
-                    id=""
-                    value={data.level}
-                    onChange={(e) => { setData({ ...data, level: e.target.value }) }}
-                >
-                    <option value="">level</option>
-                    <option value="0">master's</option>
-                    <option value="1">doctor</option>
-                </select>
-                <div className="select-img">
-                    <span className="title-upload">
-                        {t('service1-step1')}
-                    </span>
-                    <label className='upload-image' htmlFor="upload-image">
-                        <BiImageAdd className='img-icom' />
-                        <p>add image</p>
-                    </label>
-                    <input type="file"
-                        hidden
-                        id='upload-image'
-                        name='upload-image'
-                        onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
-                    />
-                </div>
-            </div>
-            <input
-                type="submit"
-                value="submit now"
-                onClick={() => handleSubmit()}
-            /> */}
+            
         </div>
     )
 }

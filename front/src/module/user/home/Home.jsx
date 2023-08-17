@@ -77,7 +77,7 @@ const Home = () => {
                                 </div>
                                 <hr />
                                 <ul className="service__list">
-                                    <li>
+                                    <li className='li-article'>
                                         <BiCheck className='service__list-icon' />
                                         <p>
                                             {getTranslatedServicePref(service)}
@@ -88,6 +88,7 @@ const Home = () => {
                                     </li>
                                 </ul>
                             </article>
+
                         )
                     })
                     }
@@ -97,6 +98,7 @@ const Home = () => {
                 <button className='more-Services' onClick={handleNavegate}>{t('more')}</button>
 
             </section>
+            <hr style={{width: '90%', margin: 'auto'}}/>
             <Profit/>
             <Coplaints/>
             

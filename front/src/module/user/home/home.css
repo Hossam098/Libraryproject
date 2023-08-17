@@ -22,7 +22,7 @@ main{
     border-radius: 2rem;
     background-color: #fff;
     /* border: 1px solid #4db5ff; */
-    height: fit-content;
+    /* height: fit-content; */
     transition: all 400ms ease;
     box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.2);
     animation: fade-iin .7s ease-in-out;
@@ -54,18 +54,21 @@ main{
 }
 .service__head h1{
     color: #000;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-align: center;
 }
 .service__list{
     padding: 2rem;
 }
 
-.service__list li{
-    display: flex;
+.service__list .li-article{
+    display: grid;
     gap: 1rem;
     margin-bottom: 0.8rem;
     align-items: center;
+    /* flex-direction: row; */
+    grid-template-columns: 5% 95%;
+    justify-items: center;
     
 }
 .bttn{
@@ -95,7 +98,7 @@ main{
     border-radius: 50%;
 }
 .service__list p{
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #000;
 }
 .enroll{

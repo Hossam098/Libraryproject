@@ -64,6 +64,7 @@
     "level": "Level",
     "master": "Master",
     "phd": "PhD",
+    "letter" : "The letter addressed to the director of the digital library ",
     "click-here": "Click here",
     "edit-btn": "Edit personal data",
     "ser-reged": "Services have been registered",
@@ -115,9 +116,50 @@
     
     
     "service-worning" : "Important note",
-    "service1-w1" : "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him via e-mail within three working days and printed for signature and seal by the Vice Dean for Postgraduate Studies in the college he is affiliated with.",
-    "service1-w2": "For any other inquiries, please contact us via the complaints link on the home page."
-    
+    "service1-w1" : "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him on the website within 3 working days and printed for signature and seal by the Vice Dean for Postgraduate Studies in the college he is affiliated with.",
+    "service1-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
+    "service2-w1" : "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him on the website within 7 working days (Fridays, Saturdays and public holidays are not counted) and printed for signature and seal by the Vice Dean for Postgraduate Studies in the college he is affiliated with.",
+    "service2-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
+    "service3-w1" : "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him on the website within 3 working days .",
+    "service3-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
+    "service4-w1" : "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him on the website within 5 working days .",
+    "service4-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
+    "service5-w1" : "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him on the website within 15 to 20 working days and printed for signature and seal by the Vice Dean for Postgraduate Studies in the college he is affiliated with.",
+    "service5-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
+    "service6-w1" : "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him on the website within 5 working days .",
+    "service6-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
+    "service7-w1" : "There is no need for the researcher to go to the digital library headquarters, as the statement will be sent to him on the website within 3 working days, printed and sent to the digital library headquarters for approval with the digital library seal.",
+    "service7-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
+    "service8-w1": "There is no need for the researcher to go to the digital library headquarters, as all details will be sent to the website." ,
+    "service8-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
+
+    "aboutus" : {
+        "title": "About the digital library",
+        "h3" : "From knowledge to innovation",
+        "p" : "Great interest and deliberate steps Helwan University seeks to upgrade the university's libraries to play its pioneering role in supporting knowledge and scientific research and raising the efficiency of the services provided through it.",
+        "us" : "who are we",
+        "us-p" : "One of the education development projects within the university with the aim of automating university libraries, developing their work, and making all library holdings and services available in digital form, within the framework of the Higher Education Development Project in the Arab Republic of Egypt.",
+        "our-message" : "Our message",
+        "our-message-p" : "Integration with information institutions in higher education under the umbrella of the digital library at the Supreme Council of Universities by unifying work policies in university libraries and providing a unified channel to provide all information services to the beneficiaries of the higher education system.",
+        "our-vision" : "Our vision",
+        "our-vision-p" : "Aspiration towards global leadership in providing information resources and services and supporting the scientific research community in line with the requirements of the new digital environment and the challenges of the twenty-first century.",
+        "our-goals" : "Our goals",
+        "our-goals-1" : "Share and make available digital resources.",
+        "our-goals-2" : "Digitizing paper resources produced by the university.",
+        "our-goals-3" : "Supporting the education and research system at the university.",
+        "our-goals-4" : "Upgrading the level of scientific research at the university.",
+        "our-goals-5" : "Promote academic integrity and avoid plagiarism. ",
+        "our-goals-6" : "Building a digital environment keeping pace with technological developments.",
+        "our-goals-7" : "Promoting informational awareness and open access.",
+        "our-goals-8" : "Spreading the culture of sustainability and linking it to research.",
+        "our-goals-9" : "Implementation of the decisions of the Supreme Council related to digital libraries."    
+
+    },
+
+    "complains": {
+        "title": "Do you have an inquiry, complaint or suggestion?",
+        "p": "In the event that you have an inquiry, complaint, or even a suggestion to improve the work in the digital library unit, with the aim of improving the work in the unit and developing and evaluating performance in order to reach an exemplary and distinguished level of service."
+    }
 
     
 }

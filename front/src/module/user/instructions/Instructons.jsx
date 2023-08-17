@@ -123,15 +123,15 @@ const Instructons = () => {
                           <li>3- {t('service3-step5')}</li>
                         </> : id == 7 ?
                         <>
-                          <li>1- {t('service3-step2')}</li>
-                          <li>2- {t('service1-step2')}</li>
-                          <li>3- {t('service7-step3')}</li>
+                          {/* <li>1- {t('service3-step2')}</li> */}
+                          <li>1- {t('service1-step2')}</li>
+                          <li>2- {t('service7-step3')}</li>
+                          <li>3- {t('service7-step4')}</li>
 
                           </> : id == 8 ?
                           <>
-                            <li>1- {t('service3-step2')}</li>
-                            <li>2- {t('service8-step2')}</li>
-                            <li>3- {t('service8-step3')}</li>
+                            <li>1- {t('service8-step2')}</li>
+                            <li>2- {t('service8-step3')}</li>
                             </>
                           : null
                           
@@ -156,7 +156,10 @@ const Instructons = () => {
 
 
           </ul>
+          {id == 1 || id == 2 || id == 3 || id == 4 || id == 5 || id == 6 ?
           <h2 style={{ color: "#d3cccc" }}>{t(`service${id}-pay`)}</h2>
+          : null
+}
 
           <button onClick={handleNext} className='sub-now'>{t('sub-now')}</button>
         </div>

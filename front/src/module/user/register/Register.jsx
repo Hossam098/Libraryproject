@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 const Register = () => {
 
   const navigate = useNavigate();
+  const [logged, setLogged] = useState(true);
   const [t] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -46,6 +47,17 @@ const Register = () => {
   
   
   useEffect(() => {
+    axios.get(`${API_URL}/auth/check`, { withCredentials: true })
+      .then((res) => {
+        console.log(res)
+        setLogged(true)
+        navigate('/')
+      })
+      .catch((err) => {
+        console.log(err)
+        setLogged(false)
+        
+      })
     if (Object.keys(errors).length === 0 && isSubmitting) {
       axios.defaults.withCredentials = true;
       axios.post(`${API_URL}/auth/register`, user, { withCredentials: true })
