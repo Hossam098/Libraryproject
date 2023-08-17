@@ -8,6 +8,7 @@ import query from './Database/DBConnection.js';
 import user from './Router/userCRUD.js';
 import userAuth from './Authentication/userAuth.js';
 import serPayment from './Router/serPayment.js';
+import serviceStepTwo from './Router/serviceStepTwo.js';
 
 const app = express();
 app.use(express.json());
@@ -41,6 +42,8 @@ app.use(bodyParser.json());
 app.use(express.static('public/imgs'));
 
 app.use('', serPayment);
+app.use('', serviceStepTwo);
+
 
 app.use('/auth', userAuth);
 app.use('/user', user);

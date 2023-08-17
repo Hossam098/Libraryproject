@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { BiImageAdd } from 'react-icons/bi'
-import './ser.css'
 import axios from 'axios'
 import { API_URL } from '../../config'
 import { t } from 'i18next'

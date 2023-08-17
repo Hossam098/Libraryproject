@@ -14,6 +14,8 @@ import Myser from "./module/user/myser/Myser.jsx";
 import AllService from "./module/user/AllService/AllService.jsx";
 import About from "./module/user/about/About.jsx"
 import Contact from "./module/user/contact/Contact.jsx"
+import ServiceStepTwo from "./module/user/serviceStepTwo/ServiceStepTwo.jsx";
+
 
   
   const Router = createBrowserRouter([
@@ -52,6 +54,10 @@ import Contact from "./module/user/contact/Contact.jsx"
           {
             path:"/service/:id",
             element: <Service/>
+          },
+          {
+            path:"/serviceStepTwo/:id/:id2",
+            element: <ServiceStepTwo/>
           },
           {
             path:"/instructions/:id",

@@ -75,45 +75,45 @@ const Ser6 = () => {
 
     return (
         <div className="inst">
-        <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
-            <div className="inst-container">
-                <div className="information-service">
-                    <img src="../assets/mini-logo.png" alt="" />
-                    <div className="information-service_body" style={{ width: '100%' }}>
-                        <h1>{t('service4-name')}</h1>
-                        <hr style={{ width: "60%" }} />
-                        <img src={Serimg} alt="" className='ImageService' />
+            <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
+                <div className="inst-container">
+                    <div className="information-service">
+                        <img src="../assets/mini-logo.png" alt="" />
+                        <div className="information-service_body"  >
+                            <h1>{t('service4-name')}</h1>
+                            <hr style={{ width: "60%" }} />
+                            <img src={Serimg} alt="" className='ImageService' />
 
-                        <div className="inputt" style={{ gridTemplateColumns: '1fr' }}>
+                            <div className="inputt" style={{ gridTemplateColumns: '1fr' }}>
 
-                            <div className="select-img">
-                                <span className="title-upload">
-                                {t('letter')}
-                                </span>
-                                <label className='upload-image' htmlFor="upload-image">
-                                    <BiImageAdd className='img-icom' />
-                                    <p>{t('click-here')}</p>
-                                </label>
-                                <input type="file"
-                                    hidden
-                                    id='upload-image'
-                                    name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
-                                />
-                                {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t('letter')}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image">
+                                        <BiImageAdd className='img-icom' />
+                                        <p>{t('click-here')}</p>
+                                    </label>
+                                    <input type="file"
+                                        hidden
+                                        id='upload-image'
+                                        name='upload-image'
+                                        onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                    />
+                                    {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                </div>
                             </div>
+                            {error != '' && <h2 style={{ color: '#AD8700' }}>
+                                **** {error} ****
+                            </h2>
+                            }
+
+                            <button onClick={handleSubmit} className='sub-now'>{t('pay-code')}</button>
                         </div>
-                        {error != '' && <h2 style={{ color: '#AD8700' }}>
-                            **** {error} ****
-                        </h2>
-                        }
 
-                        <button onClick={handleSubmit} className='sub-now'>{t('pay-code')}</button>
                     </div>
-
                 </div>
-            </div>
-            {/* <div className="inputt">
+                {/* <div className="inputt">
                 <select
                     name=""
                     id=""
@@ -145,7 +145,7 @@ const Ser6 = () => {
                 value="submit now"
                 onClick={() => handleSubmit()}
             /> */}
-        </div>
+            </div>
         </div>
     )
 }

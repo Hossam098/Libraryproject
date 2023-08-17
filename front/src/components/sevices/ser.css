@@ -7,7 +7,6 @@
 
 .inputt {
     width: 80%;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
@@ -27,7 +26,6 @@
     /* border: 2px #AD8700 dashed; */
     padding: .5rem;
     width: 350px;
-    height: 120px;
     display: grid;
     place-content: center;
 
@@ -44,9 +42,7 @@
     font-size: 1.3rem;
     color: #AD8700;
     font-weight: 600;
-    width: 100%;
-    text-align: center;
-    margin: 0 10px 
+   
 }
 
 .upload-image .img-icom {

@@ -326,7 +326,7 @@ serPayment.get('/getallwaiting',
                 return res.status(400).json({ message: error });
             }
 
-            const sqlSelect = "SELECT submit.* , services.* FROM submit INNER JOIN services ON submit.service_id = services.id WHERE submit.user_id = ? AND submit.status = 0";
+            const sqlSelect = "SELECT submit.* , services.* FROM submit INNER JOIN services ON submit.service_id = services.id WHERE submit.user_id = ? AND submit.status = 0 OR submit.status = 1 OR submit.status = 2 OR submit.status = 3";
             const result = await query(sqlSelect, req.id);
 
             if (result.length > 0) {

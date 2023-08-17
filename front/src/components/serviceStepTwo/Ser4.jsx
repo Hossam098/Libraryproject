@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { BiImageAdd } from 'react-icons/bi'
-import './ser.css'
 import axios from 'axios'
 import { API_URL } from '../../config'
 import { t } from 'i18next'
@@ -10,15 +9,13 @@ import { useTranslation } from 'react-i18next';
 import Serimg from '../../images/serIMG.png'
 
 
-const Ser2 = () => {
+const Ser4 = () => {
     const { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
-
     useEffect(() => {
         axios.defaults.withCredentials = true
-
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
@@ -35,7 +32,6 @@ const Ser2 = () => {
     }, [])
 
     const [data, setData] = useState({
-        level: '',
         photo_college_letter: '',
         service_id: id
     })
@@ -44,7 +40,6 @@ const Ser2 = () => {
         axios.defaults.withCredentials = true
         console.log(data)
         const formData = new FormData();
-        formData.append('level', data.level);
         formData.append('photo_college_letter', data.photo_college_letter);
         formData.append('service_id', data.service_id);
 
@@ -84,23 +79,11 @@ const Ser2 = () => {
                     <div className="information-service">
                         <img src="../assets/mini-logo.png" alt="" />
                         <div className="information-service_body"  >
-                            <h1>{t('service2-name')}</h1>
+                            <h1>{t('service4-name')}</h1>
                             <hr style={{ width: "60%" }} />
                             <img src={Serimg} alt="" className='ImageService' />
 
-                            <div className="inputt">
-
-                                <select
-                                    name=""
-                                    id=""
-                                    value={data.level}
-                                    onChange={(e) => { setData({ ...data, level: e.target.value }) }}
-                                >
-                                    <option value="">{t('level')}</option>
-                                    <option value="0">{t('master')}</option>
-                                    <option value="1">{t('phd')}</option>
-                                </select>
-
+                            <div className="inputt" style={{ gridTemplateColumns: '1fr' }}>
 
                                 <div className="select-img">
                                     <span className="title-upload">
@@ -129,8 +112,7 @@ const Ser2 = () => {
 
                     </div>
                 </div>
-            </div>
-            {/* <div className="inputt">
+                {/* <div className="inputt">
                 <select
                     name=""
                     id=""
@@ -162,8 +144,9 @@ const Ser2 = () => {
                 value="submit now"
                 onClick={() => handleSubmit()}
             /> */}
+            </div>
         </div>
     )
 }
 
-export default Ser2
+export default Ser4
