@@ -31,6 +31,16 @@
 
 }
 
+.information-service_body .img-btn {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5rem;
+    justify-content: center;
+}
+
+
+
 .upload-image {
     display: flex;
     flex-direction: column;

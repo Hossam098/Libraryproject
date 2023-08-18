@@ -52,6 +52,7 @@
     "profile": "Profile",
     "logout": "Logout",
     "sub-now" : "Register now",
+    "submit" : "Send",
     "register-link": "Don't have an account ? Register now...",
     "login-link": "Already have an account ? Login now...",
     "lib": "The Digital library",
@@ -169,6 +170,7 @@
         "translation" : "Translation paper for the research plan"
     },
     "service1-step-two-err": {
+        "level" : "You must choose the level of education",
         "letter" : "You must upload the letter addressed to the director of the digital library",
         "research" : "You must upload the research outline in Arabic PDF",
         "research-en" : "Research outline in English PDF (if exist)",

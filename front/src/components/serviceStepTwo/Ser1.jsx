@@ -124,9 +124,12 @@ const Ser1 = () => {
                     <div className="information-service_body">
                         <h1>{t('service1-name')}</h1>
                         <hr style={{ width: "60%" }} />
+                        <div style={{ display: 'flex'}}>
+                            <div className="img-btn">
                         <img src={Serimg} alt="" className='ImageService' />
-
-                        <div className="inputt" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+                        <button onClick={handleSubmit} className='sub-now'>{t('submet')}</button>
+                        </div>
+                        <div className="inputt" >
 
                             <div className="select-img">
                                 <span className="title-upload">
@@ -298,8 +301,7 @@ const Ser1 = () => {
                             </div>
                         </div>
                         {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
-
-                        <button onClick={handleSubmit} className='sub-now'>{t('pay-code')}</button>
+                        </div>
                     </div>
 
                 </div>

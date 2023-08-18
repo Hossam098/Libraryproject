@@ -17,7 +17,7 @@
     border-radius: 15px;
     font-size: 1.5rem;
 } */
-.inst{
+.inst {
     width: 100%;
     display: grid;
     justify-content: center;
@@ -25,11 +25,13 @@
     align-items: center;
     justify-items: center;
 }
-.inst img{
+
+.inst img {
     width: 200px;
 
 }
-.inst-container{
+
+.inst-container {
 
     width: 100%;
     display: flex;
@@ -37,7 +39,8 @@
     align-items: center;
     gap: 1rem;
 }
-.inst  .information-service_body{
+
+.inst .information-service_body {
     background: #003C70;
     color: #fff;
     width: 90%;
@@ -49,19 +52,20 @@
     gap: 2rem;
     border-radius: 10px;
     padding: 1rem;
-    margin:  1rem auto;
+    margin: 1rem auto;
     box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.3);
     animation: fade-iin .7s ease-in-out;
 
 }
-.inst h1{
+
+.inst h1 {
     font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
     margin-top: 1rem;
 }
 
-.inst .information-service{
+.inst .information-service {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -113,7 +117,7 @@
     margin-top: 1rem;
 }
 */
-.inst .list-steps{
+.inst .list-steps {
     width: 100%;
     font-size: 1.5rem;
     display: flex;
@@ -123,18 +127,18 @@
     padding: 0 5rem;
 }
 
-  .sub-now{
+.sub-now {
     width: 70%;
     padding: 1rem;
     border-radius: 10px;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     background-color: #AD8700;
     color: #fff;
     cursor: pointer;
 }
 
- .sub-now:hover{
+.sub-now:hover {
     box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.2);
     transform: translateY(-1px);
     transition: all 0.3s ease-in-out;
@@ -142,7 +146,7 @@
 }
 
 @media (max-width:910px) {
-    .inst  .information-service_body{
+    .inst .information-service_body {
         width: 90%;
     }
-} 
+}
