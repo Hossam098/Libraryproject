@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Serimg from '../../images/serIMG.png'
+import { AiFillCloseCircle } from 'react-icons/ai'
+import PopupErrorMsg from '../../components/error/PopupErrorMsg'
 
 
 const Ser1 = () => {
@@ -16,6 +18,7 @@ const Ser1 = () => {
     const { t } = useTranslation();
     const [error, setError] = useState('')
     useEffect(() => {
+
         axios.defaults.withCredentials = true
 
         try {
@@ -27,14 +30,7 @@ const Ser1 = () => {
                     console.log(err)
                     navigate('/login')
                 })
-            axios.post(`${API_URL}/StepTwo/${id}/${id2}`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res)
-                })
-                .catch((err) => {
-                    console.log(err)
-                    navigate('/login')
-                })
+            
 
         } catch (err) {
             console.log(err)
@@ -42,25 +38,63 @@ const Ser1 = () => {
     }, [])
 
     const [data, setData] = useState({
-        level: '',
+        payment_photo: '',
         photo_college_letter: '',
-        service_id: id
+        research: '',
+        research_en: '',
+        research_word: '',
+        research_word_en: '',
+        translation: '',
+        service_id: id,
+        application_id: id2,
     })
-
+    const handleCloseError = () => {
+        setError('')
+      };
     const handleSubmit = () => {
         axios.defaults.withCredentials = true
         console.log(data)
+        if (!data.payment_photo) {
+            setError(t(`service${id}-step-two-err.payment-photo`))
+            return
+        }
+        if (!data.photo_college_letter) {
+            setError(t(`service${id}-step-two-err.letter`))
+            return
+        }
+        if (!data.research) {
+            setError(t(`service${id}-step-two-err.research`))
+            return
+        }
+        if (!data.research_word) {
+            setError(t(`service${id}-step-two-err.research-word`))
+            return
+        }
+        if (!data.translation) {
+            setError(t(`service${id}-step-two-err.translation`))
+            return
+        }
+
+        
+
         const formData = new FormData();
-        formData.append('level', data.level);
-        formData.append('photo_college_letter', data.photo_college_letter);
-        formData.append('service_id', data.service_id);
+        formData.append('payment_photo', data.payment_photo)
+        formData.append('photo_college_letter', data.photo_college_letter)
+        formData.append('research', data.research)
+        formData.append('research_en', data.research_en)
+        formData.append('research_word', data.research_word)
+        formData.append('research_word_en', data.research_word_en)
+        formData.append('translation', data.translation)
+        formData.append('service_id', data.service_id)
+        formData.append('application_id', data.application_id)
+
 
         try {
-            axios.post(`${API_URL}/payment`, formData, { withCredentials: true })
+            axios.put(`${API_URL}/StepTwoReg/${id}/${id2}`, formData, { withCredentials: true })
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/pay/${id}`)
+                    navigate(`/Myservices`)
                 })
                 .catch((err) => {
                     console.log(err.response.data.message[0])
@@ -80,129 +114,197 @@ const Ser1 = () => {
     }
 
 
-    const handleNext = () => {
-    }
+
 
     return (
         <div className="inst">
-        <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
-            <div className="inst-container">
+            <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
+                <div className="inst-container">
                     <img src="../assets/mini-logo.png" alt="" />
                     <div className="information-service_body">
                         <h1>{t('service1-name')}</h1>
                         <hr style={{ width: "60%" }} />
                         <img src={Serimg} alt="" className='ImageService' />
 
-                        <div className="inputt">
+                        <div className="inputt" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
 
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('letter')}
+                                {t(`service${id}-step-two.payment-photo`)}
                                 </span>
-                                <label className='upload-image' htmlFor="upload-image">
+                                <label className='upload-image' htmlFor="upload-image0">
                                     <BiImageAdd className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
                                     hidden
-                                    id='upload-image'
-                                    name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                    id='upload-image0'
+                                    name='upload-image0'
+                                    onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
                                 />
-                                {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                {data.payment_photo &&
+                                    <div>
+                                        <p className='upload-image value'>{data.payment_photo.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, payment_photo: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
                             </div>
                             <div className="select-img">
                                 <span className="title-upload">
                                     {t('letter')}
                                 </span>
-                                <label className='upload-image' htmlFor="upload-image">
+                                <label className='upload-image' htmlFor="upload-image1">
                                     <BiImageAdd className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
                                     hidden
-                                    id='upload-image'
-                                    name='upload-image'
+                                    id='upload-image1'
+                                    name='upload-image1'
                                     onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
                                 />
-                                {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                {data.photo_college_letter &&
+                                    <div>
+                                        <p className='upload-image value'>{data.photo_college_letter.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
                             </div>
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('letter')}
+                                    {t(`service${id}-step-two.research`)}
                                 </span>
-                                <label className='upload-image' htmlFor="upload-image">
+                                <label className='upload-image' htmlFor="upload-image2">
                                     <BiImageAdd className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
                                     hidden
-                                    id='upload-image'
-                                    name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                    id='upload-image2'
+                                    name='upload-image2'
+                                    onChange={(e) => { setData({ ...data, research: e.target.files[0] })}}
                                 />
-                                {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                {data.research &&
+                                    <div>
+                                        <p className='upload-image value'>{data.research.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, research: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
                             </div>
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('letter')}
+                                    {t(`service${id}-step-two.research-en`)}
                                 </span>
-                                <label className='upload-image' htmlFor="upload-image">
+                                <label className='upload-image' htmlFor="upload-image3">
                                     <BiImageAdd className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
                                     hidden
-                                    id='upload-image'
-                                    name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                    id='upload-image3'
+                                    name='upload-image3'
+                                    onChange={(e) => { setData({ ...data, research_en: e.target.files[0] })}}
                                 />
-                                {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                {data.research_en &&
+                                    <div>
+                                        <p className='upload-image value'>{data.research_en.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, research_en: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
                             </div>
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('letter')}
+                                    {t(`service${id}-step-two.research-word`)}
                                 </span>
-                                <label className='upload-image' htmlFor="upload-image">
+                                <label className='upload-image' htmlFor="upload-image4">
                                     <BiImageAdd className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
                                     hidden
-                                    id='upload-image'
-                                    name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                    id='upload-image4'
+                                    name='upload-image4'
+                                    onChange={(e) => { setData({ ...data, research_word: e.target.files[0] })}}
                                 />
-                                {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                {data.research_word &&
+                                    <div>
+                                        <p className='upload-image value'>{data.research_word.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, research_word: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
                             </div>
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('letter')}
+                                    {t(`service${id}-step-two.research-word-en`)}
                                 </span>
-                                <label className='upload-image' htmlFor="upload-image">
+                                <label className='upload-image' htmlFor="upload-image5">
                                     <BiImageAdd className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
                                     hidden
-                                    id='upload-image'
-                                    name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                    id='upload-image5'
+                                    name='upload-image5'
+                                    onChange={(e) => { setData({ ...data, research_word_en: e.target.files[0] })}}
                                 />
-                                {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                {data.research_word_en &&
+                                    <div>
+                                        <p className='upload-image value'>{data.research_word_en.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, research_word_en: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
+                            </div>
+                            <div className="select-img">
+                                <span className="title-upload">
+                                    {t(`service${id}-step-two.translation`)}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image6">
+                                    <BiImageAdd className='img-icom' />
+                                    <p>{t('click-here')}</p>
+                                </label>
+                                <input type="file"
+                                    hidden
+                                    id='upload-image6'
+                                    name='upload-image6'
+                                    onChange={(e) => { setData({ ...data, translation: e.target.files[0] })}}
+                                />
+                                {data.translation &&
+                                    <div>
+                                        <p className='upload-image value'>{data.translation.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, translation: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
                             </div>
                         </div>
-                        {error != '' && <h2 style={{ color: '#AD8700' }}>
-                            **** {error} ****
-                        </h2>
-                        }
+                        {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
 
                         <button onClick={handleSubmit} className='sub-now'>{t('pay-code')}</button>
                     </div>
 
                 </div>
             </div>
-            
+
         </div>
     )
 }

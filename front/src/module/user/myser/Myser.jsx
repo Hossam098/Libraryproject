@@ -42,6 +42,8 @@ const Myser = () => {
         return currentLanguage == 'en' ? service.service_name : service.service_name_ar;
     };
 
+
+
     return (
         <div>
 
@@ -49,6 +51,25 @@ const Myser = () => {
                 <h2>{t("waiting-list")}</h2>
                 {
                     services.map((service) => {
+                        let type = 0
+                        if (service.ser_reg != null) {
+                            type = service.ser_reg
+                        }else if(service.ser_formation){
+                            type = service.ser_formation
+                        }else if(service.ser_personal != null){
+                            type = service.ser_personal
+                        }else if(service.ser_magazine != null){
+                            type = service.ser_magazine
+                        }else if(service.ser_upgrade  != null){
+                            type = service.ser_upgrade
+                        }else if(service.ser_best  != null){
+                            type = service.ser_best
+                        }else if(service.ser_grant   != null){
+                            type = service.ser_grant
+                        }else if(service.ser_knowledge   != null){
+                            type = service.ser_knowledge
+                        }
+
                         return (
                             <div className="inst"><div className="inst-container">
                                 <div className="information-service"  >
@@ -69,7 +90,10 @@ const Myser = () => {
                                                         <div className="code wait-txt">
                                                             {service.payment_code}
                                                         </div>
-                                                        <Link to className="waitbtn-edit">cotinue</Link>
+                                                        
+                                                        <Link to={`/serviceStepTwo/${service.id}/${type} `}
+                                                         className="waitbtn-edit">cotinue
+                                                        </Link>
                                                     </div>
                                                 </>
                                                 : service.status == 2 ?

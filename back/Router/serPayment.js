@@ -313,6 +313,7 @@ serPayment.post('/payment',
     }
 );
 
+
 serPayment.get('/getallwaiting',
     checkUser,
     async (req, res) => {

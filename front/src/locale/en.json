@@ -159,6 +159,22 @@
     "complains": {
         "title": "Do you have an inquiry, complaint or suggestion?",
         "p": "In the event that you have an inquiry, complaint, or even a suggestion to improve the work in the digital library unit, with the aim of improving the work in the unit and developing and evaluating performance in order to reach an exemplary and distinguished level of service."
+    },
+
+    "service1-step-two": {
+        "research" : "Research outline in Arabic PDF",
+        "research-en" : "Research outline in English PDF (if exist)",
+        "research-word" : "Research outline in Arabic Word",
+        "research-word-en" : "Research outline in English Word (if exist)",
+        "translation" : "Translation paper for the research plan"
+    },
+    "service1-step-two-err": {
+        "letter" : "You must upload the letter addressed to the director of the digital library",
+        "research" : "You must upload the research outline in Arabic PDF",
+        "research-en" : "Research outline in English PDF (if exist)",
+        "research-word" : "You must upload the research outline in Arabic Word",
+        "research-word-en" : "Research outline in English Word (if exist)",
+        "translation" : "You must upload the translation paper for the research plan"
     }
 
     

@@ -109,7 +109,7 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
     height: 100%;
     color: #fff;
     padding: 0 1rem;
