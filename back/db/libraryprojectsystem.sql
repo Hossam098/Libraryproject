@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 12, 2023 at 02:29 AM
+-- Generation Time: Aug 19, 2023 at 02:08 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.2
 
@@ -30,7 +30,6 @@ SET time_zone = "+00:00";
 CREATE TABLE `best_message_service` (
   `id` int(11) NOT NULL,
   `photo_college_letter` varchar(255) NOT NULL,
-  `payment_code` int(11) DEFAULT NULL,
   `research_number` tinyint(1) NOT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL,
   `research1_image_pdf` varchar(255) DEFAULT NULL,
@@ -55,8 +54,8 @@ CREATE TABLE `best_message_service` (
 -- Dumping data for table `best_message_service`
 --
 
-INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
-(1, '10_124406.jpg_1691550820009.jpg', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
+(1, '10_124406.jpg_1691550820009.jpg', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -67,7 +66,6 @@ INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `payment_code`
 CREATE TABLE `formation_service` (
   `id` int(11) NOT NULL,
   `level` tinyint(1) NOT NULL,
-  `payment_code` int(11) NOT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL,
   `photo_college_letter` varchar(255) NOT NULL,
   `message_word_ar` varchar(255) DEFAULT NULL,
@@ -81,9 +79,9 @@ CREATE TABLE `formation_service` (
 -- Dumping data for table `formation_service`
 --
 
-INSERT INTO `formation_service` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `message_word_ar`, `message_pdf_ar`, `message_word_en`, `message_pdf_en`, `quote_check_form`) VALUES
-(1, 0, 0, NULL, 'نادر ممدوح_124423.jpg_1691538652865.jpg', NULL, NULL, NULL, NULL, NULL),
-(2, 0, 0, NULL, '10_124423.jpg_1691785956961.jpg', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `formation_service` (`id`, `level`, `photo_payment_receipt`, `photo_college_letter`, `message_word_ar`, `message_pdf_ar`, `message_word_en`, `message_pdf_en`, `quote_check_form`) VALUES
+(1, 0, NULL, 'نادر ممدوح_124423.jpg_1691538652865.jpg', NULL, NULL, NULL, NULL, NULL),
+(2, 0, '10_1692445355402.pdf', '10_124423.jpg_1691785956961.jpg', '10_1692445374408.docx', '10_1692445364907.pdf', NULL, NULL, '10_1692445375730.pdf');
 
 -- --------------------------------------------------------
 
@@ -122,7 +120,6 @@ CREATE TABLE `magazine_checking_service` (
   `id` int(11) NOT NULL,
   `photo_college_letter` varchar(255) NOT NULL,
   `research_title` varchar(255) NOT NULL,
-  `payment_code` int(11) DEFAULT NULL,
   `research_number` tinyint(1) NOT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL,
   `research1_image_pdf` varchar(255) DEFAULT NULL,
@@ -147,10 +144,10 @@ CREATE TABLE `magazine_checking_service` (
 -- Dumping data for table `magazine_checking_service`
 --
 
-INSERT INTO `magazine_checking_service` (`id`, `photo_college_letter`, `research_title`, `payment_code`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
-(1, 'نادر ممدوح_124423.jpg_1691543292974.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, '10_124423.jpg_1691548098620.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, '10_124423.jpg_1691785963139.jpg', '', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `magazine_checking_service` (`id`, `photo_college_letter`, `research_title`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
+(1, 'نادر ممدوح_124423.jpg_1691543292974.jpg', '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, '10_124423.jpg_1691548098620.jpg', '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, '10_124423.jpg_1691785963139.jpg', '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -182,7 +179,6 @@ INSERT INTO `manager` (`id`, `name`, `email`, `password`, `service_id`) VALUES
 CREATE TABLE `personal_examination_service` (
   `id` int(11) NOT NULL,
   `photo_college_letter` varchar(255) DEFAULT NULL,
-  `payment_code` int(11) DEFAULT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL,
   `research1_image_pdf` varchar(255) DEFAULT NULL,
   `research1_image_word` varchar(255) DEFAULT NULL,
@@ -206,8 +202,8 @@ CREATE TABLE `personal_examination_service` (
 -- Dumping data for table `personal_examination_service`
 --
 
-INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `payment_code`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
-(3, '10_124423.jpg_1691785959903.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
+(3, '10_124423.jpg_1691785959903.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -218,7 +214,6 @@ INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `payme
 CREATE TABLE `registration_services` (
   `id` int(11) NOT NULL,
   `level` tinyint(1) NOT NULL,
-  `payment_code` int(11) DEFAULT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL,
   `photo_college_letter` varchar(255) NOT NULL,
   `research_plan_ar_pdf` varchar(255) DEFAULT NULL,
@@ -232,14 +227,14 @@ CREATE TABLE `registration_services` (
 -- Dumping data for table `registration_services`
 --
 
-INSERT INTO `registration_services` (`id`, `level`, `payment_code`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`) VALUES
-(7, 1, NULL, NULL, '10_124423.jpg_1691783190100.jpg', NULL, NULL, NULL, NULL, NULL),
-(8, 1, NULL, NULL, '10_124423.jpg_1691783235123.jpg', NULL, NULL, NULL, NULL, NULL),
-(9, 1, NULL, NULL, '10_124423.jpg_1691783263783.jpg', NULL, NULL, NULL, NULL, NULL),
-(10, 1, NULL, NULL, '10_124423.jpg_1691783331435.jpg', NULL, NULL, NULL, NULL, NULL),
-(11, 1, NULL, NULL, '10_124423.jpg_1691783360058.jpg', NULL, NULL, NULL, NULL, NULL),
-(12, 1, NULL, NULL, '10_124423.jpg_1691783391807.jpg', NULL, NULL, NULL, NULL, NULL),
-(13, 0, NULL, NULL, '10_124423.jpg_1691785950620.jpg', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `registration_services` (`id`, `level`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`) VALUES
+(7, 1, NULL, '10_124423.jpg_1691783190100.jpg', NULL, NULL, NULL, NULL, NULL),
+(8, 1, NULL, '10_124423.jpg_1691783235123.jpg', NULL, NULL, NULL, NULL, NULL),
+(9, 1, NULL, '10_124423.jpg_1691783263783.jpg', NULL, NULL, NULL, NULL, NULL),
+(10, 1, NULL, '10_124423.jpg_1691783331435.jpg', NULL, NULL, NULL, NULL, NULL),
+(11, 1, NULL, '10_124423.jpg_1691783360058.jpg', NULL, NULL, NULL, NULL, NULL),
+(12, 1, '10_1692398888457.docx', '10_1692398889451.docx', '10_1692398890449.jpg', '10_1692398891440.jpg', NULL, NULL, '10_1692398892389.jpg'),
+(13, 0, NULL, '10_124423.jpg_1691785950620.jpg', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -250,22 +245,24 @@ INSERT INTO `registration_services` (`id`, `level`, `payment_code`, `photo_payme
 CREATE TABLE `services` (
   `id` int(11) NOT NULL,
   `service_name` varchar(255) NOT NULL,
-  `service_name_ar` varchar(255) NOT NULL
+  `service_name_ar` varchar(255) NOT NULL,
+  `pref` varchar(255) NOT NULL,
+  `pref_ar` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `services`
 --
 
-INSERT INTO `services` (`id`, `service_name`, `service_name_ar`) VALUES
-(1, 'Extracting a statement that the title of the thesis plan is not previously registered', 'استخراج افادة بأن عنوان مخطط الرسالة ليس مسجل '),
-(2, 'Examination of citation of scientific theses for the purpose of formation', 'فحص الاقتباس من الرسائل العلمية لغرض التشكيل'),
-(3, 'Examination of scientific production for the purpose of personal examination', 'فحص الانتاج العلمي لغرض الفحص الشخصى'),
-(4, 'Examination of scientific research for the purpose of publication in scientific journals', 'فحص الابحاث العلمية بغرض النشر فى المجلات العلمية'),
-(5, 'Examination of scientific research for the purpose of promotion', 'فحص الابحاث العلمية لغرض الترقية'),
-(6, 'Examination of the best scientific thesis', 'فحص احسن رساله علميه'),
-(7, 'Grant service', 'خدمة المنح'),
-(8, 'Knowledge bank service', 'خدمة بنك المعرفة');
+INSERT INTO `services` (`id`, `service_name`, `service_name_ar`, `pref`, `pref_ar`) VALUES
+(1, 'Extracting a statement that the title of the thesis plan is not previously registered', 'استخراج افادة بأن عنوان مخطط الرسالة ليس مسجل', 'Procedures for applying for issuance of statements with titles of academic plans (scientific theses under study) for the purpose of registration for master\'s and doctoral degrees for postgraduate students', 'اجراءات التقدم لإستخراج افادات بعناوين المخططات العلمية (الرسائل العلمية قيد الدراسة) بغرض التسجيل لدرجة الماجستير والدكتوراه لطلاب الدراسات العليا'),
+(2, 'Examination of citation of scientific theses for the purpose of formation', 'فحص الاقتباس من الرسائل العلمية لغرض التشكيل', 'Procedures for applying for examining academic theses (Master\'s and PhD) for the purpose of formation and discussion for postgraduate students', 'اجراءات التقدم لفحص الرسائل العلمية (الماجستير والدكتوراه)  بغرض التشكيل و المناقشة  لطلاب الدراسات العليا'),
+(3, 'Examination of scientific production for the purpose of personal examination', 'فحص الانتاج العلمي لغرض الفحص الشخصى', 'Examination of scientific production for the purpose of personal examination', 'فحص الانتاج العلمي لغرض الفحص الشخصى'),
+(4, 'Examination of scientific research for the purpose of publication in scientific journals', 'فحص الابحاث العلمية بغرض النشر فى المجلات العلمية', 'Procedures for applying to examine scientific research for the purpose of publishing in scientific journals for faculty members and postgraduate students', 'اجراءات التقدم لفحص الابحاث العلمية بغرض النشر فى المجلات العلمية للسادة اعضاء هيئة التدريس وطلاب الدراسات العليا'),
+(5, 'Examination of scientific research for the purpose of promotion', 'فحص الابحاث العلمية لغرض الترقية', 'Procedures for applying at Helwan University to examine scientific research for the purpose of promotion for faculty members', ' اجراءات التقدم بجامعة حلوان  لفحص الابحاث العلمية بغرض الترقية للسادة اعضاء هيئة التدريس'),
+(6, 'Examination of the best scientific thesis', 'فحص احسن رساله علميه', 'Procedures for applying to examine scientific production for the purpose of applying for the best thesis competition', 'اجراءات التقدم لفحص الانتاج العلمي بغرض التقدم لمسابقة افضل رسالة'),
+(7, 'Grant service', 'خدمة المنح', 'Procedures for submitting an electronic copy of theses (Master\'s and PhD) after discussion', 'اجراءات تسليم نسخة الكترونية من الرسائل العلمية (الماجستير والدكتوراه) بعد المناقشة'),
+(8, 'Knowledge bank service', 'خدمة بنك المعرفة', 'Egyptian Knowledge Bank service', ' خدمة بنك المعرفة المصري');
 
 -- --------------------------------------------------------
 
@@ -283,9 +280,11 @@ CREATE TABLE `submit` (
   `ser_knowledge` int(11) DEFAULT NULL,
   `ser_magazine` int(11) DEFAULT NULL,
   `ser_best` int(11) DEFAULT NULL,
-  `status` int(11) NOT NULL,
+  `payment_code` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL COMMENT '0 => req code\r\n1 => sent code\r\n2 => req steptwo\r\n3 => edit step two\r\n4 => edit req code att\r\n5 => acc\r\n6 => reg',
   `response_text` int(11) DEFAULT NULL,
   `response_pdf` int(11) DEFAULT NULL,
+  `req_code_date` date NOT NULL DEFAULT current_timestamp(),
   `submit_date` date NOT NULL DEFAULT current_timestamp(),
   `edit_date` date NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) NOT NULL,
@@ -297,12 +296,12 @@ CREATE TABLE `submit` (
 -- Dumping data for table `submit`
 --
 
-INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `status`, `response_text`, `response_pdf`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 1, NULL),
-(2, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 1, NULL),
-(3, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 2, NULL),
-(4, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 3, NULL),
-(5, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, 0, NULL, NULL, '2023-08-11', '2023-08-11', 3, 4, NULL);
+INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(1, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2147483647, 1, NULL, NULL, '2023-08-18', '2023-08-19', '2023-08-11', 3, 1, NULL),
+(2, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 1, NULL),
+(3, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, NULL, NULL, '2023-08-18', '2023-08-19', '2023-08-11', 3, 2, NULL),
+(4, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, 3, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 3, NULL),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, 0, 1, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -335,7 +334,6 @@ CREATE TABLE `upgrade_service` (
   `current_academic_degree` varchar(255) NOT NULL,
   `academic_degree_to_which_its_ promoted` varchar(255) NOT NULL,
   `photo_college_letter` varchar(255) NOT NULL,
-  `payment_code` int(11) DEFAULT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -366,7 +364,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `national_id`, `phone`, `nationality`, `university`, `faculity`, `department`, `img`) VALUES
 (1, 'nader', 'das@info.com', '5531', '56165606', 68165, 'klnklmk', 'cscsd', 'dsc', '', ''),
 (2, 'v', 'dscsd@csc.css', '$2b$10$G7JMtmC/OcOJHenwtDhLruV3fprBbfZYO8iGR0Y3ySe7siDDIYe52', '452452', 45451, 'zdc', 'dcs', 'casc', '', ''),
-(3, 'نادر ممدوحm', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_photo_2022-08-13_01-41-51.jpg_1691789304421.jpg');
+(3, 'نادر ممدوح شاكر عبدالمحسن', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_1692400750730.jpg');
 
 --
 -- Indexes for dumped tables
