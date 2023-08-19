@@ -18,7 +18,7 @@ const Ser3 = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
-    const [progress, setProgress] = useState({started: false, value: 0})
+    const [progress, setProgress] = useState({ started: false, value: 0 })
     const [msg, setMsg] = useState(null)
     const [disabled, setDisabled] = useState(false)
     const [confirm, setConfirm] = useState(false)
@@ -38,7 +38,7 @@ const Ser3 = () => {
                     setDisabled(true)
                     navigate('/login')
                 })
-            
+
 
         } catch (err) {
             console.log(err)
@@ -49,20 +49,20 @@ const Ser3 = () => {
         payment_photo: '',
         service_id: id,
         application_id: id2,
-        puplish_date:'',
-        accept_date:'',
+        puplish_date: '',
+        accept_date: '',
         files_numbers: 0
     })
 
     const handleCloseError = () => {
         setError('')
         setConfirm(false)
-      };
+    };
 
     const confirmf = () => {
         setConfirm(true)
     }
-        
+
 
 
     const handleSubmit = () => {
@@ -78,36 +78,38 @@ const Ser3 = () => {
             return
         }
 
-        
+
 
         const formData = new FormData();
         formData.append('payment_photo', data.payment_photo)
-        if(data.accept_date !== ''){
-            formData.append('accept_date', data.accept_date)  
+        if (data.accept_date !== '') {
+            formData.append('accept_date', data.accept_date)
         }
         formData.append('puplish_date', data.puplish_date)
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
         formData.append('files_numbers', data.files_numbers)
 
-        setProgress(prevState => ({...prevState, started: true}))
+        setProgress(prevState => ({ ...prevState, started: true }))
         setMsg(t('uploading'))
 
         try {
             axios.put(`${API_URL}/StepTwoSer2/${id}/${id2}`, formData,
-             { withCredentials: true , onUploadProgress: (ProgressEvent) => {
-                setDisabled(true)
-                let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-                setProgress(prevState => ({...prevState, value: percentCompleted}))
-                
-            }}
+                {
+                    withCredentials: true, onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
 
-             )
+                    }
+                }
+
+            )
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
                     navigate(`/Myservices`)
-                    
+
                 })
                 .catch((err) => {
                     console.log(err.response.data.message[0])
@@ -118,7 +120,7 @@ const Ser3 = () => {
                         }
                     }
                     setMsg(null)
-                    setProgress(prevState => ({...prevState, started: false, value: 0}))
+                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
                     setDisabled(false)
                 })
         } catch (err) {
@@ -139,103 +141,146 @@ const Ser3 = () => {
                 <div className="inst-container">
                     <img src="../../assets/mini-logo.png" alt="" />
                     <div className="information-service_body">
-                        <h1>{t('service1-name')}</h1>
+                        <h1>{t(`service${id}-name`)}</h1>
                         <hr style={{ width: "60%" }} />
-                        <div style={{ display: 'flex'}}>
+                        <div style={{ display: 'flex' }}>
                             <div className="img-btn">
-                        <img src={Serimg} alt="" className='ImageService' />
-                        
-                        <div className="progress">
-                        {progress.started && <progress max="100" value={progress.value}></progress>}
-                        {msg && <p>{msg}</p>}
-                        </div>
-                        <button 
-                            disabled={disabled}
-                            onClick={confirmf} className='sub-now'>{t('submet')}</button>
-                        </div>
-                        {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
-                        <div className="inputt two" >
+                                <img src={Serimg} alt="" className='ImageService' />
 
-                            <div className="select-img">
-                                <span className="title-upload">
-                                {t(`service${id}-step-two.payment-photo`)}
-                                </span>
-                                <label className='upload-image' htmlFor="upload-image0">
-                                    <BiImageAdd className='img-icom' />
-                                    <p>{t('click-here')}</p>
-                                </label>
-                                <input type="file"
-                                    hidden
-                                    id='upload-image0'
-                                    name='upload-image0'
-                                    onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
-                                />
-                                {data.payment_photo &&
-                                    <div>
-                                        <p className='upload-image value'>{data.payment_photo.name}</p>
-                                        <AiFillCloseCircle
-                                            onClick={() => { setData({ ...data, payment_photo: '' }) }}
-                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+                                <div className="progress">
+                                    {progress.started && <progress max="100" value={progress.value}></progress>}
+                                    {msg && <p>{msg}</p>}
+                                </div>
+                                <button
+                                    disabled={disabled}
+                                    onClick={confirmf} className='sub-now'>{t('submet')}</button>
+                            </div>
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
+                            <div className="inputt two" >
 
-                                    </div>
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.payment-photo`)}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image0">
+                                        <BiImageAdd className='img-icom' />
+                                        <p>{t('click-here')}</p>
+                                    </label>
+                                    <input type="file"
+                                        hidden
+                                        id='upload-image0'
+                                        name='upload-image0'
+                                        onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
+                                    />
+                                    {data.payment_photo &&
+                                        <div>
+                                            <p className='upload-image value'>{data.payment_photo.name}</p>
+                                            <AiFillCloseCircle
+                                                onClick={() => { setData({ ...data, payment_photo: '' }) }}
+                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                        </div>
+                                    }
+                                </div>
+
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.files_numbers`)}
+                                    </span>
+                                    <input type="number"
+                                        value={data.files_numbers}
+                                        id='upload-image2'
+                                        name='upload-image2'
+                                        onChange={(e) => { setData({ ...data, files_numbers: e.target.value }) }}
+                                    />
+                                    <label className='upload-image' htmlFor="upload-image2">
+                                        <button onClick={() => { }}>{t('confirm')}</button>
+                                    </label>
+
+                                    {/* {
+                                        // Assuming data.files_numbers and id are defined and have valid values
+                                        Array.from({ length: data.files_numbers }, (_, i) => (
+                                            <div className="select-img" key={i}>
+                                                <span className="title-upload">
+                                                    {t(`service${id}-step-two.files_numbers`)}
+                                                </span>
+                                                <label className="upload-image" htmlFor={`upload-image${i}`}>
+                                                    <button onClick={() => { }}>{t('confirm')}</button>
+                                                </label>
+                                            </div>
+                                        ))
+                                    } */}
+
+                                </div>
+                                {
+                                    Array.from({ length: data.files_numbers }, (_, i) => (
+                                        <>
+                                        <div className="select-img" key={i}>
+                                            <span className="title-upload">
+                                                {t(`service${id}-step-two.files_numbers`)}
+                                            </span>
+                                            <label className="upload-image" htmlFor={`upload-image${i}`}>
+                                                <BiImageAdd className='img-icom' />
+                                                <p>{t('click-here')}</p>
+                                            </label>
+                                            <input
+                                                type="file"
+                                                hidden
+                                                id={`upload-image${i}`}
+                                                name={`upload-image${i}`}
+                                                onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
+                                            />
+                                        </div>
+                                        <div className="select-img" key={i}>
+                                            <span className="title-upload">
+                                                {t(`service${id}-step-two.files_numbers`)}
+                                            </span>
+                                            <label className="upload-image" htmlFor={`upload-image${i}`}>
+                                                <BiImageAdd className='img-icom' />
+                                                <p>{t('click-here')}</p>
+                                            </label>
+                                            <input
+                                                type="file"
+                                                hidden
+                                                id={`upload-image${i}`}
+                                                name={`upload-image${i}`}
+                                                onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
+                                            />
+                                        </div>
+                                        </>
+                                    ))
+
                                 }
-                            </div>
-                            
-                            <div className="select-img">
-                                <span className="title-upload">
-                                    {t(`service${id}-step-two.files_numbers`)}
-                                </span>
-                                <input type="number"
-                                    
-                                    id='upload-image2'
-                                    name='upload-image2'
-                                    onChange={(e) => { setData({ ...data, files_numbers: e.target.value })}}
-                                />
-                                <label className='upload-image' htmlFor="upload-image2">
-                                    <button onClick={()=>{}}>{t('confirm')}</button>
-                                </label>
-                                
-                                {data.research &&
-                                    <div>
-                                        <p className='upload-image value'>{data.research.name}</p>
-                                        <AiFillCloseCircle
-                                            onClick={() => { setData({ ...data, research: '' }) }}
-                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.accept-date`)}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image5">
+                                    </label>
+                                    <input type="date"
+                                        value={data.accept_date}
+                                        id=''
+                                        name=''
+                                        onChange={(e) => { setData({ ...data, accept_date: e.target.value }) }}
+                                    />
+                                </div>
 
-                                    </div>
-                                }
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.puplish-date`)}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image5">
+                                    </label>
+                                    <input type="date"
+                                        value={data.puplish_date}
+                                        id=''
+                                        name=''
+                                        onChange={(e) => { setData({ ...data, puplish_date: e.target.value }) }}
+                                    />
+                                </div>
 
                             </div>
-                            <div className="select-img">
-                                <span className="title-upload">
-                                    {t(`service${id}-step-two.accept-date`)}
-                                </span>
-                                <label className='upload-image' htmlFor="upload-image5">
-                                </label>
-                                <input type="date"
-                                    value={data.accept_date}
-                                    id=''
-                                    name=''
-                                    onChange={(e) => { setData({ ...data, accept_date: e.target.value })}}
-                                />
-                            </div>
-
-                            <div className="select-img">
-                                <span className="title-upload">
-                                    {t(`service${id}-step-two.puplish-date`)}
-                                </span>
-                                <label className='upload-image' htmlFor="upload-image5">
-                                </label>
-                                <input type="date"
-                                    value={data.puplish_date}
-                                    id=''
-                                    name=''
-                                    onChange={(e) => { setData({ ...data, puplish_date: e.target.value })}}
-                                />
-                            </div>
-                            
-                        </div>
-                        {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
+                            {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
                         </div>
                     </div>
                 </div>

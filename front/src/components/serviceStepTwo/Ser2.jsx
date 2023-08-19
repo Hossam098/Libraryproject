@@ -146,7 +146,7 @@ const Ser2 = () => {
                 <div className="inst-container">
                     <img src="../../assets/mini-logo.png" alt="" />
                     <div className="information-service_body">
-                        <h1>{t('service1-name')}</h1>
+                    <h1>{t(`service${id}-name`)}</h1>
                         <hr style={{ width: "60%" }} />
                         <div style={{ display: 'flex'}}>
                             <div className="img-btn">
