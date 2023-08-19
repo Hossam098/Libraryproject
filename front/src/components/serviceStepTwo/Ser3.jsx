@@ -47,11 +47,11 @@ const Ser3 = () => {
 
     const [data, setData] = useState({
         payment_photo: '',
-        research: '',
-        research_word: '',
-        form: '',
         service_id: id,
         application_id: id2,
+        puplish_date:'',
+        accept_date:'',
+        files_numbers: 0
     })
 
     const handleCloseError = () => {
@@ -73,17 +73,8 @@ const Ser3 = () => {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
         }
-        
-        if (!data.research) {
-            setError(t(`service${id}-step-two-err.research`))
-            return
-        }
-        if (!data.research_word) {
-            setError(t(`service${id}-step-two-err.research-word`))
-            return
-        }
-        if (!data.form) {
-            setError(t(`service${id}-step-two-err.form`))
+        if (!data.puplish_date) {
+            setError(t(`service${id}-step-two-err.puplish_date`))
             return
         }
 
@@ -91,11 +82,13 @@ const Ser3 = () => {
 
         const formData = new FormData();
         formData.append('payment_photo', data.payment_photo)
-        formData.append('research', data.research)
-        formData.append('research_word', data.research_word)
-        formData.append('form', data.form)
+        if(data.accept_date !== ''){
+            formData.append('accept_date', data.accept_date)  
+        }
+        formData.append('puplish_date', data.puplish_date)
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
+        formData.append('files_numbers', data.files_numbers)
 
         setProgress(prevState => ({...prevState, started: true}))
         setMsg(t('uploading'))
@@ -161,7 +154,7 @@ const Ser3 = () => {
                             onClick={confirmf} className='sub-now'>{t('submet')}</button>
                         </div>
                         {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
-                        <div className="inputt" >
+                        <div className="inputt two" >
 
                             <div className="select-img">
                                 <span className="title-upload">
@@ -190,18 +183,18 @@ const Ser3 = () => {
                             
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t(`service${id}-step-two.research-word`)}
+                                    {t(`service${id}-step-two.files_numbers`)}
                                 </span>
-                                <label className='upload-image' htmlFor="upload-image2">
-                                    <BiImageAdd className='img-icom' />
-                                    <p>{t('click-here')}</p>
-                                </label>
-                                <input type="file"
-                                    hidden
+                                <input type="number"
+                                    
                                     id='upload-image2'
                                     name='upload-image2'
-                                    onChange={(e) => { setData({ ...data, research: e.target.files[0] })}}
+                                    onChange={(e) => { setData({ ...data, files_numbers: e.target.value })}}
                                 />
+                                <label className='upload-image' htmlFor="upload-image2">
+                                    <button onClick={()=>{}}>{t('confirm')}</button>
+                                </label>
+                                
                                 {data.research &&
                                     <div>
                                         <p className='upload-image value'>{data.research.name}</p>
@@ -211,65 +204,42 @@ const Ser3 = () => {
 
                                     </div>
                                 }
-                            </div>
-                            
-                            <div className="select-img">
-                                <span className="title-upload">
-                                    {t(`service${id}-step-two.research`)}
-                                </span>
-                                <label className='upload-image' htmlFor="upload-image4">
-                                    <BiImageAdd className='img-icom' />
-                                    <p>{t('click-here')}</p>
-                                </label>
-                                <input type="file"
-                                    hidden
-                                    id='upload-image4'
-                                    name='upload-image4'
-                                    onChange={(e) => { setData({ ...data, research_word: e.target.files[0] })}}
-                                />
-                                {data.research_word &&
-                                    <div>
-                                        <p className='upload-image value'>{data.research_word.name}</p>
-                                        <AiFillCloseCircle
-                                            onClick={() => { setData({ ...data, research_word: '' }) }}
-                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
-                                    </div>
-                                }
                             </div>
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t(`service${id}-step-two.form`)}
+                                    {t(`service${id}-step-two.accept-date`)}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image5">
-                                    <BiImageAdd className='img-icom' />
-                                    <p>{t('click-here')}</p>
                                 </label>
-                                <input type="file"
-                                    hidden
-                                    id='upload-image5'
-                                    name='upload-image5'
-                                    onChange={(e) => { setData({ ...data, form: e.target.files[0] })}}
+                                <input type="date"
+                                    value={data.accept_date}
+                                    id=''
+                                    name=''
+                                    onChange={(e) => { setData({ ...data, accept_date: e.target.value })}}
                                 />
-                                {data.form &&
-                                    <div>
-                                        <p className='upload-image value'>{data.form.name}</p>
-                                        <AiFillCloseCircle
-                                            onClick={() => { setData({ ...data, form: '' }) }}
-                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+                            </div>
 
-                                    </div>
-                                }
+                            <div className="select-img">
+                                <span className="title-upload">
+                                    {t(`service${id}-step-two.puplish-date`)}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image5">
+                                </label>
+                                <input type="date"
+                                    value={data.puplish_date}
+                                    id=''
+                                    name=''
+                                    onChange={(e) => { setData({ ...data, puplish_date: e.target.value })}}
+                                />
                             </div>
                             
                         </div>
                         {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     )
 }
