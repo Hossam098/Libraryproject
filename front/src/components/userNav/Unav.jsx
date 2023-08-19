@@ -36,18 +36,17 @@ const Unav = () => {
     //     setIsDropdownOpen(!isDropdownOpen);
     //   };
 
+    const handleClickOutside = (event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+          setShowMenu(false);
+        }
+      };
 
     useEffect(() => {
-        function handleClickOutside(event) {
-          if (menuRef.current && !menuRef.current.contains(event.target)) {
-            setShowMenu(false);
-          }
-        }
-    
         document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-          document.removeEventListener('mousedown', handleClickOutside);
-        };
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
       }, []);
 
     useEffect(() => {
@@ -111,6 +110,7 @@ const Unav = () => {
         <nav style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'ltr' } : { direction: 'rtl' }}>
             <div className={localStorage.getItem('i18nextLng')=== 'ar'?"menu r":"menu l"}
                 onClick={()=>{toggleMenu(); setShowServices(false);}}
+                ref={menuRef}
             >
                 <span></span>
                 <span></span>

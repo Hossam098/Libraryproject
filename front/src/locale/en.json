@@ -134,6 +134,11 @@
     "service8-w1": "There is no need for the researcher to go to the digital library headquarters, as all details will be sent to the website." ,
     "service8-w2": "For any other inquiries, please contact us via the complaints link on the home page.",
 
+    "uploading" : "Uploading....",
+    "confirm" : "Confirm",
+    "cancel" : "Cancel",
+    "confirm-msg" : "Are you sure from your attachaments ?",
+    
     "aboutus" : {
         "title": "About the digital library",
         "h3" : "From knowledge to innovation",
@@ -163,6 +168,8 @@
     },
 
     "service1-step-two": {
+        "level" : "Level of education",
+        "payment-photo" : "Payment photo",
         "research" : "Research outline in Arabic PDF",
         "research-en" : "Research outline in English PDF (if exist)",
         "research-word" : "Research outline in Arabic Word",
@@ -171,6 +178,7 @@
     },
     "service1-step-two-err": {
         "level" : "You must choose the level of education",
+        "payment-photo" : "You must upload the payment photo",
         "letter" : "You must upload the letter addressed to the director of the digital library",
         "research" : "You must upload the research outline in Arabic PDF",
         "research-en" : "Research outline in English PDF (if exist)",

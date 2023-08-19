@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import Serimg from '../../images/serIMG.png'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import PopupErrorMsg from '../../components/error/PopupErrorMsg'
+import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 
 
 const Ser1 = () => {
@@ -17,6 +18,12 @@ const Ser1 = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
+    const [progress, setProgress] = useState({started: false, value: 0})
+    const [msg, setMsg] = useState(null)
+    const [disabled, setDisabled] = useState(false)
+    const [confirm, setConfirm] = useState(false)
+
+
     useEffect(() => {
 
         axios.defaults.withCredentials = true
@@ -28,6 +35,7 @@ const Ser1 = () => {
                 })
                 .catch((err) => {
                     console.log(err)
+                    setDisabled(true)
                     navigate('/login')
                 })
             
@@ -48,10 +56,20 @@ const Ser1 = () => {
         service_id: id,
         application_id: id2,
     })
+
     const handleCloseError = () => {
         setError('')
+        setConfirm(false)
       };
+
+    const confirmf = () => {
+        setConfirm(true)
+    }
+        
+
+
     const handleSubmit = () => {
+        setConfirm(false)
         axios.defaults.withCredentials = true
         console.log(data)
         if (!data.payment_photo) {
@@ -88,13 +106,24 @@ const Ser1 = () => {
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
 
+        setProgress(prevState => ({...prevState, started: true}))
+        setMsg(t('uploading'))
 
         try {
-            axios.put(`${API_URL}/StepTwoReg/${id}/${id2}`, formData, { withCredentials: true })
+            axios.put(`${API_URL}/StepTwoReg/${id}/${id2}`, formData,
+             { withCredentials: true , onUploadProgress: (ProgressEvent) => {
+                setDisabled(true)
+                let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                setProgress(prevState => ({...prevState, value: percentCompleted}))
+                
+            }}
+
+             )
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
                     navigate(`/Myservices`)
+                    
                 })
                 .catch((err) => {
                     console.log(err.response.data.message[0])
@@ -104,10 +133,14 @@ const Ser1 = () => {
                             navigate('/login')
                         }
                     }
+                    setMsg(null)
+                    setProgress(prevState => ({...prevState, started: false, value: 0}))
+                    setDisabled(false)
                 })
         } catch (err) {
             console.log(err)
             console.log(err.response.data)
+            setDisabled(false)
 
         }
 
@@ -120,15 +153,23 @@ const Ser1 = () => {
         <div className="inst">
             <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
                 <div className="inst-container">
-                    <img src="../assets/mini-logo.png" alt="" />
+                    <img src="../../assets/mini-logo.png" alt="" />
                     <div className="information-service_body">
                         <h1>{t('service1-name')}</h1>
                         <hr style={{ width: "60%" }} />
                         <div style={{ display: 'flex'}}>
                             <div className="img-btn">
                         <img src={Serimg} alt="" className='ImageService' />
-                        <button onClick={handleSubmit} className='sub-now'>{t('submet')}</button>
+                        
+                        <div className="progress">
+                        {progress.started && <progress max="100" value={progress.value}></progress>}
+                        {msg && <p>{msg}</p>}
                         </div>
+                        <button 
+                            disabled={disabled}
+                            onClick={confirmf} className='sub-now'>{t('submet')}</button>
+                        </div>
+                        {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
                         <div className="inputt" >
 
                             <div className="select-img">

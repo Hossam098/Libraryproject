@@ -39,6 +39,24 @@
     justify-content: center;
 }
 
+.progress{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+.progress progress{
+    width: 90%;
+    height: 1.5rem;
+}
+
+.progress p{
+    font-size: 1.8rem;
+    color: #AD8700;
+    font-weight: 600;
+}
+
 
 
 .upload-image {

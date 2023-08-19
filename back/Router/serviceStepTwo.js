@@ -23,20 +23,76 @@ serviceStepTwo.use(express.Router());
 // }
 
 const handleDeleteFile = (req) => {
-    const imgs = req.files;
-    for (let i = 0; i < imgs.length; i++) {
-        const img = imgs[i].filename;
-        const path = `./public/imgs/${req.national_id}/${img}`;
-        
-        fs.unlinkSync(path, (err) => {
-            if (err) {
-                console.error(err)
-                return
-            }
+    const payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : null;
+    const photo_college_letter = req.files.photo_college_letter ? req.files.photo_college_letter[0].filename : null;
+    const research = req.files.research ? req.files.research[0].filename : null;
+    const research_en = req.files.research_en ? req.files.research_en[0].filename : null;
+    const research_word = req.files.research_word ? req.files.research_word[0].filename : null;
+    const research_word_en = req.files.research_word_en ? req.files.research_word_en[0].filename : null;
+    const translation = req.files.translation ? req.files.translation[0].filename : null;
+
+    const path = `./public/imgs/${req.national_id}/${payment_photo}`;
+    const path2 = `./public/imgs/${req.national_id}/${photo_college_letter}`;
+    const path3 = `./public/imgs/${req.national_id}/${research}`;
+    const path4 = `./public/imgs/${req.national_id}/${research_en}`;
+    const path5 = `./public/imgs/${req.national_id}/${research_word}`;
+    const path6 = `./public/imgs/${req.national_id}/${research_word_en}`;
+    const path7 = `./public/imgs/${req.national_id}/${translation}`;
+
+    for (let i = 0; i < 7; i++) {
+        if (payment_photo != null && i == 0) {
+            fs.unlinkSync(path, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (photo_college_letter != null && i == 1) {
+            fs.unlinkSync(path2, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (research != null && i == 2) {
+            fs.unlinkSync(path3, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (research_en != null && i == 3) {
+            fs.unlinkSync(path4, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (research_word != null && i == 4) {
+            fs.unlinkSync(path5, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (research_word_en != null && i == 5) {
+            fs.unlinkSync(path6, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (translation != null && i == 6) {
+            fs.unlinkSync(path7, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
         }
-        )
     }
 }
+
 
 serviceStepTwo.put("/StepTwoReg/:id/:id2",
     checkUser,
@@ -55,7 +111,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                // handleDeleteFile(req);
+                handleDeleteFile(req);
                 errors.array().forEach(element => {
                     error.push(element.msg);
                 });
