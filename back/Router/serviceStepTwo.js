@@ -8,19 +8,7 @@ import fs from "fs";
 
 const serviceStepTwo = express();
 serviceStepTwo.use(express.Router());
-// const handleDeleteFile = (req) => {
 
-//     const img = req.file.filename;
-//     const path = `./public/imgs/${req.national_id}/${img}`;
-
-//     fs.unlinkSync(path, (err) => {
-//         if (err) {
-//             console.error(err)
-//             return
-//         }
-//     }
-//     )
-// }
 
 const handleDeleteFile = (req) => {
     const payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : null;
@@ -83,6 +71,49 @@ const handleDeleteFile = (req) => {
                 }
             })
         } else if (translation != null && i == 6) {
+            fs.unlinkSync(path7, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        }
+    }
+}
+const handleDeleteFile2 = (req) => {
+    const payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : null;
+    const research = req.files.research ? req.files.research[0].filename : null;
+    const research_word = req.files.research_word ? req.files.research_word[0].filename : null;
+    const form = req.files.form ? req.files.form[0].filename : null;
+
+    const path = `./public/imgs/${req.national_id}/${payment_photo}`;
+    const path3 = `./public/imgs/${req.national_id}/${research}`;
+    const path5 = `./public/imgs/${req.national_id}/${research_word}`;
+    const path7 = `./public/imgs/${req.national_id}/${form}`;
+
+    for (let i = 0; i < 7; i++) {
+        if (payment_photo != null && i == 0) {
+            fs.unlinkSync(path, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (research != null && i == 2) {
+            fs.unlinkSync(path3, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (research_word != null && i == 4) {
+            fs.unlinkSync(path5, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+            })
+        } else if (form != null && i == 6) {
             fs.unlinkSync(path7, (err) => {
                 if (err) {
                     console.error(err)
@@ -268,6 +299,125 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
 
         } catch (error) {
             handleDeleteFile(req);
+            return res.status(500).json({ message: error.message });
+        }
+    }
+);
+serviceStepTwo.put("/StepTwoSer2/:id/:id2",
+    checkUser,
+    upload.fields(
+        [{ name: "payment_photo", maxCount: 1 },
+        { name: "research", maxCount: 1 },
+        { name: "research_word", maxCount: 1 },
+        { name: "form", maxCount: 1 },
+        ]),
+
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                handleDeleteFile2(req);
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            const id = req.params.id;
+            const id2 = req.params.id2;
+
+            console.log(req.files);
+            if (!req.files.payment_photo) {
+                handleDeleteFile2(req);
+                error.push("Please upload payment_photo");
+                return res.status(400).json({ message: error });
+            } else {
+                console.log(1);
+                const ext = req.files.payment_photo[0].filename.split(".").pop();
+                console.log(2);
+                if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
+                    handleDeleteFile2(req);
+                    error.push("Please upload image or pdf or word");
+                    return res.status(400).json({ message: error });
+                }
+            }
+            
+            if (!req.files.research) {
+                handleDeleteFile2(req);
+                error.push("Please upload research");
+                return res.status(400).json({ message: error });
+            } else {
+                const ext = req.files.research[0].filename.split(".").pop();
+                if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
+                    handleDeleteFile2(req);
+                    error.push("Please upload image or pdf or word");
+                    return res.status(400).json({ message: error });
+                }
+            }
+
+            if (!req.files.research_word) {
+                handleDeleteFile2(req);
+                error.push("Please upload research_word");
+                return res.status(400).json({ message: error });
+            } else {
+                const ext = req.files.research_word[0].filename.split(".").pop();
+                if (ext !== "docx" && ext !== "doc") {
+                    handleDeleteFile2(req);
+                    error.push("Please upload word file");
+                    return res.status(400).json({ message: error });
+                }
+            }
+
+            if (!req.files.form) {
+                handleDeleteFile2(req);
+                error.push("Please upload form");
+                return res.status(400).json({ message: error });
+            } else {
+                const ext = req.files.form[0].filename.split(".").pop();
+                if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
+                    handleDeleteFile2(req);
+                    error.push("Please upload image or pdf or word");
+                    return res.status(400).json({ message: error });
+                }
+            }
+            
+
+
+            
+            const data = {
+                photo_payment_receipt: req.files.payment_photo[0].filename,
+                message_word_ar: req.files.research_word[0].filename,
+                message_pdf_ar: req.files.research[0].filename,
+                quote_check_form: req.files.form[0].filename,
+            }
+
+            const sql = `UPDATE formation_service SET ? WHERE id = ? `;
+            const value = [data, id2];
+            const result = await query(sql, value);
+            if (result.affectedRows > 0) {
+                const submit = {
+                    status: 2,
+                    submit_date: new Date(),
+                }
+                const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_formation = ? AND user_id = ?';
+                const value2 = [submit, id, id2, req.id];
+                const result2 = await query(sql2, value2);
+                if (result2.affectedRows > 0) {
+                    return res.status(200).json({ message: "Data saved successfully" });
+                } else {
+                    handleDeleteFile2(req);
+                    error.push("Data not saved");
+                    return res.status(400).json({ message: error });
+                }
+            } else {
+                handleDeleteFile2(req);
+                error.push("Data not saved");
+                return res.status(400).json({ message: error });
+            }
+
+        } catch (error) {
+            handleDeleteFile2(req);
             return res.status(500).json({ message: error.message });
         }
     }

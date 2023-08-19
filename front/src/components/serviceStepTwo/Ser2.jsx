@@ -7,15 +7,25 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Serimg from '../../images/serIMG.png'
+import { AiFillCloseCircle } from 'react-icons/ai'
+import PopupErrorMsg from '../../components/error/PopupErrorMsg'
+import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 
 
 const Ser2 = () => {
     const { id } = useParams()
+    const { id2 } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
+    const [progress, setProgress] = useState({started: false, value: 0})
+    const [msg, setMsg] = useState(null)
+    const [disabled, setDisabled] = useState(false)
+    const [confirm, setConfirm] = useState(false)
+
 
     useEffect(() => {
+
         axios.defaults.withCredentials = true
 
         try {
@@ -25,8 +35,10 @@ const Ser2 = () => {
                 })
                 .catch((err) => {
                     console.log(err)
+                    setDisabled(true)
                     navigate('/login')
                 })
+            
 
         } catch (err) {
             console.log(err)
@@ -34,25 +46,75 @@ const Ser2 = () => {
     }, [])
 
     const [data, setData] = useState({
-        level: '',
-        photo_college_letter: '',
-        service_id: id
+        payment_photo: '',
+        research: '',
+        research_word: '',
+        form: '',
+        service_id: id,
+        application_id: id2,
     })
 
+    const handleCloseError = () => {
+        setError('')
+        setConfirm(false)
+      };
+
+    const confirmf = () => {
+        setConfirm(true)
+    }
+        
+
+
     const handleSubmit = () => {
+        setConfirm(false)
         axios.defaults.withCredentials = true
         console.log(data)
+        if (!data.payment_photo) {
+            setError(t(`service${id}-step-two-err.payment-photo`))
+            return
+        }
+        
+        if (!data.research) {
+            setError(t(`service${id}-step-two-err.research`))
+            return
+        }
+        if (!data.research_word) {
+            setError(t(`service${id}-step-two-err.research-word`))
+            return
+        }
+        if (!data.form) {
+            setError(t(`service${id}-step-two-err.form`))
+            return
+        }
+
+        
+
         const formData = new FormData();
-        formData.append('level', data.level);
-        formData.append('photo_college_letter', data.photo_college_letter);
-        formData.append('service_id', data.service_id);
+        formData.append('payment_photo', data.payment_photo)
+        formData.append('research', data.research)
+        formData.append('research_word', data.research_word)
+        formData.append('form', data.form)
+        formData.append('service_id', data.service_id)
+        formData.append('application_id', data.application_id)
+
+        setProgress(prevState => ({...prevState, started: true}))
+        setMsg(t('uploading'))
 
         try {
-            axios.post(`${API_URL}/payment`, formData, { withCredentials: true })
+            axios.put(`${API_URL}/StepTwoSer2/${id}/${id2}`, formData,
+             { withCredentials: true , onUploadProgress: (ProgressEvent) => {
+                setDisabled(true)
+                let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                setProgress(prevState => ({...prevState, value: percentCompleted}))
+                
+            }}
+
+             )
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/pay/${id}`)
+                    navigate(`/Myservices`)
+                    
                 })
                 .catch((err) => {
                     console.log(err.response.data.message[0])
@@ -62,105 +124,152 @@ const Ser2 = () => {
                             navigate('/login')
                         }
                     }
-
+                    setMsg(null)
+                    setProgress(prevState => ({...prevState, started: false, value: 0}))
+                    setDisabled(false)
                 })
         } catch (err) {
             console.log(err)
             console.log(err.response.data)
+            setDisabled(false)
 
         }
 
     }
 
 
-    const handleNext = () => {
-    }
+
 
     return (
         <div className="inst">
             <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
                 <div className="inst-container">
-                    <div className="information-service">
-                        <img src="../assets/mini-logo.png" alt="" />
-                        <div className="information-service_body"  >
-                            <h1>{t('service2-name')}</h1>
-                            <hr style={{ width: "60%" }} />
-                            <img src={Serimg} alt="" className='ImageService' />
-
-                            <div className="inputt">
-
-                                <select
-                                    name=""
-                                    id=""
-                                    value={data.level}
-                                    onChange={(e) => { setData({ ...data, level: e.target.value }) }}
-                                >
-                                    <option value="">{t('level')}</option>
-                                    <option value="0">{t('master')}</option>
-                                    <option value="1">{t('phd')}</option>
-                                </select>
-
-
-                                <div className="select-img">
-                                    <span className="title-upload">
-                                        {t('letter')}
-                                    </span>
-                                    <label className='upload-image' htmlFor="upload-image">
-                                        <BiImageAdd className='img-icom' />
-                                        <p>{t('click-here')}</p>
-                                    </label>
-                                    <input type="file"
-                                        hidden
-                                        id='upload-image'
-                                        name='upload-image'
-                                        onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
-                                    />
-                                    {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
-                                </div>
-                            </div>
-                            {error != '' && <h2 style={{ color: '#AD8700' }}>
-                                **** {error} ****
-                            </h2>
-                            }
-
-                            <button onClick={handleSubmit} className='sub-now'>{t('pay-code')}</button>
+                    <img src="../../assets/mini-logo.png" alt="" />
+                    <div className="information-service_body">
+                        <h1>{t('service1-name')}</h1>
+                        <hr style={{ width: "60%" }} />
+                        <div style={{ display: 'flex'}}>
+                            <div className="img-btn">
+                        <img src={Serimg} alt="" className='ImageService' />
+                        
+                        <div className="progress">
+                        {progress.started && <progress max="100" value={progress.value}></progress>}
+                        {msg && <p>{msg}</p>}
                         </div>
+                        <button 
+                            disabled={disabled}
+                            onClick={confirmf} className='sub-now'>{t('submet')}</button>
+                        </div>
+                        {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
+                        <div className="inputt" >
 
+                            <div className="select-img">
+                                <span className="title-upload">
+                                {t(`service${id}-step-two.payment-photo`)}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image0">
+                                    <BiImageAdd className='img-icom' />
+                                    <p>{t('click-here')}</p>
+                                </label>
+                                <input type="file"
+                                    hidden
+                                    id='upload-image0'
+                                    name='upload-image0'
+                                    onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
+                                />
+                                {data.payment_photo &&
+                                    <div>
+                                        <p className='upload-image value'>{data.payment_photo.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, payment_photo: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
+                            </div>
+                            
+                            <div className="select-img">
+                                <span className="title-upload">
+                                    {t(`service${id}-step-two.research-word`)}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image2">
+                                    <BiImageAdd className='img-icom' />
+                                    <p>{t('click-here')}</p>
+                                </label>
+                                <input type="file"
+                                    hidden
+                                    id='upload-image2'
+                                    name='upload-image2'
+                                    onChange={(e) => { setData({ ...data, research: e.target.files[0] })}}
+                                />
+                                {data.research &&
+                                    <div>
+                                        <p className='upload-image value'>{data.research.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, research: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
+                            </div>
+                            
+                            <div className="select-img">
+                                <span className="title-upload">
+                                    {t(`service${id}-step-two.research`)}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image4">
+                                    <BiImageAdd className='img-icom' />
+                                    <p>{t('click-here')}</p>
+                                </label>
+                                <input type="file"
+                                    hidden
+                                    id='upload-image4'
+                                    name='upload-image4'
+                                    onChange={(e) => { setData({ ...data, research_word: e.target.files[0] })}}
+                                />
+                                {data.research_word &&
+                                    <div>
+                                        <p className='upload-image value'>{data.research_word.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, research_word: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
+                            </div>
+                            <div className="select-img">
+                                <span className="title-upload">
+                                    {t(`service${id}-step-two.form`)}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image5">
+                                    <BiImageAdd className='img-icom' />
+                                    <p>{t('click-here')}</p>
+                                </label>
+                                <input type="file"
+                                    hidden
+                                    id='upload-image5'
+                                    name='upload-image5'
+                                    onChange={(e) => { setData({ ...data, form: e.target.files[0] })}}
+                                />
+                                {data.form &&
+                                    <div>
+                                        <p className='upload-image value'>{data.form.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, form: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
+                            </div>
+                            
+                        </div>
+                        {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
+                        </div>
                     </div>
+
                 </div>
             </div>
-            {/* <div className="inputt">
-                <select
-                    name=""
-                    id=""
-                    value={data.level}
-                    onChange={(e) => { setData({ ...data, level: e.target.value }) }}
-                >
-                    <option value="">level</option>
-                    <option value="0">master's</option>
-                    <option value="1">doctor</option>
-                </select>
-                <div className="select-img">
-                    <span className="title-upload">
-                        {t('service1-step1')}
-                    </span>
-                    <label className='upload-image' htmlFor="upload-image">
-                        <BiImageAdd className='img-icom' />
-                        <p>add image</p>
-                    </label>
-                    <input type="file"
-                        hidden
-                        id='upload-image'
-                        name='upload-image'
-                        onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
-                    />
-                </div>
-            </div>
-            <input
-                type="submit"
-                value="submit now"
-                onClick={() => handleSubmit()}
-            /> */}
+
         </div>
     )
 }
