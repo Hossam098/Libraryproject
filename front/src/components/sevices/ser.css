@@ -85,6 +85,9 @@
     font-size: 1.5rem;
     padding: 10px;
 }
+.two{
+    columns: 2;
+}
 
 .req input[type=submit] {
     background-color: #AD8700;
