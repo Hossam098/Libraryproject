@@ -179,6 +179,11 @@ serPayment.post('/payment',
                 }
 
             } else if (req.body.service_id == 3) {
+                if (!req.body.files_numbers) {
+                    error.push("Files numbers is required");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
 
                 const personal = {
                     photo_college_letter: req.file.filename,
@@ -189,6 +194,7 @@ serPayment.post('/payment',
 
                 if (result.affectedRows > 0) {
                     const submitData = {
+                        files_numbers : req.body.files_numbers,
                         ser_personal: result.insertId,
                         status: 0,
                         user_id: req.id,

@@ -193,7 +193,7 @@
         "research-word" : "The letter submitted for examination (complete in one combined file without deleting any parts of it in PDF format",
         "form" : "The form for examining the citation of scientific theses for the purpose of formation"
     },
-    
+
     "service2-step-two-err": {
         "level" : "You must choose the level of education",
         "payment-photo" : "You must upload the payment photo",
@@ -205,12 +205,13 @@
         "payment-photo" : "Payment photo",
         "publish-date": "date of publication, if any",
         "accept-date": "date of acceptance of research publication",
-        "files_numbers": "choose the number of searches"
+        "files_numbers": "Enter the number of searches"
     },
     
     "service3-step-two-err": {
         "payment-photo" : "You must upload the payment photo",
-        "accept-date": "You must enter the date of acceptance of publication"
+        "accept-date": "You must enter the date of acceptance of publication",
+        "files_numbers": "You must enter the number of searches"
     }
 
     

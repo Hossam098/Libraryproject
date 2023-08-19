@@ -201,12 +201,13 @@
         "payment-photo" : " صورة ايصال الدفع ",
         "puplish-date" : "  تاريخ النشر إن وجد ",
         "accept-date" : "تاريخ قبول نشر الابحاث", 
-        "files_numbers" : " اختر عدد الابحاث  "
+        "files_numbers" : " ادخل عدد الابحاث  "
     },
     "service3-step-two-err": {
 
         "payment-photo" : " يجب رفع صورة ايصال الدفع ",
-        "accept-date" : "يجب ادخال ناريخ قبول النشر"
+        "accept-date" : "يجب ادخال ناريخ قبول النشر",
+        "files_numbers" : " يجب ادخال عدد الابحاث  "
 
     },
 

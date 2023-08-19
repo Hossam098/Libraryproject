@@ -34,6 +34,7 @@ const Ser3 = () => {
 
     const [data, setData] = useState({
         photo_college_letter: '',
+        files_numbers: '',
         service_id: id
     })
 
@@ -42,6 +43,7 @@ const Ser3 = () => {
         console.log(data)
         const formData = new FormData();
         formData.append('photo_college_letter', data.photo_college_letter);
+        formData.append('files_numbers', data.files_numbers);
         formData.append('service_id', data.service_id);
 
         try {
@@ -49,7 +51,7 @@ const Ser3 = () => {
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/pay/${id}`)
+                    navigate(`/`)
                 })
                 .catch((err) => {
                     console.log(err.response.data.message[0])
@@ -84,7 +86,13 @@ const Ser3 = () => {
                             <hr style={{ width: "60%" }} />
                             <img src={Serimg} alt="" className='ImageService' />
 
-                            <div className="inputt" style={{ gridTemplateColumns: '1fr' }}>
+                            <div className="inputt">
+
+                                <input type="number"
+                                    placeholder={t(`service${id}-step-two.files_numbers`)}
+                                    value={data.files_numbers}
+                                    onChange={(e) => { setData({ ...data, files_numbers: e.target.value }) }}
+                                />
 
                                 <div className="select-img">
                                     <span className="title-upload">
