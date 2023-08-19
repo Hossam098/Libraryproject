@@ -200,6 +200,21 @@
         "research" : "You must upload the letter submitted for examination (complete in one combined file without deleting any parts of it in Word format",
         "research-word" : "You must upload the letter submitted for examination (complete in one combined file without deleting any parts of it in PDF format",
         "form" : "You must upload the form for examining the citation of scientific theses for the purpose of formation"
+    },
+    "service3-step-two": {
+        "level" : "Level of education",
+        "payment-photo" : "Payment photo",
+        "research" : "The letter submitted for examination (complete in one combined file without deleting any parts of it in Word format",
+        "research-word" : "The letter submitted for examination (complete in one combined file without deleting any parts of it in PDF format",
+        "form" : "The form for examining the citation of scientific theses for the purpose of formation"
+    },
+    
+    "service3-step-two-err": {
+        "level" : "You must choose the level of education",
+        "payment-photo" : "You must upload the payment photo",
+        "research" : "You must upload the letter submitted for examination (complete in one combined file without deleting any parts of it in Word format",
+        "research-word" : "You must upload the letter submitted for examination (complete in one combined file without deleting any parts of it in PDF format",
+        "form" : "You must upload the form for examining the citation of scientific theses for the purpose of formation"
     }
 
     
