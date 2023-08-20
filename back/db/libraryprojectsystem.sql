@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2023 at 02:08 PM
+-- Generation Time: Aug 20, 2023 at 05:15 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.2
 
@@ -81,7 +81,10 @@ CREATE TABLE `formation_service` (
 
 INSERT INTO `formation_service` (`id`, `level`, `photo_payment_receipt`, `photo_college_letter`, `message_word_ar`, `message_pdf_ar`, `message_word_en`, `message_pdf_en`, `quote_check_form`) VALUES
 (1, 0, NULL, 'نادر ممدوح_124423.jpg_1691538652865.jpg', NULL, NULL, NULL, NULL, NULL),
-(2, 0, '10_1692445355402.pdf', '10_124423.jpg_1691785956961.jpg', '10_1692445374408.docx', '10_1692445364907.pdf', NULL, NULL, '10_1692445375730.pdf');
+(2, 0, '10_1692445355402.pdf', '10_124423.jpg_1691785956961.jpg', '10_1692445374408.docx', '10_1692445364907.pdf', NULL, NULL, '10_1692445375730.pdf'),
+(3, 0, NULL, '10_1692495991337.docx', NULL, NULL, NULL, NULL, NULL),
+(4, 0, NULL, '10_1692496021432.docx', NULL, NULL, NULL, NULL, NULL),
+(5, 0, NULL, '10_1692496106088.docx', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -203,7 +206,9 @@ CREATE TABLE `personal_examination_service` (
 --
 
 INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
-(3, '10_124423.jpg_1691785959903.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(3, '10_124423.jpg_1691785959903.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, '10_1692486858089.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, '10_1692496633292.docx', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,7 +239,8 @@ INSERT INTO `registration_services` (`id`, `level`, `photo_payment_receipt`, `ph
 (10, 1, NULL, '10_124423.jpg_1691783331435.jpg', NULL, NULL, NULL, NULL, NULL),
 (11, 1, NULL, '10_124423.jpg_1691783360058.jpg', NULL, NULL, NULL, NULL, NULL),
 (12, 1, '10_1692398888457.docx', '10_1692398889451.docx', '10_1692398890449.jpg', '10_1692398891440.jpg', NULL, NULL, '10_1692398892389.jpg'),
-(13, 0, NULL, '10_124423.jpg_1691785950620.jpg', NULL, NULL, NULL, NULL, NULL);
+(13, 0, NULL, '10_124423.jpg_1691785950620.jpg', NULL, NULL, NULL, NULL, NULL),
+(14, 0, NULL, '10_1692494743950.pdf', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -282,6 +288,7 @@ CREATE TABLE `submit` (
   `ser_best` int(11) DEFAULT NULL,
   `payment_code` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL COMMENT '0 => req code\r\n1 => sent code\r\n2 => req steptwo\r\n3 => edit step two\r\n4 => edit req code att\r\n5 => acc\r\n6 => reg',
+  `files_numbers` int(11) DEFAULT NULL,
   `response_text` int(11) DEFAULT NULL,
   `response_pdf` int(11) DEFAULT NULL,
   `req_code_date` date NOT NULL DEFAULT current_timestamp(),
@@ -296,12 +303,18 @@ CREATE TABLE `submit` (
 -- Dumping data for table `submit`
 --
 
-INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2147483647, 1, NULL, NULL, '2023-08-18', '2023-08-19', '2023-08-11', 3, 1, NULL),
-(2, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 1, NULL),
-(3, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, NULL, NULL, '2023-08-18', '2023-08-19', '2023-08-11', 3, 2, NULL),
-(4, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, 3, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 3, NULL),
-(5, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, 0, 1, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 4, NULL);
+INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(1, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2147483647, 1, NULL, NULL, NULL, '2023-08-18', '2023-08-19', '2023-08-11', 3, 1, NULL),
+(2, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, NULL, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 1, NULL),
+(3, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-08-18', '2023-08-19', '2023-08-11', 3, 2, NULL),
+(4, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, 1, 5, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 3, NULL),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, 0, 1, NULL, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 4, NULL),
+(6, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 42452452, 1, 6, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 3, NULL),
+(7, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 1, NULL),
+(8, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 2, NULL),
+(9, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 2, NULL),
+(10, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 2, NULL),
+(11, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, 3, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -474,7 +487,7 @@ ALTER TABLE `best_message_service`
 -- AUTO_INCREMENT for table `formation_service`
 --
 ALTER TABLE `formation_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `grant_service`
@@ -504,13 +517,13 @@ ALTER TABLE `manager`
 -- AUTO_INCREMENT for table `personal_examination_service`
 --
 ALTER TABLE `personal_examination_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `registration_services`
 --
 ALTER TABLE `registration_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -522,7 +535,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `submit`
 --
 ALTER TABLE `submit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sub_manager`
