@@ -53,7 +53,6 @@ const Ser3 = ({ ser }) => {
         application_id: id2,
         puplish_date: '',
         accept_date: '',
-        accept_date: '',
     })
     const [words, setwords] = useState({
         word1: "",
