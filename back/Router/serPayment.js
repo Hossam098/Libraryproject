@@ -218,7 +218,11 @@ serPayment.post('/payment',
                     return res.status(400).json({ message: error });
                 }
             } else if (req.body.service_id == 4) {
-
+                if (!req.body.files_numbers) {
+                    error.push("Files numbers is required");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
                 const magazine = {
                     photo_college_letter: req.file.filename,
                 }
@@ -228,6 +232,7 @@ serPayment.post('/payment',
 
                 if (result.affectedRows > 0) {
                     const submitData = {
+                        files_numbers : req.body.files_numbers,
                         ser_magazine: result.insertId,
                         status: 0,
                         user_id: req.id,
