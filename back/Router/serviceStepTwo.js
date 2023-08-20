@@ -392,6 +392,7 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                 quote_check_form: req.files.form[0].filename,
             }
 
+            
             const sql = `UPDATE formation_service SET ? WHERE id = ? `;
             const value = [data, id2];
             const result = await query(sql, value);

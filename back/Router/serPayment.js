@@ -85,8 +85,9 @@ serPayment.post('/payment',
 
             if (req.file) {
                 const file = req.file;
-                const ext = file.mimetype.split('/')[1];
-                if (ext != 'pdf' && ext != 'jpeg' && ext != 'jpg' && ext != 'png' && ext != 'webp' && ext != 'svg') {
+                const ext = file.filename.split(".").pop();
+                console.log(ext);
+                if (ext != 'pdf' && ext != 'jpeg' && ext != 'jpg' && ext != 'png' && ext != 'webp' && ext != 'svg' && ext != 'docx' && ext != 'doc') {
                     error.push("File type not allowed");
                     handleDeleteFile(req);
                     return res.status(400).json({ message: error });
@@ -96,14 +97,14 @@ serPayment.post('/payment',
 
             if (req.body.service_id == 1) {
 
-                // if (req.body.level == '') {
-                //     error.push("Level is required");
-                //     handleDeleteFile(req);
-                //     return res.status(400).json({ message: error });
-                // }
+                if (req.body.level == '') {
+                    error.push("Level is required");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
 
                 const reg = {
-                    // level: req.body.level,
+                    level: req.body.level,
                     photo_college_letter: req.file.filename,
                 }
 
@@ -139,13 +140,14 @@ serPayment.post('/payment',
                 }
             } else if (req.body.service_id == 2) {
 
-                // if (req.body.level == '') {
-                //     error.push("Level is required");
-                //     handleDeleteFile(req);
-                //     return res.status(400).json({ message: error });
-                // }
+                if (req.body.level == '') {
+                    error.push("Level is required");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
 
                 const form = {
+                    level: req.body.level,
                     photo_college_letter: req.file.filename,
                 }
 

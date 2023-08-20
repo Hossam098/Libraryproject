@@ -196,6 +196,7 @@
 
     "service2-step-two-err": {
         "level" : "You must choose the level of education",
+        "letter" : "You must upload the letter addressed to the director of the digital library",
         "payment-photo" : "You must upload the payment photo",
         "research" : "You must upload the letter submitted for examination (complete in one combined file without deleting any parts of it in Word format",
         "research-word" : "You must upload the letter submitted for examination (complete in one combined file without deleting any parts of it in PDF format",
@@ -209,6 +210,7 @@
     },
     
     "service3-step-two-err": {
+        "letter" : "You must upload the letter addressed to the director of the digital library",
         "payment-photo" : "You must upload the payment photo",
         "accept-date": "You must enter the date of acceptance of publication",
         "files_numbers": "You must enter the number of searches"
