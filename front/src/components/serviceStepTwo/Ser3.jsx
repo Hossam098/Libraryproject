@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BiImageAdd } from 'react-icons/bi'
+import { BsFilePdf, BsFileEarmarkWord } from 'react-icons/bs'
 import axios from 'axios'
 import { API_URL } from '../../config'
 import { t } from 'i18next'
@@ -52,6 +53,31 @@ const Ser3 = ({ ser }) => {
         application_id: id2,
         puplish_date: '',
         accept_date: '',
+        accept_date: '',
+    })
+    const [words, setwords] = useState({
+        word1: "",
+        word2: "",
+        word3: "",
+        word4: "",
+        word5: "",
+        word6: "",
+        word7: "",
+        word8: "",
+        word9: "",
+        word10: ""
+    })
+    const [pdfs, setPdfs] = useState({
+        pdf1: "",
+        pdf2: "",
+        pdf3: "",
+        pdf4: "",
+        pdf5: "",
+        pdf6: "",
+        pdf7: "",
+        pdf8: "",
+        pdf9: "",
+        pdf10: ""
     })
 
     const handleCloseError = () => {
@@ -77,6 +103,36 @@ const Ser3 = ({ ser }) => {
             setError(t(`service${id}-step-two-err.puplish_date`))
             return
         }
+        const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
+        const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+
+        for (let i = 0; i < number; i++) {
+            const file = words[`word${i + 1}`];
+
+            if (!file) {
+                setError(t(`service${id}-step-two-err.word${i + 1}`));
+                return;
+            }
+
+            const fileName = file.name;
+            if (!validExtensions.test(fileName)) {
+                setError(t(`service${id}-step-two-err.word${i + 1}`));
+                return;
+            }
+        }
+        for (let i = 0; i < number; i++) {
+            const file = pdfs[`pdf${i + 1}`];
+
+            if (!file) {
+                setError(t(`service${id}-step-two-err.pdf${i + 1}`))
+                return
+            }
+            const fileName = file.name;
+            if (!validExtensions2.test(fileName)) {
+                setError(t(`service${id}-step-two-err.pdf${i + 1}`))
+                return
+            }
+        }
 
 
 
@@ -89,6 +145,30 @@ const Ser3 = ({ ser }) => {
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
         formData.append('files_numbers', data.files_numbers)
+
+        formData.append('word1', words.word1)
+        formData.append('word2', words.word2)
+        formData.append('word3', words.word3)
+        formData.append('word4', words.word4)
+        formData.append('word5', words.word5)
+        formData.append('word6', words.word6)
+        formData.append('word8', words.word7)
+        formData.append('word9', words.word8)
+        formData.append('word9', words.word9)
+        formData.append('word10', words.word10)
+
+
+        formData.append('pdf1', pdfs.pdf1)
+        formData.append('pdf2', pdfs.pdf2)
+        formData.append('pdf3', pdfs.pdf3)
+        formData.append('pdf4', pdfs.pdf4)
+        formData.append('pdf5', pdfs.pdf5)
+        formData.append('pdf6', pdfs.pdf6)
+        formData.append('pdf8', pdfs.pdf7)
+        formData.append('pdf9', pdfs.pdf8)
+        formData.append('pdf9', pdfs.pdf9)
+        formData.append('pdf10', pdfs.pdf10)
+
 
         setProgress(prevState => ({ ...prevState, started: true }))
         setMsg(t('uploading'))
@@ -134,6 +214,36 @@ const Ser3 = ({ ser }) => {
 
     console.log(number)
 
+    // const renderInputs = () => {
+    //     const arr = [];
+    //     for (let i = 0; i < number; i++) {
+    //       arr.push(
+    //         <div className="select-img">
+    //           <span className="title-upload">
+    //             {`img ${i + 1}`}
+    //           </span>
+    //           <label className="upload-image" htmlFor={`word${i}`}>
+    //             <BiImageAdd className="img-icom" />
+    //             <p>{t('click-here')}</p>
+    //           </label>
+    //           <input
+    //             type="file"
+    //             hidden
+    //             id={`word${i}`}
+    //             name={`word${i}`}
+    //             onChange={(e) => {
+    //               setwords({
+    //                 ...words,
+    //                 [`word${i + 1}`]: e.target.files[0]
+    //               });
+    //               console.log(words)
+    //             }}
+    //           />
+    //         </div>
+    //       );
+    //     }
+    //     return arr;
+    //   };
 
 
     return (
@@ -157,9 +267,9 @@ const Ser3 = ({ ser }) => {
                                     onClick={confirmf} className='sub-now'>{t('submet')}</button>
                             </div>
                             {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
-                            <div className="inputt two" >
+                            <div className="inputt " >
 
-                                <div className="select-img">
+                                <div className="select-img two">
                                     <span className="title-upload">
                                         {t(`service${id}-step-two.payment-photo`)}
                                     </span>
@@ -185,47 +295,70 @@ const Ser3 = ({ ser }) => {
                                 </div>
 
                                 {
-  Array.from(Array(number), (e, i) => (
-    <React.Fragment key={i}>
-      <div className="select-img">
-        <span className="title-upload">
-          {t(`service${id}-step-two.files_numbers`)}
-        </span>
-        <label className="upload-image" htmlFor={`upload-image${i}`}>
-          <BiImageAdd className="img-icom" />
-          <p>{t('click-here')}</p>
-        </label>
-        <input
-          type="file"
-          hidden
-          id={`upload-image${i}`}
-          name={`upload-image${i}`}
-          onChange={(e) => {
-            setData({ ...data, payment_photo: e.target.files[0] });
-          }}
-        />
-      </div>
-      <div className="select-img">
-        <span className="title-upload">
-          {t(`service${id}-step-two.files_numbers`)}
-        </span>
-        <label className="upload-image" htmlFor={`upload-image${i}`}>
-          <BiImageAdd className="img-icom" />
-          <p>{t('click-here')}</p>
-        </label>
-        <input
-          type="file"
-          hidden
-          id={`upload-image${i}`}
-          name={`upload-image${i}`}
-          onChange={(e) => {
-            setData({ ...data, payment_photo: e.target.files[0] });
-          }}
-        />
-      </div>
-    </React.Fragment>
-  ))
-}
+                                    Array.from(Array(number), (e, i) => (
+                                        <React.Fragment key={i}>
+                                            <div className="select-img">
+                                                <span className="title-upload">
+                                                    {t(`service${id}-step-two.word${i + 1}`)}
+                                                </span>
+                                                <label className="upload-image" htmlFor={`word${i}`}>
+                                                    <BsFileEarmarkWord className="img-icom" />
+                                                    <p>{t('click-here')}</p>
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    hidden
+                                                    id={`word${i}`}
+                                                    name={`word${i}`}
+                                                    onChange={(e) => {
+                                                        setwords({ ...words, [`word${i + 1}`]: e.target.files[0] });
+
+                                                    }}
+                                                />
+
+                                                {words[`word${i + 1}`] && (
+                                                    <div>
+                                                        <p className='upload-image value'>{words[`word${i + 1}`].name}</p>
+                                                        <AiFillCloseCircle
+                                                            onClick={() => { setwords({ ...words, [`word${i + 1}`]: '' }) }}
+                                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="select-img">
+                                                <span className="title-upload">
+                                                    {t(`service${id}-step-two.pdf${i + 1}`)}
+                                                </span>
+                                                <label className="upload-image" htmlFor={`pdf${i}`}>
+                                                    <BsFilePdf className="img-icom" />
+                                                    <p>{t('click-here')}</p>
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    hidden
+                                                    id={`pdf${i}`}
+                                                    name={`pdf${i}`}
+                                                    onChange={(e) => {
+                                                        setPdfs({ ...pdfs, [`pdf${i + 1}`]: e.target.files[0] });
+
+                                                    }}
+                                                />
+
+                                                {pdfs[`pdf${i + 1}`] && (
+                                                    <div>
+                                                        <p className='upload-image value'>{pdfs[`pdf${i + 1}`].name}</p>
+                                                        <AiFillCloseCircle
+                                                            onClick={() => { setPdfs({ ...pdfs, [`pdf${i + 1}`]: '' }) }}
+                                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </React.Fragment>
+                                    ))
+                                }
+
                                 <div className="select-img">
                                     <span className="title-upload">
                                         {t(`service${id}-step-two.accept-date`)}
