@@ -60,6 +60,10 @@ import ServiceStepTwo from "./module/user/serviceStepTwo/ServiceStepTwo.jsx";
             element: <ServiceStepTwo/>
           },
           {
+            path:"/serviceStepTwo/:id/:id2/:num",
+            element: <ServiceStepTwo/>
+          },
+          {
             path:"/instructions/:id",
             element: <Instructons/>
           },

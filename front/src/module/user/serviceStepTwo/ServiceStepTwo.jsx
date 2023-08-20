@@ -21,12 +21,15 @@ import './serviceStepTwo.css'
 
 
 
-const ServiceStepTwo = () => {
-    const { id } = useParams();
+const ServiceStepTwo = (ID , Ser) => {
+    const  id  = ID.ID
     const {id2} = useParams();
     const navigate = useNavigate();
 
-    console.log(id , id2)
+    console.log(id)
+
+    const ser = ID.Ser
+
 
     useEffect(() => {
         axios.defaults.withCredentials = true
@@ -48,19 +51,19 @@ const ServiceStepTwo = () => {
 
     const serviceStepTwo = (id) => {
         switch (id) {
-            case '1':
-                return <Ser1 />;
-            case '2':
-                return <Ser2 />;
-            case '3':
-                return <Ser3 />;
-            case '4':
-                return <Ser4 />;
-            case '5':
-                return <Ser5 />;
-            case '6':
-                return <Ser6 />;
-            case '7':
+            case 1:
+                return <Ser1 ser={ser} />;
+            case 2:
+                return <Ser2 ser={ser}/>;
+            case 3:
+                return <Ser3 ser={ser}/>;
+            case 4:
+                return <Ser4 ser={ser}/>;
+            case 5:
+                return <Ser5 ser={ser}/>;
+            case 6:
+                return <Ser6 ser={ser}/>;
+            case 7:
                 return <Ser7 />;
             case '8':
                 return <Ser8 />;

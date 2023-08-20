@@ -12,9 +12,10 @@ import PopupErrorMsg from '../../components/error/PopupErrorMsg'
 import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 
 
-const Ser3 = () => {
-    const { id } = useParams()
-    const { id2 } = useParams()
+const Ser3 = ({ ser }) => {
+    const id = ser.service_id;
+    const id2 = ser.ser_personal;
+    const number = ser.files_numbers;
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -51,7 +52,6 @@ const Ser3 = () => {
         application_id: id2,
         puplish_date: '',
         accept_date: '',
-        files_numbers: 0
     })
 
     const handleCloseError = () => {
@@ -132,6 +132,7 @@ const Ser3 = () => {
 
     }
 
+    console.log(number)
 
 
 
@@ -183,74 +184,48 @@ const Ser3 = () => {
                                     }
                                 </div>
 
-                                <div className="select-img">
-                                    <span className="title-upload">
-                                        {t(`service${id}-step-two.files_numbers`)}
-                                    </span>
-                                    <input type="number"
-                                        value={data.files_numbers}
-                                        id='upload-image2'
-                                        name='upload-image2'
-                                        onChange={(e) => { setData({ ...data, files_numbers: e.target.value }) }}
-                                    />
-                                    <label className='upload-image' htmlFor="upload-image2">
-                                        <button onClick={() => { }}>{t('confirm')}</button>
-                                    </label>
-
-                                    {/* {
-                                        // Assuming data.files_numbers and id are defined and have valid values
-                                        Array.from({ length: data.files_numbers }, (_, i) => (
-                                            <div className="select-img" key={i}>
-                                                <span className="title-upload">
-                                                    {t(`service${id}-step-two.files_numbers`)}
-                                                </span>
-                                                <label className="upload-image" htmlFor={`upload-image${i}`}>
-                                                    <button onClick={() => { }}>{t('confirm')}</button>
-                                                </label>
-                                            </div>
-                                        ))
-                                    } */}
-
-                                </div>
                                 {
-                                    Array.from({ length: data.files_numbers }, (_, i) => (
-                                        <>
-                                        <div className="select-img" key={i}>
-                                            <span className="title-upload">
-                                                {t(`service${id}-step-two.files_numbers`)}
-                                            </span>
-                                            <label className="upload-image" htmlFor={`upload-image${i}`}>
-                                                <BiImageAdd className='img-icom' />
-                                                <p>{t('click-here')}</p>
-                                            </label>
-                                            <input
-                                                type="file"
-                                                hidden
-                                                id={`upload-image${i}`}
-                                                name={`upload-image${i}`}
-                                                onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
-                                            />
-                                        </div>
-                                        <div className="select-img" key={i}>
-                                            <span className="title-upload">
-                                                {t(`service${id}-step-two.files_numbers`)}
-                                            </span>
-                                            <label className="upload-image" htmlFor={`upload-image${i}`}>
-                                                <BiImageAdd className='img-icom' />
-                                                <p>{t('click-here')}</p>
-                                            </label>
-                                            <input
-                                                type="file"
-                                                hidden
-                                                id={`upload-image${i}`}
-                                                name={`upload-image${i}`}
-                                                onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
-                                            />
-                                        </div>
-                                        </>
-                                    ))
-
-                                }
+  Array.from(Array(number), (e, i) => (
+    <React.Fragment key={i}>
+      <div className="select-img">
+        <span className="title-upload">
+          {t(`service${id}-step-two.files_numbers`)}
+        </span>
+        <label className="upload-image" htmlFor={`upload-image${i}`}>
+          <BiImageAdd className="img-icom" />
+          <p>{t('click-here')}</p>
+        </label>
+        <input
+          type="file"
+          hidden
+          id={`upload-image${i}`}
+          name={`upload-image${i}`}
+          onChange={(e) => {
+            setData({ ...data, payment_photo: e.target.files[0] });
+          }}
+        />
+      </div>
+      <div className="select-img">
+        <span className="title-upload">
+          {t(`service${id}-step-two.files_numbers`)}
+        </span>
+        <label className="upload-image" htmlFor={`upload-image${i}`}>
+          <BiImageAdd className="img-icom" />
+          <p>{t('click-here')}</p>
+        </label>
+        <input
+          type="file"
+          hidden
+          id={`upload-image${i}`}
+          name={`upload-image${i}`}
+          onChange={(e) => {
+            setData({ ...data, payment_photo: e.target.files[0] });
+          }}
+        />
+      </div>
+    </React.Fragment>
+  ))
+}
                                 <div className="select-img">
                                     <span className="title-upload">
                                         {t(`service${id}-step-two.accept-date`)}

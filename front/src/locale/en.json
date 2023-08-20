@@ -213,7 +213,8 @@
         "letter" : "You must upload the letter addressed to the director of the digital library",
         "payment-photo" : "You must upload the payment photo",
         "accept-date": "You must enter the date of acceptance of publication",
-        "files_numbers": "You must enter the number of searches"
+        "files_numbers": "You must enter the number of searches",
+        "files_numbers2": "File number must be less than 10"
     }
 
     

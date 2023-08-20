@@ -66,6 +66,10 @@ const Ser3 = () => {
             setError(t(`service${id}-step-two-err.files_numbers`))
             return
         }
+        if (data.files_numbers > 10) {
+            setError(t(`service${id}-step-two-err.files_numbers2`))
+            return
+        }
 
 
         axios.defaults.withCredentials = true

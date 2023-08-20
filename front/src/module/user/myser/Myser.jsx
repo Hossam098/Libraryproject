@@ -10,13 +10,26 @@ import { useTranslation } from 'react-i18next'
 import img from '../../../images/Email campaign-amico 1.png'
 import codeIMG from '../../../images/Personal site-amico 2.png'
 import { GiSandsOfTime } from 'react-icons/gi'
+import Ser1 from '../../../components/serviceStepTwo/Ser1'
+import Ser2 from '../../../components/serviceStepTwo/Ser2'
+import Ser3 from '../../../components/serviceStepTwo/Ser3'
+import Ser4 from '../../../components/serviceStepTwo/Ser4'
+import Ser5 from '../../../components/serviceStepTwo/Ser5'
+import Ser6 from '../../../components/serviceStepTwo/Ser6'
+import Ser7 from '../../../components/serviceStepTwo/Ser7'
+import Ser8 from '../../../components/serviceStepTwo/Ser8'
+import ServiceStepTwo from '../serviceStepTwo/ServiceStepTwo'
+
 
 
 const Myser = () => {
 
 
-    const id = "1";
+    
     const [services, setServices] = useState([])
+    const [step2 , setStep2] = useState(false)
+    const [id , setId] = useState(0)
+    const [service , setService] = useState([])
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -42,9 +55,14 @@ const Myser = () => {
         return currentLanguage == 'en' ? service.service_name : service.service_name_ar;
     };
 
+    const handleRoute = (id) => {
+        setStep2(true)
+        console.log(id)
+    }
 
 
     return (
+        id !== 0 ? <ServiceStepTwo ID = {id} Ser = {service} /> :
         <div>
 
             <section id='services'>
@@ -90,10 +108,25 @@ const Myser = () => {
                                                         <div className="code wait-txt">
                                                             {service.payment_code}
                                                         </div>
-                                                        
+                                                        {/* {service.id == 3 || service.id == 4 || service.id == 5 || service == 6 ?
+                                                        <Link to={`/serviceStepTwo/${service.id}/${type}/${service.files_numbers}`}
+                                                         className="waitbtn-edit">
+                                                            cotinue
+                                                        </Link>
+                                                        :
                                                         <Link to={`/serviceStepTwo/${service.id}/${type} `}
                                                          className="waitbtn-edit">cotinue
                                                         </Link>
+                                                        } */}
+                                                        <button className="waitbtn-edit"
+                                                            onClick={() => {
+                                                                handleRoute(service.id)
+                                                                setId(service.id)
+                                                                setService(service)
+                                                            }}
+                                                        >
+                                                            {t('continue')}
+                                                        </button>
                                                     </div>
                                                 </>
                                                 : service.status == 2 ?
