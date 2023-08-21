@@ -13,7 +13,7 @@ import PopupErrorMsg from '../../components/error/PopupErrorMsg'
 import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 
 
-const Ser3 = ({ ser }) => {
+const Ser4 = ({ ser }) => {
     const id = ser.service_id;
     const id2 = ser.ser_personal;
     const number = ser.files_numbers;
@@ -210,7 +210,7 @@ const Ser3 = ({ ser }) => {
                     <div className="information-service_body">
                         <h1>{t(`service${id}-name`)}</h1>
                         <hr style={{ width: "60%" }} />
-                        <div style={{ display: 'flex' }}>
+                        <div className='data-c'>
                             <div className="img-btn">
                                 <img src={Serimg} alt="" className='ImageService' />
 
@@ -327,4 +327,4 @@ const Ser3 = ({ ser }) => {
     )
 }
 
-export default Ser3
+export default Ser4

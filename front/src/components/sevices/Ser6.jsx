@@ -8,6 +8,10 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Serimg from '../../images/serIMG.png'
+import PopupErrorMsg from '../error/PopupErrorMsg'
+import PopupConfirmMsg from '../error/PopupConfirmMsg'
+import { AiFillCloseCircle } from 'react-icons/ai'
+
 
 
 const Ser6 = () => {
@@ -15,6 +19,13 @@ const Ser6 = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
+    const [msg, setMsg] = useState('')
+    const [progress, setProgress] = useState({ started: false, value: 0 })
+    const [confirm, setConfirm] = useState(false)
+    const [disabled, setDisabled] = useState(false)
+
+
+
     useEffect(() => {
         axios.defaults.withCredentials = true
         try {
@@ -34,22 +45,57 @@ const Ser6 = () => {
 
     const [data, setData] = useState({
         photo_college_letter: '',
+        files_numbers: '',
         service_id: id
     })
 
+    const handleCloseError = () => {
+        setError('')
+        setConfirm(false)
+    };
+
+
     const handleSubmit = () => {
+        setConfirm(false)
+
+        if (!data.photo_college_letter) {
+            setError(t(`service${id}-step-two-err.letter`))
+            return
+        }
+        if (!data.files_numbers) {
+            setError(t(`service${id}-step-two-err.files_numbers`))
+            return
+        }
+        if (data.files_numbers > 10) {
+            setError(t(`service${id}-step-two-err.files_numbers2`))
+            return
+        }
+
+
         axios.defaults.withCredentials = true
         console.log(data)
         const formData = new FormData();
         formData.append('photo_college_letter', data.photo_college_letter);
+        formData.append('files_numbers', data.files_numbers);
         formData.append('service_id', data.service_id);
 
+        setProgress(prevState => ({ ...prevState, started: true }))
+        setMsg(t('uploading'))
+
         try {
-            axios.post(`${API_URL}/payment`, formData, { withCredentials: true })
+            axios.post(`${API_URL}/payment`, formData, {
+                withCredentials: true,
+                onUploadProgress: (ProgressEvent) => {
+                    setDisabled(true)
+                    let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                    setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+
+                }
+            })
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/pay/${id}`)
+                    navigate(`/Myservices`)
                 })
                 .catch((err) => {
                     console.log(err.response.data.message[0])
@@ -59,19 +105,25 @@ const Ser6 = () => {
                             navigate('/login')
                         }
                     }
-
+                    setMsg(null)
+                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                    setDisabled(false)
                 })
         } catch (err) {
             console.log(err)
             console.log(err.response.data)
-
+            setMsg(null)
+            setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+            setDisabled(false)
         }
 
     }
 
 
-    const handleNext = () => {
+    const confirmf = () => {
+        setConfirm(true)
     }
+
 
     return (
         <div className="inst">
@@ -80,11 +132,17 @@ const Ser6 = () => {
                     <div className="information-service">
                         <img src="../assets/mini-logo.png" alt="" />
                         <div className="information-service_body"  >
-                            <h1>{t('service4-name')}</h1>
+                            <h1>{t('service3-name')}</h1>
                             <hr style={{ width: "60%" }} />
-                            <img src={Serimg} alt="" className='ImageService' />
+                            <img src={Serimg} alt="" className='ImageServicee' />
 
-                            <div className="inputt" style={{ gridTemplateColumns: '1fr' }}>
+                            <div className="inputt">
+
+                                <input type="number"
+                                    placeholder={t(`service${id}-step-two.files_numbers`)}
+                                    value={data.files_numbers}
+                                    onChange={(e) => { setData({ ...data, files_numbers: e.target.value }) }}
+                                />
 
                                 <div className="select-img">
                                     <span className="title-upload">
@@ -100,51 +158,35 @@ const Ser6 = () => {
                                         name='upload-image'
                                         onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
                                     />
-                                    {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
-                                </div>
-                            </div>
-                            {error != '' && <h2 style={{ color: '#AD8700' }}>
-                                **** {error} ****
-                            </h2>
-                            }
+                                    {data.photo_college_letter &&
+                                        <div>
+                                            <p className='upload-image value'>{data.photo_college_letter.name}</p>
+                                            <AiFillCloseCircle
+                                                onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
+                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
-                            <button onClick={handleSubmit} className='sub-now'>{t('pay-code')}</button>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+
+
+                            {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
+
+                            <div className="progress">
+                                {progress.started && <progress max="100" value={progress.value}></progress>}
+                                {msg && <p>{msg}</p>}
+                            </div>
+                            <button
+                                disabled={disabled}
+                                onClick={confirmf} className='sub-now'>{t('pay-code')}</button>
                         </div>
+                        {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
 
                     </div>
                 </div>
-                {/* <div className="inputt">
-                <select
-                    name=""
-                    id=""
-                    value={data.level}
-                    onChange={(e) => { setData({ ...data, level: e.target.value }) }}
-                >
-                    <option value="">level</option>
-                    <option value="0">master's</option>
-                    <option value="1">doctor</option>
-                </select>
-                <div className="select-img">
-                    <span className="title-upload">
-                        {t('service1-step1')}
-                    </span>
-                    <label className='upload-image' htmlFor="upload-image">
-                        <BiImageAdd className='img-icom' />
-                        <p>add image</p>
-                    </label>
-                    <input type="file"
-                        hidden
-                        id='upload-image'
-                        name='upload-image'
-                        onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
-                    />
-                </div>
-            </div>
-            <input
-                type="submit"
-                value="submit now"
-                onClick={() => handleSubmit()}
-            /> */}
+
             </div>
         </div>
     )
