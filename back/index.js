@@ -9,6 +9,7 @@ import user from './Router/userCRUD.js';
 import userAuth from './Authentication/userAuth.js';
 import serPayment from './Router/serPayment.js';
 import serviceStepTwo from './Router/serviceStepTwo.js';
+import serviceStepTwoEdit from './Router/serviceStepTwoEdit.js';
 
 const app = express();
 app.use(express.json());
@@ -43,6 +44,7 @@ app.use(express.static('public/imgs'));
 
 app.use('', serPayment);
 app.use('', serviceStepTwo);
+app.use('', serviceStepTwoEdit);
 
 
 app.use('/auth', userAuth);

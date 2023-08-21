@@ -6,8 +6,8 @@ import checkUser from "../MiddleWare/checkUser.js";
 import upload from "../MiddleWare/Uplodeimgs.js";
 import fs from "fs";
 
-const serviceStepTwo = express();
-serviceStepTwo.use(express.Router());
+const serviceStepTwoEdit = express();
+serviceStepTwoEdit.use(express.Router());
 
 
 const handleDeleteFile = (req) => {
@@ -132,22 +132,22 @@ const handleDeleteFile7 = (req) => {
     const path2 = `./public/imgs/${req.national_id}/${pdf}`;
     const path3 = `./public/imgs/${req.national_id}/${word}`;
 
-    for (let i = 0; i < 4; i++) {
-        if (decision != null && i == 0) {
+    for (let i = 0; i < 4 ; i++) {
+        if(decision != null && i == 0){
             fs.unlinkSync(path, (err) => {
                 if (err) {
                     console.error(err)
                     return
                 }
             })
-        } else if (pdf != null && i == 1) {
+        }else if(pdf != null && i == 1){
             fs.unlinkSync(path2, (err) => {
                 if (err) {
                     console.error(err)
                     return
                 }
             })
-        } else if (word != null && i == 2) {
+        }else if(word != null && i == 2){
             fs.unlinkSync(path3, (err) => {
                 if (err) {
                     console.error(err)
@@ -160,181 +160,38 @@ const handleDeleteFile7 = (req) => {
 }
 
 
-serviceStepTwo.put("/StepTwoReg/:id/:id2",
+serviceStepTwoEdit.get("/StepTwoRegEdit/:id/:id2",
     checkUser,
-    upload.fields(
-        [{ name: "payment_photo", maxCount: 1 },
-        { name: "photo_college_letter", maxCount: 1 },
-        { name: "research", maxCount: 1 },
-        { name: "research_en", maxCount: 1 },
-        { name: "research_word", maxCount: 1 },
-        { name: "research_word_en", maxCount: 1 },
-        { name: "translation", maxCount: 1 },
-        ]),
-
     async (req, res) => {
-        let error = [];
         try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                handleDeleteFile(req);
-                errors.array().forEach(element => {
-                    error.push(element.msg);
-                });
-                return res.status(400).json({ message: error });
-            }
-
             const id = req.params.id;
             const id2 = req.params.id2;
-            const payment_photo = ''
-            const photo_college_letter = ''
-            const research = ''
-            const research_en = ''
-            const research_word = ''
-            const research_word_en = ''
-            const translation = ''
 
-            const sqlSelect = `SELECT submit.* registration_services.* FROM submit INNER JOIN registration_services ON submit.ser_reg = registration_services.id WHERE submit.service_id = ? AND submit.ser_reg = ? AND submit.user_id = ?`;
-            const valueSelect = [id, id2, req.id];
-            const resultSelect = await query(sqlSelect, valueSelect);
-            if (resultSelect.length > 0) {
-                if (resultSelect[0].status == 1) {
+            
 
-                    console.log(req.files);
-                    if (!req.files.payment_photo) {
-                        handleDeleteFile(req);
-                        error.push("Please upload payment_photo");
-                        return res.status(400).json({ message: error });
-                    } else {
-                        console.log(1);
-                        const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        console.log(2);
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
-                    if (!req.files.photo_college_letter) {
-                        handleDeleteFile(req);
-                        error.push("Please upload photo_college_letter");
-                        return res.status(400).json({ message: error });
-                    } else {
-                        const ext = req.files.photo_college_letter[0].filename.split(".").pop();
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
-                    if (!req.files.research) {
-                        handleDeleteFile(req);
-                        error.push("Please upload research");
-                        return res.status(400).json({ message: error });
-                    } else {
-                        const ext = req.files.research[0].filename.split(".").pop();
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
-                    if (!req.files.research_word) {
-                        handleDeleteFile(req);
-                        error.push("Please upload research_word");
-                        return res.status(400).json({ message: error });
-                    } else {
-                        const ext = req.files.research_word[0].filename.split(".").pop();
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
-                    if (!req.files.translation) {
-                        handleDeleteFile(req);
-                        error.push("Please upload translation");
-                        return res.status(400).json({ message: error });
-                    } else {
-                        const ext = req.files.translation[0].filename.split(".").pop();
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
-                    if (req.files.research_en) {
-                        const ext = req.files.research_en[0].filename.split(".").pop();
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
-                    if (req.files.research_word_en) {
-                        const ext = req.files.research_word_en[0].filename.split(".").pop();
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
-                } else if (resultSelect[0].status == 3) {
-                     payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : resultSelect[0].photo_payment_receipt;
-                     photo_college_letter = req.files.photo_college_letter ? req.files.photo_college_letter[0].filename : resultSelect[0].photo_college_letter;
-                     research = req.files.research ? req.files.research[0].filename : resultSelect[0].research_plan_ar_pdf;
-                     research_en = req.files.research_en ? req.files.research_en[0].filename : resultSelect[0].research_plan_en_pdf;
-                     research_word = req.files.research_word ? req.files.research_word[0].filename : resultSelect[0].research_plan_ar_word;
-                     research_word_en = req.files.research_word_en ? req.files.research_word_en[0].filename : resultSelect[0].research_plan_en_word;
-                     translation = req.files.translation ? req.files.translation[0].filename : resultSelect[0].translation_paper;
-
-                }
-
-
-                const data = {
-                    photo_payment_receipt: payment_photo,
-                    photo_college_letter: photo_college_letter,
-                    research_plan_ar_pdf: research,
-                    research_plan_en_pdf: research_en,
-                    research_plan_ar_word: research_word,
-                    research_plan_en_word: research_word_en,
-                    translation_paper: translation,
-                }
-
-                const sql = `UPDATE registration_services SET ? WHERE id = ? `;
-                const value = [data, id2];
-                const result = await query(sql, value);
-                if (result.affectedRows > 0) {
-                    const submit = {
-                        status: 2,
-                        submit_date: new Date(),
-                    }
-                    const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_reg = ? AND user_id = ?';
-                    const value2 = [submit, id, id2, req.id];
-                    const result2 = await query(sql2, value2);
-                    if (result2.affectedRows > 0) {
-                        return res.status(200).json({ message: "Data saved successfully" });
-                    } else {
-                        handleDeleteFile(req);
-                        error.push("Data not saved");
-                        return res.status(400).json({ message: error });
-                    }
-                } else {
-                    handleDeleteFile(req);
-                    error.push("Data not saved");
-                    return res.status(400).json({ message: error });
-                }
-
-            } 
-                
-
-            } catch (error) {
-                handleDeleteFile(req);
-                return res.status(500).json({ message: error.message });
+            const sql = `SELECT submit.* , registration_services.* FROM submit INNER JOIN registration_services ON submit.ser_reg = registration_services.id WHERE submit.service_id = ? AND submit.ser_reg = ? AND submit.user_id = ?`;
+            const value = [id, id2, req.id];
+            const result = await query(sql, value);
+            if (result.length > 0) {
+                return res.status(200).json(result[0]);
             }
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
         }
+    }
 );
-serviceStepTwo.put("/StepTwoSer2/:id/:id2",
+
+// serviceStepTwoEdit.put("/StepTwoRegEdit/:id/:id2",
+//     checkUser,
+//     upload.fields(
+//         [{ name: "payment_photo", maxCount: 1 },
+//         { name: "photo_college_letter", maxCount: 1 },
+
+
+
+
+
+serviceStepTwoEdit.put("/StepTwoSer2/:id/:id2",
     checkUser,
     upload.fields(
         [{ name: "payment_photo", maxCount: 1 },
@@ -373,7 +230,7 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                     return res.status(400).json({ message: error });
                 }
             }
-
+            
             if (!req.files.research) {
                 handleDeleteFile2(req);
                 error.push("Please upload research");
@@ -412,10 +269,10 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                     return res.status(400).json({ message: error });
                 }
             }
+            
 
 
-
-
+            
             const data = {
                 photo_payment_receipt: req.files.payment_photo[0].filename,
                 message_word_ar: req.files.research_word[0].filename,
@@ -423,7 +280,7 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                 quote_check_form: req.files.form[0].filename,
             }
 
-
+            
             const sql = `UPDATE formation_service SET ? WHERE id = ? `;
             const value = [data, id2];
             const result = await query(sql, value);
@@ -460,7 +317,7 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
 
 
 
-serviceStepTwo.post("/StepTwoSer7",
+serviceStepTwoEdit.post("/StepTwoSer7",
     checkUser,
     upload.fields(
         [{ name: "word", maxCount: 1 },
@@ -481,7 +338,7 @@ serviceStepTwo.post("/StepTwoSer7",
                 return res.status(400).json({ message: error });
             }
 
-
+            
 
             if (!req.files.decision) {
                 handleDeleteFile7(req);
@@ -497,7 +354,7 @@ serviceStepTwo.post("/StepTwoSer7",
                     return res.status(400).json({ message: error });
                 }
             }
-
+            
             if (!req.files.word) {
                 handleDeleteFile7(req);
                 error.push("Please upload word");
@@ -524,10 +381,10 @@ serviceStepTwo.post("/StepTwoSer7",
                 }
             }
 
+            
 
 
-
-
+            
             const data = {
                 message_word_ar: req.files.word[0].filename,
                 message_pdf_ar: req.files.pdf[0].filename,
@@ -535,17 +392,17 @@ serviceStepTwo.post("/StepTwoSer7",
                 level: req.body.level,
             }
 
-
+            
             const sql = `INSERT INTO grant_service SET ?`;
             const value = [data];
             const result = await query(sql, value);
             if (result.affectedRows > 0) {
                 const submit = {
-                    ser_grant: result.insertId,
+                    ser_grant : result.insertId,
                     status: 2,
                     submit_date: new Date(),
-                    service_id: 7,
-                    user_id: req.id,
+                    service_id : 7,
+                    user_id : req.id,
                 }
                 const sql2 = 'INSERT INTO submit SET ?';
                 const value2 = [submit];
@@ -570,7 +427,7 @@ serviceStepTwo.post("/StepTwoSer7",
     }
 );
 
-serviceStepTwo.post("/StepTwoSer8",
+serviceStepTwoEdit.post("/StepTwoSer8",
     checkUser,
     body("level").notEmpty().withMessage("Please enter level"),
     body("academic_div").notEmpty().withMessage("Please enter academic"),
@@ -587,28 +444,28 @@ serviceStepTwo.post("/StepTwoSer8",
                 return res.status(400).json({ message: error });
             }
 
+        
+
+            
 
 
-
-
-
-
+            
             const data = {
                 level: req.body.level,
                 academic: req.body.academic_div,
             }
 
-
+            
             const sql = `INSERT INTO knowledge_bank_service SET ?`;
             const value = [data];
             const result = await query(sql, value);
             if (result.affectedRows > 0) {
                 const submit = {
-                    ser_grant: result.insertId,
+                    ser_grant : result.insertId,
                     status: 2,
                     submit_date: new Date(),
-                    service_id: 8,
-                    user_id: req.id,
+                    service_id : 8,
+                    user_id : req.id,
                 }
                 const sql2 = 'INSERT INTO submit SET ?';
                 const value2 = [submit];
@@ -635,4 +492,4 @@ serviceStepTwo.post("/StepTwoSer8",
 
 
 
-export default serviceStepTwo;
+export default serviceStepTwoEdit;

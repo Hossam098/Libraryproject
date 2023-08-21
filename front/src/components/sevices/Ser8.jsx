@@ -54,26 +54,21 @@ const Ser8 = () => {
     const handleSubmit = () => {
         setConfirm(false)
         if (!data.level) {
-            setError(t(`service${id}-step-two-err.level`))
+            setError(t(`service2-step-two-err.level`))
             return
         }
-        if (!data.photo_college_letter) {
-            setError(t(`service${id}-step-two-err.letter`))
+        if (!data.academic_div) {
+            setError(t(`academic-div-err`))
             return
         }
+
 
         axios.defaults.withCredentials = true
-        console.log(data)
-        const formData = new FormData();
-        formData.append('level', data.level);
-        formData.append('photo_college_letter', data.photo_college_letter);
-        formData.append('service_id', data.service_id);
-
         setProgress(prevState => ({ ...prevState, started: true }))
         setMsg(t('uploading'))
 
         try {
-            axios.post(`${API_URL}/payment`, formData, {
+            axios.post(`${API_URL}/StepTwoSer8`, data, {
                 withCredentials: true,
                 onUploadProgress: (ProgressEvent) => {
                     setDisabled(true)
@@ -138,16 +133,17 @@ const Ser8 = () => {
                             </select>
                         
 
-                            <select
+                            <input
+                                style={localStorage.getItem('i18nextLng') == 'en' ? { textAlign: 'left' } : { textAlign: 'right' }}
+                                type="text"
                                 name=""
                                 id=""
+                                placeholder={t('academic-div')}
                                 value={data.academic_div}
-                                onChange={(e) => { setData({ ...data, level: e.target.value }) }}
-                            >
-                                <option value="">{t('academic-div')}</option>
-                                <option value="0">{t('master')}</option>
-                                <option value="1">{t('phd')}</option>
-                            </select>
+                                onChange={(e) => { setData({ ...data, academic_div: e.target.value }) }}
+                            />
+                                
+                            
                         </div>
 
                         {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}

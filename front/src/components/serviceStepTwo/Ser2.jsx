@@ -15,6 +15,9 @@ import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 const Ser2 = ({ ser }) => {
     const id = ser.service_id;
     const id2 = ser.ser_formation;
+    const status = ser.status;
+    console.log(status)
+    console.log(id)
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -43,7 +46,21 @@ const Ser2 = ({ ser }) => {
         } catch (err) {
             console.log(err)
         }
-    }, [])
+
+        if (status === 3) {
+            const updatedData = {
+              ...data,
+              payment_photo: ser.payment_photo,
+              research: ser.research,
+              research_word: ser.research_word,
+              form: ser.form,
+            };
+                
+            
+            setData(updatedData);
+          }
+          console.log(data)
+    }, [status])
 
     const [data, setData] = useState({
         payment_photo: '',

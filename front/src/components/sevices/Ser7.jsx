@@ -44,7 +44,7 @@ const Ser7 = () => {
 
     const [data, setData] = useState({
         level: '',
-        photo_college_letter: '',
+        decision: '',
         pdf: '',
         word: '',
         service_id: id
@@ -56,11 +56,20 @@ const Ser7 = () => {
     const handleSubmit = () => {
         setConfirm(false)
         if (!data.level) {
-            setError(t(`service${id}-step-two-err.level`))
+            setError(t(`service2-step-two-err.level`))
             return
         }
-        if (!data.photo_college_letter) {
-            setError(t(`service${id}-step-two-err.letter`))
+        if (!data.decision) {
+            setError(t(`service7-step4.3-err`))
+            return
+        }
+
+        if (!data.pdf) {
+            setError(t(`service7-step4.2-err`))
+            return
+        }
+        if (!data.word) {
+            setError(t(`service7-step4.1-err`))
             return
         }
 
@@ -68,14 +77,15 @@ const Ser7 = () => {
         console.log(data)
         const formData = new FormData();
         formData.append('level', data.level);
-        formData.append('photo_college_letter', data.photo_college_letter);
-        formData.append('service_id', data.service_id);
+        formData.append('decision', data.decision);
+        formData.append('pdf', data.pdf);
+        formData.append('word', data.word);
 
         setProgress(prevState => ({ ...prevState, started: true }))
         setMsg(t('uploading'))
 
         try {
-            axios.post(`${API_URL}/payment`, formData, {
+            axios.post(`${API_URL}/StepTwoSer7`, formData, {
                 withCredentials: true,
                 onUploadProgress: (ProgressEvent) => {
                     setDisabled(true)
@@ -142,7 +152,32 @@ const Ser7 = () => {
 
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('letter')}
+                                {t('service7-step3')}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image1">
+                                    <BiImageAdd className='img-icom' />
+                                    <p>{t('click-here')}</p>
+                                </label>
+                                <input type="file"
+                                    hidden
+                                    id='upload-image1'
+                                    name='upload-image1'
+                                    onChange={(e) => { setData({ ...data, decision: e.target.files[0] }) }}
+                                />
+                                {data.decision &&
+                                    <div>
+                                        <p className='upload-image value'>{data.decision.name}</p>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, decision: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                    </div>
+                                }
+                            </div>
+
+                            <div className="select-img">
+                                <span className="title-upload">
+                                    {t('service7-step4.1')}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image">
                                     <BiImageAdd className='img-icom' />
@@ -152,13 +187,13 @@ const Ser7 = () => {
                                     hidden
                                     id='upload-image'
                                     name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                    onChange={(e) => { setData({ ...data, word: e.target.files[0] }) }}
                                 />
-                                {data.photo_college_letter &&
+                                {data.word &&
                                     <div>
-                                        <p className='upload-image value'>{data.photo_college_letter.name}</p>
+                                        <p className='upload-image value'>{data.word.name}</p>
                                         <AiFillCloseCircle
-                                            onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
+                                            onClick={() => { setData({ ...data, word: '' }) }}
                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
                                     </div>
@@ -166,47 +201,23 @@ const Ser7 = () => {
                             </div>
                             <div className="select-img">
                                 <span className="title-upload">
-                                    {t('letter')}
+                                    {t('service7-step4.2')}
                                 </span>
-                                <label className='upload-image' htmlFor="upload-image">
+                                <label className='upload-image' htmlFor="upload-image2">
                                     <BiImageAdd className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
                                     hidden
-                                    id='upload-image'
-                                    name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                    id='upload-image2'
+                                    name='upload-image2'
+                                    onChange={(e) => { setData({ ...data, pdf: e.target.files[0] }) }}
                                 />
-                                {data.photo_college_letter &&
+                                {data.pdf &&
                                     <div>
-                                        <p className='upload-image value'>{data.photo_college_letter.name}</p>
+                                        <p className='upload-image value'>{data.pdf.name}</p>
                                         <AiFillCloseCircle
-                                            onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
-                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
-
-                                    </div>
-                                }
-                            </div>
-                            <div className="select-img">
-                                <span className="title-upload">
-                                    {t('letter')}
-                                </span>
-                                <label className='upload-image' htmlFor="upload-image">
-                                    <BiImageAdd className='img-icom' />
-                                    <p>{t('click-here')}</p>
-                                </label>
-                                <input type="file"
-                                    hidden
-                                    id='upload-image'
-                                    name='upload-image'
-                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
-                                />
-                                {data.photo_college_letter &&
-                                    <div>
-                                        <p className='upload-image value'>{data.photo_college_letter.name}</p>
-                                        <AiFillCloseCircle
-                                            onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
+                                            onClick={() => { setData({ ...data, pdf: '' }) }}
                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
                                     </div>
