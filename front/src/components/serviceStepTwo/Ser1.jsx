@@ -12,9 +12,9 @@ import PopupErrorMsg from '../../components/error/PopupErrorMsg'
 import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 
 
-const Ser1 = () => {
-    const { id } = useParams()
-    const { id2 } = useParams()
+const Ser1 = ({ ser }) => {
+    const id = ser.service_id;
+    const id2 = ser.ser_reg;
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -124,7 +124,7 @@ const Ser1 = () => {
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/Myservices`)
+                    navigate(`/`)
 
                 })
                 .catch((err) => {
@@ -161,7 +161,7 @@ const Ser1 = () => {
                     <div className="information-service_body">
                         <h1>{t(`service${id}-name`)}</h1>
                         <hr style={{ width: "60%" }} />
-                        <div style={{ display: 'flex' }}>
+                        <div className='data-c'>
                             <div className="img-btn">
                                 <img src={Serimg} alt="" className='ImageService' />
 

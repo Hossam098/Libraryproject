@@ -80,7 +80,7 @@ const Ser5 = () => {
                         <img src="../assets/mini-logo.png" alt="" />
                         <div className="information-service_body"  >
                             <h1>{t('service4-name')}</h1>
-                            <hr style={{ width: "60%" }} />
+                            <hr className='data-c' />
                             <img src={Serimg} alt="" className='ImageService' />
 
                             <div className="inputt" style={{ gridTemplateColumns: '1fr' }}>

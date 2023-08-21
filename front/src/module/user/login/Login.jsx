@@ -116,8 +116,8 @@ const Login = () => {
         <div className="main-content-logo" >
           <img src="./assets/mini-logo.png" alt="" className='im' />
         </div>
-        <div class="main-content">
-          <div class="main-content-form">
+        <div className="main-content">
+          <div className="main-content-form">
             <h3 style={{ marginBottom: "1rem" }}>{t('Login')}</h3>
             <form onSubmit={handleSubmit}>
               <div className="input-login-container" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl", textAlign: "right" } : { direction: "ltr", textAlign: "left" }}>
@@ -135,7 +135,7 @@ const Login = () => {
                   <p className='error'>{errors.email}</p>
                 </div>
 
-                <div class="input">
+                <div className="input">
                   <label>{t('pass')} </label>
                   <div
                     className={`passwordcontainer ${errors.password ? 'error-in' : ''}`}
