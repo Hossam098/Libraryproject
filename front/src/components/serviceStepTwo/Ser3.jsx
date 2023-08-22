@@ -17,6 +17,7 @@ const Ser3 = ({ ser }) => {
     const id = ser.service_id;
     const id2 = ser.ser_personal;
     const number = ser.files_numbers;
+    const status = ser.status;
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -45,6 +46,35 @@ const Ser3 = ({ ser }) => {
         } catch (err) {
             console.log(err)
         }
+
+        if (status == 3) {
+            try {
+                //هنعدل الداتا
+                axios.get(`${API_URL}/StepTwoRegEdit/${id}/${id2}`, { withCredentials: true })
+                    .then((res) => {
+                        setData({
+                            // payment_photo: res.data.photo_payment_receipt,
+                            // photo_college_letter: res.data.photo_college_letter,
+                            // research: res.data.research_plan_ar_pdf,
+                            // research_en: res.data.research_plan_en_pdf,
+                            // research_word: res.data.research_plan_ar_word,
+                            // research_word_en: res.data.research_plan_en_word,
+                            // translation: res.data.translation_paper,
+                        }
+                        )
+                    })
+                    .catch((err) => {
+                        console.log(err)
+
+                    })
+
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+
     }, [])
 
     const [data, setData] = useState({
@@ -211,38 +241,101 @@ const Ser3 = ({ ser }) => {
 
     }
 
-    console.log(number)
+    const hadleEdit = () => {
+        // console.log(data)
+        // setConfirm(false)
+        // axios.defaults.withCredentials = true
+        // console.log(data)
+        // if (!data.payment_photo) {
+        //     setError(t(`service${id}-step-two-err.payment-photo`))
+        //     return
+        // }
+        // if (!data.photo_college_letter) {
+        //     setError(t(`service${id}-step-two-err.letter`))
+        //     return
+        // }
+        // if (!data.research) {
+        //     setError(t(`service${id}-step-two-err.research`))
+        //     return
+        // }
+        // if (!data.research_word) {
+        //     setError(t(`service${id}-step-two-err.research-word`))
+        //     return
+        // }
+        // if (!data.translation) {
+        //     setError(t(`service${id}-step-two-err.translation`))
+        //     return
+        // }
 
-    // const renderInputs = () => {
-    //     const arr = [];
-    //     for (let i = 0; i < number; i++) {
-    //       arr.push(
-    //         <div className="select-img">
-    //           <span className="title-upload">
-    //             {`img ${i + 1}`}
-    //           </span>
-    //           <label className="upload-image" htmlFor={`word${i}`}>
-    //             <BiImageAdd className="img-icom" />
-    //             <p>{t('click-here')}</p>
-    //           </label>
-    //           <input
-    //             type="file"
-    //             hidden
-    //             id={`word${i}`}
-    //             name={`word${i}`}
-    //             onChange={(e) => {
-    //               setwords({
-    //                 ...words,
-    //                 [`word${i + 1}`]: e.target.files[0]
-    //               });
-    //               console.log(words)
-    //             }}
-    //           />
-    //         </div>
-    //       );
-    //     }
-    //     return arr;
-    //   };
+        // const formData = new FormData();
+
+        // if (data.payment_photo?.name) {
+        //     formData.append('payment_photo', data.payment_photo);
+        //   }
+        // if (data.photo_college_letter?.name) {
+        //     formData.append('photo_college_letter', data.photo_college_letter)
+        // }
+        // if (data.research?.name) {
+        //     formData.append('research', data.research)
+        // }
+        // if (data.research_en?.name) {
+        //     formData.append('research_en', data.research_en)
+        // }
+        // if (data.research_word?.name) {
+        //     formData.append('research_word', data.research_word)
+        // }
+        // if (data.research_word_en?.name) {
+        //     formData.append('research_word_en', data.research_word_en)
+        // }
+        // if (data.translation?.name) {
+        //     formData.append('translation', data.translation)
+        // }
+        // formData.append('service_id', id)
+        // formData.append('application_id', id2)
+
+        // setProgress(prevState => ({ ...prevState, started: true }))
+        // setMsg(t('uploading'))
+
+        // try {
+        //     axios.put(`${API_URL}/StepTwoReg/${id}/${id2}`, formData,
+        //         {
+        //             withCredentials: true, onUploadProgress: (ProgressEvent) => {
+        //                 setDisabled(true)
+        //                 let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+        //                 setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+        //             }
+        //         }
+
+        //     )
+        //         .then((res) => {
+        //             console.log(res.data)
+        //             alert("done")
+        //             navigate(`/`)
+        //         })
+        //         .catch((err) => {
+        //             console.log(err.response.data.message[0])
+        //             setError(err.response.data.message[0])
+        //             if (err && err.response && err.response.data && err.response.data[0]) {
+        //                 if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+        //                     navigate('/login')
+        //                 }
+        //             }
+        //             setMsg(null)
+        //             setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+        //             setDisabled(false)
+        //         })
+
+        // } catch (err) {
+        //     console.log(err)
+        //     console.log(err.response.data)
+        //     setMsg(null)
+        //     setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+        //     setDisabled(false)
+
+        // }
+    }
+
+    
 
 
     return (
@@ -265,7 +358,7 @@ const Ser3 = ({ ser }) => {
                                     disabled={disabled}
                                     onClick={confirmf} className='sub-now'>{t('submet')}</button>
                             </div>
-                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={status == 1 ? handleSubmit : hadleEdit} />}
                             <div className="inputt " >
 
                                 <div className="select-img two">
@@ -284,7 +377,9 @@ const Ser3 = ({ ser }) => {
                                     />
                                     {data.payment_photo &&
                                         <div>
-                                            <p className='upload-image value'>{data.payment_photo.name}</p>
+                                            <p className='upload-image value'>
+                                                {data.payment_photo.name?data.payment_photo.name:data.payment_photo}
+                                            </p>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, payment_photo: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -317,7 +412,9 @@ const Ser3 = ({ ser }) => {
 
                                                 {words[`word${i + 1}`] && (
                                                     <div>
-                                                        <p className='upload-image value'>{words[`word${i + 1}`].name}</p>
+                                                        <p className='upload-image value'>
+                                                            {words[`word${i + 1}`].name?words[`word${i + 1}`].name:words[`word${i + 1}`]}
+                                                        </p>
                                                         <AiFillCloseCircle
                                                             onClick={() => { setwords({ ...words, [`word${i + 1}`]: '' }) }}
                                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }}
@@ -346,7 +443,9 @@ const Ser3 = ({ ser }) => {
 
                                                 {pdfs[`pdf${i + 1}`] && (
                                                     <div>
-                                                        <p className='upload-image value'>{pdfs[`pdf${i + 1}`].name}</p>
+                                                        <p className='upload-image value'>
+                                                            {pdfs[`pdf${i + 1}`].name?pdfs[`pdf${i + 1}`].name:pdfs[`pdf${i + 1}`]}
+                                                        </p>
                                                         <AiFillCloseCircle
                                                             onClick={() => { setPdfs({ ...pdfs, [`pdf${i + 1}`]: '' }) }}
                                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }}
