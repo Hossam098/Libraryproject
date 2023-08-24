@@ -165,7 +165,7 @@ const Ser7 = () => {
                                     onChange={(e) => { setData({ ...data, decision: e.target.files[0] }) }}
                                 />
                                 {data.decision &&
-                                    <div>
+                                    <div className="text-container">
                                         <p className='upload-image value'>{data.decision.name}</p>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, decision: '' }) }}
@@ -190,7 +190,7 @@ const Ser7 = () => {
                                     onChange={(e) => { setData({ ...data, word: e.target.files[0] }) }}
                                 />
                                 {data.word &&
-                                    <div>
+                                    <div className="text-container">
                                         <p className='upload-image value'>{data.word.name}</p>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, word: '' }) }}
@@ -214,7 +214,7 @@ const Ser7 = () => {
                                     onChange={(e) => { setData({ ...data, pdf: e.target.files[0] }) }}
                                 />
                                 {data.pdf &&
-                                    <div>
+                                    <div className="text-container">
                                         <p className='upload-image value'>{data.pdf.name}</p>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, pdf: '' }) }}

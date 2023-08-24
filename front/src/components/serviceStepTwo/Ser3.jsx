@@ -25,6 +25,19 @@ const Ser3 = ({ ser }) => {
     const [msg, setMsg] = useState(null)
     const [disabled, setDisabled] = useState(false)
     const [confirm, setConfirm] = useState(false)
+    const [isMaxWidth, setIsMaxWidth] = useState(false);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMaxWidth(window.innerWidth <= 900);
+      };
+  
+      handleResize(); // Initial check
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
 
 
     useEffect(() => {
@@ -376,7 +389,7 @@ const Ser3 = ({ ser }) => {
                                         onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
                                     />
                                     {data.payment_photo &&
-                                        <div>
+                                        <div className="text-container">
                                             <p className='upload-image value'>
                                                 {data.payment_photo.name?data.payment_photo.name:data.payment_photo}
                                             </p>
@@ -411,7 +424,7 @@ const Ser3 = ({ ser }) => {
                                                 />
 
                                                 {words[`word${i + 1}`] && (
-                                                    <div>
+                                                    <div className="text-container">
                                                         <p className='upload-image value'>
                                                             {words[`word${i + 1}`].name?words[`word${i + 1}`].name:words[`word${i + 1}`]}
                                                         </p>
@@ -442,7 +455,7 @@ const Ser3 = ({ ser }) => {
                                                 />
 
                                                 {pdfs[`pdf${i + 1}`] && (
-                                                    <div>
+                                                    <div className="text-container">
                                                         <p className='upload-image value'>
                                                             {pdfs[`pdf${i + 1}`].name?pdfs[`pdf${i + 1}`].name:pdfs[`pdf${i + 1}`]}
                                                         </p>
@@ -457,13 +470,14 @@ const Ser3 = ({ ser }) => {
                                     ))
                                 }
 
-                                <div className="select-img">
+                                <div   className={`text-container${isMaxWidth ? ' two select-img' : ''}`}>
                                     <span className="title-upload">
                                         {t(`service${id}-step-two.accept-date`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image5">
                                     </label>
                                     <input type="date"
+                                        className={`text-container${isMaxWidth ? ' two' : ''}`}
                                         value={data.accept_date}
                                         id=''
                                         name=''
@@ -471,13 +485,16 @@ const Ser3 = ({ ser }) => {
                                     />
                                 </div>
 
-                                <div className="select-img">
+                                <div 
+                                        className={`text-container${isMaxWidth ? ' two select-img' : ''}`}
+                                >
                                     <span className="title-upload">
                                         {t(`service${id}-step-two.puplish-date`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image5">
                                     </label>
                                     <input type="date"
+                                         
                                         value={data.puplish_date}
                                         id=''
                                         name=''

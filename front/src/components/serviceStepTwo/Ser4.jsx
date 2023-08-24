@@ -395,7 +395,7 @@ const Ser4 = ({ ser }) => {
                                                 />
 
                                                 {words[`word${i + 1}`] && (
-                                                    <div>
+                                                    <div className="text-container">
                                                         <p className='upload-image value'>
                                                             {words[`word${i + 1}`].name?words[`word${i + 1}`].name:words[`word${i + 1}`]}
                                                         </p>
@@ -426,7 +426,7 @@ const Ser4 = ({ ser }) => {
                                                 />
 
                                                 {pdfs[`pdf${i + 1}`] && (
-                                                    <div>
+                                                    <div className="text-container">
                                                         <p className='upload-image value'>
                                                             {pdfs[`pdf${i + 1}`].name?pdfs[`pdf${i + 1}`].name:pdfs[`pdf${i + 1}`]}
                                                         </p>

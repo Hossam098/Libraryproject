@@ -323,7 +323,7 @@ const Ser1 = ({ ser }) => {
                                         onChange={(e) => { setData({ ...data, payment_photo: e.target.files[0] }) }}
                                     />
                                     {data.payment_photo &&
-                                        <div>
+                                        <div className="text-container">
                                             <p className='upload-image value'>
                                                 {data.payment_photo.name ? data.payment_photo.name : data.payment_photo}
                                                 </p>
