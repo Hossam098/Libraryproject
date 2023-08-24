@@ -161,6 +161,7 @@ const Ser3 = () => {
                                     {data.photo_college_letter &&
                                         <div>
                                             <p className='upload-image value'>{data.photo_college_letter.name}</p>
+                                            
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />

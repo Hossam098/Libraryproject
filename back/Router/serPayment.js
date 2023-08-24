@@ -196,7 +196,7 @@ serPayment.post('/payment',
 
                 if (result.affectedRows > 0) {
                     const submitData = {
-                        files_numbers : req.body.files_numbers,
+                        files_numbers: req.body.files_numbers,
                         ser_personal: result.insertId,
                         status: 0,
                         user_id: req.id,
@@ -232,7 +232,7 @@ serPayment.post('/payment',
 
                 if (result.affectedRows > 0) {
                     const submitData = {
-                        files_numbers : req.body.files_numbers,
+                        files_numbers: req.body.files_numbers,
                         ser_magazine: result.insertId,
                         status: 0,
                         user_id: req.id,
@@ -300,7 +300,7 @@ serPayment.post('/payment',
 
                 if (result.affectedRows > 0) {
                     const submitData = {
-                        files_numbers : req.body.files_numbers,
+                        files_numbers: req.body.files_numbers,
                         ser_best: result.insertId,
                         status: 0,
                         user_id: req.id,
@@ -346,7 +346,12 @@ serPayment.get('/getallwaiting',
                 return res.status(400).json({ message: error });
             }
 
-            const sqlSelect = "SELECT submit.* , services.* FROM submit INNER JOIN services ON submit.service_id = services.id WHERE submit.user_id = ? AND submit.status = 0 OR submit.status = 1 OR submit.status = 2 OR submit.status = 3";
+            const sqlSelect = `SELECT submit.*, services.*, users.*
+            FROM submit
+            INNER JOIN users ON submit.user_id = users.id
+            INNER JOIN services ON submit.service_id = services.id
+            WHERE submit.user_id = ?
+              AND (submit.status = 0 OR submit.status = 1 OR submit.status = 2 OR submit.status = 3 OR submit.status = 4);`
             const result = await query(sqlSelect, req.id);
 
             if (result.length > 0) {
@@ -363,94 +368,95 @@ serPayment.get('/getallwaiting',
     }
 );
 
-// serPayment.get('/getallwaitingofformation',
-//     checkUser,
-//     async (req, res) => {
-//         let error = [];
-//         try {
-//             const errors = validationResult(req);
-//             if (!errors.isEmpty()) {
-//                 errors.array().forEach(element => {
-//                     error.push(element.msg);
-//                 });
-//                 return res.status(400).json({ message: error });
-//             }
+serPayment.get('/paymentEdit/:id/:id2',
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        const id = req.params.id;
+        const id2 = req.params.id2;
+        try {
+            if (id == 1) {
+                const sqlSelect = "SELECT * FROM registration_services WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    return res.status(200).json(result[0]);
+                } else {
+                    error.push("No data found");
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 2) {
+                const sqlSelect = "SELECT * FROM formation_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    return res.status(200).json(result[0]);
+                } else {
+                    error.push("No data found");
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 3) {
+                const sqlSelect = "SELECT * FROM personal_examination_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    return res.status(200).json(result[0]);
+                } else {
+                    error.push("No data found");
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 4) {
+                const sqlSelect = "SELECT * FROM magazine_checking_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    return res.status(200).json(result[0]);
+                } else {
+                    error.push("No data found");
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 5) {
+                const sqlSelect = "SELECT * FROM upgrade_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    return res.status(200).json(result[0]);
+                } else {
+                    error.push("No data found");
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 6) {
+                const sqlSelect = "SELECT * FROM best_message_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    return res.status(200).json(result[0]);
+                } else {
+                    error.push("No data found");
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 7) {
+                const sqlSelect = "SELECT * FROM grant_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    return res.status(200).json(result[0]);
+                } else {
+                    error.push("No data found");
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 8) {
+                const sqlSelect = "SELECT * FROM knowledge_bank_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    return res.status(200).json(result[0]);
+                } else {
+                    error.push("No data found");
+                    return res.status(400).json({ message: error });
+                }
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
 
-//             SELECTWaitingCode('formation_service', req, res);
 
 
-//         } catch (errors) {
-//             error.push(errors);
-//             return res.status(500).json({ message: error });
-//         }
-//     }
-// );
-
-// serPayment.get('/getallwaitingofpersonal',
-//     checkUser,
-//     async (req, res) => {
-//         let error = [];
-//         try {
-//             const errors = validationResult(req);
-//             if (!errors.isEmpty()) {
-//                 errors.array().forEach(element => {
-//                     error.push(element.msg);
-//                 });
-//                 return res.status(400).json({ message: error });
-//             }
-
-//             SELECTWaitingCode('personal_examination_service', req, res, false);
-
-//         } catch (errors) {
-//             error.push(errors);
-//             return res.status(500).json({ message: error });
-//         }
-//     }
-// );
-
-// serPayment.get('/getallwaitingofmagazine',
-//     checkUser,
-//     async (req, res) => {
-//         let error = [];
-//         try {
-//             const errors = validationResult(req);
-//             if (!errors.isEmpty()) {
-//                 errors.array().forEach(element => {
-//                     error.push(element.msg);
-//                 });
-//                 return res.status(400).json({ message: error });
-//             }
-
-//             SELECTWaitingCode('magazine_checking_service', req, res, false);
-
-//         } catch (errors) {
-//             error.push(errors);
-//             return res.status(500).json({ message: error });
-//         }
-//     }
-// );
-
-// serPayment.get('/getallwaitingofbestmessage',
-//     checkUser,
-//     async (req, res) => {
-//         let error = [];
-//         try {
-//             const errors = validationResult(req);
-//             if (!errors.isEmpty()) {
-//                 errors.array().forEach(element => {
-//                     error.push(element.msg);
-//                 });
-//                 return res.status(400).json({ message: error });
-//             }
-
-//             SELECTWaitingCode('best_message_service', req, res, false);
-
-//         } catch (errors) {
-//             error.push(errors);
-//             return res.status(500).json({ message: error });
-//         }
-//     }
-// );
 
 export default serPayment;
 

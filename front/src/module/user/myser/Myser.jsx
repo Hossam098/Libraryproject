@@ -19,6 +19,7 @@ import Ser6 from '../../../components/serviceStepTwo/Ser6'
 import Ser7 from '../../../components/serviceStepTwo/Ser7'
 import Ser8 from '../../../components/serviceStepTwo/Ser8'
 import ServiceStepTwo from '../serviceStepTwo/ServiceStepTwo'
+import Service from '../service/Service'
 
 
 
@@ -30,6 +31,7 @@ const Myser = () => {
     const [step2, setStep2] = useState(false)
     const [id, setId] = useState(0)
     const [service, setService] = useState([])
+    const [status, setStatus] = useState(0)
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -62,9 +64,10 @@ const Myser = () => {
 
 
     return (
-        id !== 0 ? <ServiceStepTwo ID={id} Ser={service} /> :
-            <div>
+        id !== 0 && status !== 4 ? <ServiceStepTwo ID={id} Ser={service} /> :
+        id !== 0 && status == 4 ? <Service ID={id} Ser={service} /> :
 
+            <div>
                 <section id='services'>
                     <h2>{t("waiting-list")}</h2>
                     {
@@ -110,8 +113,8 @@ const Myser = () => {
                                                             </div>
                                                             <button className="waitbtn-edit"
                                                                 onClick={() => {
-                                                                    handleRoute(service.id)
-                                                                    setId(service.id)
+                                                                    handleRoute(service.service_id)
+                                                                    setId(service.service_id)
                                                                     console.log(id)
                                                                     setService(service)
                                                                 }}
@@ -133,10 +136,28 @@ const Myser = () => {
                                                                 </h2>
                                                                 <button className="waitbtn-edit"
                                                                     onClick={() => {
-                                                                        handleRoute(service.id)
-                                                                        setId(service.id)
+                                                                        handleRoute(service.service_id)
+                                                                        setId(service.service_id)
                                                                         console.log(id)
                                                                         setService(service)
+                                                                    }}
+                                                                >
+                                                                    {t('wait-edit')}
+                                                                </button>
+                                                            </>
+                                                            : service.status == 4 ?
+                                                            <>
+                                                                <h2 className='wait-txt'>
+                                                                    <GiSandsOfTime />
+                                                                    {service.response_text}
+                                                                </h2>
+                                                                <button className="waitbtn-edit"
+                                                                    onClick={() => {
+                                                                        handleRoute(service.service_id)
+                                                                        setId(service.service_id)
+                                                                        console.log(id)
+                                                                        setService(service)
+                                                                        setStatus(service.status)
                                                                     }}
                                                                 >
                                                                     {t('wait-edit')}
