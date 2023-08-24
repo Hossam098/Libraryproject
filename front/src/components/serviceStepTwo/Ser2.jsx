@@ -375,7 +375,7 @@ const Ser2 = ({ ser }) => {
                                         onChange={(e) => { setData({ ...data, research_word: e.target.files[0] }) }}
                                     />
                                     {data.research_word &&
-                                        <div>
+                                        <div className="text-container">
                                             <p className='upload-image value'>
                                                 {data.research_word.name?data.research_word.name:data.research_word}
                                             </p>

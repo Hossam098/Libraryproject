@@ -42,7 +42,8 @@ ul {
 
 }
 
-li {
+.right li ,
+.right li {
     width: fit-content;
     list-style: none;
 }
@@ -139,7 +140,7 @@ nav .menu span{
     border-radius: .2rem;
 }
 @media(max-width: 640px){
-    nav .menu{
+     nav .menu{
         display: flex;
     }
     ul.left{
@@ -157,7 +158,7 @@ nav .menu span{
     }
     .dropdown {
         margin: 1rem .5rem;
-    }
+    } 
     ul.open{
         display: flex;
     }

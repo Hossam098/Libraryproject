@@ -76,10 +76,16 @@
 }
 .value {
     padding: 1rem;
-    font-size: 1.3rem;
     color: #AD8700;
     font-weight: 600;
-   
+    max-width: 100%;
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+    word-break: break-all;
+}
+.text-container {
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .upload-image .img-icom {
@@ -109,7 +115,8 @@
 }
 
 .req select,
-.req input[type=text] {
+.req input[type=text] ,
+.req input[type=date] {
     height: 3rem;
     background-color: #ddd;
     font-size: 1.3rem;
@@ -117,6 +124,7 @@
     width: 80%;
     padding: 0 10px;
 }
+
 
 @media only screen and (max-width: 600px) {
     .inputt {
@@ -130,5 +138,8 @@
 @media only screen and (max-width: 900px) {
     .data-c{
         flex-direction: column;
+    }
+    .value{
+        font-size: .8rem;
     }
 }

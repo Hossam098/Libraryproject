@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef} from 'react'
+import { useState, useEffect,} from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineDown, AiOutlineRight } from 'react-icons/ai'
 import './unav.css'
@@ -24,30 +24,15 @@ const Unav = () => {
         setShowMenu(!showMenu);
     };
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [logged, setLogged] = useState('')
     const [services, setServices] = useState([])
     const [user, setUser] = useState({})
 
-    const menuRef = useRef(null);
+  
 
 
-    // const toggleDropdown = () => {
-    //     setIsDropdownOpen(!isDropdownOpen);
-    //   };
 
-    const handleClickOutside = (event) => {
-        if (menuRef.current && !menuRef.current.contains(event.target)) {
-          setShowMenu(false);
-        }
-      };
 
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-      }, []);
 
     useEffect(() => {
         axios.defaults.withCredentials = true
@@ -84,7 +69,7 @@ const Unav = () => {
     
 
 
-    // console.log(counter)
+   
 
     const handleLogout = () => {
         try {
@@ -110,7 +95,6 @@ const Unav = () => {
         <nav style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'ltr' } : { direction: 'rtl' }}>
             <div className={localStorage.getItem('i18nextLng')=== 'ar'?"menu r":"menu l"}
                 onClick={()=>{toggleMenu(); setShowServices(false);}}
-                ref={menuRef}
             >
                 <span></span>
                 <span></span>
@@ -125,7 +109,7 @@ const Unav = () => {
                     </a>
                     {showServices && (
                         <ul className="dropdown" style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}>
-                            <li><Link to='/profile'><RxAvatar /> {t('profile')}</Link></li>
+                            <li><Link to='/profile' onClick={()=>{setShowServices(false);}}><RxAvatar /> {t('profile')}</Link></li>
                             <li><TbLanguage /><Toggle /></li>
                             <hr />
                             <li onClick={handleLogout} className='logout'><FiLogOut /> {t('logout')}</li>
@@ -139,15 +123,15 @@ const Unav = () => {
                 )}
             </div>
             <div className="left">
-                <ul className={showMenu?" open left":"left"}>
+                <ul className={`left${showMenu ? ' open' : ''}`}>
                     <li>
-                        <NavLink to="/" onClick={()=>{setShowMenu(false); setShowServices(false) }}>{t('Home')}</NavLink>
+                        <NavLink to="/" onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('Home')}</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/contact"  onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('contact')}</NavLink>
+                        <NavLink to="/contact" onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('contact')}</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/about"  onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('about-us')}</NavLink>
+                        <NavLink to="/about" onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('about-us')}</NavLink>
                     </li>
                     <li>
                         <NavLink to="/allServices"  onClick={()=>{setShowMenu(false); setShowServices(false)}}>

@@ -100,7 +100,7 @@ const Ser5 = () => {
                                         name='upload-image'
                                         onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
                                     />
-                                    {data.photo_college_letter && <p className='upload-image value'>{data.photo_college_letter.name}</p>}
+                                    {data.photo_college_letter && <div className="text-container"> <p className='upload-image value'>{data.photo_college_letter.name}</p> </div>}
                                 </div>
                             </div>
                             {error != '' && <h2 style={{ color: '#AD8700' }}>
@@ -113,38 +113,7 @@ const Ser5 = () => {
 
                     </div>
                 </div>
-                {/* <div className="inputt">
-                <select
-                    name=""
-                    id=""
-                    value={data.level}
-                    onChange={(e) => { setData({ ...data, level: e.target.value }) }}
-                >
-                    <option value="">level</option>
-                    <option value="0">master's</option>
-                    <option value="1">doctor</option>
-                </select>
-                <div className="select-img">
-                    <span className="title-upload">
-                        {t('service1-step1')}
-                    </span>
-                    <label className='upload-image' htmlFor="upload-image">
-                        <BiImageAdd className='img-icom' />
-                        <p>add image</p>
-                    </label>
-                    <input type="file"
-                        hidden
-                        id='upload-image'
-                        name='upload-image'
-                        onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
-                    />
-                </div>
-            </div>
-            <input
-                type="submit"
-                value="submit now"
-                onClick={() => handleSubmit()}
-            /> */}
+
             </div>
         </div>
     )

@@ -159,7 +159,7 @@ const Ser6 = () => {
                                         onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
                                     />
                                     {data.photo_college_letter &&
-                                        <div>
+                                        <div className="text-container">
                                             <p className='upload-image value'>{data.photo_college_letter.name}</p>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
