@@ -124,6 +124,23 @@
     width: 80%;
     padding: 0 10px;
 }
+.openPdf{
+    margin:0  auto 1rem;
+    padding: .5rem .8rem;
+    background-color: #AD8700;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    transition: all .4s ease;
+    /* border: 1px solid #AD8700; */
+}
+.openPdf:hover{
+    
+    color: #AD8700;
+    background-color: #fff;
+    
+}
 
 
 @media only screen and (max-width: 600px) {

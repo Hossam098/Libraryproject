@@ -319,6 +319,7 @@
     ,
     "service5-step-two": {
         "payment-photo" : "Payment photo",
+        "research_list" :"List of approved and dated researches with a recent date",
         "files_numbers": "Enter the number of searches",
         "word1":"First search word",
          "word2":"Second search word",

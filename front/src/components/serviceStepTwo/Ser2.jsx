@@ -325,6 +325,15 @@ const Ser2 = ({ ser }) => {
                                             <p className='upload-image value'>
                                                 {data.payment_photo.name ? data.payment_photo.name : data.payment_photo}
                                             </p>
+                                            <button className='upload-image openPdf' 
+                                            onClick={() => {
+                                                if (data.payment_photo.name) {
+                                                    return window.open(URL.createObjectURL(data.payment_photo))
+                                                } else {
+                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
+                                                }
+                                            }}
+                                            >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, payment_photo: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -352,6 +361,15 @@ const Ser2 = ({ ser }) => {
                                             <p className='upload-image value'>
                                                 {data.research.name?data.research.name:data.research}
                                             </p>
+                                            <button className='upload-image openPdf' 
+                                            onClick={() => {
+                                                if (data.research.name) {
+                                                    return window.open(URL.createObjectURL(data.research))
+                                                } else {
+                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.research}`)
+                                                }
+                                            }}
+                                            >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, research: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -379,6 +397,15 @@ const Ser2 = ({ ser }) => {
                                             <p className='upload-image value'>
                                                 {data.research_word.name?data.research_word.name:data.research_word}
                                             </p>
+                                            <button className='upload-image openPdf' 
+                                            onClick={() => {
+                                                if (data.research_word.name) {
+                                                    return window.open(URL.createObjectURL(data.research_word))
+                                                } else {
+                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word}`)
+                                                }
+                                            }}
+                                            >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, research_word: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -405,6 +432,15 @@ const Ser2 = ({ ser }) => {
                                             <p className='upload-image value'>
                                                 {data.form.name?data.form.name:data.form}
                                             </p>
+                                            <button className='upload-image openPdf' 
+                                            onClick={() => {
+                                                if (data.form.name) {
+                                                    return window.open(URL.createObjectURL(data.form))
+                                                } else {
+                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.form}`)
+                                                }
+                                            }}
+                                            >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, form: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
