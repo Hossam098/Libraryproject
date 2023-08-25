@@ -13,7 +13,7 @@ import PopupConfirmMsg from '../error/PopupConfirmMsg'
 import { AiFillCloseCircle } from 'react-icons/ai'
 
 
-const Ser7 = () => {
+const Ser7 = ({ser}) => {
     const { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -22,6 +22,20 @@ const Ser7 = () => {
     const [progress, setProgress] = useState({ started: false, value: 0 })
     const [confirm, setConfirm] = useState(false)
     const [disabled, setDisabled] = useState(false)
+    let id2 = 0
+    let status = 0
+    if (id === undefined) {
+        id = ser.service_id;
+        id2 = ser.ser_reg;
+        status = ser.status;
+    }
+    const [data, setData] = useState({
+        level: '',
+        decision: '',
+        pdf: '',
+        word: '',
+        service_id: id
+    })
 
     useEffect(() => {
         axios.defaults.withCredentials = true
@@ -42,18 +56,13 @@ const Ser7 = () => {
     }, [])
 
 
-    const [data, setData] = useState({
-        level: '',
-        decision: '',
-        pdf: '',
-        word: '',
-        service_id: id
-    })
+
     const handleCloseError = () => {
         setError('')
         setConfirm(false)
     };
     const handleSubmit = () => {
+        if (status !== 4) {
         setConfirm(false)
         if (!data.level) {
             setError(t(`service2-step-two-err.level`))
@@ -119,8 +128,85 @@ const Ser7 = () => {
             setDisabled(false)
 
         }
-
     }
+    else if (status == 4) {
+        
+        setConfirm(false)
+        if (!data.level) {
+            setError(t(`service2-step-two-err.level`))
+            return
+        }
+        if (!data.decision) {
+            setError(t(`service7-step4.3-err`))
+            return
+        }
+
+        if (!data.pdf) {
+            setError(t(`service7-step4.2-err`))
+            return
+        }
+        if (!data.word) {
+            setError(t(`service7-step4.1-err`))
+            return
+        }
+       
+        axios.defaults.withCredentials = true
+        console.log(data)
+        const formData = new FormData();
+        formData.append('level', data.level);
+        if (data.decision?.name) {
+            formData.append('decision', data.decision)
+        }
+        if (data.pdf?.name) {
+            formData.append('pdf', data.pdf)
+        }
+        if (data.word?.name) {
+            formData.append('word', data.word)
+        }
+
+        setProgress(prevState => ({ ...prevState, started: true }))
+        setMsg(t('uploading'))
+
+        try {
+            axios.put(`${API_URL}/paymentedit/${id}/${id2}`, formData, {
+                withCredentials: true,
+                onUploadProgress: (ProgressEvent) => {
+                    setDisabled(true)
+                    let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                    setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+
+                }
+            })
+                .then((res) => {
+                    console.log(res.data)
+                    alert("done")
+                    navigate(`/Myservices`)
+                })
+                .catch((err) => {
+                    console.log(err.response.data.message[0])
+                    setError(err.response.data.message[0])
+                    if (err && err.response && err.response.data && err.response.data[0]) {
+                        if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                            navigate('/login')
+                        }
+                    }
+                    setMsg(null)
+                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                    setDisabled(false)
+                })
+        } catch (err) {
+            console.log(err)
+            console.log(err.response.data)
+            setMsg(null)
+            setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+            setDisabled(false)
+
+        }
+    }
+    }
+
+
+
     const confirmf = () => {
         setConfirm(true)
     }
@@ -166,7 +252,18 @@ const Ser7 = () => {
                                 />
                                 {data.decision &&
                                     <div className="text-container">
-                                        <p className='upload-image value'>{data.decision.name}</p>
+                                        <p className='upload-image value'>
+                                            {data.decision.name?data.decision.name:data.decision}
+                                        </p>
+                                        <button className='upload-image openPdf' 
+                                            onClick={() => {
+                                                if (data.decision.name) {
+                                                    return window.open(URL.createObjectURL(data.decision))
+                                                } else {
+                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.decision}`)
+                                                }
+                                            }}
+                                            >{t('open')}</button>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, decision: '' }) }}
                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -191,7 +288,18 @@ const Ser7 = () => {
                                 />
                                 {data.word &&
                                     <div className="text-container">
-                                        <p className='upload-image value'>{data.word.name}</p>
+                                        <p className='upload-image value'>
+                                            {data.word.name?data.word.name:data.word}
+                                        </p>
+                                        <button className='upload-image openPdf' 
+                                            onClick={() => {
+                                                if (data.word.name) {
+                                                    return window.open(URL.createObjectURL(data.word))
+                                                } else {
+                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.word}`)
+                                                }
+                                            }}
+                                            >{t('open')}</button>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, word: '' }) }}
                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -215,7 +323,18 @@ const Ser7 = () => {
                                 />
                                 {data.pdf &&
                                     <div className="text-container">
-                                        <p className='upload-image value'>{data.pdf.name}</p>
+                                        <p className='upload-image value'>
+                                            {data.pdf.name?data.pdf.name:data.pdf}
+                                        </p>
+                                        <button className='upload-image openPdf' 
+                                            onClick={() => {
+                                                if (data.pdf.name) {
+                                                    return window.open(URL.createObjectURL(data.pdf))
+                                                } else {
+                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.pdf}`)
+                                                }
+                                            }}
+                                            >{t('open')}</button>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, pdf: '' }) }}
                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />

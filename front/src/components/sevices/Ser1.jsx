@@ -57,27 +57,6 @@ const Ser1 = ({ ser }) => {
             console.log(err)
         }
 
-        if (status == 4) {
-            try {
-                axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
-                    .then((res) => {
-                        console.log(res.data.level)
-                        setData({
-                            level: res.data.level,
-                            photo_college_letter: res.data.photo_college_letter,
-                        }
-                        )
-                    })
-                    .catch((err) => {
-                        console.log(err)
-
-                    })
-
-
-            } catch (err) {
-                console.log(err)
-            }
-        }
 
     }, [])
 
@@ -88,6 +67,7 @@ const Ser1 = ({ ser }) => {
         setError('')
         setConfirm(false)
     };
+
     const handleSubmit = () => {
         if (status !== 4) {
             setConfirm(false)
@@ -111,7 +91,7 @@ const Ser1 = ({ ser }) => {
             setMsg(t('uploading'))
 
             try {
-                axios.post(`${API_URL}/payment`, formData, {
+                axios.post(`${API_URL}/payment`,formData, {
                     withCredentials: true,
                     onUploadProgress: (ProgressEvent) => {
                         setDisabled(true)
