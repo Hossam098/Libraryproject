@@ -313,6 +313,7 @@
     "service5-step-two": {
         "payment-photo" : " صورة ايصال الدفع ",
         "files_numbers" : " ادخل عدد الابحاث  ",
+        "research_list" : "قائمة الابحاث المعتمدة والمؤرخة بتاريخ حديث",
         "word1":"البحث الاول word",
         "word2":"البحث الثانى word",
         "word3":"البحث الثالث word",

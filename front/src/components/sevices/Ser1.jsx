@@ -13,7 +13,7 @@ import PopupConfirmMsg from '../error/PopupConfirmMsg'
 import { AiFillCloseCircle } from 'react-icons/ai'
 
 
-const Ser1 = ({ ser }) => {
+const Ser1 = ({ser}) => {
     let { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();

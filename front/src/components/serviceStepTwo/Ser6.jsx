@@ -63,10 +63,10 @@ const Ser6 = ({ ser }) => {
                     })
                     .catch((err) => {
                         console.log(err)
-                        
+
                     })
-    
-    
+
+
             } catch (err) {
                 console.log(err)
             }
@@ -124,7 +124,7 @@ const Ser6 = ({ ser }) => {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
         }
-      
+
         const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
         const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
@@ -363,8 +363,17 @@ const Ser6 = ({ ser }) => {
                                     {data.payment_photo &&
                                         <div className="text-container">
                                             <p className='upload-image value'>
-                                                {data.payment_photo.name?data.payment_photo.name:data.payment_photo}
+                                                {data.payment_photo.name ? data.payment_photo.name : data.payment_photo}
                                             </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.payment_photo.name) {
+                                                        return window.open(URL.createObjectURL(data.payment_photo))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
+                                                    }
+                                                }}
+                                            >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, payment_photo: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -398,8 +407,17 @@ const Ser6 = ({ ser }) => {
                                                 {words[`word${i + 1}`] && (
                                                     <div className="text-container">
                                                         <p className='upload-image value'>
-                                                            {words[`word${i + 1}`].name?words[`word${i + 1}`].name:words[`word${i + 1}`]}
+                                                            {words[`word${i + 1}`].name ? words[`word${i + 1}`].name : words[`word${i + 1}`]}
                                                         </p>
+                                                        <button className='upload-image openPdf'
+                                                            onClick={() => {
+                                                                if (words[`word${i + 1}`].name) {
+                                                                    return window.open(URL.createObjectURL(words[`word${i + 1}`]))
+                                                                } else {
+                                                                    return window.open(`http://localhost:5000/${ser.national_id}/${words[`word${i + 1}`]}`)
+                                                                }
+                                                            }}
+                                                        >{t('open')}</button>
                                                         <AiFillCloseCircle
                                                             onClick={() => { setwords({ ...words, [`word${i + 1}`]: '' }) }}
                                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }}
@@ -429,8 +447,17 @@ const Ser6 = ({ ser }) => {
                                                 {pdfs[`pdf${i + 1}`] && (
                                                     <div className="text-container">
                                                         <p className='upload-image value'>
-                                                            {pdfs[`pdf${i + 1}`].name?pdfs[`pdf${i + 1}`].name:pdfs[`pdf${i + 1}`]}
+                                                            {pdfs[`pdf${i + 1}`].name ? pdfs[`pdf${i + 1}`].name : pdfs[`pdf${i + 1}`]}
                                                         </p>
+                                                        <button className='upload-image openPdf'
+                                                            onClick={() => {
+                                                                if (pdfs[`pdf${i + 1}`].name) {
+                                                                    return window.open(URL.createObjectURL(pdfs[`pdf${i + 1}`]))
+                                                                } else {
+                                                                    return window.open(`http://localhost:5000/${ser.national_id}/${pdfs[`pdf${i + 1}`]}`)
+                                                                }
+                                                            }}
+                                                        >{t('open')}</button>
                                                         <AiFillCloseCircle
                                                             onClick={() => { setPdfs({ ...pdfs, [`pdf${i + 1}`]: '' }) }}
                                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }}
@@ -442,7 +469,7 @@ const Ser6 = ({ ser }) => {
                                     ))
                                 }
 
-                               
+
 
                             </div>
                             {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
