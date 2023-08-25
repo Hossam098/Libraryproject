@@ -13,7 +13,7 @@ import PopupConfirmMsg from '../error/PopupConfirmMsg'
 import { AiFillCloseCircle } from 'react-icons/ai'
 
 
-const Ser2 = () => {
+const Ser2 = ({ ser }) => {
     const { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -22,7 +22,18 @@ const Ser2 = () => {
     const [progress, setProgress] = useState({ started: false, value: 0 })
     const [confirm, setConfirm] = useState(false)
     const [disabled, setDisabled] = useState(false)
-
+    let id2 = 0
+    let status = 0
+    if (id === undefined) {
+        id = ser.service_id;
+        //id2 = ser;
+        status = ser.status;
+    }
+    const [data, setData] = useState({
+        level: '',
+        photo_college_letter: '',
+        service_id: id
+    })
 
 
     useEffect(() => {
@@ -41,13 +52,30 @@ const Ser2 = () => {
         } catch (err) {
             console.log(err)
         }
+        if (status == 4) {
+            try {
+                axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+                    .then((res) => {
+                        console.log(res.data.level)
+                        setData({
+                            level: res.data.level,
+                            photo_college_letter: res.data.photo_college_letter,
+                        }
+                        )
+                    })
+                    .catch((err) => {
+                        console.log(err)
+
+                    })
+
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
     }, [])
 
-    const [data, setData] = useState({
-        level: '',
-        photo_college_letter: '',
-        service_id: id
-    })
+
     const confirmf = () => {
         setConfirm(true)
     }
@@ -59,69 +87,128 @@ const Ser2 = () => {
 
 
     const handleSubmit = () => {
-        setConfirm(false)
+        if (status !== 4) {
+            setConfirm(false)
 
-        if (!data.level) {
-            setError(t(`service${id}-step-two-err.level`))
-            return
-        }
-        if (!data.photo_college_letter) {
-            setError(t(`service${id}-step-two-err.letter`))
-            return
-        }
+            if (!data.level) {
+                setError(t(`service${id}-step-two-err.level`))
+                return
+            }
+            if (!data.photo_college_letter) {
+                setError(t(`service${id}-step-two-err.letter`))
+                return
+            }
 
 
 
-        axios.defaults.withCredentials = true
-        console.log(data)
-        const formData = new FormData();
-        formData.append('level', data.level);
-        formData.append('photo_college_letter', data.photo_college_letter);
-        formData.append('service_id', data.service_id);
-        setProgress(prevState => ({ ...prevState, started: true }))
-        setMsg(t('uploading'))
-        try {
-            axios.post(`${API_URL}/payment`, formData, {
-                withCredentials: true,
+            axios.defaults.withCredentials = true
+            console.log(data)
+            const formData = new FormData();
+            formData.append('level', data.level);
+            formData.append('photo_college_letter', data.photo_college_letter);
+            formData.append('service_id', data.service_id);
+            setProgress(prevState => ({ ...prevState, started: true }))
+            setMsg(t('uploading'))
+            try {
+                axios.post(`${API_URL}/payment`, formData, {
+                    withCredentials: true,
 
-                onUploadProgress: (ProgressEvent) => {
-                    setDisabled(true)
-                    let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-                    setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+                    onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
 
-                }
-            })
-                .then((res) => {
-                    console.log(res.data)
-                    alert("done")
-                    navigate(`/Myservices`)
-                })
-                .catch((err) => {
-                    console.log(err.response.data.message[0])
-                    setError(err.response.data.message[0])
-                    if (err && err.response && err.response.data && err.response.data[0]) {
-                        if (!err.response.data[0].user && err.response.data[0].user != undefined) {
-                            navigate('/login')
-                        }
                     }
-
-                    setMsg(null)
-                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                    setDisabled(false)
                 })
-        } catch (err) {
-            console.log(err)
-            console.log(err.response.data)
-            setMsg(null)
-            setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-            setDisabled(false)
+                    .then((res) => {
+                        console.log(res.data)
+                        alert("done")
+                        navigate(`/Myservices`)
+                    })
+                    .catch((err) => {
+                        console.log(err.response.data.message[0])
+                        setError(err.response.data.message[0])
+                        if (err && err.response && err.response.data && err.response.data[0]) {
+                            if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                                navigate('/login')
+                            }
+                        }
+
+                        setMsg(null)
+                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                        setDisabled(false)
+                    })
+            } catch (err) {
+                console.log(err)
+                console.log(err.response.data)
+                setMsg(null)
+                setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                setDisabled(false)
+            }
+        }
+        else if (status == 4) {
+
+            setConfirm(false)
+            if (!data.level) {
+                setError(t(`service${id}-step-two-err.level`))
+                return
+            }
+            if (!data.photo_college_letter) {
+                setError(t(`service${id}-step-two-err.letter`))
+                return
+            }
+
+            axios.defaults.withCredentials = true
+            console.log(data)
+            const formData = new FormData();
+            formData.append('level', data.level);
+            if (data.photo_college_letter?.name) {
+                formData.append('photo_college_letter', data.photo_college_letter)
+            }
+
+            setProgress(prevState => ({ ...prevState, started: true }))
+            setMsg(t('uploading'))
+
+            try {
+                axios.put(`${API_URL}/paymentedit/${id}/${id2}`, formData, {
+                    withCredentials: true,
+                    onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+
+                    }
+                })
+                    .then((res) => {
+                        console.log(res.data)
+                        alert("done")
+                        navigate(`/Myservices`)
+                    })
+                    .catch((err) => {
+                        console.log(err.response.data.message[0])
+                        setError(err.response.data.message[0])
+                        if (err && err.response && err.response.data && err.response.data[0]) {
+                            if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                                navigate('/login')
+                            }
+                        }
+                        setMsg(null)
+                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                        setDisabled(false)
+                    })
+            } catch (err) {
+                console.log(err)
+                console.log(err.response.data)
+                setMsg(null)
+                setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                setDisabled(false)
+
+            }
         }
 
     }
 
 
-    const handleNext = () => {
-    }
 
     return (
         <div className="inst">
@@ -164,7 +251,18 @@ const Ser2 = () => {
                                     />
                                     {data.photo_college_letter &&
                                         <div>
-                                            <p className='upload-image value'>{data.photo_college_letter.name}</p>
+                                            <p className='upload-image value'>
+                                                {data.photo_college_letter.name ? data.photo_college_letter.name : data.photo_college_letter}
+                                            </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.photo_college_letter.name) {
+                                                        return window.open(URL.createObjectURL(data.photo_college_letter))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.photo_college_letter}`)
+                                                    }
+                                                }}
+                                            >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />

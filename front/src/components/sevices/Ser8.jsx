@@ -3,7 +3,6 @@ import { BiImageAdd } from 'react-icons/bi'
 import './ser.css'
 import axios from 'axios'
 import { API_URL } from '../../config'
-import { t } from 'i18next'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +12,7 @@ import PopupConfirmMsg from '../error/PopupConfirmMsg'
 import { AiFillCloseCircle } from 'react-icons/ai'
 
 
-const Ser8 = () => {
+const Ser8 = ({ ser }) => {
     const { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -22,6 +21,19 @@ const Ser8 = () => {
     const [progress, setProgress] = useState({ started: false, value: 0 })
     const [confirm, setConfirm] = useState(false)
     const [disabled, setDisabled] = useState(false)
+    let id2 = 0
+    let status = 0
+    if (id === undefined) {
+        id = ser.service_id;
+        id2 = ser.ser_reg;
+        status = ser.status;
+    }
+
+    const [data, setData] = useState({
+        level: '',
+        academic_div: '',
+        service_id: id
+    })
 
     useEffect(() => {
         axios.defaults.withCredentials = true
@@ -41,66 +53,112 @@ const Ser8 = () => {
         }
     }, [])
 
-
-    const [data, setData] = useState({
-        level: '',
-        academic_div: '',
-        service_id: id
-    })
     const handleCloseError = () => {
         setError('')
         setConfirm(false)
     };
     const handleSubmit = () => {
-        setConfirm(false)
-        if (!data.level) {
-            setError(t(`service2-step-two-err.level`))
-            return
-        }
-        if (!data.academic_div) {
-            setError(t(`academic-div-err`))
-            return
-        }
+        if (status !== 4) {
+            setConfirm(false)
+            if (!data.level) {
+                setError(t(`service2-step-two-err.level`))
+                return
+            }
+            if (!data.academic_div) {
+                setError(t(`academic-div-err`))
+                return
+            }
 
 
-        axios.defaults.withCredentials = true
-        setProgress(prevState => ({ ...prevState, started: true }))
-        setMsg(t('uploading'))
+            axios.defaults.withCredentials = true
+            setProgress(prevState => ({ ...prevState, started: true }))
+            setMsg(t('uploading'))
 
-        try {
-            axios.post(`${API_URL}/StepTwoSer8`, data, {
-                withCredentials: true,
-                onUploadProgress: (ProgressEvent) => {
-                    setDisabled(true)
-                    let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-                    setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+            try {
+                axios.post(`${API_URL}/StepTwoSer8`, data, {
+                    withCredentials: true,
+                    onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
 
-                }
-            })
-                .then((res) => {
-                    console.log(res.data)
-                    alert("done")
-                    navigate(`/Myservices`)
-                })
-                .catch((err) => {
-                    console.log(err.response.data.message[0])
-                    setError(err.response.data.message[0])
-                    if (err && err.response && err.response.data && err.response.data[0]) {
-                        if (!err.response.data[0].user && err.response.data[0].user != undefined) {
-                            navigate('/login')
-                        }
                     }
-                    setMsg(null)
-                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                    setDisabled(false)
                 })
-        } catch (err) {
-            console.log(err)
-            console.log(err.response.data)
-            setMsg(null)
-            setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-            setDisabled(false)
+                    .then((res) => {
+                        console.log(res.data)
+                        alert("done")
+                        navigate(`/Myservices`)
+                    })
+                    .catch((err) => {
+                        console.log(err.response.data.message[0])
+                        setError(err.response.data.message[0])
+                        if (err && err.response && err.response.data && err.response.data[0]) {
+                            if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                                navigate('/login')
+                            }
+                        }
+                        setMsg(null)
+                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                        setDisabled(false)
+                    })
+            } catch (err) {
+                console.log(err)
+                console.log(err.response.data)
+                setMsg(null)
+                setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                setDisabled(false)
 
+            }
+        } else if (status == 4) {
+
+            if (!data.level) {
+                setError(t(`service2-step-two-err.level`))
+                return
+            }
+            if (!data.academic_div) {
+                setError(t(`academic-div-err`))
+                return
+            }
+
+            axios.defaults.withCredentials = true
+            setProgress(prevState => ({ ...prevState, started: true }))
+            setMsg(t('uploading'))
+
+            try {
+                axios.put(`${API_URL}/paymentedit/${id}/${id2}`, data, {
+                    withCredentials: true,
+                    onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+
+                    }
+                })
+                    .then((res) => {
+                        console.log(res.data)
+                        alert("done")
+                        navigate(`/Myservices`)
+                    })
+                    .catch((err) => {
+                        console.log(err.response.data.message[0])
+                        setError(err.response.data.message[0])
+                        if (err && err.response && err.response.data && err.response.data[0]) {
+                            if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                                navigate('/login')
+                            }
+                        }
+                        setMsg(null)
+                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                        setDisabled(false)
+                    })
+            } catch (err) {
+                console.log(err)
+                console.log(err.response.data)
+                setMsg(null)
+                setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                setDisabled(false)
+
+            }
         }
 
     }
@@ -131,7 +189,7 @@ const Ser8 = () => {
                                 <option value="0">{t('master')}</option>
                                 <option value="1">{t('phd')}</option>
                             </select>
-                        
+
 
                             <input
                                 style={localStorage.getItem('i18nextLng') == 'en' ? { textAlign: 'left' } : { textAlign: 'right' }}
@@ -142,8 +200,8 @@ const Ser8 = () => {
                                 value={data.academic_div}
                                 onChange={(e) => { setData({ ...data, academic_div: e.target.value }) }}
                             />
-                                
-                            
+
+
                         </div>
 
                         {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}

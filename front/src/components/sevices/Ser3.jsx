@@ -14,7 +14,7 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 
 
 
-const Ser3 = () => {
+const Ser3 = ({ser}) => {
     const { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -23,6 +23,18 @@ const Ser3 = () => {
     const [progress, setProgress] = useState({ started: false, value: 0 })
     const [confirm, setConfirm] = useState(false)
     const [disabled, setDisabled] = useState(false)
+    let id2 = 0
+    let status = 0
+    if (id === undefined) {
+        id = ser.service_id;
+        id2 = ser.ser_reg;
+        status = ser.status;
+    }
+    const [data, setData] = useState({
+        photo_college_letter: '',
+        files_numbers: '',
+        service_id: id
+    })
 
 
 
@@ -41,13 +53,12 @@ const Ser3 = () => {
         } catch (err) {
             console.log(err)
         }
+
+        
+
     }, [])
 
-    const [data, setData] = useState({
-        photo_college_letter: '',
-        files_numbers: '',
-        service_id: id
-    })
+   
 
     const handleCloseError = () => {
         setError('')
@@ -56,6 +67,7 @@ const Ser3 = () => {
 
 
     const handleSubmit = () => {
+        if(status !==4){
         setConfirm(false)
 
         if (!data.photo_college_letter) {
@@ -115,6 +127,69 @@ const Ser3 = () => {
             setMsg(null)
             setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
             setDisabled(false)
+        }}
+        else if (status == 4) {
+        
+            setConfirm(false)
+            if (!data.photo_college_letter) {
+                setError(t(`service${id}-step-two-err.letter`))
+                return
+            }
+            if (!data.files_numbers) {
+                setError(t(`service${id}-step-two-err.files_numbers`))
+                return
+            }
+            if (data.files_numbers > 10) {
+                setError(t(`service${id}-step-two-err.files_numbers2`))
+                return
+            }
+
+            axios.defaults.withCredentials = true
+            console.log(data)
+            const formData = new FormData();
+            formData.append('files_numbers', data.files_numbers);
+            if (data.photo_college_letter?.name) {
+                formData.append('photo_college_letter', data.photo_college_letter)
+            }
+
+            setProgress(prevState => ({ ...prevState, started: true }))
+            setMsg(t('uploading'))
+
+            try {
+                axios.put(`${API_URL}/paymentedit/${id}/${id2}`, formData, {
+                    withCredentials: true,
+                    onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+
+                    }
+                })
+                    .then((res) => {
+                        console.log(res.data)
+                        alert("done")
+                        navigate(`/Myservices`)
+                    })
+                    .catch((err) => {
+                        console.log(err.response.data.message[0])
+                        setError(err.response.data.message[0])
+                        if (err && err.response && err.response.data && err.response.data[0]) {
+                            if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                                navigate('/login')
+                            }
+                        }
+                        setMsg(null)
+                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                        setDisabled(false)
+                    })
+            } catch (err) {
+                console.log(err)
+                console.log(err.response.data)
+                setMsg(null)
+                setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                setDisabled(false)
+
+            }
         }
 
     }
@@ -160,8 +235,19 @@ const Ser3 = () => {
                                     />
                                     {data.photo_college_letter &&
                                         <div>
-                                            <p className='upload-image value'>{data.photo_college_letter.name}</p>
-                                            
+                                            <p className='upload-image value'>
+                                                {data.photo_college_letter.name ? data.photo_college_letter.name : data.photo_college_letter}
+                                            </p>
+
+                                             <button className='upload-image openPdf' 
+                                            onClick={() => {
+                                                if (data.photo_college_letter.name) {
+                                                    return window.open(URL.createObjectURL(data.photo_college_letter))
+                                                } else {
+                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.photo_college_letter}`)
+                                                }
+                                            }}
+                                            >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
