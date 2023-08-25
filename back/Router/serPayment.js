@@ -12,6 +12,9 @@ const serPayment = express();
 serPayment.use(express.Router());
 const handleDeleteFile = (req) => {
 
+    if (!req.file) {
+        return;
+    }
     const img = req.file.filename;
     const path = `./public/imgs/${req.national_id}/${img}`;
 
@@ -24,21 +27,7 @@ const handleDeleteFile = (req) => {
     )
 }
 
-// async function SELECTWaitingCode(params, req, res, level = true) {
 
-//     const sqlSelect = `SELECT ${params}.* ,services.* , users.* FROM ${params} INNER JOIN services ON ${params}.service_id = services.id INNER JOIN users ON ${params}.user_id = users.id WHERE  (${params}.status = 0 OR ${params}.status = 1 OR ${params}.status = 2 OR ${params}.status = 3) AND ${params}.user_id = ?`;
-
-//     const result = await query(sqlSelect, req.id);
-//     if (result.length > 0) {
-//         delete result[0].password;
-//         delete result[0].img;
-//         delete result[0].id;
-//         return res.status(200).json(result);
-//     } else {
-
-//         return res.status(400).json({ message: false });
-//     }
-// }
 
 serPayment.get('/getAllServices',
     async (req, res) => {
@@ -254,16 +243,21 @@ serPayment.post('/payment',
                     return res.status(400).json({ message: error });
                 }
             } else if (req.body.service_id == 5) {
-
-                const update = {
+                if (!req.body.files_numbers) {
+                    error.push("Files numbers is required");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+                const upgrade_service = {
                     photo_college_letter: req.file.filename,
                 }
 
                 const sqlInsert = "INSERT INTO upgrade_service SET ?";
-                const result = await query(sqlInsert, update);
+                const result = await query(sqlInsert, upgrade_service);
 
                 if (result.affectedRows > 0) {
                     const submitData = {
+                        files_numbers: req.body.files_numbers,
                         ser_upgrade: result.insertId,
                         status: 0,
                         user_id: req.id,
@@ -455,6 +449,310 @@ serPayment.get('/paymentEdit/:id/:id2',
     }
 );
 
+serPayment.put('/paymentEdit/:id/:id2',
+    checkUser,
+    upload.single('photo_college_letter'),
+    async (req, res) => {
+        let error = [];
+        const id = req.params.id;
+        const id2 = req.params.id2;
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            /****     check file type pdf or img      ****/
+
+            if (req.file) {
+                const file = req.file;
+                const ext = file.filename.split(".").pop();
+                console.log(ext);
+                if (ext != 'pdf' && ext != 'jpeg' && ext != 'jpg' && ext != 'png' && ext != 'webp' && ext != 'svg' && ext != 'docx' && ext != 'doc') {
+                    error.push("File type not allowed");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            }
+
+            if (id == 1) {
+                const sqlSelect = "SELECT * FROM registration_services WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    const reg = {
+                        level: req.body.level ? req.body.level : result[0].level,
+                        photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
+                    }
+
+                    const sqlUpdate = "UPDATE registration_services SET ? WHERE id = ?";
+                    const result2 = await query(sqlUpdate, [reg, id2]);
+                    if (result2.affectedRows > 0) {
+                        const sqlSelect2 = "SELECT * FROM submit WHERE ser_reg = ? AND user_id = ?";
+                        const result3 = await query(sqlSelect2, [id2, req.id]);
+                        if (result3.length > 0) {
+                            const submitData = {
+                                status: 0,
+                                edit_date: new Date(),
+                            }
+
+                            const sqlUpdate2 = "UPDATE submit SET ? WHERE ser_reg = ? AND user_id = ?";
+                            const result4 = await query(sqlUpdate2, [submitData, id2, req.id]);
+                            if (result4.affectedRows > 0) {
+                                return res.status(200).json({ message: "Update successful" });
+                            } else {
+                                error.push("Update failed");
+                                handleDeleteFile(req);
+                                return res.status(400).json({ message: error });
+                            }
+                        } else {
+                            error.push("No data found");
+                            handleDeleteFile(req);
+                            return res.status(400).json({ message: error });
+                        }
+                    } else {
+                        error.push("Update failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("No data found");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 2) {
+                const sqlSelect = "SELECT * FROM formation_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    const form = {
+                        level: req.body.level ? req.body.level : result[0].level,
+                        photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
+                    }
+
+                    console.log(form);
+                    const sqlUpdate = "UPDATE formation_service SET ? WHERE id = ?";
+                    const result2 = await query(sqlUpdate, [form, id2]);
+                    if (result2.affectedRows > 0) {
+                        const sqlSelect2 = "SELECT * FROM submit WHERE ser_formation = ? AND user_id = ?";
+                        const result3 = await query(sqlSelect2, [id2, req.id]);
+                        if (result3.length > 0) {
+                            const submitData = {
+                                status: 0,
+                                edit_date: new Date(),
+                            }
+
+                            const sqlUpdate2 = "UPDATE submit SET ? WHERE ser_formation = ? AND user_id = ?";
+                            const result4 = await query(sqlUpdate2, [submitData, id2, req.id]);
+                            if (result4.affectedRows > 0) {
+                                return res.status(200).json({ message: "Update successful" });
+                            } else {
+                                error.push("Update failed");
+                                handleDeleteFile(req);
+                                return res.status(400).json({ message: error });
+                            }
+                        } else {
+                            error.push("No data found");
+                            handleDeleteFile(req);
+                            return res.status(400).json({ message: error });
+                        }
+                    } else {
+                        error.push("Update failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("No data found");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 3) {
+                const sqlSelect = "SELECT * FROM personal_examination_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    const personal = {
+                        photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
+                    }
+
+                    const sqlUpdate = "UPDATE personal_examination_service SET ? WHERE id = ?";
+                    const result2 = await query(sqlUpdate, [personal, id2]);
+                    if (result2.affectedRows > 0) {
+                        const sqlSelect2 = "SELECT * FROM submit WHERE ser_personal = ? AND user_id = ?";
+                        const result3 = await query(sqlSelect2, [id2, req.id]);
+                        if (result3.length > 0) {
+                            const submitData = {
+                                files_numbers: req.body.files_numbers ? req.body.files_numbers : result3[0].files_numbers,
+                                status: 0,
+                                edit_date: new Date(),
+                            }
+
+                            const sqlUpdate2 = "UPDATE submit SET ? WHERE ser_personal = ? AND user_id = ?";
+                            const result4 = await query(sqlUpdate2, [submitData, id2, req.id]);
+                            if (result4.affectedRows > 0) {
+                                return res.status(200).json({ message: "Update successful" });
+                            } else {
+                                error.push("Update failed");
+                                handleDeleteFile(req);
+                                return res.status(400).json({ message: error });
+                            }
+                        } else {
+                            error.push("No data found");
+                            handleDeleteFile(req);
+                            return res.status(400).json({ message: error });
+                        }
+                    } else {
+                        error.push("Update failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("No data found");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 4) {
+                const sqlSelect = "SELECT * FROM magazine_checking_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    const magazine = {
+                        photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
+                    }
+
+                    const sqlUpdate = "UPDATE magazine_checking_service SET ? WHERE id = ?";
+                    const result2 = await query(sqlUpdate, [magazine, id2]);
+                    if (result2.affectedRows > 0) {
+                        const sqlSelect2 = "SELECT * FROM submit WHERE ser_magazine = ? AND user_id = ?";
+                        const result3 = await query(sqlSelect2, [id2, req.id]);
+                        if (result3.length > 0) {
+                            const submitData = {
+                                files_numbers: req.body.files_numbers ? req.body.files_numbers : result3[0].files_numbers,
+                                status: 0,
+                                edit_date: new Date(),
+                            }
+
+                            const sqlUpdate2 = "UPDATE submit SET ? WHERE ser_magazine = ? AND user_id = ?";
+                            const result4 = await query(sqlUpdate2, [submitData, id2, req.id]);
+                            if (result4.affectedRows > 0) {
+                                return res.status(200).json({ message: "Update successful" });
+                            } else {
+                                error.push("Update failed");
+                                handleDeleteFile(req);
+                                return res.status(400).json({ message: error });
+                            }
+                        } else {
+                            error.push("No data found");
+                            handleDeleteFile(req);
+                            return res.status(400).json({ message: error });
+                        }
+                    } else {
+                        error.push("Update failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("No data found");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 5) {
+                const sqlSelect = "SELECT * FROM upgrade_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    const upgrade_service = {
+                        photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
+                    }
+
+                    const sqlUpdate = "UPDATE upgrade_service SET ? WHERE id = ?";
+                    const result2 = await query(sqlUpdate, [upgrade_service, id2]);
+                    if (result2.affectedRows > 0) {
+                        const sqlSelect2 = "SELECT * FROM submit WHERE ser_upgrade = ? AND user_id = ?";
+                        const result3 = await query(sqlSelect2, [id2, req.id]);
+                        if (result3.length > 0) {
+                            const submitData = {
+                                files_numbers: req.body.files_numbers ? req.body.files_numbers : result3[0].files_numbers,
+                                status: 0,
+                                edit_date: new Date(),
+                            }
+
+                            const sqlUpdate2 = "UPDATE submit SET ? WHERE ser_upgrade = ? AND user_id = ?";
+                            const result4 = await query(sqlUpdate2, [submitData, id2, req.id]);
+                            if (result4.affectedRows > 0) {
+                                return res.status(200).json({ message: "Update successful" });
+                            } else {
+                                error.push("Update failed");
+                                handleDeleteFile(req);
+                                return res.status(400).json({ message: error });
+                            }
+                        } else {
+                            error.push("No data found");
+                            handleDeleteFile(req);
+                            return res.status(400).json({ message: error });
+                        }
+                    } else {
+                        error.push("Update failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("No data found");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+            } else if (id == 6) {
+                const sqlSelect = "SELECT * FROM best_message_service WHERE id = ?";
+                const result = await query(sqlSelect, id2);
+                if (result.length > 0) {
+                    const best = {
+                        photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
+                    }
+
+                    const sqlUpdate = "UPDATE best_message_service SET ? WHERE id = ?";
+                    const result2 = await query(sqlUpdate, [best, id2]);
+                    if (result2.affectedRows > 0) {
+                        const sqlSelect2 = "SELECT * FROM submit WHERE ser_best = ? AND user_id = ?";
+                        const result3 = await query(sqlSelect2, [id2, req.id]);
+                        if (result3.length > 0) {
+                            const submitData = {
+                                files_numbers: req.body.files_numbers ? req.body.files_numbers : result3[0].files_numbers,
+                                status: 0,
+                                edit_date: new Date(),
+                            }
+
+                            const sqlUpdate2 = "UPDATE submit SET ? WHERE ser_best = ? AND user_id = ?";
+                            const result4 = await query(sqlUpdate2, [submitData, id2, req.id]);
+                            if (result4.affectedRows > 0) {
+                                return res.status(200).json({ message: "Update successful" });
+                            } else {
+                                error.push("Update failed");
+                                handleDeleteFile(req);
+                                return res.status(400).json({ message: error });
+                            }
+                        } else {
+                            error.push("No data found");
+                            handleDeleteFile(req);
+                            return res.status(400).json({ message: error });
+                        }
+                    } else {
+                        error.push("Update failed");
+                        handleDeleteFile(req);
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("No data found");
+                    handleDeleteFile(req);
+                    return res.status(400).json({ message: error });
+                }
+
+            }
+
+        } catch (errors) {
+            error.push(errors);
+            handleDeleteFile(req);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
 
 
 

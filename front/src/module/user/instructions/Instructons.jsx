@@ -76,8 +76,10 @@ const Instructons = () => {
             {id == 5 ?
               <>
                 <li>2- {t('service5-step2')}</li>
+                <li style={{color: "#ad8700" }}>********{t('service5-step4')}********</li>
+
                 <li>3- {t('service3-step1')}</li>
-                <li>4- {t('service5-step3')}</li>
+                <li>4- {t(`service${id}-step-two.files_numbers`)}</li>
               </>
               : null
 
@@ -112,10 +114,10 @@ const Instructons = () => {
                       <li>3- {t('service3-step5')}</li>
                     </> : id == 5 ?
                       <>
-                        <li>5- {t('service1-step4')}</li>
-                        <li>6- {t('service5-step5')}</li>
-                        <li>7- {t('service5-step6')}</li>
-                        <li>8- {t('service5-step7')}</li>
+                        <li>4- {t('service1-step4')}</li>
+                        <li>5- {t('service5-step5')}</li>
+                        <li>6- {t('service5-step6')}</li>
+                        <li>7- {t('service5-step7')}</li>
                         
                         </> : id == 6 ?
                         <>

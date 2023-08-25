@@ -15,7 +15,7 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 
 
 const Ser4 = ({ser}) => {
-    const { id } = useParams()
+    let { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -25,10 +25,12 @@ const Ser4 = ({ser}) => {
     const [disabled, setDisabled] = useState(false)
     let id2 = 0
     let status = 0
+    let files_numbers = ''
     if (id === undefined) {
         id = ser.service_id;
-        id2 = ser.ser_reg;
+        id2 = ser.ser_magazine   ;
         status = ser.status;
+        files_numbers = ser.files_numbers;
     }
     const [data, setData] = useState({
         photo_college_letter: '',
@@ -36,6 +38,7 @@ const Ser4 = ({ser}) => {
         service_id: id
     })
 
+    console.log(files_numbers)
 
 
     useEffect(() => {
@@ -53,9 +56,30 @@ const Ser4 = ({ser}) => {
         } catch (err) {
             console.log(err)
         }
+        if (status == 4) {
+            try {
+                axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+                    .then((res) => {
+                        setData({
+                            photo_college_letter: res.data.photo_college_letter,
+                        }
+                        )
+                    })
+                    .catch((err) => {
+                        console.log(err)
+
+                    })
+
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
     }, [])
 
 
+    console.log(data)
 
     const handleCloseError = () => {
         setError('')
@@ -75,10 +99,10 @@ const Ser4 = ({ser}) => {
             setError(t(`service${id}-step-two-err.files_numbers`))
             return
         }
-        if (data.files_numbers > 10) {
-            setError(t(`service${id}-step-two-err.files_numbers2`))
-            return
-        }
+        if (data.files_numbers < 0 || data.files_numbers >= 10) {
+                setError(t(`service${id}-step-two-err.files_numbers2`))
+                return
+            }
 
 
         axios.defaults.withCredentials = true
@@ -137,10 +161,10 @@ const Ser4 = ({ser}) => {
             setError(t(`service${id}-step-two-err.files_numbers`))
             return
         }
-        if (data.files_numbers > 10) {
-            setError(t(`service${id}-step-two-err.files_numbers2`))
-            return
-        }
+        if (data.files_numbers < 0 || data.files_numbers >= 10) {
+                setError(t(`service${id}-step-two-err.files_numbers2`))
+                return
+            }
 
         axios.defaults.withCredentials = true
         console.log(data)
@@ -166,7 +190,7 @@ const Ser4 = ({ser}) => {
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/Myservices`)
+                    navigate(`/`)
                 })
                 .catch((err) => {
                     console.log(err.response.data.message[0])
@@ -205,17 +229,23 @@ const Ser4 = ({ser}) => {
                     <div className="information-service">
                         <img src="../assets/mini-logo.png" alt="" />
                         <div className="information-service_body"  >
-                            <h1>{t('service3-name')}</h1>
+                            <h1>{t(`service${id}-name`)}</h1>
                             <hr style={{ width: "60%" }} />
                             <img src={Serimg} alt="" className='ImageServicee' />
 
                             <div className="inputt">
 
-                                <input type="number"
-                                    placeholder={t(`service${id}-step-two.files_numbers`)}
-                                    value={data.files_numbers}
-                                    onChange={(e) => { setData({ ...data, files_numbers: e.target.value }) }}
-                                />
+                            <div className="select-img">
+                                    {(data.files_numbers !== '' || files_numbers !== '' )&&
+                                        <h3>{t(`service${id}-step-two.files_numbers`)}</h3>
+                                    }
+
+                                    <input type="number"
+                                        placeholder={t(`service${id}-step-two.files_numbers`)}
+                                        value={data.files_numbers == '' ? files_numbers : data.files_numbers}
+                                        onChange={(e) => { setData({ ...data, files_numbers: e.target.value }) }}
+                                    />
+                                </div>
 
                                 <div className="select-img">
                                     <span className="title-upload">

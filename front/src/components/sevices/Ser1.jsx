@@ -57,6 +57,27 @@ const Ser1 = ({ ser }) => {
             console.log(err)
         }
 
+        if (status == 4) {
+            try {
+                axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+                    .then((res) => {
+                        console.log(res.data.level)
+                        setData({
+                            level: res.data.level,
+                            photo_college_letter: res.data.photo_college_letter,
+                        }
+                        )
+                    })
+                    .catch((err) => {
+                        console.log(err)
+
+                    })
+
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
 
     }, [])
 
@@ -129,7 +150,7 @@ const Ser1 = ({ ser }) => {
         } else if (status == 4) {
         
             setConfirm(false)
-            if (!data.level) {
+            if (data.level == '' && data.level !== 0) {
                 setError(t(`service${id}-step-two-err.level`))
                 return
             }
@@ -162,7 +183,7 @@ const Ser1 = ({ ser }) => {
                     .then((res) => {
                         console.log(res.data)
                         alert("done")
-                        navigate(`/Myservices`)
+                        navigate(`/`)
                     })
                     .catch((err) => {
                         console.log(err.response.data.message[0])

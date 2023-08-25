@@ -15,7 +15,7 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 
 
 const Ser3 = ({ser}) => {
-    const { id } = useParams()
+    let { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -25,10 +25,12 @@ const Ser3 = ({ser}) => {
     const [disabled, setDisabled] = useState(false)
     let id2 = 0
     let status = 0
+    let files_numbers = ''
     if (id === undefined) {
         id = ser.service_id;
-        id2 = ser.ser_reg;
+        id2 = ser.ser_personal   ;
         status = ser.status;
+        files_numbers = ser.files_numbers;
     }
     const [data, setData] = useState({
         photo_college_letter: '',
@@ -36,6 +38,7 @@ const Ser3 = ({ser}) => {
         service_id: id
     })
 
+    console.log(files_numbers)
 
 
     useEffect(() => {
@@ -53,12 +56,30 @@ const Ser3 = ({ser}) => {
         } catch (err) {
             console.log(err)
         }
+        if (status == 4) {
+            try {
+                axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+                    .then((res) => {
+                        setData({
+                            photo_college_letter: res.data.photo_college_letter,
+                        }
+                        )
+                    })
+                    .catch((err) => {
+                        console.log(err)
 
-        
+                    })
+
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
 
     }, [])
 
-   
+
+    console.log(data)
 
     const handleCloseError = () => {
         setError('')
@@ -67,7 +88,7 @@ const Ser3 = ({ser}) => {
 
 
     const handleSubmit = () => {
-        if(status !==4){
+        if(status!== 4){
         setConfirm(false)
 
         if (!data.photo_college_letter) {
@@ -78,10 +99,10 @@ const Ser3 = ({ser}) => {
             setError(t(`service${id}-step-two-err.files_numbers`))
             return
         }
-        if (data.files_numbers > 10) {
-            setError(t(`service${id}-step-two-err.files_numbers2`))
-            return
-        }
+        if (data.files_numbers < 0 || data.files_numbers >= 10) {
+                setError(t(`service${id}-step-two-err.files_numbers2`))
+                return
+            }
 
 
         axios.defaults.withCredentials = true
@@ -127,70 +148,71 @@ const Ser3 = ({ser}) => {
             setMsg(null)
             setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
             setDisabled(false)
-        }}
-        else if (status == 4) {
+        }
         
-            setConfirm(false)
-            if (!data.photo_college_letter) {
-                setError(t(`service${id}-step-two-err.letter`))
-                return
-            }
-            if (!data.files_numbers) {
-                setError(t(`service${id}-step-two-err.files_numbers`))
-                return
-            }
-            if (data.files_numbers > 10) {
+    }        else if (status == 4) {
+        
+        setConfirm(false)
+        if (!data.photo_college_letter) {
+            setError(t(`service${id}-step-two-err.letter`))
+            return
+        }
+        if (!data.files_numbers) {
+            setError(t(`service${id}-step-two-err.files_numbers`))
+            return
+        }
+        if (data.files_numbers < 0 || data.files_numbers >= 10) {
                 setError(t(`service${id}-step-two-err.files_numbers2`))
                 return
             }
 
-            axios.defaults.withCredentials = true
-            console.log(data)
-            const formData = new FormData();
-            formData.append('files_numbers', data.files_numbers);
-            if (data.photo_college_letter?.name) {
-                formData.append('photo_college_letter', data.photo_college_letter)
-            }
-
-            setProgress(prevState => ({ ...prevState, started: true }))
-            setMsg(t('uploading'))
-
-            try {
-                axios.put(`${API_URL}/paymentedit/${id}/${id2}`, formData, {
-                    withCredentials: true,
-                    onUploadProgress: (ProgressEvent) => {
-                        setDisabled(true)
-                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
-
-                    }
-                })
-                    .then((res) => {
-                        console.log(res.data)
-                        alert("done")
-                        navigate(`/Myservices`)
-                    })
-                    .catch((err) => {
-                        console.log(err.response.data.message[0])
-                        setError(err.response.data.message[0])
-                        if (err && err.response && err.response.data && err.response.data[0]) {
-                            if (!err.response.data[0].user && err.response.data[0].user != undefined) {
-                                navigate('/login')
-                            }
-                        }
-                        setMsg(null)
-                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                        setDisabled(false)
-                    })
-            } catch (err) {
-                console.log(err)
-                console.log(err.response.data)
-                setMsg(null)
-                setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                setDisabled(false)
-
-            }
+        axios.defaults.withCredentials = true
+        console.log(data)
+        const formData = new FormData();
+        formData.append('files_numbers', data.files_numbers);
+        if (data.photo_college_letter?.name) {
+            formData.append('photo_college_letter', data.photo_college_letter)
         }
+
+        setProgress(prevState => ({ ...prevState, started: true }))
+        setMsg(t('uploading'))
+
+        try {
+            axios.put(`${API_URL}/paymentedit/${id}/${id2}`, formData, {
+                withCredentials: true,
+                onUploadProgress: (ProgressEvent) => {
+                    setDisabled(true)
+                    let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                    setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+
+                }
+            })
+                .then((res) => {
+                    console.log(res.data)
+                    alert("done")
+                    navigate(`/`)
+                })
+                .catch((err) => {
+                    console.log(err.response.data.message[0])
+                    setError(err.response.data.message[0])
+                    if (err && err.response && err.response.data && err.response.data[0]) {
+                        if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                            navigate('/login')
+                        }
+                    }
+                    setMsg(null)
+                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                    setDisabled(false)
+                })
+        } catch (err) {
+            console.log(err)
+            console.log(err.response.data)
+            setMsg(null)
+            setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+            setDisabled(false)
+
+        }
+    }
 
     }
 
@@ -207,17 +229,23 @@ const Ser3 = ({ser}) => {
                     <div className="information-service">
                         <img src="../assets/mini-logo.png" alt="" />
                         <div className="information-service_body"  >
-                            <h1>{t('service3-name')}</h1>
+                            <h1>{t(`service${id}-name`)}</h1>
                             <hr style={{ width: "60%" }} />
                             <img src={Serimg} alt="" className='ImageServicee' />
 
                             <div className="inputt">
 
-                                <input type="number"
-                                    placeholder={t(`service${id}-step-two.files_numbers`)}
-                                    value={data.files_numbers}
-                                    onChange={(e) => { setData({ ...data, files_numbers: e.target.value }) }}
-                                />
+                            <div className="select-img">
+                                    {(data.files_numbers !== '' || files_numbers !== '' )&&
+                                        <h3>{t(`service${id}-step-two.files_numbers`)}</h3>
+                                    }
+
+                                    <input type="number"
+                                        placeholder={t(`service${id}-step-two.files_numbers`)}
+                                        value={data.files_numbers == '' ? files_numbers : data.files_numbers}
+                                        onChange={(e) => { setData({ ...data, files_numbers: e.target.value }) }}
+                                    />
+                                </div>
 
                                 <div className="select-img">
                                     <span className="title-upload">
@@ -234,12 +262,11 @@ const Ser3 = ({ser}) => {
                                         onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
                                     />
                                     {data.photo_college_letter &&
-                                        <div>
+                                        <div className="text-container">
                                             <p className='upload-image value'>
-                                                {data.photo_college_letter.name ? data.photo_college_letter.name : data.photo_college_letter}
+                                                {data.photo_college_letter.name?data.photo_college_letter.name:data.photo_college_letter}
                                             </p>
-
-                                             <button className='upload-image openPdf' 
+                                            <button className='upload-image openPdf' 
                                             onClick={() => {
                                                 if (data.photo_college_letter.name) {
                                                     return window.open(URL.createObjectURL(data.photo_college_letter))
