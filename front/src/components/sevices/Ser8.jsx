@@ -13,7 +13,7 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 
 
 const Ser8 = ({ ser }) => {
-    const { id } = useParams()
+    let { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -25,7 +25,7 @@ const Ser8 = ({ ser }) => {
     let status = 0
     if (id === undefined) {
         id = ser.service_id;
-        id2 = ser.ser_reg;
+        id2 = ser.ser_knowledge ;
         status = ser.status;
     }
 
@@ -47,12 +47,33 @@ const Ser8 = ({ ser }) => {
                     console.log(err)
                     navigate('/login')
                 })
+                if (status == 3) {
+                    try {
+                        axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+                            .then((res) => {
+                                setData({
+                                    level: res.data.level,
+                                    academic_div: res.data.academic,
+                                }
+                                )
+                            })
+                            .catch((err) => {
+                                console.log(err)
+        
+                            })
+        
+        
+                    } catch (err) {
+                        console.log(err)
+                    }
+                }
 
         } catch (err) {
             console.log(err)
         }
     }, [])
 
+    console.log(data)
     const handleCloseError = () => {
         setError('')
         setConfirm(false)
@@ -75,7 +96,7 @@ const Ser8 = ({ ser }) => {
             setMsg(t('uploading'))
 
             try {
-                axios.post(`${API_URL}/StepTwoSer8`, data, {
+                axios.post(`${API_URL}/StepTwoSer78/${id}/${id2}`, data, {
                     withCredentials: true,
                     onUploadProgress: (ProgressEvent) => {
                         setDisabled(true)
@@ -87,7 +108,7 @@ const Ser8 = ({ ser }) => {
                     .then((res) => {
                         console.log(res.data)
                         alert("done")
-                        navigate(`/Myservices`)
+                        navigate(`/`)
                     })
                     .catch((err) => {
                         console.log(err.response.data.message[0])

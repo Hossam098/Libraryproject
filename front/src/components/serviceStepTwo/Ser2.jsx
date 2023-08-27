@@ -10,6 +10,7 @@ import Serimg from '../../images/serIMG.png'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import PopupErrorMsg from '../../components/error/PopupErrorMsg'
 import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
+import { BsFilePdf, BsFileEarmarkWord } from 'react-icons/bs'
 
 
 const Ser2 = ({ ser }) => {
@@ -55,31 +56,18 @@ const Ser2 = ({ ser }) => {
             console.log(err)
         }
 
-        // if (status === 3) {
-        //     const updatedData = {
-        //       ...data,
-        //       payment_photo: ser.payment_photo,
-        //       research: ser.research,
-        //       research_word: ser.research_word,
-        //       form: ser.form,
-        //     };
-
-
-        //     setData(updatedData);
-        //   }
+        
         if (status == 3) {
             try {
                 //هنعدل الداتا
                 axios.get(`${API_URL}/StepTwoRegEdit/${id}/${id2}`, { withCredentials: true })
                     .then((res) => {
                         setData({
-                            // payment_photo: res.data.photo_payment_receipt,
-                            // photo_college_letter: res.data.photo_college_letter,
-                            // research: res.data.research_plan_ar_pdf,
-                            // research_en: res.data.research_plan_en_pdf,
-                            // research_word: res.data.research_plan_ar_word,
-                            // research_word_en: res.data.research_plan_en_word,
-                            // translation: res.data.translation_paper,
+                            payment_photo: res.data.photo_payment_receipt,
+                            research: res.data.message_pdf_ar,
+                            research_word: res.data.message_word_ar,
+                            form: res.data.quote_check_form,
+
                         }
                         )
                     })
@@ -122,10 +110,22 @@ const Ser2 = ({ ser }) => {
         if (!data.research) {
             setError(t(`service${id}-step-two-err.research`))
             return
+        }else if (data.research?.name) {
+            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+            if (!validExtensions.test(data.research.name)) {
+                setError(t(`service${id}-step-two-err.research`))
+                return
+            }
         }
         if (!data.research_word) {
             setError(t(`service${id}-step-two-err.research-word`))
             return
+        }else if (data.research_word?.name) {
+            const validExtensions2 = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
+            if (!validExtensions2.test(data.research_word.name)) {
+                setError(t(`service${id}-step-two-err.research-word`))
+                return
+            }
         }
         if (!data.form) {
             setError(t(`service${id}-step-two-err.form`))
@@ -185,99 +185,7 @@ const Ser2 = ({ ser }) => {
     }
 
 
-    const hadleEdit = () => {
-        // console.log(data)
-        // setConfirm(false)
-        // axios.defaults.withCredentials = true
-        // console.log(data)
-        // if (!data.payment_photo) {
-        //     setError(t(`service${id}-step-two-err.payment-photo`))
-        //     return
-        // }
-        // if (!data.photo_college_letter) {
-        //     setError(t(`service${id}-step-two-err.letter`))
-        //     return
-        // }
-        // if (!data.research) {
-        //     setError(t(`service${id}-step-two-err.research`))
-        //     return
-        // }
-        // if (!data.research_word) {
-        //     setError(t(`service${id}-step-two-err.research-word`))
-        //     return
-        // }
-        // if (!data.translation) {
-        //     setError(t(`service${id}-step-two-err.translation`))
-        //     return
-        // }
-
-        // const formData = new FormData();
-
-        // if (data.payment_photo?.name) {
-        //     formData.append('payment_photo', data.payment_photo);
-        //   }
-        // if (data.photo_college_letter?.name) {
-        //     formData.append('photo_college_letter', data.photo_college_letter)
-        // }
-        // if (data.research?.name) {
-        //     formData.append('research', data.research)
-        // }
-        // if (data.research_en?.name) {
-        //     formData.append('research_en', data.research_en)
-        // }
-        // if (data.research_word?.name) {
-        //     formData.append('research_word', data.research_word)
-        // }
-        // if (data.research_word_en?.name) {
-        //     formData.append('research_word_en', data.research_word_en)
-        // }
-        // if (data.translation?.name) {
-        //     formData.append('translation', data.translation)
-        // }
-        // formData.append('service_id', id)
-        // formData.append('application_id', id2)
-
-        // setProgress(prevState => ({ ...prevState, started: true }))
-        // setMsg(t('uploading'))
-
-        // try {
-        //     axios.put(`${API_URL}/StepTwoReg/${id}/${id2}`, formData,
-        //         {
-        //             withCredentials: true, onUploadProgress: (ProgressEvent) => {
-        //                 setDisabled(true)
-        //                 let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-        //                 setProgress(prevState => ({ ...prevState, value: percentCompleted }))
-        //             }
-        //         }
-
-        //     )
-        //         .then((res) => {
-        //             console.log(res.data)
-        //             alert("done")
-        //             navigate(`/`)
-        //         })
-        //         .catch((err) => {
-        //             console.log(err.response.data.message[0])
-        //             setError(err.response.data.message[0])
-        //             if (err && err.response && err.response.data && err.response.data[0]) {
-        //                 if (!err.response.data[0].user && err.response.data[0].user != undefined) {
-        //                     navigate('/login')
-        //                 }
-        //             }
-        //             setMsg(null)
-        //             setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-        //             setDisabled(false)
-        //         })
-
-        // } catch (err) {
-        //     console.log(err)
-        //     console.log(err.response.data)
-        //     setMsg(null)
-        //     setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-        //     setDisabled(false)
-
-        // }
-    }
+   
 
 
 
@@ -303,7 +211,7 @@ const Ser2 = ({ ser }) => {
                                     onClick={confirmf} className='sub-now'>{t('submet')}
                                 </button>
                             </div>
-                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={status == 1 ? handleSubmit : hadleEdit} />}
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit } />}
                             <div className="inputt" >
 
                                 <div className="select-img">
@@ -344,10 +252,10 @@ const Ser2 = ({ ser }) => {
 
                                 <div className="select-img">
                                     <span className="title-upload">
-                                        {t(`service${id}-step-two.research-word`)}
+                                        {t(`service${id}-step-two.research`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image2">
-                                        <BiImageAdd className='img-icom' />
+                                    <BsFilePdf className="img-icom" />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"
@@ -380,10 +288,10 @@ const Ser2 = ({ ser }) => {
 
                                 <div className="select-img">
                                     <span className="title-upload">
-                                        {t(`service${id}-step-two.research`)}
+                                        {t(`service${id}-step-two.research-word`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image4">
-                                        <BiImageAdd className='img-icom' />
+                                    <BsFileEarmarkWord className="img-icom" />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"

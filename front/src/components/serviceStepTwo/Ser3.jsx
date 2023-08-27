@@ -27,6 +27,39 @@ const Ser3 = ({ ser }) => {
     const [confirm, setConfirm] = useState(false)
     const [isMaxWidth, setIsMaxWidth] = useState(false);
 
+
+    const [data, setData] = useState({
+        payment_photo: '',
+        service_id: id,
+        application_id: id2,
+        puplish_date: '',
+        accept_date: '',
+    })
+    const [words, setwords] = useState({
+        word1: "",
+        word2: "",
+        word3: "",
+        word4: "",
+        word5: "",
+        word6: "",
+        word7: "",
+        word8: "",
+        word9: "",
+        word10: ""
+    })
+    const [pdfs, setPdfs] = useState({
+        pdf1: "",
+        pdf2: "",
+        pdf3: "",
+        pdf4: "",
+        pdf5: "",
+        pdf6: "",
+        pdf7: "",
+        pdf8: "",
+        pdf9: "",
+        pdf10: ""
+    })
+
     useEffect(() => {
         const handleResize = () => {
             setIsMaxWidth(window.innerWidth <= 900);
@@ -66,15 +99,35 @@ const Ser3 = ({ ser }) => {
                 axios.get(`${API_URL}/StepTwoRegEdit/${id}/${id2}`, { withCredentials: true })
                     .then((res) => {
                         setData({
-                            // payment_photo: res.data.photo_payment_receipt,
-                            // photo_college_letter: res.data.photo_college_letter,
-                            // research: res.data.research_plan_ar_pdf,
-                            // research_en: res.data.research_plan_en_pdf,
-                            // research_word: res.data.research_plan_ar_word,
-                            // research_word_en: res.data.research_plan_en_word,
-                            // translation: res.data.translation_paper,
-                        }
-                        )
+                            payment_photo: res.data.photo_payment_receipt,
+                            puplish_date: res.data.publish_date,
+                            accept_date: res.data.accept_date,
+                        })
+                        setwords({
+                            word1: res.data.research1_image_word !== null ? res.data.research1_image_word : '',
+                            word2: res.data.research2_image_word !== null ? res.data.research2_image_word : '',
+                            word3: res.data.research3_image_word !== null ? res.data.research3_image_word : '',
+                            word4: res.data.research4_image_word !== null ? res.data.research4_image_word : '',
+                            word5: res.data.research5_image_word !== null ? res.data.research5_image_word : '',
+                            word6: res.data.research6_image_word !== null ? res.data.research6_image_word : '',
+                            word7: res.data.research7_image_word !== null ? res.data.research7_image_word : '',
+                            word8: res.data.research8_image_word !== null ? res.data.research8_image_word : '',
+                            word9: res.data.research9_image_word !== null ? res.data.research9_image_word : '',
+                            word10: res.data.research10_image_word !== null ? res.data.research10_image_word : '',
+                        })
+                        setPdfs({
+                            pdf1: res.data.research1_image_pdf !== null ? res.data.research1_image_pdf : '',
+                            pdf2: res.data.research2_image_pdf !== null ? res.data.research2_image_pdf : '',
+                            pdf3: res.data.research3_image_pdf !== null ? res.data.research3_image_pdf : '',
+                            pdf4: res.data.research4_image_pdf !== null ? res.data.research4_image_pdf : '',
+                            pdf5: res.data.research5_image_pdf !== null ? res.data.research5_image_pdf : '',
+                            pdf6: res.data.research6_image_pdf !== null ? res.data.research6_image_pdf : '',
+                            pdf7: res.data.research7_image_pdf !== null ? res.data.research7_image_pdf : '',
+                            pdf8: res.data.research8_image_pdf !== null ? res.data.research8_image_pdf : '',
+                            pdf9: res.data.research9_image_pdf !== null ? res.data.research9_image_pdf : '',
+                            pdf10: res.data.research10_image_pdf !== null ? res.data.research10_image_pdf : '',
+                        })
+
                     })
                     .catch((err) => {
                         console.log(err)
@@ -90,37 +143,10 @@ const Ser3 = ({ ser }) => {
 
     }, [])
 
-    const [data, setData] = useState({
-        payment_photo: '',
-        service_id: id,
-        application_id: id2,
-        puplish_date: '',
-        accept_date: '',
-    })
-    const [words, setwords] = useState({
-        word1: "",
-        word2: "",
-        word3: "",
-        word4: "",
-        word5: "",
-        word6: "",
-        word7: "",
-        word8: "",
-        word9: "",
-        word10: ""
-    })
-    const [pdfs, setPdfs] = useState({
-        pdf1: "",
-        pdf2: "",
-        pdf3: "",
-        pdf4: "",
-        pdf5: "",
-        pdf6: "",
-        pdf7: "",
-        pdf8: "",
-        pdf9: "",
-        pdf10: ""
-    })
+    console.log(data)
+    console.log(words)
+    console.log(pdfs)
+
 
     const handleCloseError = () => {
         setError('')
@@ -141,8 +167,8 @@ const Ser3 = ({ ser }) => {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
         }
-        if (!data.puplish_date) {
-            setError(t(`service${id}-step-two-err.puplish_date`))
+        if (!data.accept_date) {
+            setError(t(`service${id}-step-two-err.accept-date`))
             return
         }
         const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
@@ -156,7 +182,7 @@ const Ser3 = ({ ser }) => {
                 return;
             }
 
-            const fileName = file.name;
+            const fileName = file?.name || file;
             if (!validExtensions.test(fileName)) {
                 setError(t(`service${id}-step-two-err.word${i + 1}`));
                 return;
@@ -169,7 +195,7 @@ const Ser3 = ({ ser }) => {
                 setError(t(`service${id}-step-two-err.pdf${i + 1}`))
                 return
             }
-            const fileName = file.name;
+            const fileName = file?.name || file;
             if (!validExtensions2.test(fileName)) {
                 setError(t(`service${id}-step-two-err.pdf${i + 1}`))
                 return
@@ -180,13 +206,13 @@ const Ser3 = ({ ser }) => {
 
         const formData = new FormData();
         formData.append('payment_photo', data.payment_photo)
-        if (data.accept_date !== '') {
-            formData.append('accept_date', data.accept_date)
+        if (data.puplish_date !== '') {
+            formData.append('puplish_date', data.puplish_date)
         }
-        formData.append('puplish_date', data.puplish_date)
+        formData.append('accept_date', data.accept_date)
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
-        formData.append('files_numbers', data.files_numbers)
+        formData.append('files_numbers', number)
 
         formData.append('word1', words.word1)
         formData.append('word2', words.word2)
@@ -216,7 +242,7 @@ const Ser3 = ({ ser }) => {
         setMsg(t('uploading'))
 
         try {
-            axios.put(`${API_URL}/StepTwoSer2/${id}/${id2}`, formData,
+            axios.put(`${API_URL}/StepTwoSer3/${id}/${id2}`, formData,
                 {
                     withCredentials: true, onUploadProgress: (ProgressEvent) => {
                         setDisabled(true)
@@ -230,7 +256,7 @@ const Ser3 = ({ ser }) => {
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/Myservices`)
+                    navigate(`/`)
 
                 })
                 .catch((err) => {
@@ -371,7 +397,7 @@ const Ser3 = ({ ser }) => {
                                     disabled={disabled}
                                     onClick={confirmf} className='sub-now'>{t('submet')}</button>
                             </div>
-                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={status == 1 ? handleSubmit : hadleEdit} />}
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit } />}
                             <div className="inputt " >
 
                                 <div className="select-img two">
@@ -510,11 +536,25 @@ const Ser3 = ({ ser }) => {
                                         name=''
                                         onChange={(e) => { setData({ ...data, accept_date: e.target.value }) }}
                                     />
+{
+                                    data.accept_date && (
+                                        <>
+                                        <h1 style={{ color: '#ad8700', fontSize: '1.5rem', marginTop: '1rem' }}>
+                                            {data.accept_date.slice(0, 10)}
+                                        </h1>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, accept_date: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }}
+                                        />
+                                        
+                                        </>
+                                    )
+                                }
                                 </div>
+                                
+                                
 
-                                <div
-                                    className={`text-container${isMaxWidth ? ' two select-img' : ''}`}
-                                >
+                                <div className={`text-container${isMaxWidth ? ' two select-img' : ''}`}>
                                     <span className="title-upload">
                                         {t(`service${id}-step-two.puplish-date`)}
                                     </span>

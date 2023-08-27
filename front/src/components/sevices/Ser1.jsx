@@ -124,7 +124,7 @@ const Ser1 = ({ser}) => {
                     .then((res) => {
                         console.log(res.data)
                         alert("done")
-                        navigate(`/Myservices`)
+                        window.location.href = '/Myservices';
                     })
                     .catch((err) => {
                         console.log(err.response.data.message[0])

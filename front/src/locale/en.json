@@ -146,6 +146,7 @@
     "confirm" : "Confirm",
     "cancel" : "Cancel",
     "confirm-msg" : "Are you sure from your attachaments ?",
+    "continue": "Complete the request",
     
     "aboutus" : {
         "title": "About the digital library",
@@ -340,7 +341,17 @@
          "pdf7":"The Seventh Research pdf",
          "pdf8":"The eighth research pdf",
          "pdf9":"The ninth research pdf",
-         "pdf10":"The tenth research pdf"
+         "pdf10":"The tenth research pdf",
+         "acceptance_letter1": "The first research acceptance letter in case the research has not been published yet",
+         "acceptance_letter2": "The second research acceptance letter in case the research has not been published yet",
+         "acceptance_letter3": "The third research acceptance letter in case the research has not been published yet",
+         "acceptance_letter4": "The fourth research acceptance letter in case the research has not been published yet",
+         "acceptance_letter5": "The fifth research acceptance letter in case the research has not been published yet",
+         "acceptance_letter6": "The sixth research acceptance letter in case the research has not been published yet",
+         "acceptance_letter7": "The seventh research acceptance letter in case the research has not been published yet",
+         "acceptance_letter8": "The eighth research acceptance letter in case the research has not been published yet",
+         "acceptance_letter9": "The ninth research acceptance letter in case the research has not been published yet",
+         "acceptance_letter10": "The tenth research acceptance letter in case the research has not been published yet."
     },
     
     "service5-step-two-err": {

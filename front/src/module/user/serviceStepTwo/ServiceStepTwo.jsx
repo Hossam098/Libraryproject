@@ -8,8 +8,8 @@ import Ser3 from '../../../components/serviceStepTwo/Ser3';
 import Ser4 from '../../../components/serviceStepTwo/Ser4';
 import Ser5 from '../../../components/serviceStepTwo/Ser5';
 import Ser6 from '../../../components/serviceStepTwo/Ser6';
-import Ser7 from '../../../components/serviceStepTwo/Ser7';
-import Ser8 from '../../../components/serviceStepTwo/Ser8';
+import Ser7 from '../../../components/sevices/Ser7';
+import Ser8 from '../../../components/sevices/Ser8';
 import axios from 'axios';
 import { API_URL } from '../../../config';
 import { useState } from 'react';
@@ -50,6 +50,7 @@ const ServiceStepTwo = (ID , Ser) => {
     }, [])
 
     const serviceStepTwo = (id) => {
+        console.log(id)
         switch (id) {
             case 1:
                 return <Ser1 ser={ser} />;
@@ -65,8 +66,8 @@ const ServiceStepTwo = (ID , Ser) => {
                 return <Ser6 ser={ser}/>;
             case 7:
                 return <Ser7 />;
-            case '8':
-                return <Ser8 />;
+            case 8:
+                return <Ser8 ser={ser}/>;
 
 
             default:

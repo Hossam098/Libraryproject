@@ -10,6 +10,7 @@ import Serimg from '../../images/serIMG.png'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import PopupErrorMsg from '../../components/error/PopupErrorMsg'
 import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
+import { BsFilePdf, BsFileEarmarkWord } from 'react-icons/bs'
 
 
 const Ser1 = ({ ser }) => {
@@ -26,7 +27,16 @@ const Ser1 = ({ ser }) => {
     const [disabled, setDisabled] = useState(false)
     const [confirm, setConfirm] = useState(false)
 
-    
+    const [data, setData] = useState({
+        payment_photo: '',
+        research: '',
+        research_en: '',
+        research_word: '',
+        research_word_en: '',
+        translation: '',
+        service_id: id,
+        application_id: id2,
+    })
 
     useEffect(() => {
 
@@ -65,33 +75,24 @@ const Ser1 = ({ ser }) => {
                     })
                     .catch((err) => {
                         console.log(err)
-                        
+
                     })
-    
-    
+
+
             } catch (err) {
                 console.log(err)
             }
         }
 
-        
+
     }, [])
-    console.log(ser.national_id)
+    console.log(data)
 
- 
 
-    const [data, setData] = useState({
-        payment_photo: '',
-        research: '',
-        research_en: '',
-        research_word: '',
-        research_word_en: '',
-        translation: '',
-        service_id: id,
-        application_id: id2,
-    })
 
-    
+
+
+
     const handleCloseError = () => {
         setError('')
         setConfirm(false)
@@ -114,11 +115,39 @@ const Ser1 = ({ ser }) => {
         if (!data.research) {
             setError(t(`service${id}-step-two-err.research`))
             return
+        } else if (data.research?.name) {
+            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+            if (!validExtensions.test(data.research.name)) {
+                setError(t(`service${id}-step-two-err.research`))
+                return
+            }
         }
         if (!data.research_word) {
             setError(t(`service${id}-step-two-err.research-word`))
             return
+        } else if (data.research_word?.name) {
+            const validExtensions2 = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
+            if (!validExtensions2.test(data.research_word.name)) {
+                setError(t(`service${id}-step-two-err.research-word`))
+                return
+            }
         }
+        if (data.research_en?.name) {
+            const validExtensions3 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+            if (!validExtensions3.test(data.research_en.name)) {
+                setError(t(`service${id}-step-two-err.research-en`))
+                return
+            }
+        }
+        if (data.research_word_en?.name) {
+            const validExtensions4 = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
+            if (!validExtensions4.test(data.research_word_en.name)) {
+                setError(t(`service${id}-step-two-err.research-word-en`))
+                return
+            }
+        }
+
+
         if (!data.translation) {
             setError(t(`service${id}-step-two-err.translation`))
             return
@@ -180,94 +209,122 @@ const Ser1 = ({ ser }) => {
 
     }
 
-    const hadleEdit = () => {
-        console.log(data)
-        setConfirm(false)
-        axios.defaults.withCredentials = true
-        console.log(data)
-        if (!data.payment_photo) {
-            setError(t(`service${id}-step-two-err.payment-photo`))
-            return
-        }
-        if (!data.research) {
-            setError(t(`service${id}-step-two-err.research`))
-            return
-        }
-        if (!data.research_word) {
-            setError(t(`service${id}-step-two-err.research-word`))
-            return
-        }
-        if (!data.translation) {
-            setError(t(`service${id}-step-two-err.translation`))
-            return
-        }
-        
-        const formData = new FormData();
+    // const hadleEdit = () => {
+    //     console.log(data)
+    //     setConfirm(false)
+    //     axios.defaults.withCredentials = true
+    //     console.log(data)
+    //     if (!data.payment_photo) {
+    //         setError(t(`service${id}-step-two-err.payment-photo`))
+    //         return
+    //     }
+    //     if (!data.research) {
+    //         setError(t(`service${id}-step-two-err.research`))
+    //         return
+    //     }
+    //     const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+    //     if (!validExtensions.test(data.research.name)) {
+    //         setError(t(`service${id}-step-two-err.research`))
+    //         return
+    //     }
+    //     if (!data.research_word) {
+    //         setError(t(`service${id}-step-two-err.research-word`))
+    //         return
+    //     }
+    //     const validExtensions2 = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
+    //     if (!validExtensions2.test(data.research_word.name)) {
+    //         setError(t(`service${id}-step-two-err.research-word`))
+    //         return
+    //     }
 
-        if (data.payment_photo?.name) {
-            formData.append('payment_photo', data.payment_photo);
-          }
-        if (data.research?.name) {
-            formData.append('research', data.research)
-        }
-        if (data.research_en?.name) {
-            formData.append('research_en', data.research_en)
-        }
-        if (data.research_word?.name) {
-            formData.append('research_word', data.research_word)
-        }
-        if (data.research_word_en?.name) {
-            formData.append('research_word_en', data.research_word_en)
-        }
-        if (data.translation?.name) {
-            formData.append('translation', data.translation)
-        }
-        formData.append('service_id', id)
-        formData.append('application_id', id2)
+    //     if (data.research_en?.name) {
+    //         const validExtensions3 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+    //         if (!validExtensions3.test(data.research_en.name)) {
+    //             setError(t(`service${id}-step-two-err.research-en`))
+    //             return
+    //         }
+    //     }
+    //     if (data.research_word_en?.name) {
+    //         const validExtensions4 = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
+    //         if (!validExtensions4.test(data.research_word_en.name)) {
+    //             setError(t(`service${id}-step-two-err.research-word-en`))
+    //             return
+    //         }
+    //     }
 
-        setProgress(prevState => ({ ...prevState, started: true }))
-        setMsg(t('uploading'))
 
-        try {
-            axios.put(`${API_URL}/StepTwoReg/${id}/${id2}`, formData,
-                {
-                    withCredentials: true, onUploadProgress: (ProgressEvent) => {
-                        setDisabled(true)
-                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
-                    }
-                }
 
-            )
-                .then((res) => {
-                    console.log(res.data)
-                    alert("done")
-                    navigate(`/`)
-                })
-                .catch((err) => {
-                    console.log(err.response.data.message[0])
-                    setError(err.response.data.message[0])
-                    if (err && err.response && err.response.data && err.response.data[0]) {
-                        if (!err.response.data[0].user && err.response.data[0].user != undefined) {
-                            navigate('/login')
-                        }
-                    }
-                    setMsg(null)
-                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                    setDisabled(false)
-                })
+    //     if (!data.translation) {
+    //         setError(t(`service${id}-step-two-err.translation`))
+    //         return
+    //     }
 
-        } catch (err) {
-            console.log(err)
-            console.log(err.response.data)
-            setMsg(null)
-            setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-            setDisabled(false)
+    //     const formData = new FormData();
 
-        }
-    }
+    //     if (data.payment_photo?.name) {
+    //         formData.append('payment_photo', data.payment_photo);
+    //       }
+    //     if (data.research?.name) {
+    //         formData.append('research', data.research)
+    //     }
+    //     if (data.research_en?.name) {
+    //         formData.append('research_en', data.research_en)
+    //     }
+    //     if (data.research_word?.name) {
+    //         formData.append('research_word', data.research_word)
+    //     }
+    //     if (data.research_word_en?.name) {
+    //         formData.append('research_word_en', data.research_word_en)
+    //     }
+    //     if (data.translation?.name) {
+    //         formData.append('translation', data.translation)
+    //     }
+    //     formData.append('service_id', id)
+    //     formData.append('application_id', id2)
 
-        
+    //     setProgress(prevState => ({ ...prevState, started: true }))
+    //     setMsg(t('uploading'))
+
+    //     try {
+    //         axios.put(`${API_URL}/StepTwoReg/${id}/${id2}`, formData,
+    //             {
+    //                 withCredentials: true, onUploadProgress: (ProgressEvent) => {
+    //                     setDisabled(true)
+    //                     let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+    //                     setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+    //                 }
+    //             }
+
+    //         )
+    //             .then((res) => {
+    //                 console.log(res.data)
+    //                 alert("done")
+    //                 navigate(`/`)
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err.response.data.message[0])
+    //                 setError(err.response.data.message[0])
+    //                 if (err && err.response && err.response.data && err.response.data[0]) {
+    //                     if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+    //                         navigate('/login')
+    //                     }
+    //                 }
+    //                 setMsg(null)
+    //                 setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+    //                 setDisabled(false)
+    //             })
+
+    //     } catch (err) {
+    //         console.log(err)
+    //         console.log(err.response.data)
+    //         setMsg(null)
+    //         setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+    //         setDisabled(false)
+
+    //     }
+    // }
+
+
 
 
 
@@ -293,7 +350,7 @@ const Ser1 = ({ ser }) => {
                                     onClick={confirmf} className='sub-now'>{t('submet')}
                                 </button>
                             </div>
-                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={status == 1 ? handleSubmit : hadleEdit} />}
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
                             <div className="inputt" >
 
                                 <div className="select-img">
@@ -314,159 +371,18 @@ const Ser1 = ({ ser }) => {
                                         <div className="text-container">
                                             <p className='upload-image value'>
                                                 {data.payment_photo.name ? data.payment_photo.name : data.payment_photo}
-                                                </p>
-                                                <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.payment_photo.name) {
-                                                    return window.open(URL.createObjectURL(data.payment_photo))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
-                                                }
-                                            }}
+                                            </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.payment_photo.name) {
+                                                        return window.open(URL.createObjectURL(data.payment_photo))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
+                                                    }
+                                                }}
                                             >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, payment_photo: '' }) }}
-                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
-
-                                        </div>
-                                    }
-                                </div>
-                               
-                                <div className="select-img">
-                                    <span className="title-upload">
-                                        {t(`service${id}-step-two.research`)}
-                                    </span>
-                                    <label className='upload-image' htmlFor="upload-image2">
-                                        <BiImageAdd className='img-icom' />
-                                        <p>{t('click-here')}</p>
-                                    </label>
-                                    <input type="file"
-                                        hidden
-                                        id='upload-image2'
-                                        name='upload-image2'
-                                        onChange={(e) => { setData({ ...data, research: e.target.files[0] }) }}
-                                    />
-                                    {data.research &&
-                                        <div>
-                                            <p className='upload-image value'>
-                                                {data.research.name ? data.research.name : data.research}
-                                                </p>
-                                                <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.research.name) {
-                                                    return window.open(URL.createObjectURL(data.research))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.research}`)
-                                                }
-                                            }}
-                                            >{t('open')}</button>
-                                            <AiFillCloseCircle
-                                                onClick={() => { setData({ ...data, research: '' }) }}
-                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
-
-                                        </div>
-                                    }
-                                </div>
-                                <div className="select-img">
-                                    <span className="title-upload">
-                                        {t(`service${id}-step-two.research-en`)}
-                                    </span>
-                                    <label className='upload-image' htmlFor="upload-image3">
-                                        <BiImageAdd className='img-icom' />
-                                        <p>{t('click-here')}</p>
-                                    </label>
-                                    <input type="file"
-                                        hidden
-                                        id='upload-image3'
-                                        name='upload-image3'
-                                        onChange={(e) => { setData({ ...data, research_en: e.target.files[0] }) }}
-                                    />
-                                    {data.research_en &&
-                                        <div>
-                                            <p className='upload-image value'>
-                                                {data.research_en.name ? data.research_en.name : data.research_en}
-                                                </p>
-                                                <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.research_en.name) {
-                                                    return window.open(URL.createObjectURL(data.research_en))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.research_en}`)
-                                                }
-                                            }}
-                                            >{t('open')}</button>
-                                            <AiFillCloseCircle
-                                                onClick={() => { setData({ ...data, research_en: '' }) }}
-                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
-
-                                        </div>
-                                    }
-                                </div>
-                                <div className="select-img">
-                                    <span className="title-upload">
-                                        {t(`service${id}-step-two.research-word`)}
-                                    </span>
-                                    <label className='upload-image' htmlFor="upload-image4">
-                                        <BiImageAdd className='img-icom' />
-                                        <p>{t('click-here')}</p>
-                                    </label>
-                                    <input type="file"
-                                        hidden
-                                        id='upload-image4'
-                                        name='upload-image4'
-                                        onChange={(e) => { setData({ ...data, research_word: e.target.files[0] }) }}
-                                    />
-                                    {data.research_word &&
-                                        <div>
-                                            <p className='upload-image value'>
-                                                {data.research_word.name ? data.research_word.name : data.research_word}
-                                                </p>
-                                                <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.research_word.name) {
-                                                    return window.open(URL.createObjectURL(data.research_word))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word}`)
-                                                }
-                                            }}
-                                            >{t('open')}</button>
-                                            <AiFillCloseCircle
-                                                onClick={() => { setData({ ...data, research_word: '' }) }}
-                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
-
-                                        </div>
-                                    }
-                                </div>
-                                <div className="select-img">
-                                    <span className="title-upload">
-                                        {t(`service${id}-step-two.research-word-en`)}
-                                    </span>
-                                    <label className='upload-image' htmlFor="upload-image5">
-                                        <BiImageAdd className='img-icom' />
-                                        <p>{t('click-here')}</p>
-                                    </label>
-                                    <input type="file"
-                                        hidden
-                                        id='upload-image5'
-                                        name='upload-image5'
-                                        onChange={(e) => { setData({ ...data, research_word_en: e.target.files[0] }) }}
-                                    />
-                                    {data.research_word_en &&
-                                        <div>
-                                            <p className='upload-image value'>
-                                                {data.research_word_en.name ? data.research_word_en.name : data.research_word_en}
-                                            </p>
-                                            <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.research_word_en.name) {
-                                                    return window.open(URL.createObjectURL(data.research_word_en))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word_en}`)
-                                                }
-                                            }}
-                                            >{t('open')}</button>
-                                            <AiFillCloseCircle
-                                                onClick={() => { setData({ ...data, research_word_en: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
                                         </div>
@@ -490,15 +406,15 @@ const Ser1 = ({ ser }) => {
                                         <div>
                                             <p className='upload-image value'>
                                                 {data.translation.name ? data.translation.name : data.translation}
-                                                </p>
-                                                <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.translation.name) {
-                                                    return window.open(URL.createObjectURL(data.translation))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.translation}`)
-                                                }
-                                            }}
+                                            </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.translation.name) {
+                                                        return window.open(URL.createObjectURL(data.translation))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.translation}`)
+                                                    }
+                                                }}
                                             >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, translation: '' }) }}
@@ -507,6 +423,147 @@ const Ser1 = ({ ser }) => {
                                         </div>
                                     }
                                 </div>
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.research`)}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image2">
+                                    <BsFilePdf className="img-icom" />
+                                        <p>{t('click-here')}</p>
+                                    </label>
+                                    <input type="file"
+                                        hidden
+                                        id='upload-image2'
+                                        name='upload-image2'
+                                        onChange={(e) => { setData({ ...data, research: e.target.files[0] }) }}
+                                    />
+                                    {data.research &&
+                                        <div>
+                                            <p className='upload-image value'>
+                                                {data.research.name ? data.research.name : data.research}
+                                            </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.research.name) {
+                                                        return window.open(URL.createObjectURL(data.research))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research}`)
+                                                    }
+                                                }}
+                                            >{t('open')}</button>
+                                            <AiFillCloseCircle
+                                                onClick={() => { setData({ ...data, research: '' }) }}
+                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                        </div>
+                                    }
+                                </div>
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.research-en`)}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image3">
+                                    <BsFilePdf className="img-icom" />
+                                        <p>{t('click-here')}</p>
+                                    </label>
+                                    <input type="file"
+                                        hidden
+                                        id='upload-image3'
+                                        name='upload-image3'
+                                        onChange={(e) => { setData({ ...data, research_en: e.target.files[0] }) }}
+                                    />
+                                    {data.research_en &&
+                                        <div>
+                                            <p className='upload-image value'>
+                                                {data.research_en.name ? data.research_en.name : data.research_en}
+                                            </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.research_en.name) {
+                                                        return window.open(URL.createObjectURL(data.research_en))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_en}`)
+                                                    }
+                                                }}
+                                            >{t('open')}</button>
+                                            <AiFillCloseCircle
+                                                onClick={() => { setData({ ...data, research_en: '' }) }}
+                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                        </div>
+                                    }
+                                </div>
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.research-word`)}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image4">
+                                    <BsFileEarmarkWord className="img-icom" />
+                                        <p>{t('click-here')}</p>
+                                    </label>
+                                    <input type="file"
+                                        hidden
+                                        id='upload-image4'
+                                        name='upload-image4'
+                                        onChange={(e) => { setData({ ...data, research_word: e.target.files[0] }) }}
+                                    />
+                                    {data.research_word &&
+                                        <div>
+                                            <p className='upload-image value'>
+                                                {data.research_word.name ? data.research_word.name : data.research_word}
+                                            </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.research_word.name) {
+                                                        return window.open(URL.createObjectURL(data.research_word))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word}`)
+                                                    }
+                                                }}
+                                            >{t('open')}</button>
+                                            <AiFillCloseCircle
+                                                onClick={() => { setData({ ...data, research_word: '' }) }}
+                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                        </div>
+                                    }
+                                </div>
+                                <div className="select-img">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.research-word-en`)}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image5">
+                                    <BsFileEarmarkWord className="img-icom" />
+                                        <p>{t('click-here')}</p>
+                                    </label>
+                                    <input type="file"
+                                        hidden
+                                        id='upload-image5'
+                                        name='upload-image5'
+                                        onChange={(e) => { setData({ ...data, research_word_en: e.target.files[0] }) }}
+                                    />
+                                    {data.research_word_en &&
+                                        <div>
+                                            <p className='upload-image value'>
+                                                {data.research_word_en.name ? data.research_word_en.name : data.research_word_en}
+                                            </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.research_word_en.name) {
+                                                        return window.open(URL.createObjectURL(data.research_word_en))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word_en}`)
+                                                    }
+                                                }}
+                                            >{t('open')}</button>
+                                            <AiFillCloseCircle
+                                                onClick={() => { setData({ ...data, research_word_en: '' }) }}
+                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                        </div>
+                                    }
+                                </div>
+
                             </div>
                             {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
                         </div>

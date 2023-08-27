@@ -28,7 +28,7 @@ const Ser5 = ({ser}) => {
     let files_numbers = ''
     if (id === undefined) {
         id = ser.service_id;
-        id2 = ser.ser_upgrade  ;
+        id2 = ser.ser_upgrade ;
         status = ser.status;
         files_numbers = ser.files_numbers;
     }
@@ -99,7 +99,7 @@ const Ser5 = ({ser}) => {
             setError(t(`service${id}-step-two-err.files_numbers`))
             return
         }
-        if (data.files_numbers < 0 || data.files_numbers >= 8) {
+        if (data.files_numbers < 0 || data.files_numbers >= 10) {
                 setError(t(`service${id}-step-two-err.files_numbers2`))
                 return
             }
@@ -161,7 +161,7 @@ const Ser5 = ({ser}) => {
             setError(t(`service${id}-step-two-err.files_numbers`))
             return
         }
-        if (data.files_numbers < 0 || data.files_numbers >= 8) {
+        if (data.files_numbers < 0 || data.files_numbers >= 10) {
                 setError(t(`service${id}-step-two-err.files_numbers2`))
                 return
             }

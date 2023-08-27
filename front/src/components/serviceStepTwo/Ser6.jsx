@@ -15,7 +15,7 @@ import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 
 const Ser6 = ({ ser }) => {
     const id = ser.service_id;
-    const id2 = ser.ser_personal;
+    const id2 = ser.ser_best  ;
     const number = ser.files_numbers;
     const status = ser.status;
     const navigate = useNavigate();
@@ -25,55 +25,8 @@ const Ser6 = ({ ser }) => {
     const [msg, setMsg] = useState(null)
     const [disabled, setDisabled] = useState(false)
     const [confirm, setConfirm] = useState(false)
+    const [isMaxWidth, setIsMaxWidth] = useState(false);
 
-
-    useEffect(() => {
-
-        axios.defaults.withCredentials = true
-
-        try {
-            axios.get(`${API_URL}/auth/check`, { withCredentials: true })
-                .then((res) => {
-                    console.log(res)
-                })
-                .catch((err) => {
-                    console.log(err)
-                    setDisabled(true)
-                    navigate('/login')
-                })
-
-
-        } catch (err) {
-            console.log(err)
-        }
-        if (status == 3) {
-            try {
-                axios.get(`${API_URL}/StepTwoRegEdit/${id}/${id2}`, { withCredentials: true })
-                    .then((res) => {
-                        setData({
-                            payment_photo: res.data.photo_payment_receipt,
-                            photo_college_letter: res.data.photo_college_letter,
-                            research: res.data.research_plan_ar_pdf,
-                            research_en: res.data.research_plan_en_pdf,
-                            research_word: res.data.research_plan_ar_word,
-                            research_word_en: res.data.research_plan_en_word,
-                            translation: res.data.translation_paper,
-                        }
-                        )
-                    })
-                    .catch((err) => {
-                        console.log(err)
-
-                    })
-
-
-            } catch (err) {
-                console.log(err)
-            }
-        }
-
-
-    }, [])
 
     const [data, setData] = useState({
         payment_photo: '',
@@ -105,6 +58,92 @@ const Ser6 = ({ ser }) => {
         pdf10: ""
     })
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMaxWidth(window.innerWidth <= 900);
+        };
+
+        handleResize(); // Initial check
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+
+    useEffect(() => {
+
+        axios.defaults.withCredentials = true
+
+        try {
+            axios.get(`${API_URL}/auth/check`, { withCredentials: true })
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    setDisabled(true)
+                    navigate('/login')
+                })
+
+
+        } catch (err) {
+            console.log(err)
+        }
+
+        if (status == 3) {
+            try {
+                //هنعدل الداتا
+                axios.get(`${API_URL}/StepTwoRegEdit/${id}/${id2}`, { withCredentials: true })
+                    .then((res) => {
+                        setData({
+                            payment_photo: res.data.photo_payment_receipt,
+                        })
+                        setwords({
+                            word1: res.data.research1_image_word !== null ? res.data.research1_image_word : '',
+                            word2: res.data.research2_image_word !== null ? res.data.research2_image_word : '',
+                            word3: res.data.research3_image_word !== null ? res.data.research3_image_word : '',
+                            word4: res.data.research4_image_word !== null ? res.data.research4_image_word : '',
+                            word5: res.data.research5_image_word !== null ? res.data.research5_image_word : '',
+                            word6: res.data.research6_image_word !== null ? res.data.research6_image_word : '',
+                            word7: res.data.research7_image_word !== null ? res.data.research7_image_word : '',
+                            word8: res.data.research8_image_word !== null ? res.data.research8_image_word : '',
+                            word9: res.data.research9_image_word !== null ? res.data.research9_image_word : '',
+                            word10: res.data.research10_image_word !== null ? res.data.research10_image_word : '',
+                        })
+                        setPdfs({
+                            pdf1: res.data.research1_image_pdf !== null ? res.data.research1_image_pdf : '',
+                            pdf2: res.data.research2_image_pdf !== null ? res.data.research2_image_pdf : '',
+                            pdf3: res.data.research3_image_pdf !== null ? res.data.research3_image_pdf : '',
+                            pdf4: res.data.research4_image_pdf !== null ? res.data.research4_image_pdf : '',
+                            pdf5: res.data.research5_image_pdf !== null ? res.data.research5_image_pdf : '',
+                            pdf6: res.data.research6_image_pdf !== null ? res.data.research6_image_pdf : '',
+                            pdf7: res.data.research7_image_pdf !== null ? res.data.research7_image_pdf : '',
+                            pdf8: res.data.research8_image_pdf !== null ? res.data.research8_image_pdf : '',
+                            pdf9: res.data.research9_image_pdf !== null ? res.data.research9_image_pdf : '',
+                            pdf10: res.data.research10_image_pdf !== null ? res.data.research10_image_pdf : '',
+                        })
+
+                    })
+                    .catch((err) => {
+                        console.log(err)
+
+                    })
+
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+
+    }, [])
+
+    console.log(data)
+    console.log(words)
+    console.log(pdfs)
+
+
     const handleCloseError = () => {
         setError('')
         setConfirm(false)
@@ -124,7 +163,7 @@ const Ser6 = ({ ser }) => {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
         }
-
+        
         const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
         const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
@@ -136,7 +175,7 @@ const Ser6 = ({ ser }) => {
                 return;
             }
 
-            const fileName = file.name;
+            const fileName = file?.name || file;
             if (!validExtensions.test(fileName)) {
                 setError(t(`service${id}-step-two-err.word${i + 1}`));
                 return;
@@ -149,7 +188,7 @@ const Ser6 = ({ ser }) => {
                 setError(t(`service${id}-step-two-err.pdf${i + 1}`))
                 return
             }
-            const fileName = file.name;
+            const fileName = file?.name || file;
             if (!validExtensions2.test(fileName)) {
                 setError(t(`service${id}-step-two-err.pdf${i + 1}`))
                 return
@@ -160,9 +199,10 @@ const Ser6 = ({ ser }) => {
 
         const formData = new FormData();
         formData.append('payment_photo', data.payment_photo)
+       
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
-        formData.append('files_numbers', data.files_numbers)
+        formData.append('files_numbers', number)
 
         formData.append('word1', words.word1)
         formData.append('word2', words.word2)
@@ -191,44 +231,45 @@ const Ser6 = ({ ser }) => {
         setProgress(prevState => ({ ...prevState, started: true }))
         setMsg(t('uploading'))
 
-        // try {
-        //     axios.put(`${API_URL}/StepTwoSer2/${id}/${id2}`, formData,
-        //         {
-        //             withCredentials: true, onUploadProgress: (ProgressEvent) => {
-        //                 setDisabled(true)
-        //                 let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-        //                 setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+        try {
+            axios.put(`${API_URL}/StepTwoSer6/${id}/${id2}`, formData,
+                {
+                    withCredentials: true, onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
 
-        //             }
-        //         }
+                    }
+                }
 
-        //     )
-        //         .then((res) => {
-        //             console.log(res.data)
-        //             alert("done")
-        //             navigate(`/Myservices`)
+            )
+                .then((res) => {
+                    console.log(res.data)
+                    alert("done")
+                    navigate(`/`)
 
-        //         })
-        //         .catch((err) => {
-        //             console.log(err.response.data.message[0])
-        //             setError(err.response.data.message[0])
-        //             if (err && err.response && err.response.data && err.response.data[0]) {
-        //                 if (!err.response.data[0].user && err.response.data[0].user != undefined) {
-        //                     navigate('/login')
-        //                 }
-        //             }
-        //             setMsg(null)
-        //             setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-        //             setDisabled(false)
-        //         })
-        // } catch (err) {
-        //     console.log(err)
-        //     console.log(err.response.data)
-        //     setDisabled(false)
+                })
+                .catch((err) => {
+                    console.log(err.response.data.message[0])
+                    setError(err.response.data.message[0])
+                    if (err && err.response && err.response.data && err.response.data[0]) {
+                        if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                            navigate('/login')
+                        }
+                    }
+                    setMsg(null)
+                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                    setDisabled(false)
+                })
+        } catch (err) {
+            console.log(err)
+            console.log(err.response.data)
+            setDisabled(false)
 
-        // }
+        }
 
     }
+
     const hadleEdit = () => {
         // console.log(data)
         // setConfirm(false)
@@ -323,6 +364,9 @@ const Ser6 = ({ ser }) => {
         // }
     }
 
+
+
+
     return (
         <div className="inst">
             <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
@@ -331,7 +375,7 @@ const Ser6 = ({ ser }) => {
                     <div className="information-service_body">
                         <h1>{t(`service${id}-name`)}</h1>
                         <hr style={{ width: "60%" }} />
-                        <div style={{ display: 'flex' }}>
+                        <div className='data-c'>
                             <div className="img-btn">
                                 <img src={Serimg} alt="" className='ImageService' />
 
@@ -343,7 +387,7 @@ const Ser6 = ({ ser }) => {
                                     disabled={disabled}
                                     onClick={confirmf} className='sub-now'>{t('submet')}</button>
                             </div>
-                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={status == 1 ? handleSubmit : hadleEdit} />}
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit } />}
                             <div className="inputt " >
 
                                 <div className="select-img two">
@@ -469,7 +513,11 @@ const Ser6 = ({ ser }) => {
                                     ))
                                 }
 
+                                
+                                
+                                
 
+                                
 
                             </div>
                             {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}

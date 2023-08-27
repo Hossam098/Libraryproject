@@ -124,7 +124,7 @@ const Ser2 = ({ ser }) => {
                     .then((res) => {
                         console.log(res.data)
                         alert("done")
-                        navigate(`/Myservices`)
+                        navigate(`/`)
                     })
                     .catch((err) => {
                         console.log(err.response.data.message[0])

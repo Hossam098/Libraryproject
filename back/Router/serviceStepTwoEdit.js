@@ -160,26 +160,6 @@ const handleDeleteFile7 = (req) => {
 }
 
 
-serviceStepTwoEdit.get("/StepTwoRegEdit/:id/:id2",
-    checkUser,
-    async (req, res) => {
-        try {
-            const id = req.params.id;
-            const id2 = req.params.id2;
-
-            
-
-            const sql = `SELECT submit.* , registration_services.* FROM submit INNER JOIN registration_services ON submit.ser_reg = registration_services.id WHERE submit.service_id = ? AND submit.ser_reg = ? AND submit.user_id = ?`;
-            const value = [id, id2, req.id];
-            const result = await query(sql, value);
-            if (result.length > 0) {
-                return res.status(200).json(result[0]);
-            }
-        } catch (error) {
-            return res.status(500).json({ message: error.message });
-        }
-    }
-);
 
 // serviceStepTwoEdit.put("/StepTwoRegEdit/:id/:id2",
 //     checkUser,

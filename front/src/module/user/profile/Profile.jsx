@@ -19,6 +19,7 @@ const Profile = () => {
   const { t, i18n } = useTranslation()
   const [user, setUser] = useState({})
   const [showPersonal, setShowPersonal] = useState(true)
+  const [imgUser, setImgUser] = useState('')
 
 
 
@@ -38,6 +39,7 @@ const Profile = () => {
         .then((res) => {
           console.log(res.data)
           setUser(res.data)
+          setImgUser(res.data.img)
         })
         .catch((err) => {
           if (err.response.status === 401) {
@@ -132,7 +134,7 @@ const Profile = () => {
               <div className="subnav">
                 <div className="p-img-container">
                   <div className="p-i-c">
-                  <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${user.img}`} alt="profile" />
+                  <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${imgUser}`} alt="profile" />
                   </div>
                   <div className="editbutton">
 
@@ -148,6 +150,12 @@ const Profile = () => {
                     />
                     
                   </div>
+                  {user.img?.name && 
+                  <h1 style={{color: 'red' , textAlign: 'center'}}>
+                    {user.img.name}
+                  </h1>
+                  }
+
                 </div>
                 <h1>{user.name}</h1>
                 <div className="subnav-header">
