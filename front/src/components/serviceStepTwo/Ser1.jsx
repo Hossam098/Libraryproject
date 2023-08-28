@@ -324,11 +324,6 @@ const Ser1 = ({ ser }) => {
     //     }
     // }
 
-
-
-
-
-
     return (
         <div className="inst">
             <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>

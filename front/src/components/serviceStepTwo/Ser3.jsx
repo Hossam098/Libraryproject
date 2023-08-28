@@ -163,14 +163,14 @@ const Ser3 = ({ ser }) => {
         setConfirm(false)
         axios.defaults.withCredentials = true
         console.log(data)
-        if (!data.payment_photo) {
-            setError(t(`service${id}-step-two-err.payment-photo`))
-            return
-        }
-        if (!data.accept_date) {
-            setError(t(`service${id}-step-two-err.accept-date`))
-            return
-        }
+        // if (!data.payment_photo) {
+        //     setError(t(`service${id}-step-two-err.payment-photo`))
+        //     return
+        // }
+        // if (!data.accept_date) {
+        //     setError(t(`service${id}-step-two-err.accept-date`))
+        //     return
+        // }
         const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
         const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
