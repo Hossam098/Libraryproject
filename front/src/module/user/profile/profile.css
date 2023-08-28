@@ -132,6 +132,17 @@
     justify-content: center;
     z-index: 5;
 }
+table{
+    border-collapse: collapse;
+}
+tr td{
+    text-align: center;
+    border: 1px solid white;
+    padding: .3rem;
+}
+thead{
+    font-weight: bold;
+}
 .p-img-container{
     position:relative;
 }
