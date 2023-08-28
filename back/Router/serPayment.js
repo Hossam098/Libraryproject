@@ -344,11 +344,11 @@ serPayment.get('/getallwaiting',
             FROM submit
             INNER JOIN users ON submit.user_id = users.id
             INNER JOIN services ON submit.service_id = services.id
-            WHERE submit.user_id = ?
-              AND (submit.status = 0 OR submit.status = 1 OR submit.status = 2 OR submit.status = 3 OR submit.status = 4);`
+            WHERE submit.user_id = ?`
             const result = await query(sqlSelect, req.id);
 
             if (result.length > 0) {
+                delete result[0].password;
                 return res.status(200).json(result);
             } else {
                 error.push("No data found");
