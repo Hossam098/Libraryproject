@@ -32,6 +32,7 @@ const Ser5 = ({ ser }) => {
     const [data, setData] = useState({
         payment_photo: '',
         service_id: id,
+        research_list:"",
         application_id: id2,
     })
     const [words, setwords] = useState({
@@ -220,6 +221,7 @@ const Ser5 = ({ ser }) => {
 
         const formData = new FormData();
         formData.append('payment_photo', data.payment_photo)
+        formData.append('research_list', data.research_list)
        
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
@@ -330,7 +332,7 @@ const Ser5 = ({ ser }) => {
                             {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit } />}
                             <div className="inputt " >
 
-                                <div className="select-img two">
+                                <div className="select-img ">
                                     <span className="title-upload">
                                         {t(`service${id}-step-two.payment-photo`)}
                                     </span>
@@ -360,6 +362,41 @@ const Ser5 = ({ ser }) => {
                                             >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, payment_photo: '' }) }}
+                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
+                                        </div>
+                                    }
+                                </div>
+                                <div className="select-img ">
+                                    <span className="title-upload">
+                                        {t(`service${id}-step-two.research_list`)}
+                                    </span>
+                                    <label className='upload-image' htmlFor="upload-image0">
+                                        <BiImageAdd className='img-icom' />
+                                        <p>{t('click-here')}</p>
+                                    </label>
+                                    <input type="file"
+                                        hidden
+                                        id='upload-image0'
+                                        name='upload-image0'
+                                        onChange={(e) => { setData({ ...data, research_list: e.target.files[0] }) }}
+                                    />
+                                    {data.research_list &&
+                                        <div className="text-container">
+                                            <p className='upload-image value'>
+                                                {data.research_list.name ? data.research_list.name : data.research_list}
+                                            </p>
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.research_list.name) {
+                                                        return window.open(URL.createObjectURL(data.research_list))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_list}`)
+                                                    }
+                                                }}
+                                            >{t('open')}</button>
+                                            <AiFillCloseCircle
+                                                onClick={() => { setData({ ...data, research_list: '' }) }}
                                                 style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
                                         </div>

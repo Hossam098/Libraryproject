@@ -102,7 +102,7 @@ const Unav = () => {
             </div>
             <div className="right" >
                 {logged ? (<li>
-                    <a href="#" onClick={()=>{toggleServices(); setShowMenu(false);}}>
+                    <a href="#" onClick={()=>{toggleServices(); setShowMenu(false);}} onBlur={()=>{setServices(false)}}>
                         <div className="profile-image">
                             <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${user.img}`} alt="" />
                         </div>
