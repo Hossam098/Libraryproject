@@ -110,6 +110,7 @@ const Ser5 = ({ ser }) => {
                     .then((res) => {
                         setData({
                             payment_photo: res.data.photo_payment_receipt,
+                            research_list: res.data.research_list,
                         })
                         setwords({
                             word1: res.data.research1_image_word !== null ? res.data.research1_image_word : '',
@@ -248,6 +249,7 @@ const Ser5 = ({ ser }) => {
         formData.append('pdf8', pdfs.pdf7)
         formData.append('pdf9', pdfs.pdf8)
         formData.append('pdf9', pdfs.pdf9)
+
         formData.append('pdf10', pdfs.pdf10)
         formData.append('pdf11', pdfs.pdf11)
         formData.append('pdf12', pdfs.pdf12)
