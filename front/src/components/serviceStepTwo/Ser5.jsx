@@ -186,6 +186,10 @@ const Ser5 = ({ ser }) => {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
         }
+        if (!data.research_list) {
+            setError(t(`service${id}-step-two-err.research_list`))
+            return
+        }
         
         const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
         const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
@@ -217,6 +221,8 @@ const Ser5 = ({ ser }) => {
                 return
             }
         }
+
+
 
 
 
@@ -373,14 +379,14 @@ const Ser5 = ({ ser }) => {
                                     <span className="title-upload">
                                         {t(`service${id}-step-two.research_list`)}
                                     </span>
-                                    <label className='upload-image' htmlFor="upload-image0">
+                                    <label className='upload-image' htmlFor="upload-image10">
                                         <BiImageAdd className='img-icom' />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"
                                         hidden
-                                        id='upload-image0'
-                                        name='upload-image0'
+                                        id='upload-image10'
+                                        name='upload-image10'
                                         onChange={(e) => { setData({ ...data, research_list: e.target.files[0] }) }}
                                     />
                                     {data.research_list &&

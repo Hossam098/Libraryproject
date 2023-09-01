@@ -160,6 +160,7 @@ const handleDeleteFile3 = (req) => {
 }
 const handleDeleteFile5 = (req) => {
     const payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : null;
+    const research_list = req.files.research_list ? req.files.research_list[0].filename : null;
     for (let i = 1; i <= 20; i++) {
         const word = req.files[`word${i}`] ? req.files[`word${i}`][0].filename : null;
         const pdf = req.files[`pdf${i}`] ? req.files[`pdf${i}`][0].filename : null;
@@ -186,6 +187,15 @@ const handleDeleteFile5 = (req) => {
     const path3 = `./public/imgs/${req.national_id}/${payment_photo}`;
     if (payment_photo != null) {
         fs.unlinkSync(path3, (err) => {
+            if (err) {
+                console.error(err)
+                return
+            }
+        })
+    }
+    const path4 = `./public/imgs/${req.national_id}/${research_list}`;
+    if (research_list != null) {
+        fs.unlinkSync(path4, (err) => {
             if (err) {
                 console.error(err)
                 return
@@ -589,6 +599,7 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
 
 const uploadFields = [
     { name: "payment_photo", maxCount: 1 },
+    { name: "research_list", maxCount: 1 },
 ];
 for (let i = 1; i <= 10; i++) {
     uploadFields.push({ name: `word${i}`, maxCount: 1 });
@@ -985,6 +996,8 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                 console.log(id);
 
                 let payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : resultSelect[0].photo_payment_receipt;
+                let research_list = req.files.research_list ? req.files.research_list[0].filename : resultSelect[0].research_list;
+                
                 let word1 = req.files.word1 ? req.files.word1[0].filename : resultSelect[0].research1_image_word;
                 let word2 = req.files.word2 ? req.files.word2[0].filename : resultSelect[0].research2_image_word;
                 let word3 = req.files.word3 ? req.files.word3[0].filename : resultSelect[0].research3_image_word;
@@ -1020,6 +1033,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
 
                 const data = {
                     photo_payment_receipt: payment_photo,
+                    research_list: research_list,
                     research1_image_pdf: pdf1,
                     research2_image_pdf: pdf2,
                     research3_image_pdf: pdf3,

@@ -357,6 +357,7 @@
         "payment-photo": "You must upload the payment photo",
         "files_numbers": "You must enter the number of searches",
         "files_numbers2": "File number must be less than 8",
+        "research_list" : "You must upload the list of approved and dated researches with a recent date",
         "word1": "You must enter the first word word",
         "word2": "You must enter the second word word",
         "word3": "You must enter the third word word",

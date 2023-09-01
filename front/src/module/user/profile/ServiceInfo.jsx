@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { API_URL } from '../../../config'
 import Serinfo from './Serinfo'
 
-const ServiceInfo = () => {
+const ServiceInfo = ({User}) => {
 
   const [services, setServices] = useState([])
   const [service, setService] = useState({})
@@ -88,6 +88,7 @@ const ServiceInfo = () => {
     {flag&&(
       <Serinfo
        service={service}
+       User={User}
       />
     )
     }

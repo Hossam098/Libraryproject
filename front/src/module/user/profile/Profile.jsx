@@ -23,12 +23,6 @@ const Profile = () => {
 
 
 
-  const [selectedImage, setSelectedImage] = useState();
-  const [reg, setReg] = useState([])
-  const [formation, setFormation] = useState([])
-  const [personal, setPersonal] = useState([])
-  const [magazine, setMagazine] = useState([])
-  const [bestMessage, setBestMessage] = useState([])
 
 
 
@@ -48,47 +42,7 @@ const Profile = () => {
           console.log(err)
         })
 
-      axios.get(`${API_URL}/getallwaitingofregistration`, { withCredentials: true })
-        .then((res) => {
-          console.log(res.data)
-          setReg(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-      axios.get(`${API_URL}/getallwaitingofformation`, { withCredentials: true })
-        .then((res) => {
-          console.log(res.data)
-          setFormation(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      axios.get(`${API_URL}/getallwaitingofpersonal`, { withCredentials: true })
-        .then((res) => {
-          console.log(res.data)
-          setPersonal(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      axios.get(`${API_URL}/getallwaitingofmagazine`, { withCredentials: true })
-        .then((res) => {
-          console.log(res.data)
-          setMagazine(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      axios.get(`${API_URL}/getallwaitingofbestmessage`, { withCredentials: true })
-        .then((res) => {
-          console.log(res.data)
-          setBestMessage(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      
     } catch (error) {
       console.log(error)
     }
@@ -180,7 +134,7 @@ const Profile = () => {
                     edituser={edituser}
                   />
                   :
-                    <ServiceInfo/>
+                    <ServiceInfo User={user}/>
                 }
               </div>
            
