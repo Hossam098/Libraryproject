@@ -25,7 +25,7 @@ const Ser8 = ({ ser }) => {
     let status = 0
     if (id === undefined) {
         id = ser.service_id;
-        id2 = ser.ser_knowledge ;
+        id2 = ser.ser_knowledge;
         status = ser.status;
     }
 
@@ -47,26 +47,26 @@ const Ser8 = ({ ser }) => {
                     console.log(err)
                     navigate('/login')
                 })
-                if (status == 3) {
-                    try {
-                        axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
-                            .then((res) => {
-                                setData({
-                                    level: res.data.level,
-                                    academic_div: res.data.academic,
-                                }
-                                )
-                            })
-                            .catch((err) => {
-                                console.log(err)
-        
-                            })
-        
-        
-                    } catch (err) {
-                        console.log(err)
-                    }
+            if (status == 4) {
+                try {
+                    axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+                        .then((res) => {
+                            setData({
+                                level: res.data.level,
+                                academic_div: res.data.academic,
+                            }
+                            )
+                        })
+                        .catch((err) => {
+                            console.log(err)
+
+                        })
+
+
+                } catch (err) {
+                    console.log(err)
                 }
+            }
 
         } catch (err) {
             console.log(err)
@@ -96,7 +96,7 @@ const Ser8 = ({ ser }) => {
             setMsg(t('uploading'))
 
             try {
-                axios.post(`${API_URL}/StepTwoSer78/${id}/${id2}`, data, {
+                axios.post(`${API_URL}/StepTwoSer8`, data, {
                     withCredentials: true,
                     onUploadProgress: (ProgressEvent) => {
                         setDisabled(true)
@@ -106,11 +106,13 @@ const Ser8 = ({ ser }) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res.data)
                         alert("done")
                         navigate(`/`)
                     })
                     .catch((err) => {
+                        setMsg(null)
+                        setDisabled(false)
+                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
                         console.log(err.response.data.message[0])
                         setError(err.response.data.message[0])
                         if (err && err.response && err.response.data && err.response.data[0]) {
@@ -118,9 +120,6 @@ const Ser8 = ({ ser }) => {
                                 navigate('/login')
                             }
                         }
-                        setMsg(null)
-                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                        setDisabled(false)
                     })
             } catch (err) {
                 console.log(err)
@@ -131,8 +130,9 @@ const Ser8 = ({ ser }) => {
 
             }
         } else if (status == 4) {
+            setConfirm(false)
 
-            if (!data.level) {
+            if (data.level == '' && data.level !== 0) {
                 setError(t(`service2-step-two-err.level`))
                 return
             }
@@ -146,7 +146,7 @@ const Ser8 = ({ ser }) => {
             setMsg(t('uploading'))
 
             try {
-                axios.put(`${API_URL}/paymentedit/${id}/${id2}`, data, {
+                axios.put(`${API_URL}/StepTwoSer8edit/${id}/${id2}`, data, {
                     withCredentials: true,
                     onUploadProgress: (ProgressEvent) => {
                         setDisabled(true)
@@ -158,7 +158,7 @@ const Ser8 = ({ ser }) => {
                     .then((res) => {
                         console.log(res.data)
                         alert("done")
-                        navigate(`/Myservices`)
+                        navigate(`/`)
                     })
                     .catch((err) => {
                         console.log(err.response.data.message[0])
@@ -233,7 +233,9 @@ const Ser8 = ({ ser }) => {
                         </div>
                         <button
                             disabled={disabled}
-                            onClick={confirmf} className='sub-now'>{t('pay-code')}</button>
+                            onClick={confirmf} className='sub-now'>
+                            {status !== 4 ? t('sub-now') : t('edit-btn')}
+                        </button>
                     </div>
                     {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
 

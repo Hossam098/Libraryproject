@@ -6,7 +6,7 @@ import axios from 'axios'
 import { saveAs } from 'file-saver'
 
 
-const Serinfo = ({ service ,User}) => {
+const Serinfo = ({ service, User }) => {
 
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -79,172 +79,271 @@ const Serinfo = ({ service ,User}) => {
 
     return (
 
-        <div className='subnav-contentt'>
-
-            {data.level && <p>{data.level}</p>}
-            <div className="inputt">
-                {data.submit_date &&
-                    <p>{data.submit_date.slice(0, 10)}</p>
-                }
-                {data.edit_date &&
-                    <p>{data.edit_date.slice(0, 10)}</p>
-                }
-                {data.req_code_date &&
-                    <p>{data.req_code_date.slice(0, 10)}</p>
-                }
-                {data.accept_date &&
-                    <p>{data.accept_date.slice(0, 10)}</p>
-                }
-                {data.publish_date &&
-                    <p>{data.publish_date.slice(0, 10)}</p>
-                }
-
-            </div>
-            <h3>attachments</h3>
+        <div className='subnav-contentt' style={{ width: "80%" }}>
+            <h1>{localStorage.getItem('i18nextLng') == 'en' ? service.service_name : service.service_name_ar}</h1>
+            <h1>{t('attach')}</h1>
             <hr style={{ width: "100%" }} />
+            {data.req_code_date && data.submit_date &&
+                <div className="inputt">
+                    {data.req_code_date && data.req_code_date !== null &&
+                        <h3><span style={{ color: "#AD8700" }}> {t('date-code')}</span> : {data.req_code_date.slice(0, 10)}</h3>
+                    }
+                    {data.submit_date &&
+                        <h3><span style={{ color: "#AD8700" }}>{t('date-attach')}</span> : {data.submit_date.slice(0, 10)}</h3>
+                    }
+
+                </div>
+            }
+            {/* {data.edit_date &&
+                <h3>{t('date-edit')} : {data.edit_date.slice(0, 10)}</h3>
+            } */}
+            {!data.req_code_date && data.submit_date &&
+                <h3><span style={{ color: "#AD8700" }}>{t('date-attach')}</span> : {data.submit_date.slice(0, 10)}</h3>
+            }
+            
+            {data.level !== null && data.level !== '' &&
+                <h2><span style={{ color: "#AD8700" }}>{t('level')}</span> : {data.level == 0 ? t('master') : t('phd')}</h2>
+            }
+            {data.academic &&
+                <h2><span style={{ color: "#AD8700" }}>{t('academic-div')}</span> : {data.academic}</h2>
+            }
             <div className="inputt">
                 {data.photo_payment_receipt &&
-                    <div>
-                        {t('payment-photo')}
-                        <button
-                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.photo_payment_receipt}`) }}
-                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                        </button>
-                        <button
-                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.photo_payment_receipt}`) }}
-                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                        </button>
+                    <div className='inputt-atch'>
+                        <h3>{t('payment-photo')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.photo_payment_receipt}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.photo_payment_receipt}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
                     </div>
                 }
                 {data.photo_college_letter &&
-                    <div>
-                        {t('letter')}
-                        <button
-                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.photo_college_letter}`) }}
-                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                        </button>
-                        <button
-                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.photo_college_letter}`) }}
-                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                        </button>
+                    <div className='inputt-atch'>
+                        <h3>{t('letter')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.photo_college_letter}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.photo_college_letter}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
                     </div>
                 }
                 {data.research_plan_ar_pdf &&
-                    <div>
-                        {t('research')}
-                        <button
-                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_pdf}`) }}
-                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                        </button>
-                        <button
-                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_pdf}`) }}
-                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                        </button>
+                    <div className='inputt-atch'>
+                        <h3>{t('research')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_pdf}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_pdf}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
                     </div>
                 }
                 {data.research_plan_ar_word &&
-                    <div>
-                        {t('research-word')}
-                        <button
-                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_word}`) }}
-                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                        </button>
-                        <button
-                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_word}`) }}
-                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                        </button>
+                    <div className='inputt-atch'>
+                        <h3>{t('research-word')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_word}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_word}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
                     </div>
                 }
                 {data.research_plan_en_word &&
-                    <div>
-                        {t('research-word-en')}
-                        <button
-                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_word}`) }}
-                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                        </button>
-                        <button
-                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_word}`) }}
-                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                        </button>
+                    <div className='inputt-atch'>
+                        <h3>{t('research-word-en')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_word}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_word}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
                     </div>
                 }
                 {data.research_plan_en_pdf &&
-                    <div>
-                        {t('research-en')}
-                        <button
-                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_pdf}`) }}
-                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                        </button>
-                        <button
-                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_pdf}`) }}
-                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                        </button>
+                    <div className='inputt-atch'>
+                        <h3>{t('research-en')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_pdf}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_pdf}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
                     </div>
                 }
                 {data.translation_paper &&
-                    <div>
-                        {t('translation')}
-                        <button
-                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.translation_paper}`) }}
-                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                        </button>
-                        <button
-                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.translation_paper}`) }}
-                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                        </button>
+                    <div className='inputt-atch'>
+                        <h3>{t('translation')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.translation_paper}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.translation_paper}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
                     </div>
                 }
                 {data.message_word_ar &&
-                    <p>{data.message_word_ar}</p>
+                    <div className='inputt-atch'>
+                        <h3>{t('service2-step-two.research-word')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.message_word_ar}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.message_word_ar}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
+                    </div>
                 }
-                {data.message_pdf_ar && <p>{data.message_pdf_ar}</p>}
-                {data.message_word_en && <p>{data.message_word_en}</p>}
-                {data.message_pdf_en && <p>{data.message_pdf_en}</p>}
-                {data.quote_check_form && <p>{data.quote_check_form}</p>}
+                {data.message_pdf_ar &&
+                    <div className='inputt-atch'>
+                        <h3>{t('service2-step-two.research')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.message_pdf_ar}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.message_pdf_ar}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
+                    </div>
+                }
+                {data.quote_check_form &&
+                    <div className='inputt-atch'>
+                        <h3>{t('service2-step-two.form')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.quote_check_form}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.quote_check_form}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
+                    </div>
+                }
+                {data.decision &&
+                    <div className='inputt-atch'>
+                        <h3>{t('service7-step3')}</h3>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.decision}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.decision}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+
+
+
+
+
+
+
                 {data.files_numbers &&
                     Array.from(Array(number), (e, i) => (
                         <React.Fragment key={i}>
-
-
-
                             {data[`research${i + 1}_image_word`] && (
-                                <div>
-                                    {t(`service${id}-step-two.word${i + 1}`)}
-                                    <button
-                                        onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_word`]}`) }}
-                                        style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                                    </button>
-                                    <button
-                                        onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_word`]}`) }}
-                                        style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                                    </button>
+                                <div className='inputt-atch'>
+                                    <h3>{t(`service${id}-step-two.word${i + 1}`)}</h3>
+                                    <div className="atch-btns">
+                                        <button
+                                            className="atch-btn-open"
+                                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_word`]}`) }}
+                                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                                        </button>
+                                        <button
+                                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_word`]}`) }}
+                                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                             {data[`research${i + 1}_image_pdf`] && (
-                                <div>
-                                    {t(`service${id}-step-two.pdf${i + 1}`)}
-                                    <button
-                                        onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`) }}
-                                        style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                                    </button>
-                                    <button
-                                        onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`) }}
-                                        style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                                    </button>
+                                <div className='inputt-atch'>
+                                    <h3>{t(`service${id}-step-two.pdf${i + 1}`)}</h3>
+                                    <div className="atch-btns">
+                                        <button
+                                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`) }}
+                                            style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                                        </button>
+                                        <button
+                                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`) }}
+                                            style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                             {data[`acceptance_letter${i + 1}`] && (
-                                <div>
-                                    {t(`service${id}-step-two.acceptance_letter${i + 1}`)}
-                                    <button
-                                        onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`) }}
-                                        style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                                    </button>
-                                    <button
-                                        onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`) }}
-                                        style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                                    </button>
-                                </div>
+                                <>
+                                    <div className='inputt-atch' >
+                                        <h3>{t(`service${id}-step-two.acceptance_letter${i + 1}`)}</h3>
+                                        <div className="atch-btns">
+                                            <button
+                                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`) }}
+                                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                                            </button>
+                                            <button
+                                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`) }}
+                                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div></div>
+                                </>
                             )}
 
                         </React.Fragment>
@@ -252,38 +351,46 @@ const Serinfo = ({ service ,User}) => {
 
 
                 }
-                
-                
-            </div>
-            <hr style={{width:"100%"}}/>
-                <div className='inputt'>
-                    <div>
-                    {t('quote_check_form')}
-                    <button
-                        onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.quote_check_form}`) }}
-                        style={{ background: "#003C70" }} class="atch-btn">{t('open')}
-                    </button>
-                    <button
-                        onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.quote_check_form}`) }}
-                        style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                    </button>
-                    </div>  
-                </div>
-            <h3>response</h3>    
-            <hr style={{width:"100%"}}/>
-                <div className="inputt ">
-                {data.response_text &&
-                    <p>{data.response_text}</p>
-                }
-                {data.response_pdf &&
-                    <p>{data.response_pdf}</p>
-                }
-                {data.payment_code &&
-                    <p>{data.payment_code}</p>
-                }
-                
 
-                </div>
+
+            </div>
+
+
+
+
+
+            <h1>{t('response')}</h1>
+            <hr style={{ width: "100%" }} />
+            {data.response_date &&
+                <h2><span style={{ color: "#AD8700" }}>{t('date-response')} </span> : {data.response_date.slice(0, 10)}</h2>
+            }
+            {data.payment_code &&
+                <h2><span style={{ color: "#AD8700" }}>{t('res-code')}</span>: {data.payment_code}</h2>
+            }
+            {data.response_text &&
+                <h2><span style={{ color: "#AD8700" }}>{t('notes')}</span> : {data.response_text}</h2>
+            }
+            <div className="inputt " style={{ gridTemplateColumns: "1fr", gridGap: "0px" }}>
+                {data.response_pdf &&
+                    <div className='inputt-atch' style={{ justifyContent: "space-evenly" }}>
+                        <h2>{t('att-res')}</h2>
+                        <div className="atch-btns">
+                            <button
+                                className="atch-btn-open"
+                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.response_pdf}`) }}
+                                style={{ background: "#003C70" }} class="atch-btn">{t('open')}
+                            </button>
+                            <button
+                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.response_pdf}`) }}
+                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+
         </div>
     )
 }

@@ -25,9 +25,44 @@
     margin: 0 auto;
     text-align: center;
     width: 100%;
+    
 }
+.inputt .inputt-atch {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+
 .data-c{
     display: flex;
+}
+.inputt>div .atch-btns{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.inputt-atch .atch-btns button{
+    background-color: #AD8700;
+    color: #fff;
+    padding: .7rem;
+    border-radius: 15px;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    transition: all .4s ease;
+    cursor: pointer;
+}
+.inputt>div .atch-btns button:hover{
+    transform: scale(1.1);
+    transition: all .7s ease;
 }
 
 .select-img {
@@ -39,6 +74,7 @@
     justify-items: center;
 
 }
+
 
 .information-service_body .img-btn {
     display: flex;

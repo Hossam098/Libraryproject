@@ -73,7 +73,7 @@
     border-radius: 10px;
     color: #fff;
     padding: 1rem;
-    animation: fade-iin .7s ease-in-out;
+    animation: fade-iin .5s ease-in-out;
 }
 .profile-container .subnav .subnav-content{
     background: #003c70;
@@ -139,6 +139,7 @@ tr td{
     text-align: center;
     border: 1px solid white;
     padding: .3rem;
+    font-size: 1.2rem;
 }
 thead{
     font-weight: bold;
@@ -147,9 +148,29 @@ thead{
     position:relative;
 }
 
-@media(max-width: 640px){
+@media(max-width: 1024px){
+    .profile-container .subnav .subnav-content{
+        width: 80%;
+    }
+
+}
+
+@media(max-width: 768px){
+    .profile-container .subnav .subnav-contentt, 
+    .profile-container .subnav .subnav-content{
+        width: 100% !important;
+        font-size: 80%;
+    }
+    .profile-container .subnav .subnav-contentt .inputt{
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+}
+
+/* @media(max-width: 640px){
     .profile-container .subnav .subnav-content{
         width: 90%;
     }
 
-}
+} */
+

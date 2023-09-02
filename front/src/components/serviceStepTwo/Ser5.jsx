@@ -221,6 +221,18 @@ const Ser5 = ({ ser }) => {
                 return
             }
         }
+        for (let i = 0; i < number; i++) {
+            if (!pdfs[`pdf${i + 11}`]) {
+                continue
+            }
+            const file = pdfs[`pdf${i + 11}`];
+
+            const fileName = file?.name || file;
+            if (!validExtensions2.test(fileName)) {
+                setError(t(`service${id}-step-two-err.acceptance_letter`))
+                return
+            }
+        }
 
 
 

@@ -280,7 +280,9 @@ const Ser2 = ({ ser }) => {
                             </div>
                             <button
                                 disabled={disabled}
-                                onClick={confirmf} className='sub-now'>{t('pay-code')}</button>
+                                onClick={confirmf} className='sub-now'>
+                                    {status !== 4 ? t('sub-now') : t('edit-btn')}
+                                </button>
                         </div>
                         {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
 

@@ -14,7 +14,7 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 
 
 const Ser7 = ({ser}) => {
-    const { id } = useParams()
+    let { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -26,7 +26,7 @@ const Ser7 = ({ser}) => {
     let status = 0
     if (id === undefined) {
         id = ser.service_id;
-        id2 = ser.ser_reg;
+        id2 = ser.ser_grant;
         status = ser.status;
     }
     const [data, setData] = useState({
@@ -50,9 +50,34 @@ const Ser7 = ({ser}) => {
                     navigate('/login')
                 })
 
+                if (status == 4) {
+                    try {
+                        axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+                            .then((res) => {
+                                console.log(res.data.level)
+                                setData({
+                                    level: res.data.level,
+                                    decision: res.data.decision,
+                                    pdf: res.data.message_pdf_ar,
+                                    word: res.data.message_word_ar,                                    
+                                }
+                                )
+                            })
+                            .catch((err) => {
+                                console.log(err)
+        
+                            })
+        
+        
+                    } catch (err) {
+                        console.log(err)
+                    }
+                }
+
         } catch (err) {
             console.log(err)
         }
+        console.log(data)
     }, [])
 
 
@@ -71,15 +96,34 @@ const Ser7 = ({ser}) => {
         if (!data.decision) {
             setError(t(`service7-step4.3-err`))
             return
+        }else if (data.decision?.name) {
+            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+
+            if (!validExtensions.test(data.decision.name)) {
+                setError(t(`service7-step4.3-err`))
+                return
+            }
         }
 
         if (!data.pdf) {
             setError(t(`service7-step4.2-err`))
             return
+        }else if (data.pdf?.name) {
+            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+            if (!validExtensions.test(data.pdf.name)) {
+                setError(t(`service7-step4.2-err`))
+                return
+            }
         }
         if (!data.word) {
             setError(t(`service7-step4.1-err`))
             return
+        }else if (data.word?.name) {
+            const validExtensions = /\.(doc|docx)$/i;
+            if (!validExtensions.test(data.word.name)) {
+                setError(t(`service7-step4.1-err`))
+                return
+            }
         }
 
         axios.defaults.withCredentials = true
@@ -106,7 +150,7 @@ const Ser7 = ({ser}) => {
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/Myservices`)
+                    navigate(`/`)
                 })
                 .catch((err) => {
                     console.log(err.response.data.message[0])
@@ -132,23 +176,43 @@ const Ser7 = ({ser}) => {
     else if (status == 4) {
         
         setConfirm(false)
-        if (!data.level) {
+        if (data.level == '' && data.level !== 0) {
             setError(t(`service2-step-two-err.level`))
             return
         }
         if (!data.decision) {
             setError(t(`service7-step4.3-err`))
             return
+        }else if (data.decision?.name) {
+            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+
+            if (!validExtensions.test(data.decision.name)) {
+                setError(t(`service7-step4.3-err`))
+                return
+            }
         }
 
         if (!data.pdf) {
             setError(t(`service7-step4.2-err`))
             return
+        }else if (data.pdf?.name) {
+            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+            if (!validExtensions.test(data.pdf.name)) {
+                setError(t(`service7-step4.2-err`))
+                return
+            }
         }
         if (!data.word) {
             setError(t(`service7-step4.1-err`))
             return
+        }else if (data.word?.name) {
+            const validExtensions = /\.(doc|docx)$/i;
+            if (!validExtensions.test(data.word.name)) {
+                setError(t(`service7-step4.1-err`))
+                return
+            }
         }
+
        
         axios.defaults.withCredentials = true
         console.log(data)
@@ -168,7 +232,7 @@ const Ser7 = ({ser}) => {
         setMsg(t('uploading'))
 
         try {
-            axios.put(`${API_URL}/paymentedit/${id}/${id2}`, formData, {
+            axios.put(`${API_URL}/StepTwoSer7edit/${id}/${id2}`, formData, {
                 withCredentials: true,
                 onUploadProgress: (ProgressEvent) => {
                     setDisabled(true)
@@ -180,9 +244,10 @@ const Ser7 = ({ser}) => {
                 .then((res) => {
                     console.log(res.data)
                     alert("done")
-                    navigate(`/Myservices`)
+                    navigate(`/`)
                 })
                 .catch((err) => {
+                    setDisabled(false)
                     console.log(err.response.data.message[0])
                     setError(err.response.data.message[0])
                     if (err && err.response && err.response.data && err.response.data[0]) {
@@ -192,14 +257,13 @@ const Ser7 = ({ser}) => {
                     }
                     setMsg(null)
                     setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                    setDisabled(false)
                 })
         } catch (err) {
+            setDisabled(false)
             console.log(err)
             console.log(err.response.data)
             setMsg(null)
             setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-            setDisabled(false)
 
         }
     }
@@ -351,7 +415,9 @@ const Ser7 = ({ser}) => {
                         </div>
                         <button
                             disabled={disabled}
-                            onClick={confirmf} className='sub-now'>{t('pay-code')}</button>
+                            onClick={confirmf} className='sub-now'>
+                                {status !== 4 ? t('sub-now') : t('edit-btn')}
+                            </button>
                     </div>
                     {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
 

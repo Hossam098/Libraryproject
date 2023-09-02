@@ -75,7 +75,7 @@ serPayment.post('/payment',
             if (req.file) {
                 const file = req.file;
                 const ext = file.filename.split(".").pop();
-                console.log(ext);
+                (ext);
                 if (ext != 'pdf' && ext != 'jpeg' && ext != 'jpg' && ext != 'png' && ext != 'webp' && ext != 'svg' && ext != 'docx' && ext != 'doc') {
                     error.push("File type not allowed");
                     handleDeleteFile(req);
@@ -109,6 +109,7 @@ serPayment.post('/payment',
                         status: 0,
                         user_id: req.id,
                         service_id: req.body.service_id,
+                        req_code_date: new Date(),
                     }
 
                     const sqlInsert2 = "INSERT INTO submit SET ?";
@@ -152,6 +153,7 @@ serPayment.post('/payment',
                         status: 0,
                         user_id: req.id,
                         service_id: req.body.service_id,
+                        req_code_date: new Date(),
                     }
 
                     const sqlInsert2 = "INSERT INTO submit SET ?";
@@ -190,6 +192,7 @@ serPayment.post('/payment',
                         status: 0,
                         user_id: req.id,
                         service_id: req.body.service_id,
+                        req_code_date: new Date(),
                     }
 
                     const sqlInsert2 = "INSERT INTO submit SET ?";
@@ -226,6 +229,8 @@ serPayment.post('/payment',
                         status: 0,
                         user_id: req.id,
                         service_id: req.body.service_id,
+                        req_code_date: new Date(),
+
                     }
 
                     const sqlInsert2 = "INSERT INTO submit SET ?";
@@ -262,6 +267,7 @@ serPayment.post('/payment',
                         status: 0,
                         user_id: req.id,
                         service_id: req.body.service_id,
+                        req_code_date: new Date(),
                     }
 
                     const sqlInsert2 = "INSERT INTO submit SET ?";
@@ -299,6 +305,7 @@ serPayment.post('/payment',
                         status: 0,
                         user_id: req.id,
                         service_id: req.body.service_id,
+                        req_code_date: new Date(),
                     }
 
                     const sqlInsert2 = "INSERT INTO submit SET ?";
@@ -470,7 +477,7 @@ serPayment.put('/paymentEdit/:id/:id2',
             if (req.file) {
                 const file = req.file;
                 const ext = file.filename.split(".").pop();
-                console.log(ext);
+                (ext);
                 if (ext != 'pdf' && ext != 'jpeg' && ext != 'jpg' && ext != 'png' && ext != 'webp' && ext != 'svg' && ext != 'docx' && ext != 'doc') {
                     error.push("File type not allowed");
                     handleDeleteFile(req);
@@ -531,7 +538,6 @@ serPayment.put('/paymentEdit/:id/:id2',
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
 
-                    console.log(form);
                     const sqlUpdate = "UPDATE formation_service SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [form, id2]);
                     if (result2.affectedRows > 0) {

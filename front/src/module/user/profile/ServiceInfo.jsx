@@ -46,8 +46,8 @@ const ServiceInfo = ({User}) => {
 
   return (
     <>
-    <div className="subnav-contentt">
-      <table>
+    <div className="subnav-contentt" style={{ width : '80%' }}>
+      <table style={{ width: '100%' }}>
         <thead>
           <tr>
             <td>{t('service-name')}</td>
@@ -64,13 +64,13 @@ const ServiceInfo = ({User}) => {
                 <td>{ser.status == 0 ? t('service1-step3') :
                   ser.status == 1 ? t('continue') :
                     ser.status == 2 ? t('wait-res') :
-                      ser.status == 3 ? t('wait-edit') :
-                        ser.status == 4 ? t('wait-edit') :
+                      ser.status == 3 ? t('edit-att') :
+                        ser.status == 4 ? t('edit-att') :
                           ser.status == 5 ? t('acc') :
                             ser.status == 6 ? t('rej') : null
 
                 }</td>
-                <td>{ser.req_code_date.slice(0, 10)}</td>
+                <td>{ser.req_code_date ? ser.req_code_date.slice(0, 10) : ser.submit_date.slice(0, 10)}</td>
                 <td>
                   <button className='bttn'
                    onClick={() => { setFlag(true); setService(ser); }}>

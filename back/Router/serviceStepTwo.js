@@ -168,6 +168,7 @@ const handleDeleteFile5 = (req) => {
         const path2 = `./public/imgs/${req.national_id}/${pdf}`;
         for (let i = 0; i < 2; i++) {
             if (word != null && i == 0) {
+                console.log(path);
                 fs.unlinkSync(path, (err) => {
                     if (err) {
                         console.error(err)
@@ -349,9 +350,9 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        console.log(1);
+                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        console.log(2);
+                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile(req);
                             error.push("Please upload image or pdf or word");
@@ -493,15 +494,15 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
             const resultSelect = await query(sqlSelect, valueSelect);
             if (resultSelect.length > 0) {
                 if (resultSelect[0].status == 1) {
-                    console.log(req.files);
+                    (req.files);
                     if (!req.files.payment_photo) {
                         handleDeleteFile2(req);
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        console.log(1);
+                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        console.log(2);
+                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile2(req);
                             error.push("Please upload image or pdf or word");
@@ -632,15 +633,15 @@ serviceStepTwo.put("/StepTwoSer3/:id/:id2",
             const resultSelect = await query(sqlSelect, valueSelect);
             if (resultSelect.length > 0) {
                 if (resultSelect[0].status == 1) {
-                    console.log(req.files);
+                    (req.files);
                     if (!req.files.payment_photo) {
                         handleDeleteFile3(req);
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        console.log(1);
+                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        console.log(2);
+                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile3(req);
                             error.push("Please upload image or pdf or word");
@@ -723,8 +724,8 @@ serviceStepTwo.put("/StepTwoSer3/:id/:id2",
                     research8_image_word: word8,
                     research9_image_word: word9,
                     research10_image_word: word10,
-                    publish_date: req.body.publish_date ? req.body.publish_date : null,
-                    accept_date: req.body.accept_date
+                    publish_date: (!req.body.puplish_date && req.body.accept_date) ? null : req.body.puplish_date ? req.body.puplish_date : null,
+                    accept_date: (!req.body.accept_date && req.body.puplish_date) ? null : req.body.accept_date ? req.body.accept_date : null,
                 }
 
 
@@ -783,15 +784,15 @@ serviceStepTwo.put("/StepTwoSer4/:id/:id2",
             const resultSelect = await query(sqlSelect, valueSelect);
             if (resultSelect.length > 0) {
                 if (resultSelect[0].status == 1) {
-                    console.log(req.files);
+                    (req.files);
                     if (!req.files.payment_photo) {
                         handleDeleteFile3(req);
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        console.log(1);
+                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        console.log(2);
+                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile3(req);
                             error.push("Please upload image or pdf or word");
@@ -916,7 +917,10 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
 
     async (req, res) => {
         let error = [];
+        console.log(1);
         try {
+            console.log(2);
+
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 handleDeleteFile5(req);
@@ -929,12 +933,13 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
             const id = req.params.id;
             const id2 = req.params.id2;
 
-            console.log(id);
             const sqlSelect = `SELECT submit.* ,upgrade_service.* FROM submit INNER JOIN upgrade_service ON submit.ser_upgrade     = upgrade_service.id WHERE submit.service_id = ? AND submit.ser_upgrade     = ? AND submit.user_id = ?`;
             const valueSelect = [id, id2, req.id];
             const resultSelect = await query(sqlSelect, valueSelect);
             if (resultSelect.length > 0) {
+                console.log(3);
                 if (resultSelect[0].status == 1) {
+                    console.log(4);
                     if (!req.files.payment_photo) {
                         handleDeleteFile5(req);
                         error.push("Please upload payment_photo");
@@ -947,9 +952,21 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                             return res.status(400).json({ message: error });
                         }
                     }
+                    if(!req.files.research_list){
+                        console.log(5);
+                        handleDeleteFile5(req);
+                        error.push("Please upload research_list");
+                        return res.status(400).json({ message: error });
+                    }else{
+                        const ext = req.files.research_list[0].filename.split(".").pop();
+                        if (ext !== "pdf" && ext !== "docx" && ext !== "doc" && ext !== "jpg" && ext !== "png" && ext !== "jpeg") {
+                            handleDeleteFile5(req);
+                            error.push("Please upload pdf or word or image");
+                            return res.status(400).json({ message: error });
+                        }
+                    }
                     for (let i = 1; i <= req.body.files_numbers; i++) {
-                        console.log(id);
-
+                        console.log(6);
                         if (!req.files[`word${i}`]) {
                             handleDeleteFile5(req);
                             error.push(`Please upload word${i}`);
@@ -964,8 +981,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                         }
                     }
                     for (let i = 1; i <= req.body.files_numbers; i++) {
-                        console.log(id);
-
+                        console.log(7);
                         if (!req.files[`pdf${i}`]) {
                             handleDeleteFile5(req);
                             error.push(`Please upload pdf${i}`);
@@ -981,7 +997,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                     }
                     for (let i = 11; i <= 20; i++) {
 
-                        if (!req.files[`pdf${i}`]) {
+                        if (req.files[`pdf${i}`]) {
                             const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
                             if (ext !== "pdf") {
                                 handleDeleteFile5(req);
@@ -993,11 +1009,13 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                     }
 
                 }
-                console.log(id);
 
                 let payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : resultSelect[0].photo_payment_receipt;
+                console.log(req.files);
                 let research_list = req.files.research_list ? req.files.research_list[0].filename : resultSelect[0].research_list;
-                
+
+                console.log(req.files);
+                console.log(resultSelect[0]);
                 let word1 = req.files.word1 ? req.files.word1[0].filename : resultSelect[0].research1_image_word;
                 let word2 = req.files.word2 ? req.files.word2[0].filename : resultSelect[0].research2_image_word;
                 let word3 = req.files.word3 ? req.files.word3[0].filename : resultSelect[0].research3_image_word;
@@ -1030,6 +1048,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                 let pdf20 = req.files.pdf20 ? req.files.pdf20[0].filename : resultSelect[0].acceptance_letter10;
 
 
+                console.log(5);
 
                 const data = {
                     photo_payment_receipt: payment_photo,
@@ -1066,6 +1085,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                     acceptance_letter10: pdf20,
 
                 }
+                console.log(6);
 
 
                 const sql = `UPDATE upgrade_service SET ? WHERE id = ? `;
@@ -1095,7 +1115,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
 
         } catch (error) {
             handleDeleteFile5(req);
-            return res.status(500).json({ message: error.message });
+            return res.status(500).json(error);
         }
     }
 );
@@ -1124,15 +1144,15 @@ serviceStepTwo.put("/StepTwoSer6/:id/:id2",
             const resultSelect = await query(sqlSelect, valueSelect);
             if (resultSelect.length > 0) {
                 if (resultSelect[0].status == 1) {
-                    console.log(req.files);
+                    (req.files);
                     if (!req.files.payment_photo) {
                         handleDeleteFile3(req);
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        console.log(1);
+                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        console.log(2);
+                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile3(req);
                             error.push("Please upload image or pdf or word");
@@ -1259,7 +1279,7 @@ serviceStepTwo.get("/StepTwoSer78/:id/:id2",
         try {
             const id = req.params.id;
             const id2 = req.params.id2;
-            if(id == 7){
+            if (id == 7) {
                 const sqlSelect = `SELECT submit.* ,grant_service.* users.* FROM submit INNER JOIN grant_service ON submit.ser_personal     = grant_service.id INNER JOIN users ON submit.user_id = users.id WHERE submit.service_id = ? AND submit.ser_personal     = ? AND submit.user_id = ?`;
                 const valueSelect = [id, id2, req.id];
                 const resultSelect = await query(sqlSelect, valueSelect);
@@ -1270,7 +1290,7 @@ serviceStepTwo.get("/StepTwoSer78/:id/:id2",
                     error.push("Data not found");
                     return res.status(400).json({ message: error });
                 }
-            }else if(id == 8){
+            } else if (id == 8) {
                 const sqlSelect = `SELECT submit.* ,knowledge_bank_service.* users.* FROM submit INNER JOIN knowledge_bank_service ON submit.ser_personal     = knowledge_bank_service.id INNER JOIN users ON submit.user_id = users.id WHERE submit.service_id = ? AND submit.ser_personal     = ? AND submit.user_id = ?`;
                 const valueSelect = [id, id2, req.id];
                 const resultSelect = await query(sqlSelect, valueSelect);
@@ -1281,7 +1301,7 @@ serviceStepTwo.get("/StepTwoSer78/:id/:id2",
                     error.push("Data not found");
                     return res.status(400).json({ message: error });
                 }
-            }else{
+            } else {
                 error.push("Data not found");
                 return res.status(400).json({ message: error });
             }
@@ -1325,10 +1345,10 @@ serviceStepTwo.post("/StepTwoSer7",
                 error.push("Please upload decision");
                 return res.status(400).json({ message: error });
             } else {
-                console.log(1);
+                (1);
                 const ext = req.files.decision[0].filename.split(".").pop();
-                console.log(2);
-                if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
+                (2);
+                if (ext !== "pdf" ) {
                     handleDeleteFile7(req);
                     error.push("Please upload image or pdf or word");
                     return res.status(400).json({ message: error });
@@ -1378,7 +1398,7 @@ serviceStepTwo.post("/StepTwoSer7",
             const result = await query(sql, value);
             if (result.affectedRows > 0) {
                 const submit = {
-                    ser_personal: result.insertId,
+                    ser_grant: result.insertId,
                     status: 2,
                     submit_date: new Date(),
                     service_id: 7,
@@ -1407,6 +1427,79 @@ serviceStepTwo.post("/StepTwoSer7",
     }
 );
 
+serviceStepTwo.put("/StepTwoSer7edit/:id/:id2",
+    checkUser,
+    upload.fields(
+        [{ name: "word", maxCount: 1 },
+        { name: "pdf", maxCount: 1 },
+        { name: "decision", maxCount: 1 },
+        ]),
+
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                handleDeleteFile7(req);
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            const id = req.params.id;
+            const id2 = req.params.id2;
+
+            const sqlSelect = `SELECT * FROM grant_service WHERE id = ?`;
+            const valueSelect = [id2];
+            const resultSelect = await query(sqlSelect, valueSelect);
+            if (resultSelect.length > 0) {
+                
+                let word = req.files.word ? req.files.word[0].filename : resultSelect[0].message_word_ar;
+                let pdf = req.files.pdf ? req.files.pdf[0].filename : resultSelect[0].message_pdf_ar;
+                let decision = req.files.decision ? req.files.decision[0].filename : resultSelect[0].decision;
+                
+                const grant = {
+                    message_word_ar: word,
+                    message_pdf_ar: pdf,
+                    decision: decision,
+                    level: req.body.level ? req.body.level : resultSelect[0].level,
+                }
+                console.log(1)
+                const sql = `UPDATE grant_service SET ? WHERE id = ? `;
+                const value = [grant, id2];
+                const result = await query(sql, value);
+                if (result.affectedRows > 0) {
+                    const submit = {
+                        status: 2,
+                        edit_date: new Date(),
+                        response_text : null,
+                    }
+                    const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_grant = ? AND user_id = ?';
+                    const value2 = [submit, id, id2, req.id];
+                    const result2 = await query(sql2, value2);
+                    if (result2.affectedRows > 0) {
+                        return res.status(200).json({ message: "Data saved successfully" });
+                    } else {
+                        handleDeleteFile7(req);
+                        error.push("Data not saved");
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    handleDeleteFile7(req);
+                    error.push("Data not saved");
+                    return res.status(400).json({ message: error });
+                }
+            }
+        } catch (error) {
+            handleDeleteFile7(req);
+            return res.status(500).send( error );
+        }
+    }
+);
+
+
+
 serviceStepTwo.post("/StepTwoSer8",
     checkUser,
     body("level").notEmpty().withMessage("Please enter level"),
@@ -1424,11 +1517,6 @@ serviceStepTwo.post("/StepTwoSer8",
             }
 
 
-
-
-
-
-
             const data = {
                 level: req.body.level,
                 academic: req.body.academic_div,
@@ -1440,7 +1528,7 @@ serviceStepTwo.post("/StepTwoSer8",
             const result = await query(sql, value);
             if (result.affectedRows > 0) {
                 const submit = {
-                    ser_knowledge : result.insertId,
+                    ser_knowledge: result.insertId,
                     status: 2,
                     submit_date: new Date(),
                     service_id: 8,
@@ -1452,7 +1540,7 @@ serviceStepTwo.post("/StepTwoSer8",
                 if (result2.affectedRows > 0) {
                     return res.status(200).json({ message: "Data saved successfully" });
                 } else {
-                        error.push("Data not saved");
+                    error.push("Data not saved");
                     return res.status(400).json({ message: error });
                 }
             } else {
@@ -1466,6 +1554,63 @@ serviceStepTwo.post("/StepTwoSer8",
     }
 );
 
+serviceStepTwo.put("/StepTwoSer8edit/:id/:id2",
+    checkUser,
+    body("level").notEmpty().withMessage("Please enter level"),
+    body("academic_div").notEmpty().withMessage("Please enter academic"),
+
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            const id = req.params.id;
+            const id2 = req.params.id2;
+
+            const sqlSelect = `SELECT * FROM knowledge_bank_service WHERE id = ?`;
+            const valueSelect = [id2];
+            const resultSelect = await query(sqlSelect, valueSelect);
+            if (resultSelect.length > 0) {
+                const data = {
+                    level: req.body.level ? req.body.level : resultSelect[0].level,
+                    academic: req.body.academic_div ? req.body.academic_div : resultSelect[0].academic,
+                }
+                const sql = `UPDATE knowledge_bank_service SET ? WHERE id = ? `;
+                const value = [data, id2];
+                const result = await query(sql, value);
+                if (result.affectedRows > 0) {
+                    const submit = {
+                        status: 2,
+                        edit_date: new Date(),
+                        response_text : null,
+                    }
+
+                    const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_knowledge = ? AND user_id = ?';
+                    const value2 = [submit, id, id2, req.id];
+                    const result2 = await query(sql2, value2);
+                    if (result2.affectedRows > 0) {
+                        return res.status(200).json({ message: "Data saved successfully" });
+                    } else {
+                        error.push("Data not saved");
+                        return res.status(400).json({ message: error });
+                    }
+                } else {
+                    error.push("Data not saved");
+                    return res.status(400).json({ message: error });
+                }
+
+            }
+        } catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+);
 
 
 export default serviceStepTwo;

@@ -105,6 +105,7 @@ const Myser = () => {
                                 }
 
                                 return (
+                                    service.status === 5 || service.status === 6 ? null : 
                                     <div className="inst"><div className="inst-container">
                                         <div className="information-service"  >
                                             <div className="information-service_body" style={{ backgroundColor: '#fff', color: '#000', width: '100%' }}>
