@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2023 at 05:15 PM
+-- Generation Time: Sep 02, 2023 at 07:41 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.2
 
@@ -47,15 +47,19 @@ CREATE TABLE `best_message_service` (
   `research7_image_pdf` varchar(255) DEFAULT NULL,
   `research7_image_word` varchar(255) DEFAULT NULL,
   `research8_image_pdf` varchar(255) DEFAULT NULL,
-  `research8_image_word` varchar(255) DEFAULT NULL
+  `research8_image_word` varchar(255) DEFAULT NULL,
+  `research9_image_pdf` varchar(255) DEFAULT NULL,
+  `research9_image_word` varchar(255) DEFAULT NULL,
+  `research10_image_pdf` varchar(255) DEFAULT NULL,
+  `research10_image_word` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `best_message_service`
 --
 
-INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
-(1, '10_124406.jpg_1691550820009.jpg', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `best_message_service` (`id`, `photo_college_letter`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `research9_image_pdf`, `research9_image_word`, `research10_image_pdf`, `research10_image_word`) VALUES
+(4, '10_1693661117257.jpg', 0, '10_1693661192594.png', '10_1693661192599.pdf', '10_1693661192595.docx', '10_1693661192601.pdf', '10_1693661192597.docx', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -80,11 +84,7 @@ CREATE TABLE `formation_service` (
 --
 
 INSERT INTO `formation_service` (`id`, `level`, `photo_payment_receipt`, `photo_college_letter`, `message_word_ar`, `message_pdf_ar`, `message_word_en`, `message_pdf_en`, `quote_check_form`) VALUES
-(1, 0, NULL, 'نادر ممدوح_124423.jpg_1691538652865.jpg', NULL, NULL, NULL, NULL, NULL),
-(2, 0, '10_1692445355402.pdf', '10_124423.jpg_1691785956961.jpg', '10_1692445374408.docx', '10_1692445364907.pdf', NULL, NULL, '10_1692445375730.pdf'),
-(3, 0, NULL, '10_1692495991337.docx', NULL, NULL, NULL, NULL, NULL),
-(4, 0, NULL, '10_1692496021432.docx', NULL, NULL, NULL, NULL, NULL),
-(5, 0, NULL, '10_1692496106088.docx', NULL, NULL, NULL, NULL, NULL);
+(7, 1, '10_1693577242299.jpg', '10_1693577145225.pdf', '10_1693577242302.docx', '10_1693577285424.pdf', NULL, NULL, '10_1693577242302.pdf');
 
 -- --------------------------------------------------------
 
@@ -98,8 +98,17 @@ CREATE TABLE `grant_service` (
   `message_word_en` varchar(255) NOT NULL,
   `message_pdf_ar` varchar(255) NOT NULL,
   `message_word_ar` varchar(255) NOT NULL,
-  `decision_of_the_Judgment_and_discussion_committee` varchar(255) NOT NULL
+  `decision` varchar(255) NOT NULL,
+  `level` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `grant_service`
+--
+
+INSERT INTO `grant_service` (`id`, `message_pdf_en`, `message_word_en`, `message_pdf_ar`, `message_word_ar`, `decision`, `level`) VALUES
+(3, '', '', '10_1693669246101.pdf', '10_1693669251022.docx', '10_1693669244455.pdf', 0),
+(4, '', '', '10_1693673724472.pdf', '10_1693669504811.docx', '10_1693669504796.pdf', 1);
 
 -- --------------------------------------------------------
 
@@ -109,9 +118,18 @@ CREATE TABLE `grant_service` (
 
 CREATE TABLE `knowledge_bank_service` (
   `id` int(11) NOT NULL,
-  `subscription_status` tinyint(1) NOT NULL COMMENT 'حاله الاشتراك \r\nمش مشترك =0\r\nتفعيل =1\r\nافاده او اثبات انه مشترك =2',
-  `proof_of_subscription` varchar(255) NOT NULL
+  `subscription_status` tinyint(1) DEFAULT NULL COMMENT 'حاله الاشتراك \r\nمش مشترك =0\r\nتفعيل =1\r\nافاده او اثبات انه مشترك =2',
+  `proof_of_subscription` varchar(255) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `academic` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `knowledge_bank_service`
+--
+
+INSERT INTO `knowledge_bank_service` (`id`, `subscription_status`, `proof_of_subscription`, `level`, `academic`) VALUES
+(6, NULL, NULL, 0, 'evwefwevew');
 
 -- --------------------------------------------------------
 
@@ -122,8 +140,6 @@ CREATE TABLE `knowledge_bank_service` (
 CREATE TABLE `magazine_checking_service` (
   `id` int(11) NOT NULL,
   `photo_college_letter` varchar(255) NOT NULL,
-  `research_title` varchar(255) NOT NULL,
-  `research_number` tinyint(1) NOT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL,
   `research1_image_pdf` varchar(255) DEFAULT NULL,
   `research1_image_word` varchar(255) DEFAULT NULL,
@@ -140,17 +156,19 @@ CREATE TABLE `magazine_checking_service` (
   `research7_image_pdf` varchar(255) DEFAULT NULL,
   `research7_image_word` varchar(255) DEFAULT NULL,
   `research8_image_pdf` varchar(255) DEFAULT NULL,
-  `research8_image_word` varchar(255) DEFAULT NULL
+  `research8_image_word` varchar(255) DEFAULT NULL,
+  `research9_image_pdf` varchar(255) DEFAULT NULL,
+  `research9_image_word` varchar(255) DEFAULT NULL,
+  `research10_image_pdf` varchar(255) DEFAULT NULL,
+  `research10_image_word` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `magazine_checking_service`
 --
 
-INSERT INTO `magazine_checking_service` (`id`, `photo_college_letter`, `research_title`, `research_number`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
-(1, 'نادر ممدوح_124423.jpg_1691543292974.jpg', '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, '10_124423.jpg_1691548098620.jpg', '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, '10_124423.jpg_1691785963139.jpg', '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `magazine_checking_service` (`id`, `photo_college_letter`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `research9_image_pdf`, `research9_image_word`, `research10_image_pdf`, `research10_image_word`) VALUES
+(5, '10_1693659835832.png', '10_1693659919933.jpg', '10_1693659919940.pdf', '10_1693660256082.doc', '10_1693659919942.pdf', '10_1693659919939.docx', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -183,6 +201,8 @@ CREATE TABLE `personal_examination_service` (
   `id` int(11) NOT NULL,
   `photo_college_letter` varchar(255) DEFAULT NULL,
   `photo_payment_receipt` varchar(255) DEFAULT NULL,
+  `accept_date` date DEFAULT NULL,
+  `publish_date` date DEFAULT NULL,
   `research1_image_pdf` varchar(255) DEFAULT NULL,
   `research1_image_word` varchar(255) DEFAULT NULL,
   `research2_image_pdf` varchar(255) DEFAULT NULL,
@@ -198,17 +218,19 @@ CREATE TABLE `personal_examination_service` (
   `research7_image_pdf` varchar(255) DEFAULT NULL,
   `research7_image_word` varchar(255) DEFAULT NULL,
   `research8_image_pdf` varchar(255) DEFAULT NULL,
-  `research8_image_word` varchar(255) DEFAULT NULL
+  `research8_image_word` varchar(255) DEFAULT NULL,
+  `research9_image_pdf` varchar(255) DEFAULT NULL,
+  `research9_image_word` varchar(255) DEFAULT NULL,
+  `research10_image_pdf` varchar(255) DEFAULT NULL,
+  `research10_image_word` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `personal_examination_service`
 --
 
-INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`) VALUES
-(3, '10_124423.jpg_1691785959903.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, '10_1692486858089.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, '10_1692496633292.docx', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `photo_payment_receipt`, `accept_date`, `publish_date`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `research9_image_pdf`, `research9_image_word`, `research10_image_pdf`, `research10_image_word`) VALUES
+(7, '10_1693654704676.png', '10_1693655063129.png', '2023-09-15', '2023-09-05', '10_1693655068389.pdf', '10_1693655066099.doc', '10_1693655070368.pdf', '10_1693655066770.docx', '10_1693655071986.pdf', '10_1693655067063.docx', '10_1693655073960.pdf', '10_1693655067391.docx', '10_1693655075919.pdf', '10_1693655068061.docx', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -233,14 +255,7 @@ CREATE TABLE `registration_services` (
 --
 
 INSERT INTO `registration_services` (`id`, `level`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`) VALUES
-(7, 1, NULL, '10_124423.jpg_1691783190100.jpg', NULL, NULL, NULL, NULL, NULL),
-(8, 1, NULL, '10_124423.jpg_1691783235123.jpg', NULL, NULL, NULL, NULL, NULL),
-(9, 1, NULL, '10_124423.jpg_1691783263783.jpg', NULL, NULL, NULL, NULL, NULL),
-(10, 1, NULL, '10_124423.jpg_1691783331435.jpg', NULL, NULL, NULL, NULL, NULL),
-(11, 1, NULL, '10_124423.jpg_1691783360058.jpg', NULL, NULL, NULL, NULL, NULL),
-(12, 1, '10_1692398888457.docx', '10_1692398889451.docx', '10_1692398890449.jpg', '10_1692398891440.jpg', NULL, NULL, '10_1692398892389.jpg'),
-(13, 0, NULL, '10_124423.jpg_1691785950620.jpg', NULL, NULL, NULL, NULL, NULL),
-(14, 0, NULL, '10_1692494743950.pdf', NULL, NULL, NULL, NULL, NULL);
+(20, 0, '10_1693576871975.jpg', '10_1693576790107.jpg', '10_1693576969390.pdf', '10_1693576871986.docx', '10_1693581857712.pdf', '10_1693581857735.docx', '10_1693576871987.jpg');
 
 -- --------------------------------------------------------
 
@@ -289,11 +304,12 @@ CREATE TABLE `submit` (
   `payment_code` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL COMMENT '0 => req code\r\n1 => sent code\r\n2 => req steptwo\r\n3 => edit step two\r\n4 => edit req code att\r\n5 => acc\r\n6 => reg',
   `files_numbers` int(11) DEFAULT NULL,
-  `response_text` int(11) DEFAULT NULL,
-  `response_pdf` int(11) DEFAULT NULL,
-  `req_code_date` date NOT NULL DEFAULT current_timestamp(),
-  `submit_date` date NOT NULL DEFAULT current_timestamp(),
-  `edit_date` date NOT NULL DEFAULT current_timestamp(),
+  `response_text` varchar(255) DEFAULT NULL,
+  `response_pdf` varchar(255) DEFAULT NULL,
+  `req_code_date` date DEFAULT NULL,
+  `submit_date` date DEFAULT NULL,
+  `edit_date` date DEFAULT NULL,
+  `response_date` date DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   `sub_manager_id` int(11) DEFAULT NULL
@@ -303,18 +319,15 @@ CREATE TABLE `submit` (
 -- Dumping data for table `submit`
 --
 
-INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
-(1, 12, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2147483647, 1, NULL, NULL, NULL, '2023-08-18', '2023-08-19', '2023-08-11', 3, 1, NULL),
-(2, 13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, NULL, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 1, NULL),
-(3, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, NULL, '2023-08-18', '2023-08-19', '2023-08-11', 3, 2, NULL),
-(4, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, 1, 5, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 3, NULL),
-(5, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, 0, 1, NULL, NULL, NULL, '2023-08-18', '2023-08-11', '2023-08-11', 3, 4, NULL),
-(6, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 42452452, 1, 6, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 3, NULL),
-(7, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 1, NULL),
-(8, NULL, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 2, NULL),
-(9, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 2, NULL),
-(10, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 2, NULL),
-(11, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, 0, 3, NULL, NULL, '2023-08-20', '2023-08-20', '2023-08-20', 3, 3, NULL);
+INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `response_date`, `user_id`, `service_id`, `sub_manager_id`) VALUES
+(32, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1212121212, 2, NULL, 'استخراج افادة بأن عنوان مخطط الرسالة ليس مسجل	', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-05', 3, 1, NULL),
+(33, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, 312312345, 2, NULL, 'vsdsdvsdvs', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-03', 3, 2, NULL),
+(34, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, NULL, 2, 5, 'bfdbdfbdfbfdb', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', '2023-09-05', 3, 3, NULL),
+(35, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, 4343453, 5, 2, 'dfbfdbfd', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 4, NULL),
+(36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, 53453, 2, 2, 'dfnfdndf', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 6, NULL),
+(37, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, 55343453, 2, 2, 'خطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\n', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 5, NULL),
+(39, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 7, NULL),
+(40, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 8, NULL);
 
 -- --------------------------------------------------------
 
@@ -344,11 +357,47 @@ INSERT INTO `sub_manager` (`id`, `name`, `email`, `password`) VALUES
 
 CREATE TABLE `upgrade_service` (
   `id` int(11) NOT NULL,
-  `current_academic_degree` varchar(255) NOT NULL,
-  `academic_degree_to_which_its_ promoted` varchar(255) NOT NULL,
+  `research_list` varchar(255) DEFAULT NULL,
   `photo_college_letter` varchar(255) NOT NULL,
-  `photo_payment_receipt` varchar(255) DEFAULT NULL
+  `photo_payment_receipt` varchar(255) DEFAULT NULL,
+  `research1_image_pdf` varchar(255) DEFAULT NULL,
+  `research1_image_word` varchar(255) DEFAULT NULL,
+  `research2_image_pdf` varchar(255) DEFAULT NULL,
+  `research2_image_word` varchar(255) DEFAULT NULL,
+  `research3_image_pdf` varchar(255) DEFAULT NULL,
+  `research3_image_word` varchar(255) DEFAULT NULL,
+  `research4_image_pdf` varchar(255) DEFAULT NULL,
+  `research4_image_word` varchar(255) DEFAULT NULL,
+  `research5_image_pdf` varchar(255) DEFAULT NULL,
+  `research5_image_word` varchar(255) DEFAULT NULL,
+  `research6_image_pdf` varchar(255) DEFAULT NULL,
+  `research6_image_word` varchar(255) DEFAULT NULL,
+  `research7_image_pdf` varchar(255) DEFAULT NULL,
+  `research7_image_word` varchar(255) DEFAULT NULL,
+  `research8_image_pdf` varchar(255) DEFAULT NULL,
+  `research8_image_word` varchar(255) DEFAULT NULL,
+  `research9_image_pdf` varchar(255) DEFAULT NULL,
+  `research9_image_word` varchar(255) DEFAULT NULL,
+  `research10_image_pdf` varchar(255) DEFAULT NULL,
+  `research10_image_word` varchar(255) DEFAULT NULL,
+  `acceptance_letter1` varchar(255) DEFAULT NULL,
+  `acceptance_letter2` varchar(255) DEFAULT NULL,
+  `acceptance_letter3` varchar(255) DEFAULT NULL,
+  `acceptance_letter4` varchar(255) DEFAULT NULL,
+  `acceptance_letter5` varchar(255) DEFAULT NULL,
+  `acceptance_letter6` varchar(255) DEFAULT NULL,
+  `acceptance_letter7` varchar(255) DEFAULT NULL,
+  `acceptance_letter8` varchar(255) DEFAULT NULL,
+  `acceptance_letter9` varchar(255) DEFAULT NULL,
+  `acceptance_letter10` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `upgrade_service`
+--
+
+INSERT INTO `upgrade_service` (`id`, `research_list`, `photo_college_letter`, `photo_payment_receipt`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `research9_image_pdf`, `research9_image_word`, `research10_image_pdf`, `research10_image_word`, `acceptance_letter1`, `acceptance_letter2`, `acceptance_letter3`, `acceptance_letter4`, `acceptance_letter5`, `acceptance_letter6`, `acceptance_letter7`, `acceptance_letter8`, `acceptance_letter9`, `acceptance_letter10`) VALUES
+(4, '10_1693665343676.docx', '10_1693661286773.jpg', '10_1693665343669.png', '10_1693665343686.pdf', '10_1693667325196.docx', '10_1693667325199.pdf', '10_1693665343682.doc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '10_1693667325538.pdf', '10_1693667325544.pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -377,7 +426,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `national_id`, `phone`, `nationality`, `university`, `faculity`, `department`, `img`) VALUES
 (1, 'nader', 'das@info.com', '5531', '56165606', 68165, 'klnklmk', 'cscsd', 'dsc', '', ''),
 (2, 'v', 'dscsd@csc.css', '$2b$10$G7JMtmC/OcOJHenwtDhLruV3fprBbfZYO8iGR0Y3ySe7siDDIYe52', '452452', 45451, 'zdc', 'dcs', 'casc', '', ''),
-(3, 'نادر ممدوح شاكر عبدالمحسن', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_1692400750730.jpg');
+(3, 'نادر ممدوح شاكر عبدالمحسن', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_1693108098865.jpg');
 
 --
 -- Indexes for dumped tables
@@ -481,31 +530,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `best_message_service`
 --
 ALTER TABLE `best_message_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `formation_service`
 --
 ALTER TABLE `formation_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `grant_service`
 --
 ALTER TABLE `grant_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `knowledge_bank_service`
 --
 ALTER TABLE `knowledge_bank_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `magazine_checking_service`
 --
 ALTER TABLE `magazine_checking_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `manager`
@@ -517,13 +566,13 @@ ALTER TABLE `manager`
 -- AUTO_INCREMENT for table `personal_examination_service`
 --
 ALTER TABLE `personal_examination_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `registration_services`
 --
 ALTER TABLE `registration_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -535,7 +584,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `submit`
 --
 ALTER TABLE `submit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `sub_manager`
@@ -547,7 +596,7 @@ ALTER TABLE `sub_manager`
 -- AUTO_INCREMENT for table `upgrade_service`
 --
 ALTER TABLE `upgrade_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
