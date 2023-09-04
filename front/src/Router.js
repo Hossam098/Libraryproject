@@ -2,7 +2,6 @@ import {createBrowserRouter,} from "react-router-dom";
   
 import App from './App.jsx'
 import Register from "./module/user/register/Register.jsx";
-import Landing from "./module/user/landing/Landing.jsx";
 import Login from "./module/user/login/Login.jsx";
 import Upage from "./module/user/userpage/Upage.jsx";
 import Profile from "./module/user/profile/Profile.jsx";
@@ -15,7 +14,13 @@ import AllService from "./module/user/AllService/AllService.jsx";
 import About from "./module/user/about/About.jsx"
 import Contact from "./module/user/contact/Contact.jsx"
 import ServiceStepTwo from "./module/user/serviceStepTwo/ServiceStepTwo.jsx";
-
+import AdminLogin from "./module/admin/Alogin/AdminLogin.jsx";
+import { Payment } from "./module/admin/Payment/Payment.jsx";
+import Admin from "./module/admin/manager/Manager.jsx";
+import { SuperAdmin } from "./module/admin/SuperAdmin/SuperAdmin.jsx";
+import StudentListadmin from "./module/admin/manager/studentList/StudentList.jsx";
+import Review from "./module/admin/manager/review/Review.jsx";
+import Show from "./module/admin/manager/show/Show.jsx"
 
   
   const Router = createBrowserRouter([
@@ -80,9 +85,40 @@ import ServiceStepTwo from "./module/user/serviceStepTwo/ServiceStepTwo.jsx";
         {
          path: "/login",
          element: <Login/>, 
+        },
+        {
+          path:"/adminLogin",
+          element:<AdminLogin/>        
+        },
+        {
+          path:"/Payment",
+          element:<Payment/>        
+        },
+        {
+          path:"/manager",
+          element:<Admin/>,   
+          children:[
+            {
+              path:"",
+              element:<StudentListadmin/>,  
+            },
+            {
+              path:"/manager/review",
+              element:<Review/>,  
+            },
+            {
+              path:"/manager/show/id",
+              element:<Show/>,  
+            },
+          ]     
+        },
+        {
+          path:"/SuperAdmin",
+          element:<SuperAdmin/>        
         }
       ]
     },
+    
   
   ]);
   
