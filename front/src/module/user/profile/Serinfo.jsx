@@ -46,7 +46,7 @@ const Serinfo = ({ service, User }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+                    // console.log(res)
                 })
                 .catch((err) => {
                     // console.log(err)

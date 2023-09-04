@@ -7,6 +7,8 @@ import axios from 'axios';
 import { API_URL } from '../../../config';
 import { Link, useNavigate } from 'react-router-dom';
 import PopupError from '../../../components/error/PopupError';
+import mini from '../../../images/mini-logo.png'
+import uni from '../../../images/uni-logo.png'
 
 
 const Login = () => {
@@ -109,12 +111,12 @@ const Login = () => {
         />
       )}
       <div className="main-image" style={{ height: "100%" }}>
-        <img src="./assets/uni-logo.png" alt="" />
+        <img src={uni} alt="" />
       </div>
 
       <div className="main-content">
         <div className="main-content-logo" >
-          <img src="./assets/mini-logo.png" alt="" className='im' />
+          <img src={mini} alt="" className='im' />
         </div>
         <div className="main-content">
           <div className="main-content-form">
