@@ -100,7 +100,7 @@
 
 
 
-table {
+.student-container table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 95%;
@@ -109,21 +109,21 @@ table {
     color: black;
 }
 
-td,
-th {
+.student-container td,
+.student-container th {
     border: 1px solid #dddddd;
     text-align: center;
     padding: 8px;
 }
-td,
-th,
-tr,
+.student-container td,
+.student-container th,
+.student-container tr,
 .input-cell{
     font-size: 1.5rem;
 }
 
 
-tr:nth-child(even) {
+.student-container tr:nth-child(even) {
     background: #dddddd;
 }
 
@@ -159,7 +159,7 @@ tr:nth-child(even) {
     border: 1px solid #000;
 }
 
-tr:nth-child(odd) .input-cell:focus{
+.student-container tr:nth-child(odd) .input-cell:focus{
     background: #dddddd;
     border: 1px solid #000;
 }
