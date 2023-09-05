@@ -11,7 +11,7 @@ import PopupError from '../../../components/error/PopupError';
 
 
 
-const AdminLogin = () => {
+const ManagerLogin = () => {
 
 
   const [t] = useTranslation();
@@ -187,4 +187,4 @@ const AdminLogin = () => {
   )
 }
 
-export default AdminLogin
+export default ManagerLogin
