@@ -9,8 +9,7 @@ import user from './Router/userCRUD.js';
 import userAuth from './Authentication/userAuth.js';
 import serPayment from './Router/serPayment.js';
 import serviceStepTwo from './Router/serviceStepTwo.js';
-// import serviceStepTwoEdit from './Router/serviceStepTwoEdit.js';
-
+import managerAuth from './Authentication/managerAuth.js';
 const app = express();
 app.use(express.json());
 
@@ -48,6 +47,7 @@ app.use('', serviceStepTwo);
 
 
 app.use('/auth', userAuth);
+app.use('/authmanager', managerAuth);
 app.use('/user', user);
 
 const PORT = process.env.PORT || 5000;

@@ -21,9 +21,10 @@ const checkmanager = async (req, res, next) => {
                     return res.status(401).json({ manager: false, msg: err });
                 }
                 
-                req.faculty_id = decoded.faculty_id;
-                req.manager_id = decoded.manager_id;
-                req.manager_email = decoded.manager_email;
+                req.service_id = decoded.service_id;
+                req.role = decoded.role;
+                req.id = decoded.id;
+                req.email = decoded.email;
                 next();
             }
             );
