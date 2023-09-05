@@ -186,6 +186,20 @@
     background: #19355A;
     border-radius: 10px;
 }
+.cotainer-stu button {
+    font-size: 15px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    background: #19355A;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.cotainer-stu button:hover {
+    background: #AD8700;
+    transition: 0.2s;
+}
 
 .cotainer-data .confirm-btn:hover {
     cursor: pointer;
@@ -199,4 +213,26 @@
         flex-direction: column;
         align-items: center;
     }
+}
+@media only screen and (max-width: 500px) {
+    .data-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .student-container td,
+.student-container th,
+.student-container tr,
+.input-cell ,
+input{
+    font-size: 1rem;
+}
+.navv select,
+.navv h2{
+    font-size: 1rem;
+}
+.navv{
+    justify-content: flex-start;
+    gap: 5px;
+}
 }

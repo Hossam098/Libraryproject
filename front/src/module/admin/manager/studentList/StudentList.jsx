@@ -11,6 +11,7 @@ const StudentListadmin = () => {
   const [student, setStudent] = React.useState(data)
   const [admins, setAdmins] = React.useState(admin)
   const [managerid, setmanagerid] =React.useState("")
+  const [role ,setRole ] =React.useState("")
 
   localStorage.setItem('i18nextLng', 'ar')
 
@@ -48,21 +49,22 @@ const StudentListadmin = () => {
         <div className="navv">
           <h2>الطلاب</h2>
           <select
-            onChange={(e) => {
-              const filteredStudents = e.target.value === ''
-                ? student
-                : student.filter((item) => item.status === parseInt(e.target.value));
-              setFilter(filteredStudents);
-              setFilter2(filteredStudents);
-            }}
+
+            // onChange={(e) => {
+            //   const filteredStudents = e.target.value === ''
+            //     ? student
+            //     : student.filter((item) => item.status === parseInt(e.target.value));
+            //   setFilter(filteredStudents);
+            //   setFilter2(filteredStudents);
+            // }}
             className='filter'
             name=""
             id=""
+            onChange={(e)=>{setRole(e.target.value)}}
           >
-            <option value="">فلتره</option>
-            <option value="5">مرفوض من الجامعه</option>
-            <option value="4">موافقه من الجامعه</option>
-            <option value="1">موافقه كليه</option>
+            <option value="">الصلاحيات</option>
+            <option value="1"> مراجعه فقط </option>
+            <option value="2"> تحكم كامل </option>
           </select>
           <select
             className='filter'
@@ -77,6 +79,9 @@ const StudentListadmin = () => {
               )
             )}
           </select>
+          { selected.length > 0 &&
+          <button>تأكيد</button>
+        }
         </div>
         <div className="student-container">
           <table className="data-table">
@@ -86,7 +91,7 @@ const StudentListadmin = () => {
                 <th> نوع الخدمه </th>
                 <th>تاريخ التقديم</th>
                 <th> حاله الخدمه </th>
-                <th>اختيار</th>
+                {(managerid && role) &&<th>اختيار</th>}
               </tr>
             </thead>
             <tbody>
@@ -97,21 +102,36 @@ const StudentListadmin = () => {
       <td>{item.ser_name}</td>
       <td>{item.submission_date.slice(0, 10)}</td>
       <td>{item.status === 1 ? 'موافقه كليه' : item.status === 2 ? 'موافقه عماده' : item.status === 3 ? 'موافقه وزاره' : item.status === 4 ? 'موافقه جامعه' : 'مرفوض'}</td>
-      <td>
-        {managerid &&
+      {(managerid && role) &&<td>
+        
         <input
-          onClick={(e) => {
-            setSelected(prev => ([...prev, {
-              student_id: item.student_id,
-              managerid: managerid
-            }]))
-          }}
+            onClick={(e) => {
+              if (e.target.checked) {
+                setSelected((prev) => [
+                  ...prev,
+                  {
+                    student_id: item.student_id,
+                    managerid: managerid,
+                    role: role,
+                  },
+                ]);
+              } else {
+                setSelected((prev) =>
+                  prev.filter(
+                    (selectedItem) =>
+                      selectedItem.student_id !== item.student_id ||
+                      selectedItem.managerid !== managerid ||
+                      selectedItem.role !== role
+                  )
+                );
+              }
+            }}
           type="checkbox"
           name=""
           id=""
         />
-      }
-      </td>
+      
+      </td>}
     </tr>
   )
 ))}

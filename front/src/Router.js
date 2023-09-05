@@ -14,7 +14,7 @@ import AllService from "./module/user/AllService/AllService.jsx";
 import About from "./module/user/about/About.jsx"
 import Contact from "./module/user/contact/Contact.jsx"
 import ServiceStepTwo from "./module/user/serviceStepTwo/ServiceStepTwo.jsx";
-import AdminLogin from "./module/admin/Alogin/AdminLogin.jsx";
+import ManagerLogin from "./module/admin/Alogin/ManagerLogin.jsx";
 import { Payment } from "./module/admin/Payment/Payment.jsx";
 import Admin from "./module/admin/manager/Manager.jsx";
 import { SuperAdmin } from "./module/admin/SuperAdmin/SuperAdmin.jsx";
@@ -87,8 +87,8 @@ import Show from "./module/admin/manager/show/Show.jsx"
          element: <Login/>, 
         },
         {
-          path:"/adminLogin",
-          element:<AdminLogin/>        
+          path:"/ManagerLogin",
+          element:<ManagerLogin/>        
         },
         {
           path:"/Payment",
