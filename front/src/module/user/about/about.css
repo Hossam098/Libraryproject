@@ -13,7 +13,7 @@
 
 .intro-text h1,
 .intro-text h4,
-.intro-text h2 ,
+.intro-text h2,
 .intro-text h3 {
     text-align: center;
     padding: .3rem 0;
@@ -43,7 +43,7 @@
 }
 
 .about-cont span {
-    color: #003C70;
+    color: #19355A;
     font-weight: bold;
     font-size: 1.3rem;
 }

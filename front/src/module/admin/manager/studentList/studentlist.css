@@ -8,6 +8,7 @@
     align-items: center;
     direction: rtl;
 }
+
 .cotainer-data h1 {
     color: #AD8700;
     font-size: 6rem;
@@ -25,34 +26,40 @@
     margin: 2rem auto 0;
 
 }
-.image{
+
+.image {
     width: 80%;
     border-radius: 10px;
-    margin: 3rem  auto 0;
+    margin: 3rem auto 0;
 }
-.moreinfo a{
+
+.moreinfo a {
     text-decoration: none;
     color: #fff;
 }
+
 .moreinfo {
     font-size: 1.1rem;
     border: 2px solid transparent;
     padding: 10px;
     border-radius: 15px;
-    background: #003C70;
+    background: #19355A;
     color: white;
     cursor: pointer;
     transition: .7s ease;
 }
+
 .moreinfo:hover {
-    border: 2px solid #003C70;
+    border: 2px solid #19355A;
     background-color: #fff;
-    color: #003C70;
+    color: #19355A;
 }
-.moreinfo:hover a{
-    color: #003C70;
+
+.moreinfo:hover a {
+    color: #19355A;
 }
-.student-container{
+
+.student-container {
     display: grid;
     width: 100%;
     justify-content: center;
@@ -69,11 +76,11 @@
 }
 
 
-.student-container  button {
+.student-container button {
     font-size: 15px;
     padding: 15px;
     border-radius: 15px;
-    background: #003C70;
+    background: #19355A;
     color: white;
     border: none;
     cursor: pointer;
@@ -83,7 +90,8 @@
     background: #AD8700;
     transition: 0.2s;
 }
-.filter{
+
+.filter {
     padding: 5px 3px;
     width: fit-content;
     font-size: 1.3rem;
@@ -115,10 +123,11 @@
     text-align: center;
     padding: 8px;
 }
+
 .student-container td,
 .student-container th,
 .student-container tr,
-.input-cell{
+.input-cell {
     font-size: 1.5rem;
 }
 
@@ -127,12 +136,12 @@
     background: #dddddd;
 }
 
-.profile-table{
+.profile-table {
     width: 80%;
     margin: 0 auto;
 }
 
-.profile-table .atch-btn{
+.profile-table .atch-btn {
     font-size: 20px;
     padding: 5px 8px;
     border: none;
@@ -141,11 +150,12 @@
     cursor: pointer;
     margin: 6px 11px;
 }
-.profile-table .atch-btn:hover{
+
+.profile-table .atch-btn:hover {
     box-shadow: 5px 10px 10px #888888;
 }
 
-.data-table .input-cell{
+.data-table .input-cell {
     outline: none;
     background: transparent;
     border: 1px solid transparent;
@@ -155,16 +165,16 @@
     /* font-size: 1rem; */
 }
 
-.data-table .input-cell:focus{
+.data-table .input-cell:focus {
     border: 1px solid #000;
 }
 
-.student-container tr:nth-child(odd) .input-cell:focus{
+.student-container tr:nth-child(odd) .input-cell:focus {
     background: #dddddd;
     border: 1px solid #000;
 }
 
-.cotainer-data .confirm-btn{
+.cotainer-data .confirm-btn {
     margin: 5rem 0;
     width: 90%;
     color: white;
@@ -173,19 +183,20 @@
     font-size: 2rem;
     border: transparent;
     text-transform: uppercase;
-    background: #003C70;
+    background: #19355A;
     border-radius: 10px;
 }
 
-.cotainer-data .confirm-btn:hover{
+.cotainer-data .confirm-btn:hover {
     cursor: pointer;
     background-color: #002a4d;
     box-shadow: 5px 10px 10px #888888;
 }
+
 @media only screen and (max-width: 500px) {
-    .data-container{
+    .data-container {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-  }
+}

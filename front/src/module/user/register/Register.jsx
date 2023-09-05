@@ -44,8 +44,8 @@ const Register = () => {
     setErrors2('');
   };
 
-  
-  
+
+
   useEffect(() => {
     axios.get(`${API_URL}/auth/check`, { withCredentials: true })
       .then((res) => {
@@ -56,7 +56,7 @@ const Register = () => {
       .catch((err) => {
         console.log(err)
         setLogged(false)
-        
+
       })
     if (Object.keys(errors).length === 0 && isSubmitting) {
       axios.defaults.withCredentials = true;
@@ -72,7 +72,7 @@ const Register = () => {
         });
     }
   }, [errors]);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validate(user));
@@ -90,9 +90,9 @@ const Register = () => {
       errors.email = `${t('email-err')}`
     } else if (!regex.test(values.email)) {
       errors.email = `${t('email-v-err')}`
-    }else if (!regex.test(values.email) || !values.email.includes('.edu')) {
+    } else if (!regex.test(values.email) || !values.email.includes('.edu')) {
       errors.email = `${t('email-t-err')}`;
-    }  
+    }
     if (!values.password) {
       errors.password = `${t('pass-err')}`
     } else if (values.password.length < 8) {
@@ -110,7 +110,7 @@ const Register = () => {
     if (!values.university) {
       errors.university = `${t('uni-err')}`
     }
-    if(values.university === "0"){
+    if (values.university === "0") {
       if (!values.other_uni) {
         errors.other_uni = `${t('uni-err')}`
       }
@@ -151,7 +151,7 @@ const Register = () => {
           <div class="main-content-form">
             <h3>{t('cerate')}</h3>
             <form onSubmit={handleSubmit}>
-              <div className="input-container" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" , textAlign:"right"} : { direction: "ltr" , textAlign:"left"}}>
+              <div className="input-container" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl", textAlign: "right" } : { direction: "ltr", textAlign: "left" }}>
 
 
                 <div class="input">
@@ -254,23 +254,23 @@ const Register = () => {
                   </select>
                   <p className='error'>{errors.university}</p>
                 </div>
-                
+
 
                 {user.university === "0" && (
                   <div class="input">
-                  <label>{t('uni-name')} </label>
-                  <input
-                    style={localStorage.getItem('i18nextLng') === "ar" ? { direction: "rtl" } : { direction: "ltr" }}
-                    type="text"
-                    className={errors.other_uni ? 'error-in' : ''}
-                    placeholder={t('e-uni')}
-                    value={user.other_uni}
-                    onChange={(e) => { setUser({ ...user, other_uni: e.target.value }) }}
-                  />
-                  <p className='error'>{errors.other_uni}</p>
-                </div>
+                    <label>{t('uni-name')} </label>
+                    <input
+                      style={localStorage.getItem('i18nextLng') === "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                      type="text"
+                      className={errors.other_uni ? 'error-in' : ''}
+                      placeholder={t('e-uni')}
+                      value={user.other_uni}
+                      onChange={(e) => { setUser({ ...user, other_uni: e.target.value }) }}
+                    />
+                    <p className='error'>{errors.other_uni}</p>
+                  </div>
                 )}
-                
+
 
 
                 <div class="input">
@@ -316,7 +316,7 @@ const Register = () => {
                     />
 
                     <span onClick={togglePasswordVisibility}>
-                      {showPassword ? <HiEyeOff style={{color:"#003C70"}} /> : <HiEye style={{color:"#003C70"}}/>}
+                      {showPassword ? <HiEyeOff style={{ color: "#19355A" }} /> : <HiEye style={{ color: "#19355A" }} />}
                     </span>
                   </div>
                   <p className='error'>{errors.password}</p>
@@ -337,7 +337,7 @@ const Register = () => {
                 </div>
 
               </div>
-              <input type="submit" value={t('create')} style={{marginBottom:"1rem"}}/>
+              <input type="submit" value={t('create')} style={{ marginBottom: "1rem" }} />
             </form>
 
             <Link to="/login" className="link">{t('login-link')}</Link>

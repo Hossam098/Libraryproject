@@ -100,11 +100,11 @@ import Show from "./module/admin/manager/show/Show.jsx"
           children:[
             {
               path:"",
-              element:<StudentListadmin/>,  
+              element:<Review/>,  
             },
             {
-              path:"/manager/review",
-              element:<Review/>,  
+              path:"/manager/list",
+              element:<StudentListadmin/>,  
             },
             {
               path:"/manager/show/id",

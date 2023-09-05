@@ -1,6 +1,6 @@
 .waitbtn-edit {
-    background-color: #003C70;
-    color: #fff; 
+    background-color: #19355A;
+    color: #fff;
     border-radius: 10px;
     padding: 10px;
     font-size: 1.5rem;
@@ -9,12 +9,15 @@
     cursor: pointer;
     margin: 0 auto;
 }
-.information-service_body .contiue .code{
+
+.information-service_body .contiue .code {
     width: 80%;
 }
-.information-service_body .contiue a{
+
+.information-service_body .contiue a {
     width: 50%;
 }
+
 .information-service_body .contiue {
     width: 100%;
 }

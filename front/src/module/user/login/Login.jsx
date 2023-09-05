@@ -45,7 +45,7 @@ const Login = () => {
       .catch((err) => {
         console.log(err)
         setLogged(false)
-        
+
       })
     if (Object.keys(errors).length === 0 && isSubmitting) {
       axios.defaults.withCredentials = true
@@ -153,7 +153,7 @@ const Login = () => {
                     />
 
                     <span onClick={togglePasswordVisibility}>
-                      {showPassword ? <HiEyeOff style={{ color: "#003C70" }} /> : <HiEye style={{ color: "#003C70" }} />}
+                      {showPassword ? <HiEyeOff style={{ color: "#19355A" }} /> : <HiEye style={{ color: "#19355A" }} />}
                     </span>
                   </div>
                   <p className='error'>{errors.password}</p>

@@ -1,27 +1,28 @@
-.input-login-container{
+.input-login-container {
     display: grid;
     grid-template-columns: 1fr;
     align-items: center;
     justify-content: center;
 }
 
-.input-login-container> .input{
+.input-login-container>.input {
     width: 70%;
     margin: 1rem auto;
 }
-.im{
+
+.im {
     width: 35% !important;
 }
-.input-login-container .input label{
-    color: #003C70;
+
+.input-login-container .input label {
+    color: #19355A;
     padding: 5px;
     font-weight: bold;
 }
 
-.link{
-    color: #003C70;
+.link {
+    color: #19355A;
     text-decoration: underline;
     font-weight: bold;
     font-size: 1.5rem;
 }
-

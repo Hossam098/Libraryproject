@@ -22,7 +22,7 @@
 }
 
 .inst .information-service_body {
-    background: #003C70;
+    background: #19355A;
     color: #fff;
     width: 90%;
     display: flex;
@@ -89,6 +89,7 @@
         width: 90%;
         justify-content: flex-end;
     }
+
     .inst .list-steps {
         padding: 0 1rem;
     }

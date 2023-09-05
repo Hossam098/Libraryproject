@@ -29,7 +29,7 @@ const Nav = () => {
 
       <ul>
         <li>
-          <Link to='/manager/review' > مراجعه الطلبات </Link>
+          <Link to='/manager/list' > مراجعه الطلبات </Link>
         </li>
         <li>
           <Link to= '/manager'> عرض جميع الطلاب</Link>

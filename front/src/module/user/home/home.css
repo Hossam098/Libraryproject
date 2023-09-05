@@ -1,24 +1,24 @@
-main{
-   height: 47rem;
-   /* background-image: linear-gradient(180deg, #003C70, rgba(255,0,0,0) 70.71%),url("../../../images/124406.jpg"); */
-   background-position: center;
-   background-image: url("../../../images/124509.jpg");
-   background-size: cover;
-   background-repeat: no-repeat;
-   background-attachment: fixed;
+main {
+    height: 47rem;
+    /* background-image: linear-gradient(180deg, #19355A, rgba(255,0,0,0) 70.71%),url("../../../images/124406.jpg"); */
+    background-position: center;
+    background-image: url("../../../images/124509.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 
 /* service */
 
-.services__container{
+.services__container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
 }
 
-.services{
-    /* background: #003C70; */
+.services {
+    /* background: #19355A; */
     border-radius: 2rem;
     background-color: #fff;
     /* border: 1px solid #4db5ff; */
@@ -28,40 +28,45 @@ main{
     animation: fade-iin .7s ease-in-out;
 
 }
+
 /* .services:hover{
     background: transparent;
     border-color: #2c2c6c;
     cursor: default;
 } */
-#services h2{
+#services h2 {
     width: 100%;
     text-align: center;
     font-size: 3rem;
-    color: #003C70;
+    color: #19355A;
     margin: 2rem auto;
 
 }
-#services{
+
+#services {
     padding: 1rem .3rem;
     margin: 0 1rem;
     /* background: #EFF2FF; */
 }
-.service__head{
+
+.service__head {
     /* background: #AD8700; */
     padding: 2rem;
-    border-radius:  2rem ;
+    border-radius: 2rem;
     /* box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1); */
 }
-.service__head h1{
+
+.service__head h1 {
     color: #000;
     font-size: 1.3rem;
     text-align: center;
 }
-.service__list{
+
+.service__list {
     padding: 2rem;
 }
 
-.service__list .li-article{
+.service__list .li-article {
     display: grid;
     gap: 1rem;
     margin-bottom: 0.8rem;
@@ -69,21 +74,24 @@ main{
     /* flex-direction: row; */
     grid-template-columns: 5% 95%;
     justify-items: center;
-    
+
 }
-.bttn{
+
+.bttn {
     width: 100%;
     display: grid;
     place-content: center;
     margin-bottom: 0 !important;
 }
-.bttn a{
+
+.bttn a {
     background: #AD8700;
     font-size: 1.5rem;
     margin: 1rem auto 0 auto;
     padding: 0.7rem 1.5rem;
     border-radius: 10px;
 }
+
 button.bttn {
     color: #fff;
     border: none;
@@ -95,28 +103,31 @@ button.bttn {
     cursor: pointer;
 }
 
-.bttn a:hover{
+.bttn a:hover {
     cursor: pointer;
     box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);
     transform: translateY(-1px);
     transition: all 0.3s ease-in-out;
 }
-.service__list-icon{
+
+.service__list-icon {
     color: #AD8700;
     margin-top: 2px;
     font-size: 1.5rem;
     border: 2px solid;
     border-radius: 50%;
 }
-.service__list p{
+
+.service__list p {
     font-size: 1.2rem;
     color: #000;
 }
-.enroll{
+
+.enroll {
     margin: 0 auto;
 }
 
-.intro-txt{
+.intro-txt {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -127,20 +138,23 @@ button.bttn {
     animation: fade-iin 1s ease-in;
     gap: 1rem;
 }
-.intro-txt h1{
+
+.intro-txt h1 {
     font-size: 3.5rem;
     font-weight: bolder;
 }
-.intro-txt h2{
+
+.intro-txt h2 {
     font-size: 2.5rem;
     font-weight: bolder;
 }
-.intro-txt h3{
+
+.intro-txt h3 {
     font-size: 1.2rem;
     font-weight: bolder;
 }
 
-#services .more-Services{
+#services .more-Services {
     display: flex;
     width: 50%;
     justify-content: center;
@@ -150,11 +164,12 @@ button.bttn {
     border-radius: 10px;
     border: none;
     font-size: 1.5rem;
-    background: #003C70;
+    background: #19355A;
     color: #fff;
 
 }
-#services .more-Services:hover{
+
+#services .more-Services:hover {
     cursor: pointer;
     box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);
     transform: translateY(-1px);
@@ -164,27 +179,29 @@ button.bttn {
 
 @keyframes fade-iin {
     from {
-      opacity: 0;
-      transform: scale(0);
+        opacity: 0;
+        transform: scale(0);
     }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
 
-@media screen and (max-width:1024px){
-    .services__container{
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .services__container {
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
     }
-    .services{
+
+    .services {
         height: auto;
     }
-  }
-  
-@media screen and (max-width:600PX){
-    .services__container{
+}
+
+@media screen and (max-width:600PX) {
+    .services__container {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }

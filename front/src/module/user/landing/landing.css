@@ -1,11 +1,12 @@
-.main{
+.main {
     width: 100%;
     height: 100vh;
     display: grid;
-    grid-template-columns:40% 60%;
-    background:#ffffff;
+    grid-template-columns: 40% 60%;
+    background: #ffffff;
 }
-.main .main-image{
+
+.main .main-image {
     display: flex;
     width: 100%;
     height: 95%;
@@ -14,14 +15,14 @@
     padding: 1rem;
     overflow: hidden;
 }
-.main .main-image img{
+
+.main .main-image img {
     width: 100%;
     height: 100%;
     border-radius: 7%
-
 }
 
-.main .main-content{
+.main .main-content {
     text-align: center;
     height: 90%;
     width: 100%;
@@ -32,7 +33,7 @@
 }
 
 
-.main .main-content .main-content-image img{
+.main .main-content .main-content-image img {
     width: 80%;
     height: 80%;
 }
@@ -46,42 +47,45 @@
     padding: 15px;
     border-radius: 15px;
     width: 20%;
-    background: #003C70;
+    background: #19355A;
     margin-top: 40px;
     border: none;
     cursor: pointer;
     min-width: fit-content;
 }
+
 .main .main-content .main-content-btn {
     text-decoration: none;
     color: white;
 }
-.main .main-content .main-content-btn:hover{
+
+.main .main-content .main-content-btn:hover {
     background: #AD8700;
     transition: 0.2s;
 }
 
 
-.lang{
+.lang {
     position: absolute;
     top: 10px;
     right: 10px;
 }
 
 @media only screen and (max-width: 600px) {
-    .main{
+    .main {
         grid-template-columns: 1fr;
     }
-    .main .main-image{
+
+    .main .main-image {
         display: none;
     }
-  }
+}
 
 
 
 @media only screen and (max-width: 1125px) {
 
-    .main .main-image img{
+    .main .main-image img {
         height: 60%;
     }
-  }
+}

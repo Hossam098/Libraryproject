@@ -85,6 +85,7 @@ const StudentListadmin = () => {
                 <th>اسم الطالب</th>
                 <th> نوع الخدمه </th>
                 <th>تاريخ التقديم</th>
+                <th> حاله الخدمه </th>
                 <th>اختيار</th>
               </tr>
             </thead>
@@ -95,6 +96,7 @@ const StudentListadmin = () => {
       <td>{item.student_name}</td>
       <td>{item.ser_name}</td>
       <td>{item.submission_date.slice(0, 10)}</td>
+      <td>{item.status === 1 ? 'موافقه كليه' : item.status === 2 ? 'موافقه عماده' : item.status === 3 ? 'موافقه وزاره' : item.status === 4 ? 'موافقه جامعه' : 'مرفوض'}</td>
       <td>
         {managerid &&
         <input

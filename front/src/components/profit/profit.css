@@ -1,35 +1,39 @@
-.profit h1{
+.profit h1 {
     font-size: 2.5rem;
 }
 
-.icons-cont{
+.icons-cont {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: baseline;
     justify-content: space-around;
     padding: 0 3rem;
 }
-.icon-cont{
+
+.icon-cont {
     display: flex;
     flex-direction: column;
     align-items: center;
 
 }
-.title-profit{
+
+.title-profit {
     width: 100%;
     text-align: center;
     font-size: 3rem;
-    color: #003C70;
+    color: #19355A;
     margin: 2rem auto;
 }
-.icon-cont p{
+
+.icon-cont p {
     text-align: center;
     font-size: 1.5rem;
 }
-.icon{
+
+.icon {
     font-size: 7rem;
     margin: 0.5rem;
-    background-color: #003C70;
+    background-color: #19355A;
     padding: 1.4rem;
     border-radius: 50%;
     border: none;
@@ -37,12 +41,13 @@
     overflow: visible;
     transition: all .3s ease-in-out;
 }
-.icon:hover{
-    background-color:  #AD8700 ;
+
+.icon:hover {
+    background-color: #AD8700;
 }
 
 @media(max-width: 760px) {
-    .icons-cont{
-    grid-template-columns: repeat(2, 1fr);
+    .icons-cont {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

@@ -1,11 +1,12 @@
-.main{
+.main {
     width: 100%;
     height: 100vh;
     display: grid;
-    grid-template-columns:40% 60%;
-    background:#ffffff;
+    grid-template-columns: 40% 60%;
+    background: #ffffff;
 }
-.main .main-image{
+
+.main .main-image {
     display: flex;
     width: 100%;
     height: 95%;
@@ -14,14 +15,14 @@
     padding: 1rem;
     overflow: hidden;
 }
-.main .main-image img{
+
+.main .main-image img {
     width: 100%;
     height: 100%;
     border-radius: 7%
-
 }
 
-.main .main-content{
+.main .main-content {
     text-align: center;
     height: 90%;
     width: 100%;
@@ -32,7 +33,7 @@
 }
 
 
-.main .main-content .main-content-image img{
+.main .main-content .main-content-image img {
     width: 80%;
     height: 80%;
 }
@@ -46,89 +47,98 @@
     padding: 15px;
     border-radius: 15px;
     width: 20%;
-    background: #003C70;
+    background: #19355A;
     margin-top: 40px;
     border: none;
     cursor: pointer;
     min-width: fit-content;
 }
+
 .main .main-content .main-content-btn {
     text-decoration: none;
     color: white;
 }
-.main .main-content .main-content-btn:hover{
+
+.main .main-content .main-content-btn:hover {
     background: #AD8700;
     transition: 0.2s;
 }
 
 
-.lang{
+.lang {
     position: absolute;
     top: 10px;
     right: 10px;
 }
 
 @media only screen and (max-width: 600px) {
-    .main{
+    .main {
         grid-template-columns: 1fr;
     }
-    .main .main-image{
+
+    .main .main-image {
         display: none;
     }
-  }
+}
 
-.main .main-content .main-content-logo{
+.main .main-content .main-content-logo {
     width: 100%;
 
 }
-.main .main-content .main-content-logo img{
-    width:20%;
+
+.main .main-content .main-content-logo img {
+    width: 20%;
 }
-.main-content-form{
+
+.main-content-form {
     width: 95%;
     padding: 1rem 0;
 }
-.main-content-form h3{
+
+.main-content-form h3 {
     color: #AD8700;
     font-size: 2rem;
 }
-.main-content-form input[type=submit]{
+
+.main-content-form input[type=submit] {
     background: #AD8700;
     color: #fff;
     width: 50%;
     height: 2.5rem;
     border-radius: 10px;
-    border: none;   
+    border: none;
     cursor: pointer;
 }
 
-.main-content-form input[type=submit]:hover{
+.main-content-form input[type=submit]:hover {
     box-shadow: 0 0 15px #000;
     transition: 0.5s;
 }
 
-.input-container{
+.input-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0 .5rem;
 }
 
 
-.input p{
+.input p {
     line-height: 25px;
     font-size: 20px;
 }
-.input-container .input label{
-    color: #003C70;
+
+.input-container .input label {
+    color: #19355A;
     padding: 5px;
     font-weight: bold;
 }
+
 input,
-.input select{
+.input select {
     font-size: 1.4rem;
 }
 
- form .input {
+form .input {
     margin: 5px;
     direction: ltr;
     margin-bottom: .5rem;
@@ -136,7 +146,7 @@ input,
 }
 
 .input input,
-.input select{
+.input select {
     width: 100%;
     height: 2.5rem;
     padding: 0 3PX;
@@ -148,33 +158,36 @@ input,
 
 }
 
-.input input:focus{
+.input input:focus {
     border: 1px solid green;
     outline: none;
 }
 
-.passwordcontainer{
+.passwordcontainer {
     display: flex;
     align-items: center;
     border: none;
     padding: 0 3PX;
     border-radius: 5px;
 }
-.passwordcontainer input{
+
+.passwordcontainer input {
     border: none;
 }
-.passwordcontainer input:focus{
+
+.passwordcontainer input:focus {
     border: none;
     outline: none;
 }
 
 @media only screen and (max-width: 600px) {
-    .input-container{
+    .input-container {
         display: grid;
         grid-template-columns: 1fr;
         gap: .5rem;
     }
-    .main .main-content .main-content-logo img{
+
+    .main .main-content .main-content-logo img {
         width: 50% !important;
     }
-  }
+}
