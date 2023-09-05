@@ -41,6 +41,7 @@ const Landing = () => {
             {t('cont')}
         </div>
     </div>
+    
     <div className="lang">
       <Toggle/>
     </div>

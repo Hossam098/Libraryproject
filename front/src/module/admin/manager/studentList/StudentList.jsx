@@ -10,7 +10,7 @@ const StudentListadmin = () => {
   const navigate = useNavigate()
   const [student, setStudent] = React.useState(data)
   const [admins, setAdmins] = React.useState(admin)
-  const [adminid, setAdminid] =React.useState("")
+  const [managerid, setmanagerid] =React.useState("")
 
   localStorage.setItem('i18nextLng', 'ar')
 
@@ -68,7 +68,7 @@ const StudentListadmin = () => {
             className='filter'
             name=""
             id=""
-            onChange={(e)=>{setAdminid(e.target.value)}}
+            onChange={(e)=>{setmanagerid(e.target.value)}}
           >
             <option value="">اختر الادمن</option>
             {admins.map((admin)=>
@@ -96,17 +96,19 @@ const StudentListadmin = () => {
       <td>{item.ser_name}</td>
       <td>{item.submission_date.slice(0, 10)}</td>
       <td>
+        {managerid &&
         <input
           onClick={(e) => {
             setSelected(prev => ([...prev, {
               student_id: item.student_id,
-              admin_id: adminid
+              managerid: managerid
             }]))
           }}
           type="checkbox"
           name=""
           id=""
         />
+      }
       </td>
     </tr>
   )
