@@ -12,9 +12,7 @@ const checkmanager = async (req, res, next) => {
         let type = req.session.type;
         if (!token) {
             return res.status(401).json({ manager: false, msg: "Unauthorized" });
-        } else if(type != 0){
-            return res.status(401).json({ manager: false, msg: "Unauthorized" });
-        } else {
+        }else {
             token = token.split(" ")[1];
             jwt.verify(token, key, (err, decoded) => {
                 if (err) {

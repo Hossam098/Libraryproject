@@ -58,4 +58,10 @@ managerAuth.post('/login',
 });
 
 
+managerAuth.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.status(200).json({ message: "User logged out successfully" });
+});
+
+
 export default managerAuth;

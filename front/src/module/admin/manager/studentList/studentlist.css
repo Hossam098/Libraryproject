@@ -101,8 +101,19 @@
 
 
 
+.super-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-
+.super-container img {
+    width: 15%;
+    /* margin: 10px auto; */
+    z-index: -1;
+}
 
 
 
@@ -112,7 +123,7 @@
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 95%;
-    margin: 23px 0;
+    margin: 23px auto;
     background: white;
     color: black;
 }
@@ -187,18 +198,21 @@
     border-radius: 10px;
 }
 .cotainer-stu button {
-    font-size: 15px;
-    padding: 10px 15px;
+    font-size: 1.5rem;
+    padding: 10px 30px;
     border-radius: 15px;
     background: #19355A;
     color: white;
-    border: none;
+    border: 2px solid transparent;
     cursor: pointer;
+    animation: ease-in-out 0.5s all;
 }
 
 .cotainer-stu button:hover {
-    background: #AD8700;
-    transition: 0.2s;
+    background: #fff;
+    color: #19355A;
+    border: 2px solid #19355A;
+    transition: ease-in-out 0.3s all;
 }
 
 .cotainer-data .confirm-btn:hover {
