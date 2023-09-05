@@ -41,3 +41,4 @@ manager.get('/getallApplicantsWaiting',
     }
 )
 
+export default manager;
