@@ -21,22 +21,22 @@ const Nav = () => {
 
   return (
     <div className="dmin">
-    <nav >
-      <button
-        onClick={logout}
-        className="btn">
-        <Link style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</Link>
-      </button>
+      <nav >
+        <button
+          onClick={logout}
+          className="btn">
+          <Link style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</Link>
+        </button>
 
-      <ul>
-        <li>
-          <Link to='/manager/list' > مراجعه الطلبات </Link>
-        </li>
-        <li>
-          <Link to= '/manager'> عرض جميع الطلاب</Link>
-        </li>
-      </ul>
-    </nav>
+        <ul>
+          <li>
+            <Link to='/manager'> مراجعه الطلبات </Link>
+          </li>
+          <li>
+            <Link to='/manager/list' >  عرض جميع الطلبات </Link>
+          </li>
+        </ul>
+      </nav>
     </div>
 
   )

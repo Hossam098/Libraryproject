@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import img from '../../../../images/mini-logo.png'
+
 
 
 const Review = () => {
@@ -21,7 +23,7 @@ const Review = () => {
           // setFilter2(res.data)
         }).catch((error) => {
           if(error.response.status === 401) navigate('/ManagerLogin')
-          navigate('/adminLogin')
+          navigate('/ManagerLogin')
         })
     } catch (error) {
     }
@@ -38,8 +40,9 @@ const Review = () => {
 
 
   return (
-    <>
+    <div className='super-container'>
       <section className='cotainer-stu'>
+      <img src={img} alt="img" />
         <div className="navv">
           <h2>الطلاب</h2>
           {/* <select
@@ -63,6 +66,7 @@ const Review = () => {
         </div>
         <div className="student-container">
           {/* {student  && <h2>{student}</h2>} */}
+          {student.length > 0 ?(
           <table className="data-table">
             <thead>
               <tr>
@@ -76,22 +80,25 @@ const Review = () => {
             <tbody>
 {student.length > 0 && student.map((item, index) => (
     <tr key={item.student_id}>
-      <td>{item.student_name}</td>
-      <td>{item.ser_name}</td>
-      <td>{item.submission_date.slice(0, 10)}</td>
+      <td>{item.name}</td>
+      <td>{item.service_name_ar}</td>
+      <td>{item.submit_date.slice(0, 10)}</td>
+      <td>{item.status === 0 ? "منتظر كود دفع" : item.status === 1 ? "في انتظار رفع المرفقات" : item.status === 2 ? "في انتظار رد المكتبه" : item.status === 3 ? "قيد التعديل" : item.status === 4 ? "قيد التعديل" : item.status === 5 ? "مقبول" : item.status === 6 ? "مرفوض" : null}</td>
       <td>
         <button>
-          <Link to=''>تفاصيل</Link>
-        </button>
+      
+          <Link to={`/manager/show/${item.id}`}>تفاصيل</Link>
+          </button>
       </td>
     </tr>
   
 ))}
             </tbody>
           </table>
+          ):<h2 style={{marginBottom:"1rem"}}>لا يوجد طلبات بعد</h2>}
         </div>
       </section>
-    </>
+    </div>
   )
 }
 
