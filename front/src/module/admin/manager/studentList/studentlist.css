@@ -207,6 +207,13 @@
     cursor: pointer;
     animation: ease-in-out 0.5s all;
 }
+td .delete{
+    background:  red;
+}
+td button.delete:hover{
+    color:  red;
+    border: 2px solid red;
+}
 
 .cotainer-stu button:hover {
     background: #fff;
@@ -228,7 +235,7 @@
         align-items: center;
     }
 }
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 660px) {
     .data-container {
         display: flex;
         flex-direction: column;
@@ -238,8 +245,12 @@
 .student-container th,
 .student-container tr,
 .input-cell ,
-input{
+input, 
+.cotainer-stu button{
     font-size: 1rem;
+}
+.cotainer-stu button{
+    padding: .5rem;
 }
 .navv select,
 .navv h2{
@@ -248,5 +259,9 @@ input{
 .navv{
     justify-content: flex-start;
     gap: 5px;
+}
+.student-container table {
+ 
+    width: 100%;
 }
 }

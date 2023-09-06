@@ -104,7 +104,7 @@ const ShowA = () => {
           <h2>
             بيانات الطالب
           </h2>
-          <button onClick={downloadPDF}><BiSolidPrinter />طباعه</button>
+          <button onClick={downloadPDF} className='wait-edit'><BiSolidPrinter />طباعه</button>
         </div>
         <div className="data-container" ref={pdfRef}>
           <div className='image-con'>
@@ -137,8 +137,8 @@ const ShowA = () => {
           </div>
           <table className="data-table">
             <tr>
-              <th>Application Basic Information</th>
-              <th>Application Data</th>
+              <th> معلومات اساسيه </th>
+              <th> البيانات </th> 
             </tr>
 
             <tr>

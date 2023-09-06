@@ -107,7 +107,7 @@ import Show from "./module/admin/manager/show/Show.jsx"
               element:<StudentListadmin/>,  
             },
             {
-              path:"/manager/show/id",
+              path:"/manager/show/:id",
               element:<Show/>,  
             },
           ]     
