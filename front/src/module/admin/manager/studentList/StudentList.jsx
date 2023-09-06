@@ -134,9 +134,9 @@ const StudentListadmin = () => {
 
   return (
     <div className='super-container'>
-      <img  src={img} alt="img" />
+      <img src={img} alt="img" />
       <section className='cotainer-stu'>
-        
+
         <div className="navv">
           <h2>الطلاب</h2>
           <select
@@ -218,7 +218,7 @@ const StudentListadmin = () => {
                             setSelected((prev) =>
                               prev.filter(
                                 (selectedItem) =>
-                                  selectedItem.student_id !== item.student_id ||
+                                  selectedItem.student_id !== item.user_id ||
                                   selectedItem.managerid !== managerid ||
                                   selectedItem.role !== role
                               )
@@ -229,7 +229,6 @@ const StudentListadmin = () => {
                         name=""
                         id=""
                       />
-
                     </td> :
 
                       item.role !== null && item.role !== "" ?

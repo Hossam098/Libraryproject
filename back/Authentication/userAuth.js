@@ -117,6 +117,7 @@ userAuth.post('/login',
                         national_id: result[0].national_id,
                         name: result[0].name,
                         email: result[0].email,
+                        type : "user"
                     };
                     const token =jwt.sign(payload, key);
                     req.session.token ="Bearer "+ token;

@@ -23,6 +23,9 @@ const checkmanager = async (req, res, next) => {
                 req.role = decoded.role;
                 req.id = decoded.id;
                 req.email = decoded.email;
+                if (decoded.type !== "manager") {
+                    return res.status(401).json({ manager: false, msg: "Unauthorized" });
+                }
                 next();
             }
             );

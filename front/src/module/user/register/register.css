@@ -1,9 +1,21 @@
-.main {
+/* .main {
     width: 100%;
     height: 100vh;
     display: grid;
     grid-template-columns: 40% 60%;
     background: #ffffff;
+} */
+.main {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    background: #ffffff;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    background: #CDCDCD;
 }
 
 .main .main-image {
@@ -22,7 +34,7 @@
     border-radius: 7%
 }
 
-.main .main-content {
+/* .main .main-content {
     text-align: center;
     height: 90%;
     width: 100%;
@@ -30,6 +42,20 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+} */
+.main .main-content {
+    text-align: center;
+    height: 90%;
+    width: 80%;
+    display: flex;
+    background: #fff;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 1rem;
 }
 
 
@@ -41,7 +67,13 @@
 /*.main .main-content .main-content-image-text{
 
 }*/
-
+.links{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    align-content: center;
+    flex-direction: row-reverse;
+}
 .main .main-content .main-content-btn {
     font-size: 15px;
     padding: 15px;
@@ -82,12 +114,12 @@
 }
 
 .main .main-content .main-content-logo {
-    width: 100%;
+    width: 30%;
 
 }
 
 .main .main-content .main-content-logo img {
-    width: 20%;
+    width: 100%;
 }
 
 .main-content-form {
@@ -106,12 +138,14 @@
     width: 50%;
     height: 2.5rem;
     border-radius: 10px;
-    border: none;
+    border: 1px solid #AD8700;
     cursor: pointer;
 }
 
 .main-content-form input[type=submit]:hover {
-    box-shadow: 0 0 15px #000;
+    background: #fff;
+    color: #19355A;
+    border: 1px solid #AD8700;
     transition: 0.5s;
 }
 

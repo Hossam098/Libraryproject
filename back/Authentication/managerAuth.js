@@ -36,7 +36,8 @@ managerAuth.post('/login',
                         id : result[0].id,
                         service_id: result[0].service_id,
                         email: result[0].email,
-                        role : result[0].role
+                        role : result[0].role,
+                        type : "manager"
                     };
                     const token =jwt.sign(payload, key);
                     req.session.token ="Bearer "+ token;

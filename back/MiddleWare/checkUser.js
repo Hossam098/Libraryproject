@@ -23,7 +23,10 @@ const checkUser = async (req, res, next) => {
                 req.name = decoded.name;
                 req.email = decoded.email;
                 req.national_id = decoded.national_id;
-                
+                if (decoded.type !== "user") {
+                    error.push({user: false, msg: "Unauthorized"});
+                    return res.status(401).json(error);
+                }
                 next();
             }
             );

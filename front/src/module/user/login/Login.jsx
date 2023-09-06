@@ -103,20 +103,20 @@ const Login = () => {
 
 
   return (
-    <div className="main">
+    <div className="main logBack">
       {errors2 && (
         <PopupError
           message={errors2}
           onClose={handleCloseError}
         />
       )}
-      <div className="main-image" style={{ height: "100%" }}>
+      {/* <div className="main-image" style={{ height: "100%" }}>
         <img src={uni} alt="" />
-      </div>
+      </div> */}
 
-      <div className="main-content">
+      <div className="main-content" style={{boxShadow: "0 0 15px #000"}}>
         <div className="main-content-logo" >
-          <img src={mini} alt="" className='im' />
+          <img src={mini} alt="" className='img' />
         </div>
         <div className="main-content">
           <div className="main-content-form">
@@ -164,7 +164,11 @@ const Login = () => {
 
               </div>
               <input type="submit" value={t('Login')} />
-              <Link to="/register" style={{ color: "black", marginTop: "2rem", display: "block" }}>{t('register-link')}</Link>
+              <div className='links' style={{ textAlign: "center" }}>
+              <Link to="/register" style={{ marginTop: "1rem", display: "block" }}className="link">{t('register-link')}</Link>
+              <Link to="/" style={{ marginTop: "1rem", display: "block" }} className="link">{t('Home')}</Link>
+
+              </div>
               <Link style={{ color: "black", marginTop: "2rem", display: "block" }}>forget password</Link>
             </form>
 

@@ -2,37 +2,37 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import data from './data.json';
 
 
 const Review = () => {
   const navigate = useNavigate()
-  const [student, setStudent] = React.useState(data)
+  const [student, setStudent] = React.useState([])
 
 
   localStorage.setItem('i18nextLng', 'ar')
 
   useEffect(() => {
-    // try {
-    //   axios.defaults.withCredentials = true
-    //   axios.get('http://localhost:5000/admin/allaaplication', { withCredentials: true })
-    //     .then((res) => {
-    //       setStudent(res.data)
-    //       setFilter(res.data)
-    //       setFilter2(res.data)
-    //     }).catch((error) => {
-    //       navigate('/adminLogin')
-    //     })
-    // } catch (error) {
-    // }
+    try {
+      axios.defaults.withCredentials = true
+      axios.get('http://localhost:5000/manager/getallApplicantsAssigned', { withCredentials: true })
+        .then((res) => {
+          setStudent(res.data)
+          // setFilter(res.data)
+          // setFilter2(res.data)
+        }).catch((error) => {
+          if(error.response.status === 401) navigate('/ManagerLogin')
+          navigate('/adminLogin')
+        })
+    } catch (error) {
+    }
 
   }, [])
 
-  const [filter, setFilter] = useState(student);
-  const [filter2, setFilter2] = useState(student);
+  // const [filter, setFilter] = useState(student);
+  // const [filter2, setFilter2] = useState(student);
 
 
-  
+  console.log(student)
 
 
 
@@ -42,7 +42,7 @@ const Review = () => {
       <section className='cotainer-stu'>
         <div className="navv">
           <h2>الطلاب</h2>
-          <select
+          {/* <select
             onChange={(e) => {
               const filteredStudents = e.target.value === ''
                 ? student
@@ -58,10 +58,11 @@ const Review = () => {
             <option value="5">مرفوض من الجامعه</option>
             <option value="4">موافقه من الجامعه</option>
             <option value="1">موافقه كليه</option>
-          </select>
+          </select> */}
 
         </div>
         <div className="student-container">
+          {/* {student  && <h2>{student}</h2>} */}
           <table className="data-table">
             <thead>
               <tr>
@@ -73,8 +74,7 @@ const Review = () => {
               </tr>
             </thead>
             <tbody>
-{(filter.length > 0 ? filter : filter2).map((item, index) => (
-  !item.admin_id && (
+{student.length > 0 && student.map((item, index) => (
     <tr key={item.student_id}>
       <td>{item.student_name}</td>
       <td>{item.ser_name}</td>
@@ -85,7 +85,7 @@ const Review = () => {
         </button>
       </td>
     </tr>
-  )
+  
 ))}
             </tbody>
           </table>

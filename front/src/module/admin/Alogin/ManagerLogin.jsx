@@ -111,13 +111,13 @@ const ManagerLogin = () => {
             onClose={handleCloseError}
           />
         )}
-        <div className="main-image" style={{ height: "100%" }}>
+        {/* <div className="main-image" style={{ height: "100%" }}>
           <img src="./assets/uni-logo.png" alt="" />
-        </div>
+        </div> */}
 
-        <div className="main-content">
+        <div className="main-content" style={{ boxShadow: "0 0 15px #000" }}>
           <div className="main-content-logo" >
-            <img src="./assets/mini-logo.png" alt="" className='im' />
+            <img src="./assets/mini-logo.png" alt="" className='img' />
           </div>
           <div className="main-content">
             <div className="main-content-form">
