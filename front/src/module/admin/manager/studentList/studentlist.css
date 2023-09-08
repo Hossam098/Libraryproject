@@ -152,19 +152,40 @@
     margin: 0 auto;
 }
 
-.profile-table .atch-btn {
+.profile-table .atch-btn ,
+.resp .atch-btn,
+.atch-btns .atch-btn{
     font-size: 20px;
     padding: 5px 8px;
-    border: none;
+    border: 2px solid #19355A;
+    background-color: #19355A;
     border-radius: 10px;
     color: #fff;
     cursor: pointer;
     margin: 6px 11px;
+    transition: ease-in-out 0.5s all;
+}
+.profile-table .atch-btn:hover,
+.atch-btns .atch-btn:hover {
+    color: #19355A;
+    background-color: #fff;
+    border: 2px solid #19355A;
+}
+.profile-table .atch-btn2,
+.resp .atch-btn2,
+.atch-btns .atch-btn2 {
+    border: 2px solid #AD8700;
+    background-color: #AD8700;
+}
+.profile-table .atch-btn2:hover,
+.resp .atch-btn2:hover, 
+.atch-btns .atch-btn2:hover{
+    color: #AD8700;
+    background-color: #fff;
+    border: 2px solid #AD8700;
 }
 
-.profile-table .atch-btn:hover {
-    box-shadow: 5px 10px 10px #888888;
-}
+
 
 .data-table .input-cell {
     outline: none;

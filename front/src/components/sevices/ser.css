@@ -50,7 +50,7 @@
     justify-content: center;
 }
 
-.inputt-atch .atch-btns button{
+.subnav-contentt .inputt-atch .atch-btns button{
     background-color: #AD8700;
     color: #fff;
     padding: .7rem;
@@ -60,7 +60,7 @@
     transition: all .4s ease;
     cursor: pointer;
 }
-.inputt>div .atch-btns button:hover{
+.inputt>div .subnav-contentt .atch-btns button:hover{
     transform: scale(1.1);
     transition: all .7s ease;
 }

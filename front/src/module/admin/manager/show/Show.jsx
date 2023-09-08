@@ -9,6 +9,8 @@ import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf'
 import pimg from '../../../../images/Ellipse 1.png'
+import { BiImageAdd } from 'react-icons/bi'
+import { AiFillCloseCircle } from 'react-icons/ai'
 
 
 const ShowA = () => {
@@ -19,6 +21,12 @@ const ShowA = () => {
   const [rejRes, SetRejRes] = useState("")
 
   const dataArray = id.split(",");
+  const [response, setResponse] = useState({
+    response_text: "",
+    response_pdf: "",
+  })
+  const [payment, setPayment] = useState("")
+
 
   const [data, SetData] = useState({
     student_id: dataArray[0],
@@ -104,6 +112,11 @@ const ShowA = () => {
       alert("يجب ادخال سبب الرفض")
     }
   }
+  const increaseDateByOneDay = (date) => {
+    const currentDate = new Date(date);
+    currentDate.setDate(currentDate.getDate() + 1);
+    return currentDate.toISOString().slice(0, 10);
+  };
 
 
 
@@ -120,7 +133,7 @@ const ShowA = () => {
         </div>
         <div className="data-container" ref={pdfRef}>
           <div className='image-con'>
-            <img src={user.img?`http://localhost:5000/${user.national_id}/${user.img}`:pimg} alt="img" className='imagee' />
+            <img src={user.img ? `http://localhost:5000/${user.national_id}/${user.img}` : pimg} alt="img" className='imagee' />
             {user.status == 5 ? (
               <>
                 <p style={{ background: "rgb(175, 35, 35)" }}>مرفوض من الجامعه</p>
@@ -148,7 +161,7 @@ const ShowA = () => {
             }
           </div>
 
-          <table className="data-table" style={{direction:"rtl"}}>
+          <table className="data-table" style={{ direction: "rtl" }}>
             <tr>
               <th> معلومات اساسيه </th>
               <th> البيانات </th>
@@ -197,9 +210,21 @@ const ShowA = () => {
               </td>
             </tr>
             <tr>
+              <td>تاريخ طلب كود الدفع</td>
+              <td>
+                {(increaseDateByOneDay(user.req_code_date ? user.req_code_date?.slice(0, 10) : null))}
+              </td>
+            </tr>
+            <tr>
               <td>تاريخ الطلب</td>
               <td>
-                {(user.submit_date?.split('T')[0]) || ''}
+                {(increaseDateByOneDay(user.submit_date ? user.submit_date.slice(0, 10) : null))}
+              </td>
+            </tr>
+            <tr>
+              <td>تاريخ اخر تعديل</td>
+              <td>
+                {(increaseDateByOneDay(user.edit_date ? user.edit_date?.slice(0, 10) : null))}
               </td>
             </tr>
             <tr>
@@ -226,11 +251,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.photo_payment_receipt}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.photo_payment_receipt}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -242,11 +267,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.photo_college_letter}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.photo_college_letter}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -258,11 +283,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.research_plan_ar_pdf}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.research_plan_ar_pdf}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -274,11 +299,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.research_plan_ar_word}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.research_plan_ar_word}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -290,11 +315,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.research_plan_en_word}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.research_plan_en_word}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -306,11 +331,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.research_plan_en_pdf}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.research_plan_en_pdf}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -322,11 +347,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.translation_paper}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.translation_paper}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -338,11 +363,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.message_word_ar}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.message_word_ar}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -354,11 +379,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.message_pdf_ar}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.message_pdf_ar}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -370,11 +395,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.quote_check_form}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.quote_check_form}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -386,11 +411,11 @@ const ShowA = () => {
               <td className='att-row'>
                 <button
                   onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.decision}`) }}
-                  style={{ background: "#19355A" }} class="atch-btn">Open
+                  class="atch-btn">Open
                 </button>
                 <button
                   onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.decision}`) }}
-                  style={{ background: "#AD8700" }} class="atch-btn">Download
+                  class="atch-btn atch-btn2">Download
                 </button>
 
               </td>
@@ -405,11 +430,11 @@ const ShowA = () => {
                     <td className='att-row'>
                       <button
                         onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user[`research${i + 1}_image_word`]}`) }}
-                        style={{ background: "#19355A" }} class="atch-btn">Open
+                        class="atch-btn">Open
                       </button>
                       <button
                         onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user[`research${i + 1}_image_word`]}`) }}
-                        style={{ background: "#AD8700" }} class="atch-btn">Download
+                        class="atch-btn atch-btn2">Download
                       </button>
 
                     </td>
@@ -421,11 +446,11 @@ const ShowA = () => {
                     <td className='att-row'>
                       <button
                         onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`) }}
-                        style={{ background: "#19355A" }} class="atch-btn">Open
+                        class="atch-btn">Open
                       </button>
                       <button
                         onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`) }}
-                        style={{ background: "#AD8700" }} class="atch-btn">Download
+                        class="atch-btn atch-btn2">Download
                       </button>
 
                     </td>
@@ -439,11 +464,11 @@ const ShowA = () => {
                       <td className='att-row'>
                         <button
                           onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`) }}
-                          style={{ background: "#19355A" }} class="atch-btn">Open
+                          class="atch-btn">Open
                         </button>
                         <button
                           onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`) }}
-                          style={{ background: "#AD8700" }} class="atch-btn">Download
+                          class="atch-btn atch-btn2">Download
                         </button>
 
                       </td>
@@ -459,39 +484,99 @@ const ShowA = () => {
 
 
         </table>
-        <hr style={{ width: "90%", marginTop:"1rem", height:"3px" }} />
         <h1>الرد المرسل من المكتبه</h1>
+        <hr style={{ width: "90%", marginBottom: "1rem", height: "3px" }} />
         <div className="resp-cont">
           <div className="resp">
-          <h2><span style={{ color: "#AD8700" }}>{t('date-response')} </span> : {(user.response_date?.split('T')[0]) || '' }</h2>
+            <h2><span style={{ color: "#19355A" }}>{t('date-response')} </span> : {
+              (user.response_date && user.response_date !== "null") ?
+                (increaseDateByOneDay(user.response_date?.slice(0, 10))) :
+                "لم يتم الرد بعد"
+
+            }</h2>
           </div>
 
 
           <div className="resp">
-          <h2><span style={{ color: "#AD8700" }}>{t('res-code')}</span>: {user.payment_code ? user.payment_code : (
-            <input type="text" name="" id="" />
-          )}</h2>
+            <h2><span style={{ color: "#19355A" }}>{t('res-code')}</span>: {user.payment_code ? user.payment_code : (
+              <input
+                type="text"
+                name="" id=""
+                placeholder='ادخل كود الدفع'
+              />
+            )}</h2>
 
           </div>
           <div className="resp">
-          <h2><span style={{ color: "#AD8700" }}>{t('notes')}</span> : {user.response_text}</h2>
+            <h2><span style={{ color: "#19355A" }}>{t('notes')}</span> :
+              {(user.response_text && user.response_text !== "null") ?
+                user.response_text :
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder='ادخل ملاحظاتك'
+                  onChange={(e) => { setResponse({ ...response, response_text: e.target.value }) }}
+                />
+              }
+            </h2>
           </div>
           <div className="resp">
-          <div className='inputt-atch' style={{ justifyContent: "space-evenly" }}>
-                        <h2>{t('att-res')}</h2>
-                        <div className="atch-btns">
-                            <button
-                                className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
-                                style={{ background: "#19355A" }} class="atch-btn">{t('open')}
-                            </button>
-                            <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
-                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                            </button>
-                        </div>
+            <div className='inputt-atch'>
+              {user.response_pdf && user.response_pdf !== "null" ? (
+                <div className="atch-btns">
+                  <button
+                    onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
+                    className="atch-btn">Open
+                  </button>
+                  <button
+                    onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
+                    className="atch-btn atch-btn2">Download
+                  </button>
+                </div>) : (
+                <div className="select-img">
+                  <label className='upload-image' htmlFor="upload-image">
+                    <BiImageAdd className='img-icom' />
+                    <p>{t('click-here')}</p>
+                  </label>
+                  <input type="file"
+                    hidden
+                    id='upload-image'
+                    name='upload-image'
+                    onChange={(e) => { setResponse({ ...response, response_pdf: e.target.files[0] }) }}
+                  />
+                  {response.response_pdf &&
+                    <div>
+                      <p className='upload-image value'>
+                        {response.response_pdf.name ? response.response_pdf.name : response.response_pdf}
+                      </p>
+                      <button className='upload-image openPdf'
+                        onClick={() => {
+                          window.open(URL.createObjectURL(response.response_pdf))
+                        }}
+                      >{t('open')}</button>
+                      <AiFillCloseCircle
+                        onClick={() => { setResponse({ ...response, response_pdf: '' }) }}
+                        style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+
                     </div>
+                  }
+                </div>
+              )}
+              <h2>{t('att-res')} :</h2>
+
+            </div>
           </div>
+          {response.response_pdf || response.response_text ? (
+          <div className="resp two">
+            <button
+              className='atch-btn atch-btn2'
+              style={{ width: "50%"}}
+            >
+              ارسال
+            </button>
+          </div>
+          ) : null}
         </div>
 
       </section>
