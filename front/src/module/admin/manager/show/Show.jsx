@@ -14,21 +14,33 @@ import jspdf from 'jspdf'
 const ShowA = () => {
   const { t } = useTranslation();
   const { id } = useParams();
+  console.log(id)
   const pdfRef = useRef()
   const [rejRes, SetRejRes] = useState("")
+
+  const dataArray = id.split(",");
+
+  const [data, SetData] = useState({
+    student_id: dataArray[0],
+    ser_id: dataArray[1],
+    ser_name: dataArray[2],
+    app_id: dataArray[3]
+  })
+   console.log(data)
 
 
   const navigate = useNavigate()
   const [user, setUser] = useState({})
   axios.defaults.withCredentials = true
   useEffect(() => {
-    // axios.get('http://localhost:5000/student/studentdetailsAdmin/' + id, { withCredentials: true })
-    //   .then((res) => {
-    //     setUser(res.data)
-    //   }).catch((error) => {
-    //     navigate('/adminLogin')
+    axios.get(`http://localhost:5000/user/getuserbyid/${data.ser_id}/${data.ser_name}/${data.student_id}/${data.app_id}`, { withCredentials: true })
+      .then((res) => {
+        setUser(res.data)
+      }).catch((error) => {
+        if(error.response.status == 401 )
+        navigate('/ManagerLogin')
 
-    //   })
+      })
   }, [])
   const openImage = (url) => {
     const filename = url.split('/').pop();

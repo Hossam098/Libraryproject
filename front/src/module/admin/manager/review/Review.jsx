@@ -9,6 +9,8 @@ import img from '../../../../images/mini-logo.png'
 const Review = () => {
   const navigate = useNavigate()
   const [student, setStudent] = React.useState([])
+  const [ser_name, setSer_name] =("")
+  
 
 
   localStorage.setItem('i18nextLng', 'ar')
@@ -36,7 +38,32 @@ const Review = () => {
 
   console.log(student)
 
+const sername=(item)=>{
+  const ser_name =item.ser_reg !== null ? 
+          'ser_reg' : item.ser_formation !== null ? 
+          'ser_formation' : item.ser_grant !== null ? 
+          'ser_grant' : item.ser_personal !== null ? 
+          'ser_personal' : item.ser_upgrade !== null ? 
+          'ser_upgrade' : item.ser_knowledge !== null ? 
+          'ser_knowledge' : item.ser_magazine !== null ? 
+          'ser_magazine' : item.ser_best !== null ? 
+          'ser_best' : null
+ 
+  return ser_name;
+}
+const app_id=(item)=>{
+  const appid =item.ser_reg !== null ? 
+  item.ser_reg : item.ser_formation !== null ?
+   item.ser_formation : item.ser_grant !== null ? 
+   item.ser_grant : item.ser_personal !== null ? 
+   item.ser_personal : item.ser_upgrade !== null ?
+    item.ser_upgrade : item.ser_knowledge !== null ? 
+    item.ser_knowledge : item.ser_magazine !== null ? 
+    item.ser_magazine : item.ser_best !== null ?
+     item.ser_best : null
 
+  return appid;
+}
 
 
   return (
@@ -85,9 +112,9 @@ const Review = () => {
       <td>{item.submit_date.slice(0, 10)}</td>
       <td>{item.status === 0 ? "منتظر كود دفع" : item.status === 1 ? "في انتظار رفع المرفقات" : item.status === 2 ? "في انتظار رد المكتبه" : item.status === 3 ? "قيد التعديل" : item.status === 4 ? "قيد التعديل" : item.status === 5 ? "مقبول" : item.status === 6 ? "مرفوض" : null}</td>
       <td>
-        <button>
-      
-          <Link to={`/manager/show/${item.id}`}>تفاصيل</Link>
+        <button >
+         
+          <Link to={`/manager/show/${item.id},${item.service_id},${sername(item)},${app_id(item)}`}>تفاصيل</Link>
           </button>
       </td>
     </tr>

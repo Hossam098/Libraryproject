@@ -113,8 +113,8 @@ manager.get('/getallApplicantsAssigned',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.service_id = ? AND submit.manager_id = ? ";
-                const value = [req.service_id, req.id];
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ? ";
+                const value = [req.id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
                     return res.status(200).json(result);
