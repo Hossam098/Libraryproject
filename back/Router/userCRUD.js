@@ -4,6 +4,7 @@ import { body, validationResult } from "express-validator";
 import e from "express";
 import checkUser from "../MiddleWare/checkUser.js";
 import upload from "../MiddleWare/Uplodeimgs.js";
+import checkmanager from "../MiddleWare/checkManager.js";
 
 
 const user = express();
@@ -93,7 +94,19 @@ user.put('/updateuser',
     }
 );
 
-                    
+user.get('/getuserbyid/:serId/:serNam/:stId/:appId',
+    checkmanager,
+    async (req, res) => {
+
+        const serId = req.params.serId
+        const serNam = req.params.serNam
+        const stId = req.params.stId
+        const appId = req.params.appId
+
+        console.log(appId,stId,serNam,serId)
+    }
+)
+
 
 
 
