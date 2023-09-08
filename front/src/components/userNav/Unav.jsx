@@ -92,7 +92,7 @@ const Unav = () => {
     }
 
     return (
-        <nav style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'ltr' } : { direction: 'rtl' }}>
+        <nav className='UNAV' style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'ltr' } : { direction: 'rtl' }}>
             <div className={localStorage.getItem('i18nextLng')=== 'ar'?"menu r":"menu l"}
                 onClick={()=>{toggleMenu(); setShowServices(false);}}
             >

@@ -114,7 +114,7 @@ const app_id=(item)=>{
       <td>
         <button >
          
-          <Link to={`/manager/show/${item.id},${item.service_id},${sername(item)},${app_id(item)}`}>تفاصيل</Link>
+          <Link to={`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}>تفاصيل</Link>
           </button>
       </td>
     </tr>

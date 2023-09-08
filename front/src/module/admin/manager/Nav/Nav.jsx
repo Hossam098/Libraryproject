@@ -1,9 +1,10 @@
 import React from 'react'
 import './navbar.css'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { API_URL } from '../../../../config'
+
 
 const Nav = () => {
 
@@ -21,19 +22,18 @@ const Nav = () => {
 
   return (
     <div className="dmin">
-      <nav >
+      <nav className='mnav'>
         <button
           onClick={logout}
           className="btn">
-          <Link style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</Link>
+          <NavLink style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</NavLink>
         </button>
-
         <ul>
           <li>
-            <Link to='/manager'> مراجعه الطلبات </Link>
+            <NavLink to='/manager'> مراجعه الطلبات </NavLink>
           </li>
           <li>
-            <Link to='/manager/list' >  عرض جميع الطلبات </Link>
+            <NavLink to='/manager/list' >  عرض جميع الطلبات </NavLink>
           </li>
         </ul>
       </nav>

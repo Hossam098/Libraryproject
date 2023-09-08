@@ -9,6 +9,17 @@
     padding: 1rem;
 }
 
+.mnav .active{
+    color: #AD8700;
+}
+.mnav .active::after{
+    content: '';
+    width: 0;
+    height: 2px;
+    background: #AD8700;
+    display: block;
+    transition: 0.2s linear;
+}
 
 .dmin nav button {
     font-size: 15px;
