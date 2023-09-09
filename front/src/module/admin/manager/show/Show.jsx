@@ -11,7 +11,7 @@ import jspdf from 'jspdf'
 import pimg from '../../../../images/Ellipse 1.png'
 import { BiImageAdd } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
-
+import {API_URL} from "../../../../config"
 
 const ShowA = () => {
   const { t } = useTranslation();
@@ -79,19 +79,15 @@ const ShowA = () => {
     })
   }
 
-  const [status, setStatus] = useState('')
+  const [errors, setErrors] = useState()
+  
   const handelAccept = () => {
-    // try {
-    //   axios.put('http://localhost:5000/admin/updatestatus/' + id, { status: 4 }, { withCredentials: true })
-    //     .then((res) => {
-    //       window.location.reload()
-    //     }).catch((error) => {
-    //       console.log(error.response)
+    if(!response.response_text || !response.response_pdf){
+      setErrors("")
 
-    //     })
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    }else{
+      setErrors(" يجب ارسال الرد المطلوب (مرفق او ملاحظات على الاقل) ")
+    }
   }
 
   const handelrej = () => {
@@ -572,6 +568,7 @@ const ShowA = () => {
             <button
               className='atch-btn atch-btn2'
               style={{ width: "50%"}}
+              onClick={handelAccept}
             >
               ارسال
             </button>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 06, 2023 at 06:09 PM
+-- Generation Time: Sep 09, 2023 at 12:34 PM
 -- Server version: 10.4.27-MariaDB
--- PHP Version: 8.1.2
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -324,23 +324,24 @@ CREATE TABLE `submit` (
   `user_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   `role` tinyint(1) DEFAULT NULL,
-  `manager_id` int(11) DEFAULT NULL
+  `manager_id` int(11) DEFAULT NULL,
+  `manger_status` tinyint(1) DEFAULT NULL COMMENT ' 1    =>  req acc\r\n2     => req rej\r\n3     => req edit step2\r\n4     => req edit step1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `submit`
 --
 
-INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `response_date`, `user_id`, `service_id`, `role`, `manager_id`) VALUES
-(32, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1212121212, 2, NULL, 'استخراج افادة بأن عنوان مخطط الرسالة ليس مسجل	', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-05', 3, 1, NULL, NULL),
-(33, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, 312312345, 2, NULL, 'vsdsdvsdvs', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-03', 3, 2, NULL, NULL),
-(34, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, NULL, 2, 5, 'bfdbdfbdfbfdb', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', '2023-09-05', 3, 3, NULL, NULL),
-(35, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, 4343453, 2, 2, 'dfbfdbfd', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 4, NULL, NULL),
-(36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, 53453, 0, 2, 'dfnfdndf', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 6, NULL, NULL),
-(37, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, 55343453, 2, 2, 'خطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\n', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 5, NULL, NULL),
-(39, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 7, NULL, NULL),
-(40, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 8, NULL, NULL),
-(41, 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 453453, 2, NULL, NULL, NULL, '2023-09-05', '2023-09-05', NULL, NULL, 3, 1, 2, 3);
+INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `response_date`, `user_id`, `service_id`, `role`, `manager_id`, `manger_status`) VALUES
+(32, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1212121212, 2, NULL, 'استخراج افادة بأن عنوان مخطط الرسالة ليس مسجل	', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-05', 3, 1, 1, 2, NULL),
+(33, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, 312312345, 2, NULL, 'vsdsdvsdvs', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-03', 3, 2, NULL, NULL, NULL),
+(34, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, NULL, 2, 5, 'bfdbdfbdfbfdb', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', '2023-09-05', 3, 3, 2, 4, NULL),
+(35, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, 4343453, 2, 2, 'dfbfdbfd', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 4, NULL, NULL, NULL),
+(36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, 53453, 0, 2, 'dfnfdndf', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 6, NULL, NULL, NULL),
+(37, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, 55343453, 2, 2, 'خطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\n', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 5, NULL, NULL, NULL),
+(39, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 7, NULL, NULL, NULL),
+(40, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 8, NULL, NULL, NULL),
+(41, 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 453453, 2, NULL, NULL, NULL, '2023-09-05', '2023-09-05', NULL, NULL, 3, 1, 1, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -439,7 +440,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `national_id`, `phone`, `nationality`, `university`, `faculity`, `department`, `img`) VALUES
 (1, 'nader', 'das@info.com', '5531', '56165606', 68165, 'klnklmk', 'cscsd', 'dsc', '', ''),
 (2, 'v', 'dscsd@csc.css', '$2b$10$G7JMtmC/OcOJHenwtDhLruV3fprBbfZYO8iGR0Y3ySe7siDDIYe52', '452452', 45451, 'zdc', 'dcs', 'casc', '', ''),
-(3, 'نادر ممدوح شاكر عبدالمحسن', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_1693678978281.jpg');
+(3, 'نادر ممدوح شاكر عبدالمحسن', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_1693576790107.jpg');
 
 --
 -- Indexes for dumped tables
