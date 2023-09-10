@@ -6,10 +6,10 @@ import img from '../../../../images/mini-logo.png'
 
 
 
-const Review = () => {
+const Reviewed = () => {
   const navigate = useNavigate()
   const [student, setStudent] = React.useState([])
-  const [ser_name, setSer_name] = ("")
+
 
 
 
@@ -18,7 +18,7 @@ const Review = () => {
   useEffect(() => {
     try {
       axios.defaults.withCredentials = true
-      axios.get('http://localhost:5000/manager/getallApplicantsAssigned', { withCredentials: true })
+      axios.get('http://localhost:5000/manager/getallApplicantsReviewed', { withCredentials: true })
         .then((res) => {
           setStudent(res.data)
           // setFilter(res.data)
@@ -130,4 +130,4 @@ const Review = () => {
   )
 }
 
-export default Review;
+export default Reviewed;

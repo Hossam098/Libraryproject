@@ -104,11 +104,10 @@ user.get('/getuserbyid/:serId/:serNam/:stId/:appId',
             const appId = req.params.appId
 
             console.log(appId, stId, serNam, serId)
-            let error = [];
             let ser_table = ""
             if (serNam === 'ser_reg') {
                 ser_table = "registration_services"
-            } else if (serNam == 'ser_formation ') {
+            } else if (serNam == 'ser_formation') {
                 ser_table = 'formation_service'
             } else if (serNam == 'ser_grant') {
                 ser_table = 'grant_service'
@@ -130,8 +129,7 @@ user.get('/getuserbyid/:serId/:serNam/:stId/:appId',
             if (result.length > 0) {
                 return res.status(200).json(result[0]);
             } else {
-                error.push("No user found");
-                return res.status(400).json({ message: error });
+                return res.status(400).json({ message: "No user found" });
             }
         } catch (errors) {
             return res.status(500).json({ message: errors });

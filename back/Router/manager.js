@@ -92,10 +92,10 @@ manager.put('/AssignManager',
             //   ]
 
             for (const obj of req.body) {
-                const { student_id, managerid, service_id, aplecationId, role , ser_name} = obj;
-                console.log(obj);                
+                const { student_id, managerid, service_id, aplecationId, role, ser_name } = obj;
+                console.log(obj);
                 const sqlUpdate = `UPDATE submit SET role = ? , manager_id = ? WHERE user_id = ? AND service_id = ? AND ${obj.ser_name} = ?`;
-                const value = [role,managerid, student_id, service_id, aplecationId];
+                const value = [role, managerid, student_id, service_id, aplecationId];
                 await query(sqlUpdate, value);
             }
             return res.status(200).json({ message: "تم تعين المدير بنجاح" });
@@ -113,7 +113,37 @@ manager.get('/getallApplicantsAssigned',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ? ";
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ?  AND submit.manager_status IS NULL ";
+                const value = [req.id];
+                const result = await query(sqlSelect, value);
+                if (result.length > 0) {
+                    return res.status(200).json(result);
+                } else {
+                    return res.status(200).json({ message: "لا يوجد طلبات" });
+                }
+            } else if (req.service_id === 9) {
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 0";
+                const result = await query(sqlSelect);
+                if (result.length > 0) {
+                    return res.status(200).json(result);
+                } else {
+                    return res.status(200).json({ message: "لا يوجد طلبات" });
+                }
+            }
+        }
+        catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+manager.get('/getallApplicantsReviewed',
+    checkmanager,
+    async (req, res) => {
+        let error = [];
+        try {
+            if (req.service_id !== 9) {
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ?  AND submit.manager_status IS NOT NULL "
                 const value = [req.id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
@@ -168,6 +198,120 @@ manager.put('/deleteManager',
     }
 )
 
+manager.put('/acceptApplicant/:id',
+    upload.single('response_pdf'),
+    checkmanager,
+    body('national_id').notEmpty().withMessage('يجب ادخال نص الرد'),
+    async (req, res) => {
+        let error = [];
+        try {
 
+            console.log(req.body.national_id);
+            const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
+            const value = [req.body.app_id];
+            const result = await query(sqlSelect, value);
+            if (result[0].role === 1) {
+                if (result.length > 0) {
+                    const Data = {
+                        response_text: req.body.response_text,
+                        response_pdf: req.file.filename,
+                        manager_status: 1,
+                    }
+                    const sqlUpdate = `UPDATE submit SET ? WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
+                    const value = [Data, req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
+                    const result = await query(sqlUpdate, value);
+                    if (result.affectedRows > 0) {
+                        return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
+
+                    }
+                }
+                else {
+                    return res.status(200).json({ message: "لا يوجد طلبات" });
+                }
+            } else if (result[0].role === 2) {
+                if (result.length > 0) {
+                    const Data = {
+                        response_text: req.body.response_text,
+                        response_pdf: req.file.filename,
+                        status: 5,
+                    }
+                    const sqlUpdate = `UPDATE submit SET ? WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
+                    const value = [Data, req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
+                    const result = await query(sqlUpdate, value);
+                    if (result.affectedRows > 0) {
+                        return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
+
+                    }
+                }
+                else {
+                    return res.status(200).json({ message: "لا يوجد طلبات" });
+                }
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+
+manager.put('/acceptApplicantforManager',
+    checkmanager,
+    async (req, res) => {
+        let error = [];
+        try {
+            let status = ''
+            if (req.body.status === null) { status = ', response_pdf = null'; }
+
+            if (req.body.reason === "") {
+                const sqlUpdate = `UPDATE submit SET ${req.body.column} = ?  WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
+                console.log(sqlUpdate);
+                const value = [req.body.status, req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
+                const result = await query(sqlUpdate, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
+                }
+            } else if (req.body.reason !== "") {
+                console.log(req.body.status, req.body.reason, req.body.app_id, req.id , req.body.column ,req.body.ser_name);
+                // const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
+                // const value1 = [req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
+                // const result1 = await query(sqlSelect, value1);
+                // if (result1.length > 0) {
+                //     console.log(result1);
+                // }
+                const sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status}
+             WHERE ${req.body.ser_name} = ?`;
+                const value = [req.body.status, req.body.reason, req.body.app_id];
+                const result = await query(sqlUpdate, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+
+manager.put('/Sendpayment',
+    checkmanager,
+    upload.single('payment_pdf'),
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlUpdate = `UPDATE submit SET payment_code = ? , status = 1 WHERE ${req.body.ser_name} = ? `;
+            const value = [req.body.payment_code, req.body.app_id];
+            const result = await query(sqlUpdate, value);
+            if (result.affectedRows > 0) {
+                return res.status(200).json({ message: "تم ارسال الكود بنجاح" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
 
 export default manager;

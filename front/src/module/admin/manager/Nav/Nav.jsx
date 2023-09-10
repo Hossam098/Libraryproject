@@ -22,13 +22,16 @@ const Nav = () => {
 
   return (
     <div className="dmin">
-      <nav className='mnav'>
+      <nav className=''>
         <button
           onClick={logout}
           className="btn">
           <NavLink style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</NavLink>
         </button>
         <ul>
+          <li>
+            <NavLink to='/manager/reviewed'> الطلبات التي تمت مراجعتها </NavLink>
+          </li>
           <li>
             <NavLink to='/manager'> مراجعه الطلبات </NavLink>
           </li>

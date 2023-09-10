@@ -21,6 +21,7 @@ import { SuperAdmin } from "./module/admin/SuperAdmin/SuperAdmin.jsx";
 import StudentListadmin from "./module/admin/manager/studentList/StudentList.jsx";
 import Review from "./module/admin/manager/review/Review.jsx";
 import Show from "./module/admin/manager/show/Show.jsx"
+import Reviewed from "./module/admin/manager/reviewed/Reviewed.jsx";
 
   
   const Router = createBrowserRouter([
@@ -101,6 +102,10 @@ import Show from "./module/admin/manager/show/Show.jsx"
             {
               path:"",
               element:<Review/>,  
+            },
+            {
+              path:"/manager/reviewed",
+              element:<Reviewed/>,  
             },
             {
               path:"/manager/list",

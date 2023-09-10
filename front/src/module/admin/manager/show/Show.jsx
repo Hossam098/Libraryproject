@@ -11,21 +11,36 @@ import jspdf from 'jspdf'
 import pimg from '../../../../images/Ellipse 1.png'
 import { BiImageAdd } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
-import {API_URL} from "../../../../config"
+import { API_URL } from "../../../../config"
+import PopupErrorMsg from '../../../../components/error/PopupErrorMsg';
+
 
 const ShowA = () => {
   const { t } = useTranslation();
   const { id } = useParams();
-  console.log(id)
   const pdfRef = useRef()
   const [rejRes, SetRejRes] = useState("")
+  const [msg, setMsg] = useState('')
+  const [progress, setProgress] = useState({ started: false, value: 0 })
+  const [confirm, setConfirm] = useState(false)
+  const [disabled, setDisabled] = useState(false)
+  const [payment_code, setPayment_code] = useState('')
 
   const dataArray = id.split(",");
   const [response, setResponse] = useState({
     response_text: "",
     response_pdf: "",
   })
-  const [payment, setPayment] = useState("")
+  const [action, setAction] = useState({
+    status: 0,
+    column: '',
+    reason: '',
+    student_id: '',
+    ser_id: '',
+    ser_name: '',
+    app_id: ''
+  })
+
 
 
   const [data, SetData] = useState({
@@ -34,7 +49,6 @@ const ShowA = () => {
     ser_name: dataArray[2],
     app_id: dataArray[3]
   })
-  console.log(data)
 
 
   const navigate = useNavigate()
@@ -80,39 +94,410 @@ const ShowA = () => {
   }
 
   const [errors, setErrors] = useState()
-  
-  const handelAccept = () => {
-    if(!response.response_text || !response.response_pdf){
-      setErrors("")
 
-    }else{
-      setErrors(" يجب ارسال الرد المطلوب (مرفق او ملاحظات على الاقل) ")
-    }
-  }
-
-  const handelrej = () => {
-    if (rejRes !== "") {
-
-
-      try {
-        axios.put('http://localhost:5000/admin/updatestatus/' + id, { status: 5, comment: rejRes }, { withCredentials: true })
-          .then((res) => {
-            window.location.reload()
-          }).catch((error) => {
-            console.log(error.response)
-          })
-      } catch (error) {
-        console.log(error)
-      }
-    } else {
-      alert("يجب ادخال سبب الرفض")
-    }
-  }
   const increaseDateByOneDay = (date) => {
     const currentDate = new Date(date);
     currentDate.setDate(currentDate.getDate() + 1);
     return currentDate.toISOString().slice(0, 10);
   };
+
+  const handleCloseError = () => {
+    setErrors('')
+  }
+
+
+
+  const handelAccept = () => {
+    if (response.response_text !== '') {
+      const formData = new FormData()
+      setErrors("")
+      axios.defaults.withCredentials = true
+      try {
+        formData.append('response_text', response.response_text)
+        formData.append('response_pdf', response.response_pdf)
+        formData.append('student_id', data.student_id)
+        formData.append('ser_id', data.ser_id)
+        formData.append('ser_name', data.ser_name)
+        formData.append('app_id', data.app_id)
+        formData.append('national_id', user.national_id)
+
+        axios.put(`${API_URL}/manager/acceptApplicant/${user.national_id}`, formData, {
+          withCredentials: true,
+          onUploadProgress: (ProgressEvent) => {
+            setDisabled(true)
+            let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+            setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+          }
+        })
+          .then((res) => {
+            setProgress(prevState => ({ ...prevState, started: false }))
+            setMsg(res.data.msg)
+            navigate('/manager')
+          }
+          ).catch((error) => {
+            setDisabled(false)
+            setProgress(prevState => ({ ...prevState, started: false }))
+            if (error.response.status == 401)
+              navigate('/ManagerLogin')
+            else if (error.response.status == 400)
+              setErrors(error.response.data.msg)
+            else
+              setErrors("حدث خطأ ما")
+          })
+      } catch (error) {
+        setDisabled(false)
+        setProgress(prevState => ({ ...prevState, started: false }))
+        setErrors("حدث خطأ ما")
+      }
+
+    } else {
+      setErrors("يجب ادخال الرد")
+    }
+
+  }
+  const handelAcceptpayment = () => {
+    if (payment_code !== '') {
+      const formData = new FormData()
+      setErrors("")
+      axios.defaults.withCredentials = true
+      try {
+        formData.append('payment_code', payment_code)
+        formData.append('student_id', data.student_id)
+        formData.append('ser_id', data.ser_id)
+        formData.append('ser_name', data.ser_name)
+        formData.append('app_id', data.app_id)
+
+        axios.put(`${API_URL}/manager/Sendpayment`, formData, {
+          withCredentials: true,
+          onUploadProgress: (ProgressEvent) => {
+            setDisabled(true)
+            let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+            setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+          }
+        })
+          .then((res) => {
+            setProgress(prevState => ({ ...prevState, started: false }))
+            setMsg(res.data.msg)
+            // navigate('/manager')
+          }
+          ).catch((error) => {
+            setDisabled(false)
+            setProgress(prevState => ({ ...prevState, started: false }))
+            if (error.response.status == 401)
+              navigate('/ManagerLogin')
+            else if (error.response.status == 400)
+              setErrors(error.response.data.msg)
+            else
+              setErrors("حدث خطأ ما")
+          })
+      } catch (error) {
+        setDisabled(false)
+        setProgress(prevState => ({ ...prevState, started: false }))
+        setErrors("حدث خطأ ما")
+      }
+
+    } else {
+      setErrors("يجب ادخال الرد")
+    }
+
+  }
+
+  const handleEdit = () => {
+    if (action.reason !== '') {
+      try {
+        const updatedAction = {
+          ...action,
+          student_id: dataArray[0],
+          ser_id: dataArray[1],
+          ser_name: dataArray[2],
+          app_id: dataArray[3]
+        };
+
+        if (user.role === 1) {
+          updatedAction.column = 'manager_status';
+          updatedAction.status = 3;
+        } else if (user.role === 2) {
+          updatedAction.column = 'status';
+          updatedAction.status = 3;
+        }
+
+        if (user.status === 0) {
+          updatedAction.column = 'status';
+          updatedAction.status = 3;
+        }
+
+        setAction(updatedAction);
+        setConfirm(true);
+        axios.defaults.withCredentials = true;
+
+        axios
+          .put(`${API_URL}/manager/acceptApplicantforManager`, updatedAction, {
+            withCredentials: true
+          })
+          .then((res) => {
+            navigate('/manager')
+          })
+          .catch((error) => {
+            setDisabled(false);
+            if (error.response && error.response.status === 401) {
+              // Unauthorized, navigate to the login page
+              navigate('/ManagerLogin');
+            } else if (error.response && error.response.status === 400) {
+              // Bad request, set the error message
+              setErrors(error.response.data.msg);
+            } else {
+              // Other errors, set a generic error message
+              setErrors('حدث خطأ ما');
+            }
+          });
+      } catch (error) {
+        setDisabled(false);
+        setErrors('حدث خطأ ما');
+      }
+    } else {
+      setErrors('يجب ادخال سبب');
+    }
+  };
+  const handelrej = () => {
+    if (action.reason !== '') {
+      try {
+        const updatedAction = {
+          ...action,
+          student_id: dataArray[0],
+          ser_id: dataArray[1],
+          ser_name: dataArray[2],
+          app_id: dataArray[3]
+        };
+
+        if (user.role === 1) {
+          updatedAction.column = 'manager_status';
+          updatedAction.status = 2;
+        } else if (user.role === 2) {
+          updatedAction.column = 'status';
+          updatedAction.status = 6;
+        }
+
+        setAction(updatedAction);
+        setConfirm(true);
+        axios.defaults.withCredentials = true;
+
+        axios
+          .put(`${API_URL}/manager/acceptApplicantforManager`, updatedAction, {
+            withCredentials: true
+          })
+          .then((res) => {
+            navigate('/manager')
+          })
+          .catch((error) => {
+            setDisabled(false);
+            if (error.response && error.response.status === 401) {
+              navigate('/ManagerLogin');
+            } else if (error.response && error.response.status === 400) {
+              setErrors(error.response.data.msg);
+            } else {
+              setErrors('حدث خطأ ما');
+            }
+          });
+      } catch (error) {
+        setDisabled(false);
+        setErrors('حدث خطأ ما');
+      }
+    } else {
+      setErrors('يجب ادخال سبب');
+    }
+  };
+
+  const handelEdit2 = () => {
+    try {
+      const updatedAction = {
+        ...action,
+        status: 3,
+        column: 'status',
+        student_id: dataArray[0],
+        ser_id: dataArray[1],
+        ser_name: dataArray[2],
+        app_id: dataArray[3]
+      };
+
+      setAction(updatedAction);
+      setConfirm(true);
+      axios.defaults.withCredentials = true;
+
+      axios
+        .put(`${API_URL}/manager/acceptApplicantforManager`, updatedAction, {
+          withCredentials: true,
+          onUploadProgress: (progressEvent) => {
+            setDisabled(true);
+            let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setProgress((prevState) => ({ ...prevState, value: percentCompleted }));
+          }
+        })
+        .then((res) => {
+          setProgress((prevState) => ({ ...prevState, started: false }));
+          setMsg(res.data.msg);
+          navigate('/manager');
+        })
+        .catch((error) => {
+          setDisabled(false);
+          setProgress((prevState) => ({ ...prevState, started: false }));
+          if (error.response && error.response.status === 401) {
+            navigate('/ManagerLogin');
+          } else if (error.response && error.response.status === 400) {
+            setErrors(error.response.data.msg);
+          } else {
+            setErrors('حدث خطأ ما');
+          }
+        });
+    } catch (error) {
+      setDisabled(false);
+      setProgress((prevState) => ({ ...prevState, started: false }));
+      setErrors('حدث خطأ ما');
+    }
+  };
+  const handelrej2 = () => {
+    try {
+      const updatedAction = {
+        ...action,
+        status: 6,
+        column: 'status',
+        student_id: dataArray[0],
+        ser_id: dataArray[1],
+        ser_name: dataArray[2],
+        app_id: dataArray[3]
+      };
+
+      setAction(updatedAction);
+      setConfirm(true);
+      axios.defaults.withCredentials = true;
+
+      axios
+        .put(`${API_URL}/manager/acceptApplicantforManager`, updatedAction, {
+          withCredentials: true,
+          onUploadProgress: (progressEvent) => {
+            setDisabled(true);
+            let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setProgress((prevState) => ({ ...prevState, value: percentCompleted }));
+          }
+        })
+        .then((res) => {
+          setProgress((prevState) => ({ ...prevState, started: false }));
+          setMsg(res.data.msg);
+          navigate('/manager/reviewed');
+        })
+        .catch((error) => {
+          setDisabled(false);
+          setProgress((prevState) => ({ ...prevState, started: false }));
+          if (error.response && error.response.status === 401) {
+            navigate('/ManagerLogin');
+          } else if (error.response && error.response.status === 400) {
+            setErrors(error.response.data.msg);
+          } else {
+            setErrors('حدث خطأ ما');
+          }
+        });
+    } catch (error) {
+      setDisabled(false);
+      setProgress((prevState) => ({ ...prevState, started: false }));
+      setErrors('حدث خطأ ما');
+    }
+  };
+  const handelAccept2 = () => {
+    try {
+      const updatedAction = {
+        ...action,
+        status: 5,
+        column: 'status',
+        student_id: dataArray[0],
+        ser_id: dataArray[1],
+        ser_name: dataArray[2],
+        app_id: dataArray[3]
+      };
+
+      setAction(updatedAction);
+      setConfirm(true);
+      axios.defaults.withCredentials = true;
+
+      axios
+        .put(`${API_URL}/manager/acceptApplicantforManager`, updatedAction, {
+          withCredentials: true,
+          onUploadProgress: (progressEvent) => {
+            setDisabled(true);
+            let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setProgress((prevState) => ({ ...prevState, value: percentCompleted }));
+          }
+        })
+        .then((res) => {
+          setProgress((prevState) => ({ ...prevState, started: false }));
+          setMsg(res.data.msg);
+          navigate('/manager/reviewed');
+        })
+        .catch((error) => {
+          setDisabled(false);
+          setProgress((prevState) => ({ ...prevState, started: false }));
+          if (error.response && error.response.status === 401) {
+            navigate('/ManagerLogin');
+          } else if (error.response && error.response.status === 400) {
+            setErrors(error.response.data.msg);
+          } else {
+            setErrors('حدث خطأ ما');
+          }
+        });
+    } catch (error) {
+      setDisabled(false);
+      setProgress((prevState) => ({ ...prevState, started: false }));
+      setErrors('حدث خطأ ما');
+    }
+  };
+  const handleReturn = () => {
+    try {
+      const updatedAction = {
+        ...action,
+        status: null,
+        column: 'manager_status',
+        student_id: dataArray[0],
+        ser_id: dataArray[1],
+        ser_name: dataArray[2],
+        app_id: dataArray[3],
+        reason: null
+      };
+
+      setAction(updatedAction);
+      setConfirm(true);
+      axios.defaults.withCredentials = true;
+
+      axios
+        .put(`${API_URL}/manager/acceptApplicantforManager`, updatedAction, {
+          withCredentials: true,
+          onUploadProgress: (progressEvent) => {
+            setDisabled(true);
+            let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setProgress((prevState) => ({ ...prevState, value: percentCompleted }));
+          }
+        })
+        .then((res) => {
+          setProgress((prevState) => ({ ...prevState, started: false }));
+          setMsg(res.data.msg);
+          navigate('/manager/reviewed');
+        })
+        .catch((error) => {
+          setDisabled(false);
+          setProgress((prevState) => ({ ...prevState, started: false }));
+          if (error.response && error.response.status === 401) {
+            navigate('/ManagerLogin');
+          } else if (error.response && error.response.status === 400) {
+            setErrors(error.response.data.msg);
+          } else {
+            setErrors('حدث خطأ ما');
+          }
+        });
+    } catch (error) {
+      setDisabled(false);
+      setProgress((prevState) => ({ ...prevState, started: false }));
+      setErrors('حدث خطأ ما');
+    }
+  };
+
+
 
 
 
@@ -130,31 +515,104 @@ const ShowA = () => {
         <div className="data-container" ref={pdfRef}>
           <div className='image-con'>
             <img src={user.img ? `http://localhost:5000/${user.national_id}/${user.img}` : pimg} alt="img" className='imagee' />
-            {user.status == 5 ? (
-              <>
-                <p style={{ background: "rgb(175, 35, 35)" }}>مرفوض من الجامعه</p>
-                <h2>سبب الرفض</h2>
-                <p style={{ background: "rgb(175, 35, 35)" }}>{user.comment}</p>
-              </>
-            )
-              : user.status == 4 ? <p >مقبول من الجامعه</p>
-                : user.status == 1 ?
-                  <>
-                    <button onClick={handelAccept} className='acc'>قبول</button>
+
+            {user.manager_status == 1 && user.status !== 5 ?
+              <div className='status'>
+                <h2> تأكيد قبول الطلب </h2>
+                <div className="atch-btns">
+                  <button
+                    onClick={handelAccept2}
+                    className="atch-btn">تأكيد
+                  </button>
+                  <button
+                    onClick={handleReturn}
+                    className="atch-btn atch-btn2">يعود للمراجعه مره اخري
+                  </button>
+                </div>
+
+              </div>
+              :
+              (user.manager_status == 1 && user.status == 5) || (user.manager_status == null && user.status == 5) ?
+                <div className='status'>
+                  <p style={{ background: "rgb(35, 175, 110)" }}> تم قبول الطلب </p>
+                  <p style={{ background: "rgb(35, 175, 110)" }}>{user.response_text}</p>
+                </div>
+                : null
+            }
+            {user.manager_status == null && (user.status == 2 ||user.status == 0) ?
+              <div className='status'>
+                <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
+                <input
+                  disabled={disabled}
+                  type="text"
+                  placeholder='سبب التعديل'
+                  className='edit-input'
+                  onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
+                />
+
+                <button onClick={handelrej} className='ref'>رفض</button>
+                <input
+                  disabled={disabled}
+                  type="text"
+                  placeholder='سبب الرفض'
+                  style={{ border: '2px solid rgb(175, 35, 35)' }}
+                  className='rej-input'
+                  onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
+                />
 
 
 
+              </div>
+              :
+              (user.manager_status == 3 && user.status == 2) ?
+                <div className='status'>
+                  <h2> تأكيد تعديل الطلب </h2>
+                  <div className="atch-btns">
+                    <button
+                      onClick={handelEdit2}
+                      className="atch-btn">تأكيد
+                    </button>
+                    <button
+                      onClick={handleReturn}
+                      className="atch-btn atch-btn2">يعود للمراجعه مره اخري
+                    </button>
+                  </div>
 
-                    <button onClick={handelrej} className='ref'>رفض</button>
-                    <input
-                      type="text"
-                      placeholder='سبب الرفض'
-                      value={rejRes}
-                      onChange={(e) => { SetRejRes(e.target.value) }}
-                    />
-                  </>
+                </div>
+                :
+                ((user.manager_status == 3 && user.status == 3) || (user.manager_status == null && user.status == 3)) ?
+                  <div className='status'>
+                    <p style={{ background: "rgb(0, 60, 112)" }}> سبب التعديل </p>
+                    <p style={{ background: "rgb(0, 60, 112)" }}> {user.response_text} </p>
+                  </div>
                   : null
             }
+            {(user.manager_status == 2 && user.status == 2) ?
+              <div className='status'>
+                <h2> تأكيد رفض الطلب </h2>
+                <div className="atch-btns">
+                  <button
+                    onClick={handelrej2}
+                    className="atch-btn">تأكيد
+                  </button>
+                  <button
+                    onClick={handleReturn}
+                    className="atch-btn atch-btn2">يعود للمراجعه مره اخري
+                  </button>
+                </div>
+
+              </div>
+              :
+              ((user.manager_status == 2 && user.status == 6) || (user.manager_status == null && user.status == 6)) ?
+                <div className='status'>
+                  <p style={{ background: "rgb(175, 35, 35)" }}> سبب الرفض </p>
+                  <p style={{ background: "rgb(175, 35, 35)" }}> {user.response_text} </p>
+                </div>
+                : null
+            }
+            
+
+
           </div>
 
           <table className="data-table" style={{ direction: "rtl" }}>
@@ -494,33 +952,45 @@ const ShowA = () => {
 
 
           <div className="resp">
-            <h2><span style={{ color: "#19355A" }}>{t('res-code')}</span>: {user.payment_code ? user.payment_code : (
+            <h2><span style={{ color: "#19355A" }}>{t('res-code')}</span>: {user.payment_code ? 
+            user.payment_code :
+            user.status == 0 ?  (
               <input
                 type="text"
                 name="" id=""
                 placeholder='ادخل كود الدفع'
+                onChange={(e) => { setPayment_code(e.target.value) }}
               />
-            )}</h2>
+            )
+            : "لم يتم ارسال كود الدفع بعد"
+          }</h2>
 
           </div>
+
           <div className="resp">
-            <h2><span style={{ color: "#19355A" }}>{t('notes')}</span> :
-              {(user.response_text && user.response_text !== "null") ?
+            <h2><span style={{ color: "#19355A" }}>{t('notes')}</span>
+              {(user.response_text && user.response_text !== "null" && user.status !== 0) ?
                 user.response_text :
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder='ادخل ملاحظاتك'
-                  onChange={(e) => { setResponse({ ...response, response_text: e.target.value }) }}
-                />
+                (user.manager_status === null && user.response_pdf === null && user.status == 0) ?
+                  <h3>
+                    لم يتم ارسال ملاحظات بعد
+                  </h3>
+                  :
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder='ادخل ملاحظاتك'
+                    onChange={(e) => { setResponse({ ...response, response_text: e.target.value }) }}
+                  />
               }
             </h2>
           </div>
           <div className="resp">
+
             <div className='inputt-atch'>
-              {user.response_pdf && user.response_pdf !== "null" ? (
-                <div className="atch-btns">
+              {(user.response_pdf !== null) && user.status !== 0 ?
+                (<div className="atch-btns">
                   <button
                     onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
                     className="atch-btn">Open
@@ -529,50 +999,79 @@ const ShowA = () => {
                     onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
                     className="atch-btn atch-btn2">Download
                   </button>
-                </div>) : (
-                <div className="select-img">
-                  <label className='upload-image' htmlFor="upload-image">
-                    <BiImageAdd className='img-icom' />
-                    <p>{t('click-here')}</p>
-                  </label>
-                  <input type="file"
-                    hidden
-                    id='upload-image'
-                    name='upload-image'
-                    onChange={(e) => { setResponse({ ...response, response_pdf: e.target.files[0] }) }}
-                  />
-                  {response.response_pdf &&
-                    <div>
-                      <p className='upload-image value'>
-                        {response.response_pdf.name ? response.response_pdf.name : response.response_pdf}
-                      </p>
-                      <button className='upload-image openPdf'
-                        onClick={() => {
-                          window.open(URL.createObjectURL(response.response_pdf))
-                        }}
-                      >{t('open')}</button>
-                      <AiFillCloseCircle
-                        onClick={() => { setResponse({ ...response, response_pdf: '' }) }}
-                        style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+                </div>) :
+                (user.manager_status === null && user.response_pdf === null && user.status !== 0) ? (
+                  <div className="select-img">
+                    <label className='upload-image' htmlFor="upload-image">
+                      <BiImageAdd className='img-icom' />
+                      <p>{t('click-here')}</p>
+                    </label>
+                    <input type="file"
+                      hidden
+                      id='upload-image'
+                      name='upload-image'
+                      onChange={(e) => { setResponse({ ...response, response_pdf: e.target.files[0] }) }}
+                    />
+                    {response.response_pdf &&
+                      <div>
+                        <p className='upload-image value'>
+                          {response.response_pdf.name ? response.response_pdf.name : response.response_pdf}
+                        </p>
+                        <button className='upload-image openPdf'
+                          onClick={() => {
+                            window.open(URL.createObjectURL(response.response_pdf))
+                          }}
+                        >{t('open')}</button>
+                        <AiFillCloseCircle
+                          onClick={() => { setResponse({ ...response, response_pdf: '' }) }}
+                          style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
-                    </div>
-                  }
-                </div>
-              )}
-              <h2>{t('att-res')} :</h2>
+                      </div>
+                    }
+                  </div>
+                ) : ((user.manager_status !== null && user.response_pdf === null) || user.status == 0) ? (
+                  <h3>
+                    لم يتم ارسال ملف الرد بعد
+                  </h3>
+
+                ) : null
+
+              }
+              <h2><span style={{ color: "#19355A" }}>{t('att-res')}</span> </h2>
 
             </div>
+
+          </div>
+
+          {errors && <PopupErrorMsg message={errors} onClose={handleCloseError} />}
+
+          <div className="progress">
+            {progress.started && <progress max="100" value={progress.value}></progress>}
+            {msg && <p>{msg}</p>}
           </div>
           {response.response_pdf || response.response_text ? (
-          <div className="resp two">
-            <button
-              className='atch-btn atch-btn2'
-              style={{ width: "50%"}}
-              onClick={handelAccept}
-            >
-              ارسال
-            </button>
-          </div>
+            <div className="resp two">
+              <button
+                disabled={disabled}
+                className='atch-btn atch-btn2'
+                style={{ width: "50%" }}
+                onClick={handelAccept}
+              >
+                ارسال
+              </button>
+            </div>
+          ) : null}
+          {payment_code && user.status == 0? (
+            <div className="resp two">
+              <button
+                disabled={disabled}
+                className='atch-btn atch-btn2'
+                style={{ width: "50%" }}
+                onClick={handelAcceptpayment}
+              >
+                ارسال كود الدفع
+              </button>
+            </div>
           ) : null}
         </div>
 

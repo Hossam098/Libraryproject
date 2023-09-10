@@ -42,7 +42,7 @@
 
 .data-container{
     display: grid;
-    grid-template-columns: 4fr 6fr;
+    grid-template-columns: 3fr 7fr;
     align-items: self-start;
     width: 100%;
 }
@@ -86,6 +86,17 @@
     align-self: center;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+.image-con .status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem auto;
+    gap: 1rem;
+    text-align: center;
 }
 
 .imagee {
@@ -134,7 +145,6 @@
     transition: .7s ease;
     border: 2px solid transparent;
     cursor: pointer;
-    margin: 1rem auto;
 }
 
 .image-con .acc {
@@ -163,3 +173,16 @@ h2 > input{
     border-radius: 5px;
     border: 2px solid #19355a;
 }
+
+.status > input{
+    width: 80%;
+    margin: auto;
+    padding: 8px 6px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: .7s ease;
+    border: 2px solid #19355a;
+    direction: rtl;
+}
+
