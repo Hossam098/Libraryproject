@@ -1,0 +1,88 @@
+.side-nav-container {
+    background-color: #88b2ff;
+    width: 300px;
+    height: 100vh;
+    position: relative;
+    color: white;
+
+    transition: .4s;
+}
+.side-nav-container-NO{
+    width: 55px;
+}
+
+.nav-upper,
+.nav-heading {
+    display: grid;
+}
+
+.nav-heading {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    height: 75px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo .icon {
+    width: 40px;
+    padding: 0 10px;
+}
+
+.hamburger {
+    position: absolute;
+    right: 0;
+
+    background-color: none;
+    border: none;
+    cursor: pointer;
+
+    margin: auto -35px;
+    background-color: #001844;
+    border: 3px solid #79b3ff;
+    -webkit-box-shadow: 0px 0px 30px -1px rgba(121, 179, 255, 1);
+    -moz-box-shadow: 0px 0px 30px -1px rgba(121, 179, 255, 1);
+    box-shadow: 0px 0px 30px -1px rgba(121, 179, 255, 1);
+    padding: 20px;
+    border-radius: 90px;
+    height: 71px;
+    width: 74px;
+}
+.hamburger span{
+    display: block;
+    margin-top: 5px;
+    background-color: #fff;
+    border-radius: 15px;
+    height: 4px;
+    width: 30px;
+
+    transition: .3s;
+    transition-delay: .5s transform;
+
+}
+.hamburger-in:hover span:nth-child(1){
+ width: 25px;
+ transform:  translate(-3px, 10px) rotate(30deg);
+}
+.hamburger-in:hover span:nth-child(2){
+display: none;
+}
+.hamburger-in:hover span:nth-child(3){
+ width: 25px;
+ transform:  translate(-3px, -10px) rotate(-30deg);
+}
+
+.hamburger-out:hover span:nth-child(1){
+    width: 25px;
+    transform:  translate(0px, 10px) rotate(-30deg);
+   }
+   .hamburger-out:hover span:nth-child(2){
+   display: none;
+   }
+   .hamburger-out:hover span:nth-child(3){
+    width: 25px;
+    transform:  translate(0px, -10px) rotate(30deg);
+   }
