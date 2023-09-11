@@ -178,7 +178,7 @@ const ShowA = () => {
           .then((res) => {
             setProgress(prevState => ({ ...prevState, started: false }))
             setMsg(res.data.msg)
-            // navigate('/manager')
+            navigate('/manager')
           }
           ).catch((error) => {
             setDisabled(false)

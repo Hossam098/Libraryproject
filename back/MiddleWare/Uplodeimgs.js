@@ -6,7 +6,7 @@ import fs from "fs";
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         console.log(req.params.id);
-        const national_id = req.params.id || req.national_id;
+        const national_id = req.national_id || req.params.id  ;
         if(!national_id) return cb(new Error("national_id is required"));
         if (fs.existsSync(`./public/imgs/${national_id}`)) {
             cb(null, `./public/imgs/${national_id}`);
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         }
     },
     filename(req, file, cb) {
-        return cb(null, `${req.params.id || req.national_id}_${Date.now()}${path.extname(file.originalname)}`);
+        return cb(null, `${req.national_id || req.params.id}_${Date.now()}${path.extname(file.originalname)}`);
     }
 });
 
