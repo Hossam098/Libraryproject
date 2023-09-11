@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2023 at 12:34 PM
+-- Generation Time: Sep 11, 2023 at 09:57 AM
 -- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -238,7 +238,8 @@ CREATE TABLE `personal_examination_service` (
 --
 
 INSERT INTO `personal_examination_service` (`id`, `photo_college_letter`, `photo_payment_receipt`, `accept_date`, `publish_date`, `research1_image_pdf`, `research1_image_word`, `research2_image_pdf`, `research2_image_word`, `research3_image_pdf`, `research3_image_word`, `research4_image_pdf`, `research4_image_word`, `research5_image_pdf`, `research5_image_word`, `research6_image_pdf`, `research6_image_word`, `research7_image_pdf`, `research7_image_word`, `research8_image_pdf`, `research8_image_word`, `research9_image_pdf`, `research9_image_word`, `research10_image_pdf`, `research10_image_word`) VALUES
-(7, '10_1693654704676.png', '10_1693655063129.png', '2023-09-15', '2023-09-05', '10_1693655068389.pdf', '10_1693655066099.doc', '10_1693655070368.pdf', '10_1693655066770.docx', '10_1693655071986.pdf', '10_1693655067063.docx', '10_1693655073960.pdf', '10_1693655067391.docx', '10_1693655075919.pdf', '10_1693655068061.docx', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(7, '10_1693654704676.png', '10_1693655063129.png', '2023-09-15', '2023-09-05', '10_1693655068389.pdf', '10_1693655066099.doc', '10_1693655070368.pdf', '10_1693655066770.docx', '10_1693655071986.pdf', '10_1693655067063.docx', '10_1693655073960.pdf', '10_1693655067391.docx', '10_1693655075919.pdf', '10_1693655068061.docx', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, '10_1694375604458.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -325,23 +326,24 @@ CREATE TABLE `submit` (
   `service_id` int(11) NOT NULL,
   `role` tinyint(1) DEFAULT NULL,
   `manager_id` int(11) DEFAULT NULL,
-  `manger_status` tinyint(1) DEFAULT NULL COMMENT ' 1    =>  req acc\r\n2     => req rej\r\n3     => req edit step2\r\n4     => req edit step1'
+  `manager_status` tinyint(1) DEFAULT NULL COMMENT ' 1    =>  req acc\r\n2     => req rej\r\n3     => req edit step2\r\n4     => req edit step1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `submit`
 --
 
-INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `response_date`, `user_id`, `service_id`, `role`, `manager_id`, `manger_status`) VALUES
-(32, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1212121212, 2, NULL, 'استخراج افادة بأن عنوان مخطط الرسالة ليس مسجل	', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-05', 3, 1, 1, 2, NULL),
-(33, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, 312312345, 2, NULL, 'vsdsdvsdvs', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-03', 3, 2, NULL, NULL, NULL),
-(34, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, NULL, 2, 5, 'bfdbdfbdfbfdb', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', '2023-09-05', 3, 3, 2, 4, NULL),
+INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `response_date`, `user_id`, `service_id`, `role`, `manager_id`, `manager_status`) VALUES
+(32, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1212121212, 5, NULL, 'cc', '10_1694364661065.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-05', 3, 1, 1, 2, 1),
+(33, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, 312312345, 2, NULL, 'sdv', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-03', 3, 2, 1, 3, 3),
+(34, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, NULL, 3, 5, 'iiui', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', '2023-09-05', 3, 3, 2, 4, NULL),
 (35, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, 4343453, 2, 2, 'dfbfdbfd', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 4, NULL, NULL, NULL),
-(36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, 53453, 0, 2, 'dfnfdndf', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 6, NULL, NULL, NULL),
-(37, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, 55343453, 2, 2, 'خطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\n', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 5, NULL, NULL, NULL),
-(39, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 7, NULL, NULL, NULL),
+(36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, 56566, 1, 2, NULL, NULL, '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 6, NULL, NULL, NULL),
+(37, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 2, 2, 'خطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\n', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 5, NULL, NULL, NULL),
+(39, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, 5655, 5, NULL, 'KLLKL', '10_1694367412359.jpg', NULL, '2023-09-02', '2023-09-02', NULL, 3, 7, 2, 2, NULL),
 (40, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 8, NULL, NULL, NULL),
-(41, 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 453453, 2, NULL, NULL, NULL, '2023-09-05', '2023-09-05', NULL, NULL, 3, 1, 1, 2, NULL);
+(41, 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 453453, 3, NULL, NULL, NULL, '2023-09-05', '2023-09-05', NULL, NULL, 3, 1, 1, 2, 3),
+(42, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, NULL, 3, 2, 'sca', NULL, '2023-09-10', NULL, NULL, NULL, 3, 3, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -581,7 +583,7 @@ ALTER TABLE `manager`
 -- AUTO_INCREMENT for table `personal_examination_service`
 --
 ALTER TABLE `personal_examination_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `registration_services`
@@ -599,7 +601,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `submit`
 --
 ALTER TABLE `submit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `sub_manager`
