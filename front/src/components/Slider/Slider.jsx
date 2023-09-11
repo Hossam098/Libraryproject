@@ -32,7 +32,7 @@ const Slider = () => {
             {isExpanded && (
                 <div className="nav-logo">
                     < BsFillBarChartFill className='icon' />
-                    <h2>Charts</h2>
+                    <h2>المخططات</h2>
                 </div>
             )}
             <button
