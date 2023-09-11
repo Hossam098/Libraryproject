@@ -143,8 +143,8 @@ manager.get('/getallApplicantsReviewed',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ?  AND submit.manager_status IS NOT NULL "
-                const value = [req.id];
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE  submit.service_id  = ? AND submit.manager_status IS NOT NULL "
+                const value = [ req.service_id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
                     return res.status(200).json(result);
@@ -263,14 +263,16 @@ manager.put('/acceptApplicantforManager',
             if (req.body.status === null) { status = ', response_pdf = null'; }
 
             if (req.body.reason === "") {
-                const sqlUpdate = `UPDATE submit SET ${req.body.column} = ?  WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
+                console.log(1)
+                const sqlUpdate = `UPDATE submit SET ${req.body.column} = ?  WHERE ${req.body.ser_name} = ? AND service_id = ? AND user_id = ?`;
                 console.log(sqlUpdate);
-                const value = [req.body.status, req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
+                const value = [req.body.status, req.body.app_id, req.body.ser_id, req.body.student_id];
                 const result = await query(sqlUpdate, value);
                 if (result.affectedRows > 0) {
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
                 }
             } else if (req.body.reason !== "") {
+                console.log(2)
                 console.log(req.body.status, req.body.reason, req.body.app_id, req.id , req.body.column ,req.body.ser_name);
                 // const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
                 // const value1 = [req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
