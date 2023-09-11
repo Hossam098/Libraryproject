@@ -367,6 +367,8 @@ const Serinfo = ({ service, User }) => {
             {data.payment_code &&
                 <h2><span style={{ color: "#AD8700" }}>{t('res-code')}</span>: {data.payment_code}</h2>
             }
+            {(data.status == 5 && data.status == 6) &&
+            <>
             {data.response_text &&
                 <h2><span style={{ color: "#AD8700" }}>{t('notes')}</span> : {data.response_text}</h2>
             }
@@ -387,9 +389,9 @@ const Serinfo = ({ service, User }) => {
                         </div>
                     </div>
                 }
-
-
             </div>
+            </>
+}
 
         </div>
     )

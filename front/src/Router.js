@@ -99,7 +99,7 @@ import  Charts  from "./module/admin/admin/charts/Charts.jsx";
         },
         {
           path:"/manager",
-          element:<Admin/>,   
+          element:<Manager/>,   
           children:[
             {
               path:"",

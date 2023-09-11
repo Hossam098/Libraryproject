@@ -223,7 +223,7 @@ const ShowA = () => {
 
         if (user.status === 0) {
           updatedAction.column = 'status';
-          updatedAction.status = 3;
+          updatedAction.status = 4;
         }
 
         setAction(updatedAction);

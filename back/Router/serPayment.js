@@ -493,6 +493,15 @@ serPayment.put('/paymentEdit/:id/:id2',
                         level: req.body.level ? req.body.level : result[0].level,
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
+                    if(req.file.filename ){
+                        fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
 
                     const sqlUpdate = "UPDATE registration_services SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [reg, id2]);
@@ -537,7 +546,15 @@ serPayment.put('/paymentEdit/:id/:id2',
                         level: req.body.level ? req.body.level : result[0].level,
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-
+                    if(req.file.filename){
+                        fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
                     const sqlUpdate = "UPDATE formation_service SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [form, id2]);
                     if (result2.affectedRows > 0) {
@@ -580,7 +597,15 @@ serPayment.put('/paymentEdit/:id/:id2',
                     const personal = {
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-
+                    if(req.file.filename ){
+                        fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
                     const sqlUpdate = "UPDATE personal_examination_service SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [personal, id2]);
                     if (result2.affectedRows > 0) {
@@ -624,7 +649,15 @@ serPayment.put('/paymentEdit/:id/:id2',
                     const magazine = {
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-
+                    if(req.file.filename ){
+                        fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
                     const sqlUpdate = "UPDATE magazine_checking_service SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [magazine, id2]);
                     if (result2.affectedRows > 0) {
@@ -668,7 +701,15 @@ serPayment.put('/paymentEdit/:id/:id2',
                     const upgrade_service = {
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-
+                    if(req.file.filename ){
+                        fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
                     const sqlUpdate = "UPDATE upgrade_service SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [upgrade_service, id2]);
                     if (result2.affectedRows > 0) {
@@ -712,7 +753,15 @@ serPayment.put('/paymentEdit/:id/:id2',
                     const best = {
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-
+                    if(req.file.filename ){
+                        fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
                     const sqlUpdate = "UPDATE best_message_service SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [best, id2]);
                     if (result2.affectedRows > 0) {

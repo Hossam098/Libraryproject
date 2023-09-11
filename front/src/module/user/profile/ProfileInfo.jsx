@@ -27,6 +27,7 @@ const ProfileInfo = (props) => {
             <div className='subnav-content-item'>
                 <h3>{t('n-id')}</h3>
                 <input
+                disabled
                     type="text"
                     value={props.user.national_id}
                     onChange={(e) => { props.setUser({ ...props.user, national_id: e.target.value }) }}
