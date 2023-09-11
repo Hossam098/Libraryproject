@@ -15,13 +15,15 @@ import About from "./module/user/about/About.jsx"
 import Contact from "./module/user/contact/Contact.jsx"
 import ServiceStepTwo from "./module/user/serviceStepTwo/ServiceStepTwo.jsx";
 import ManagerLogin from "./module/admin/Alogin/ManagerLogin.jsx";
-import { Payment } from "./module/admin/Payment/Payment.jsx";
-import Admin from "./module/admin/manager/Manager.jsx";
+import Manager from "./module/admin/manager/Manager.jsx";
 import { SuperAdmin } from "./module/admin/SuperAdmin/SuperAdmin.jsx";
 import StudentListadmin from "./module/admin/manager/studentList/StudentList.jsx";
 import Review from "./module/admin/manager/review/Review.jsx";
 import Show from "./module/admin/manager/show/Show.jsx"
 import Reviewed from "./module/admin/manager/reviewed/Reviewed.jsx";
+import AdminLogin from "./module/admin/AdminLog/AdminLogin.jsx";
+import Admin from "./module/admin/admin/Admin.jsx";
+import  Charts  from "./module/admin/admin/charts/Charts.jsx";
 
   
   const Router = createBrowserRouter([
@@ -92,8 +94,8 @@ import Reviewed from "./module/admin/manager/reviewed/Reviewed.jsx";
           element:<ManagerLogin/>        
         },
         {
-          path:"/Payment",
-          element:<Payment/>        
+          path:"/AdminLOgin",
+          element:<AdminLogin/>        
         },
         {
           path:"/manager",
@@ -115,6 +117,17 @@ import Reviewed from "./module/admin/manager/reviewed/Reviewed.jsx";
               path:"/manager/show/:id",
               element:<Show/>,  
             },
+          ]     
+        },
+        {
+          path:"/Admin",
+          element:<Admin/>,   
+          children:[
+            {
+              path:"",
+              element:<Charts/>,  
+            },
+            
           ]     
         },
         {
