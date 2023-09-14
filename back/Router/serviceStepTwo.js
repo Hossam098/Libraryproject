@@ -438,6 +438,8 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
+                        response_text : null ,
+                        manager_status: null ,
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_reg = ? AND user_id = ?';
@@ -572,6 +574,8 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
+                        response_text : null ,
+                        manager_status: null ,
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_formation = ? AND user_id = ?';
@@ -735,6 +739,8 @@ serviceStepTwo.put("/StepTwoSer3/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
+                        response_text : null ,
+                        manager_status: null ,
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_personal = ? AND user_id = ?';
@@ -885,6 +891,8 @@ serviceStepTwo.put("/StepTwoSer4/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
+                        response_text : null ,
+                        manager_status : null ,
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_magazine  = ? AND user_id = ?';
@@ -1094,6 +1102,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
+                        response_text : null ,
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_upgrade   = ? AND user_id = ?';
@@ -1245,6 +1254,7 @@ serviceStepTwo.put("/StepTwoSer6/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
+                        response_text : null ,
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_best   = ? AND user_id = ?';
