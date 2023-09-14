@@ -144,7 +144,7 @@ manager.get('/getallApplicantsReviewed',
         try {
             if (req.service_id !== 9) {
                 const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE  submit.service_id  = ? AND submit.manager_status IS NOT NULL "
-                const value = [ req.service_id];
+                const value = [req.service_id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
                     return res.status(200).json(result);
@@ -211,10 +211,11 @@ manager.put('/acceptApplicant/:id',
             const value = [req.body.app_id];
             const result = await query(sqlSelect, value);
             if (result[0].role === 1) {
+                console.log(1)
                 if (result.length > 0) {
                     const Data = {
                         response_text: req.body.response_text,
-                        response_pdf: req.file.filename,
+                        response_pdf: req.file ? req.file.filename : null,
                         manager_status: 1,
                     }
                     const sqlUpdate = `UPDATE submit SET ? WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
@@ -222,14 +223,17 @@ manager.put('/acceptApplicant/:id',
                     const result = await query(sqlUpdate, value);
                     if (result.affectedRows > 0) {
                         return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
-
+                        console.log(2)
                     }
                 }
                 else {
                     return res.status(200).json({ message: "لا يوجد طلبات" });
                 }
+                console.log(3)
             } else if (result[0].role === 2) {
+                console.log(4)
                 if (result.length > 0) {
+                    console.log(5)
                     const Data = {
                         response_text: req.body.response_text,
                         response_pdf: req.file.filename,
@@ -259,8 +263,18 @@ manager.put('/acceptApplicantforManager',
     async (req, res) => {
         let error = [];
         try {
+            console.log(req.body.ser_id);
+            console.log('///////');
+            console.log(req.service_id);
+            if ((req.body.column === "status") && (+req.body.ser_id !== +req.service_id)) {
+                return res.status(400).json({ message: "لا تملك صلاحية القيام بهذا الامر" });
+            }
             let status = ''
             if (req.body.status === null) { status = ', response_pdf = null'; }
+            if((req.body.status == null && req.body.column === "manager_status") && +req.body.ser_id !== +req.service_id){
+                return res.status(400).json({ message: "لا تملك صلاحية القيام بهذا الامر" });
+            }
+
 
             if (req.body.reason === "") {
                 console.log(1)
@@ -273,7 +287,7 @@ manager.put('/acceptApplicantforManager',
                 }
             } else if (req.body.reason !== "") {
                 console.log(2)
-                console.log(req.body.status, req.body.reason, req.body.app_id, req.id , req.body.column ,req.body.ser_name);
+                console.log(req.body.status, req.body.reason, req.body.app_id, req.id, req.body.column, req.body.ser_name);
                 // const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
                 // const value1 = [req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
                 // const result1 = await query(sqlSelect, value1);

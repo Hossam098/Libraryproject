@@ -140,7 +140,7 @@ const ShowA = () => {
             if (error.response.status == 401)
               navigate('/ManagerLogin')
             else if (error.response.status == 400)
-              setErrors(error.response.data.msg)
+              setErrors(error.response.data.message)
             else
               setErrors("حدث خطأ ما")
           })
@@ -186,7 +186,7 @@ const ShowA = () => {
             if (error.response.status == 401)
               navigate('/ManagerLogin')
             else if (error.response.status == 400)
-              setErrors(error.response.data.msg)
+              setErrors(error.response.data.message)
             else
               setErrors("حدث خطأ ما")
           })
@@ -339,11 +339,13 @@ const ShowA = () => {
         })
         .catch((error) => {
           setDisabled(false);
+          setErrors(error.response.data.message);
+          console.log(error.response.data.message);
           setProgress((prevState) => ({ ...prevState, started: false }));
           if (error.response && error.response.status === 401) {
             navigate('/ManagerLogin');
           } else if (error.response && error.response.status === 400) {
-            setErrors(error.response.data.msg);
+            setErrors(error.response.data.message);
           } else {
             setErrors('حدث خطأ ما');
           }
@@ -390,7 +392,7 @@ const ShowA = () => {
           if (error.response && error.response.status === 401) {
             navigate('/ManagerLogin');
           } else if (error.response && error.response.status === 400) {
-            setErrors(error.response.data.msg);
+            setErrors(error.response.data.message);
           } else {
             setErrors('حدث خطأ ما');
           }
@@ -437,7 +439,7 @@ const ShowA = () => {
           if (error.response && error.response.status === 401) {
             navigate('/ManagerLogin');
           } else if (error.response && error.response.status === 400) {
-            setErrors(error.response.data.msg);
+            setErrors(error.response.data.message);
           } else {
             setErrors('حدث خطأ ما');
           }
@@ -485,7 +487,7 @@ const ShowA = () => {
           if (error.response && error.response.status === 401) {
             navigate('/ManagerLogin');
           } else if (error.response && error.response.status === 400) {
-            setErrors(error.response.data.msg);
+            setErrors(error.response.data.message);
           } else {
             setErrors('حدث خطأ ما');
           }
@@ -1043,7 +1045,6 @@ const ShowA = () => {
 
           </div>
 
-          {errors && <PopupErrorMsg message={errors} onClose={handleCloseError} />}
 
           <div className="progress">
             {progress.started && <progress max="100" value={progress.value}></progress>}
@@ -1076,6 +1077,8 @@ const ShowA = () => {
         </div>
 
       </section>
+      {errors && <PopupErrorMsg message={errors} onClose={handleCloseError} />}
+
     </>
   )
 }

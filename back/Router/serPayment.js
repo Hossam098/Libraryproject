@@ -493,7 +493,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                         level: req.body.level ? req.body.level : result[0].level,
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-                    if(req.file.filename ){
+                    if(req.file ){
                         fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
                             if (err) {
                                 console.error(err)
@@ -502,7 +502,6 @@ serPayment.put('/paymentEdit/:id/:id2',
                         }
                         )
                     }
-
                     const sqlUpdate = "UPDATE registration_services SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [reg, id2]);
                     if (result2.affectedRows > 0) {
@@ -513,7 +512,6 @@ serPayment.put('/paymentEdit/:id/:id2',
                                 status: 0,
                                 edit_date: new Date(),
                             }
-
                             const sqlUpdate2 = "UPDATE submit SET ? WHERE ser_reg = ? AND user_id = ?";
                             const result4 = await query(sqlUpdate2, [submitData, id2, req.id]);
                             if (result4.affectedRows > 0) {
