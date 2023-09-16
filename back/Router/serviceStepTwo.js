@@ -1103,6 +1103,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                     const submit = {
                         status: 2,
                         response_text : null ,
+                        manager_status: null ,                        
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_upgrade   = ? AND user_id = ?';
@@ -1159,9 +1160,7 @@ serviceStepTwo.put("/StepTwoSer6/:id/:id2",
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile3(req);
                             error.push("Please upload image or pdf or word");
@@ -1255,6 +1254,7 @@ serviceStepTwo.put("/StepTwoSer6/:id/:id2",
                     const submit = {
                         status: 2,
                         response_text : null ,
+                        manager_status: null ,
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_best   = ? AND user_id = ?';
@@ -1355,9 +1355,7 @@ serviceStepTwo.post("/StepTwoSer7",
                 error.push("Please upload decision");
                 return res.status(400).json({ message: error });
             } else {
-                (1);
                 const ext = req.files.decision[0].filename.split(".").pop();
-                (2);
                 if (ext !== "pdf" ) {
                     handleDeleteFile7(req);
                     error.push("Please upload image or pdf or word");
@@ -1482,8 +1480,9 @@ serviceStepTwo.put("/StepTwoSer7edit/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
+                        response_text : null ,
+                        manager_status: null ,
                         edit_date: new Date(),
-                        response_text : null,
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_grant = ? AND user_id = ?';
                     const value2 = [submit, id, id2, req.id];
@@ -1598,7 +1597,8 @@ serviceStepTwo.put("/StepTwoSer8edit/:id/:id2",
                     const submit = {
                         status: 2,
                         edit_date: new Date(),
-                        response_text : null,
+                        response_text : null ,
+                        manager_status: null ,
                     }
 
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_knowledge = ? AND user_id = ?';

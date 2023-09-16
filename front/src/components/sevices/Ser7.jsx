@@ -87,6 +87,7 @@ const Ser7 = ({ser}) => {
         setConfirm(false)
     };
     const handleSubmit = () => {
+        console.log(data)
         if (status !== 4) {
         setConfirm(false)
         if (!data.level) {
@@ -96,7 +97,8 @@ const Ser7 = ({ser}) => {
         if (!data.decision) {
             setError(t(`service7-step4.3-err`))
             return
-        }else if (data.decision?.name) {
+        }
+        else if (data.decision?.name) {
             const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
             if (!validExtensions.test(data.decision.name)) {

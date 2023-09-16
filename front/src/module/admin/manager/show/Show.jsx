@@ -213,15 +213,21 @@ const ShowA = () => {
           app_id: dataArray[3]
         };
 
-        if (user.role === 1) {
+        if (+user.role === 1 && (+updatedAction.ser_id !== 8 || +updatedAction.ser_id !== 7)) {
           updatedAction.column = 'manager_status';
           updatedAction.status = 3;
-        } else if (user.role === 2) {
+        } else if (+user.role === 2 && (+updatedAction.ser_id !== 8 || +updatedAction.ser_id !== 7)) {
           updatedAction.column = 'status';
           updatedAction.status = 3;
+        }else if (+user.role === 1 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
+          updatedAction.column = 'manager_status';
+          updatedAction.status = 3;
+        }else if (+user.role === 2 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
+          updatedAction.column = 'status';
+          updatedAction.status = 4;
         }
 
-        if (user.status === 0) {
+        if (+user.status === 0) {
           updatedAction.column = 'status';
           updatedAction.status = 4;
         }
@@ -311,13 +317,18 @@ const ShowA = () => {
     try {
       const updatedAction = {
         ...action,
-        status: 3,
         column: 'status',
         student_id: dataArray[0],
         ser_id: dataArray[1],
         ser_name: dataArray[2],
         app_id: dataArray[3]
       };
+
+      if (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7 || +user.status === 0 ) {
+        updatedAction.status = 4;
+      }else if (+updatedAction.ser_id !== 8 || +updatedAction.ser_id !== 7 || +user.status === 0 ) {
+        updatedAction.status = 3;
+      }
 
       setAction(updatedAction);
       setConfirm(true);
@@ -689,6 +700,20 @@ const ShowA = () => {
                 {user.service_name_ar}
               </td>
             </tr>
+            <tr>
+              <td>  المرحله </td>
+              <td>
+                {user.level == 0 ? "ماجستير" : user.level == 1 ? "دكتوراه" : null}
+              </td>
+            </tr>
+            {user.academic &&(
+            <tr>
+              <td> الشعبه </td>
+              <td>
+                {user.academic}
+              </td>
+            </tr>
+            )}
           </table>
         </div>
 
