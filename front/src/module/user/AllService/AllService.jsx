@@ -48,7 +48,10 @@ const AllService = () => {
                 </h2>
 
                 <div className="services__container">
-                    {Array.isArray(services) && services.map((service) => {
+                    {Array.isArray(services) && services.map((service , index) => {
+                        if (index >= 8) {
+                            return null; // Skip rendering for index >= 5
+                        }
                         return (
                             <article className='services'  style={localStorage.getItem('i18nextLng') == 'en' ? {direction: 'ltr'} : {direction: 'rtl'}}>
                                 <div className="service__head">

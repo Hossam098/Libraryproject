@@ -56,7 +56,7 @@ const Ser2 = ({ ser }) => {
             console.log(err)
         }
 
-        
+
         if (status == 3) {
             try {
                 //هنعدل الداتا
@@ -110,7 +110,7 @@ const Ser2 = ({ ser }) => {
         if (!data.research) {
             setError(t(`service${id}-step-two-err.research`))
             return
-        }else if (data.research?.name) {
+        } else if (data.research?.name) {
             const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
             if (!validExtensions.test(data.research.name)) {
                 setError(t(`service${id}-step-two-err.research`))
@@ -120,7 +120,7 @@ const Ser2 = ({ ser }) => {
         if (!data.research_word) {
             setError(t(`service${id}-step-two-err.research-word`))
             return
-        }else if (data.research_word?.name) {
+        } else if (data.research_word?.name) {
             const validExtensions2 = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
             if (!validExtensions2.test(data.research_word.name)) {
                 setError(t(`service${id}-step-two-err.research-word`))
@@ -185,7 +185,7 @@ const Ser2 = ({ ser }) => {
     }
 
 
-   
+
 
 
 
@@ -211,7 +211,7 @@ const Ser2 = ({ ser }) => {
                                     onClick={confirmf} className='sub-now'>{t('submet')}
                                 </button>
                             </div>
-                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit } />}
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
                             <div className="inputt" >
 
                                 <div className="select-img">
@@ -233,14 +233,14 @@ const Ser2 = ({ ser }) => {
                                             <p className='upload-image value'>
                                                 {data.payment_photo.name ? data.payment_photo.name : data.payment_photo}
                                             </p>
-                                            <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.payment_photo.name) {
-                                                    return window.open(URL.createObjectURL(data.payment_photo))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
-                                                }
-                                            }}
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.payment_photo.name) {
+                                                        return window.open(URL.createObjectURL(data.payment_photo))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
+                                                    }
+                                                }}
                                             >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, payment_photo: '' }) }}
@@ -255,7 +255,7 @@ const Ser2 = ({ ser }) => {
                                         {t(`service${id}-step-two.research`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image2">
-                                    <BsFilePdf className="img-icom" />
+                                        <BsFilePdf className="img-icom" />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"
@@ -267,16 +267,16 @@ const Ser2 = ({ ser }) => {
                                     {data.research &&
                                         <div>
                                             <p className='upload-image value'>
-                                                {data.research.name?data.research.name:data.research}
+                                                {data.research.name ? data.research.name : data.research}
                                             </p>
-                                            <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.research.name) {
-                                                    return window.open(URL.createObjectURL(data.research))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.research}`)
-                                                }
-                                            }}
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.research.name) {
+                                                        return window.open(URL.createObjectURL(data.research))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research}`)
+                                                    }
+                                                }}
                                             >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, research: '' }) }}
@@ -291,7 +291,7 @@ const Ser2 = ({ ser }) => {
                                         {t(`service${id}-step-two.research-word`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image4">
-                                    <BsFileEarmarkWord className="img-icom" />
+                                        <BsFileEarmarkWord className="img-icom" />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"
@@ -303,16 +303,16 @@ const Ser2 = ({ ser }) => {
                                     {data.research_word &&
                                         <div className="text-container">
                                             <p className='upload-image value'>
-                                                {data.research_word.name?data.research_word.name:data.research_word}
+                                                {data.research_word.name ? data.research_word.name : data.research_word}
                                             </p>
-                                            <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.research_word.name) {
-                                                    return window.open(URL.createObjectURL(data.research_word))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word}`)
-                                                }
-                                            }}
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.research_word.name) {
+                                                        return window.open(URL.createObjectURL(data.research_word))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word}`)
+                                                    }
+                                                }}
                                             >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, research_word: '' }) }}
@@ -338,16 +338,16 @@ const Ser2 = ({ ser }) => {
                                     {data.form &&
                                         <div>
                                             <p className='upload-image value'>
-                                                {data.form.name?data.form.name:data.form}
+                                                {data.form.name ? data.form.name : data.form}
                                             </p>
-                                            <button className='upload-image openPdf' 
-                                            onClick={() => {
-                                                if (data.form.name) {
-                                                    return window.open(URL.createObjectURL(data.form))
-                                                } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.form}`)
-                                                }
-                                            }}
+                                            <button className='upload-image openPdf'
+                                                onClick={() => {
+                                                    if (data.form.name) {
+                                                        return window.open(URL.createObjectURL(data.form))
+                                                    } else {
+                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.form}`)
+                                                    }
+                                                }}
                                             >{t('open')}</button>
                                             <AiFillCloseCircle
                                                 onClick={() => { setData({ ...data, form: '' }) }}

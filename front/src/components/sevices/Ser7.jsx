@@ -13,7 +13,7 @@ import PopupConfirmMsg from '../error/PopupConfirmMsg'
 import { AiFillCloseCircle } from 'react-icons/ai'
 
 
-const Ser7 = ({ser}) => {
+const Ser7 = ({ ser }) => {
     let { id } = useParams()
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -50,29 +50,29 @@ const Ser7 = ({ser}) => {
                     navigate('/login')
                 })
 
-                if (status == 4) {
-                    try {
-                        axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
-                            .then((res) => {
-                                console.log(res.data.level)
-                                setData({
-                                    level: res.data.level,
-                                    decision: res.data.decision,
-                                    pdf: res.data.message_pdf_ar,
-                                    word: res.data.message_word_ar,                                    
-                                }
-                                )
-                            })
-                            .catch((err) => {
-                                console.log(err)
-        
-                            })
-        
-        
-                    } catch (err) {
-                        console.log(err)
-                    }
+            if (status == 4) {
+                try {
+                    axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+                        .then((res) => {
+                            console.log(res.data.level)
+                            setData({
+                                level: res.data.level,
+                                decision: res.data.decision,
+                                pdf: res.data.message_pdf_ar,
+                                word: res.data.message_word_ar,
+                            }
+                            )
+                        })
+                        .catch((err) => {
+                            console.log(err)
+
+                        })
+
+
+                } catch (err) {
+                    console.log(err)
                 }
+            }
 
         } catch (err) {
             console.log(err)
@@ -89,186 +89,186 @@ const Ser7 = ({ser}) => {
     const handleSubmit = () => {
         console.log(data)
         if (status !== 4) {
-        setConfirm(false)
-        if (!data.level) {
-            setError(t(`service2-step-two-err.level`))
-            return
-        }
-        if (!data.decision) {
-            setError(t(`service7-step4.3-err`))
-            return
-        }
-        else if (data.decision?.name) {
-            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
-
-            if (!validExtensions.test(data.decision.name)) {
+            setConfirm(false)
+            if (!data.level) {
+                setError(t(`service2-step-two-err.level`))
+                return
+            }
+            if (!data.decision) {
                 setError(t(`service7-step4.3-err`))
                 return
             }
-        }
+            else if (data.decision?.name) {
+                const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
-        if (!data.pdf) {
-            setError(t(`service7-step4.2-err`))
-            return
-        }else if (data.pdf?.name) {
-            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
-            if (!validExtensions.test(data.pdf.name)) {
+                if (!validExtensions.test(data.decision.name)) {
+                    setError(t(`service7-step4.3-err`))
+                    return
+                }
+            }
+
+            if (!data.pdf) {
                 setError(t(`service7-step4.2-err`))
                 return
+            } else if (data.pdf?.name) {
+                const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+                if (!validExtensions.test(data.pdf.name)) {
+                    setError(t(`service7-step4.2-err`))
+                    return
+                }
             }
-        }
-        if (!data.word) {
-            setError(t(`service7-step4.1-err`))
-            return
-        }else if (data.word?.name) {
-            const validExtensions = /\.(doc|docx)$/i;
-            if (!validExtensions.test(data.word.name)) {
+            if (!data.word) {
                 setError(t(`service7-step4.1-err`))
                 return
+            } else if (data.word?.name) {
+                const validExtensions = /\.(doc|docx)$/i;
+                if (!validExtensions.test(data.word.name)) {
+                    setError(t(`service7-step4.1-err`))
+                    return
+                }
+            }
+
+            axios.defaults.withCredentials = true
+            console.log(data)
+            const formData = new FormData();
+            formData.append('level', data.level);
+            formData.append('decision', data.decision);
+            formData.append('pdf', data.pdf);
+            formData.append('word', data.word);
+
+            setProgress(prevState => ({ ...prevState, started: true }))
+            setMsg(t('uploading'))
+
+            try {
+                axios.post(`${API_URL}/StepTwoSer7`, formData, {
+                    withCredentials: true,
+                    onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+
+                    }
+                })
+                    .then((res) => {
+                        console.log(res.data)
+                        alert("done")
+                        navigate(`/`)
+                    })
+                    .catch((err) => {
+                        console.log(err.response.data.message[0])
+                        setError(err.response.data.message[0])
+                        if (err && err.response && err.response.data && err.response.data[0]) {
+                            if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                                navigate('/login')
+                            }
+                        }
+                        setMsg(null)
+                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                        setDisabled(false)
+                    })
+            } catch (err) {
+                console.log(err)
+                console.log(err.response.data)
+                setMsg(null)
+                setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                setDisabled(false)
+
             }
         }
+        else if (status == 4) {
 
-        axios.defaults.withCredentials = true
-        console.log(data)
-        const formData = new FormData();
-        formData.append('level', data.level);
-        formData.append('decision', data.decision);
-        formData.append('pdf', data.pdf);
-        formData.append('word', data.word);
-
-        setProgress(prevState => ({ ...prevState, started: true }))
-        setMsg(t('uploading'))
-
-        try {
-            axios.post(`${API_URL}/StepTwoSer7`, formData, {
-                withCredentials: true,
-                onUploadProgress: (ProgressEvent) => {
-                    setDisabled(true)
-                    let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-                    setProgress(prevState => ({ ...prevState, value: percentCompleted }))
-
-                }
-            })
-                .then((res) => {
-                    console.log(res.data)
-                    alert("done")
-                    navigate(`/`)
-                })
-                .catch((err) => {
-                    console.log(err.response.data.message[0])
-                    setError(err.response.data.message[0])
-                    if (err && err.response && err.response.data && err.response.data[0]) {
-                        if (!err.response.data[0].user && err.response.data[0].user != undefined) {
-                            navigate('/login')
-                        }
-                    }
-                    setMsg(null)
-                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                    setDisabled(false)
-                })
-        } catch (err) {
-            console.log(err)
-            console.log(err.response.data)
-            setMsg(null)
-            setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-            setDisabled(false)
-
-        }
-    }
-    else if (status == 4) {
-        
-        setConfirm(false)
-        if (data.level == '' && data.level !== 0) {
-            setError(t(`service2-step-two-err.level`))
-            return
-        }
-        if (!data.decision) {
-            setError(t(`service7-step4.3-err`))
-            return
-        }else if (data.decision?.name) {
-            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
-
-            if (!validExtensions.test(data.decision.name)) {
+            setConfirm(false)
+            if (data.level == '' && data.level !== 0) {
+                setError(t(`service2-step-two-err.level`))
+                return
+            }
+            if (!data.decision) {
                 setError(t(`service7-step4.3-err`))
                 return
-            }
-        }
+            } else if (data.decision?.name) {
+                const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
-        if (!data.pdf) {
-            setError(t(`service7-step4.2-err`))
-            return
-        }else if (data.pdf?.name) {
-            const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
-            if (!validExtensions.test(data.pdf.name)) {
+                if (!validExtensions.test(data.decision.name)) {
+                    setError(t(`service7-step4.3-err`))
+                    return
+                }
+            }
+
+            if (!data.pdf) {
                 setError(t(`service7-step4.2-err`))
                 return
+            } else if (data.pdf?.name) {
+                const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+                if (!validExtensions.test(data.pdf.name)) {
+                    setError(t(`service7-step4.2-err`))
+                    return
+                }
             }
-        }
-        if (!data.word) {
-            setError(t(`service7-step4.1-err`))
-            return
-        }else if (data.word?.name) {
-            const validExtensions = /\.(doc|docx)$/i;
-            if (!validExtensions.test(data.word.name)) {
+            if (!data.word) {
                 setError(t(`service7-step4.1-err`))
                 return
+            } else if (data.word?.name) {
+                const validExtensions = /\.(doc|docx)$/i;
+                if (!validExtensions.test(data.word.name)) {
+                    setError(t(`service7-step4.1-err`))
+                    return
+                }
+            }
+
+
+            axios.defaults.withCredentials = true
+            console.log(data)
+            const formData = new FormData();
+            formData.append('level', data.level);
+            if (data.decision?.name) {
+                formData.append('decision', data.decision)
+            }
+            if (data.pdf?.name) {
+                formData.append('pdf', data.pdf)
+            }
+            if (data.word?.name) {
+                formData.append('word', data.word)
+            }
+
+            setProgress(prevState => ({ ...prevState, started: true }))
+            setMsg(t('uploading'))
+
+            try {
+                axios.put(`${API_URL}/StepTwoSer7edit/${id}/${id2}`, formData, {
+                    withCredentials: true,
+                    onUploadProgress: (ProgressEvent) => {
+                        setDisabled(true)
+                        let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
+                        setProgress(prevState => ({ ...prevState, value: percentCompleted }))
+
+                    }
+                })
+                    .then((res) => {
+                        console.log(res.data)
+                        alert("done")
+                        navigate(`/`)
+                    })
+                    .catch((err) => {
+                        setDisabled(false)
+                        console.log(err.response.data.message[0])
+                        setError(err.response.data.message[0])
+                        if (err && err.response && err.response.data && err.response.data[0]) {
+                            if (!err.response.data[0].user && err.response.data[0].user != undefined) {
+                                navigate('/login')
+                            }
+                        }
+                        setMsg(null)
+                        setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+                    })
+            } catch (err) {
+                setDisabled(false)
+                console.log(err)
+                console.log(err.response.data)
+                setMsg(null)
+                setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
+
             }
         }
-
-       
-        axios.defaults.withCredentials = true
-        console.log(data)
-        const formData = new FormData();
-        formData.append('level', data.level);
-        if (data.decision?.name) {
-            formData.append('decision', data.decision)
-        }
-        if (data.pdf?.name) {
-            formData.append('pdf', data.pdf)
-        }
-        if (data.word?.name) {
-            formData.append('word', data.word)
-        }
-
-        setProgress(prevState => ({ ...prevState, started: true }))
-        setMsg(t('uploading'))
-
-        try {
-            axios.put(`${API_URL}/StepTwoSer7edit/${id}/${id2}`, formData, {
-                withCredentials: true,
-                onUploadProgress: (ProgressEvent) => {
-                    setDisabled(true)
-                    let percentCompleted = Math.round((ProgressEvent.loaded * 100) / ProgressEvent.total)
-                    setProgress(prevState => ({ ...prevState, value: percentCompleted }))
-
-                }
-            })
-                .then((res) => {
-                    console.log(res.data)
-                    alert("done")
-                    navigate(`/`)
-                })
-                .catch((err) => {
-                    setDisabled(false)
-                    console.log(err.response.data.message[0])
-                    setError(err.response.data.message[0])
-                    if (err && err.response && err.response.data && err.response.data[0]) {
-                        if (!err.response.data[0].user && err.response.data[0].user != undefined) {
-                            navigate('/login')
-                        }
-                    }
-                    setMsg(null)
-                    setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-                })
-        } catch (err) {
-            setDisabled(false)
-            console.log(err)
-            console.log(err.response.data)
-            setMsg(null)
-            setProgress(prevState => ({ ...prevState, started: false, value: 0 }))
-
-        }
-    }
     }
 
 
@@ -304,7 +304,7 @@ const Ser7 = ({ser}) => {
 
                             <div className="select-img">
                                 <span className="title-upload">
-                                {t('service7-step3')}
+                                    {t('service7-step3')}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image1">
                                     <BiImageAdd className='img-icom' />
@@ -319,9 +319,9 @@ const Ser7 = ({ser}) => {
                                 {data.decision &&
                                     <div className="text-container">
                                         <p className='upload-image value'>
-                                            {data.decision.name?data.decision.name:data.decision}
+                                            {data.decision.name ? data.decision.name : data.decision}
                                         </p>
-                                        <button className='upload-image openPdf' 
+                                        <button className='upload-image openPdf'
                                             onClick={() => {
                                                 if (data.decision.name) {
                                                     return window.open(URL.createObjectURL(data.decision))
@@ -329,7 +329,7 @@ const Ser7 = ({ser}) => {
                                                     return window.open(`http://localhost:5000/${ser.national_id}/${data.decision}`)
                                                 }
                                             }}
-                                            >{t('open')}</button>
+                                        >{t('open')}</button>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, decision: '' }) }}
                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -355,9 +355,9 @@ const Ser7 = ({ser}) => {
                                 {data.word &&
                                     <div className="text-container">
                                         <p className='upload-image value'>
-                                            {data.word.name?data.word.name:data.word}
+                                            {data.word.name ? data.word.name : data.word}
                                         </p>
-                                        <button className='upload-image openPdf' 
+                                        <button className='upload-image openPdf'
                                             onClick={() => {
                                                 if (data.word.name) {
                                                     return window.open(URL.createObjectURL(data.word))
@@ -365,7 +365,7 @@ const Ser7 = ({ser}) => {
                                                     return window.open(`http://localhost:5000/${ser.national_id}/${data.word}`)
                                                 }
                                             }}
-                                            >{t('open')}</button>
+                                        >{t('open')}</button>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, word: '' }) }}
                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -390,9 +390,9 @@ const Ser7 = ({ser}) => {
                                 {data.pdf &&
                                     <div className="text-container">
                                         <p className='upload-image value'>
-                                            {data.pdf.name?data.pdf.name:data.pdf}
+                                            {data.pdf.name ? data.pdf.name : data.pdf}
                                         </p>
-                                        <button className='upload-image openPdf' 
+                                        <button className='upload-image openPdf'
                                             onClick={() => {
                                                 if (data.pdf.name) {
                                                     return window.open(URL.createObjectURL(data.pdf))
@@ -400,7 +400,7 @@ const Ser7 = ({ser}) => {
                                                     return window.open(`http://localhost:5000/${ser.national_id}/${data.pdf}`)
                                                 }
                                             }}
-                                            >{t('open')}</button>
+                                        >{t('open')}</button>
                                         <AiFillCloseCircle
                                             onClick={() => { setData({ ...data, pdf: '' }) }}
                                             style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
@@ -418,8 +418,8 @@ const Ser7 = ({ser}) => {
                         <button
                             disabled={disabled}
                             onClick={confirmf} className='sub-now'>
-                                {status !== 4 ? t('sub-now') : t('edit-btn')}
-                            </button>
+                            {status !== 4 ? t('sub-now') : t('edit-btn')}
+                        </button>
                     </div>
                     {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
 

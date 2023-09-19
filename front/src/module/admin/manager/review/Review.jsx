@@ -110,7 +110,7 @@ const Review = () => {
                   <tr key={item.student_id}>
                     <td>{item.name}</td>
                     <td>{item.service_name_ar}</td>
-                    <td>{item.status === 0 ? item.req_code_date?.slice(0,10) : item.submit_date?.slice(0,10)}</td>
+                    <td>{item.status === 0 ? item.req_code_date?.slice(0, 10) : item.submit_date?.slice(0, 10)}</td>
                     <td>{item.status === 0 ? "منتظر كود دفع" : item.status === 1 ? "في انتظار رفع المرفقات" : item.status === 2 ? "في انتظار رد المكتبه" : item.status === 3 ? "قيد التعديل" : item.status === 4 ? "قيد التعديل" : item.status === 5 ? "مقبول" : item.status === 6 ? "مرفوض" : null}</td>
                     <td>
                       <button >

@@ -42,13 +42,13 @@ const Profile = () => {
           console.log(err)
         })
 
-      
+
     } catch (error) {
       console.log(error)
     }
   }, [])
 
-  const edituser = () =>{
+  const edituser = () => {
     const formData = new FormData()
     formData.append('name', user.name)
     formData.append('email', user.email)
@@ -60,7 +60,7 @@ const Profile = () => {
     formData.append('department', user.department)
     formData.append('img', user.img)
     try {
-      axios.put(`${API_URL}/user/updateuser`,formData ,{ withCredentials: true })
+      axios.put(`${API_URL}/user/updateuser`, formData, { withCredentials: true })
         .then((res) => {
           console.log(res.data)
           window.location.reload()
@@ -71,10 +71,10 @@ const Profile = () => {
           }
           console.log(err)
         })
-  }catch(err){
-    console.log(err)
+    } catch (err) {
+      console.log(err)
+    }
   }
-}
 
 
 
@@ -85,59 +85,59 @@ const Profile = () => {
     <>
       <div className="profile-container" style={{ direction: i18n.language == "ar" ? "rtl" : "ltr", backgroundColor: '#f5f5f5' }}>
 
-              <div className="subnav">
-                <div className="p-img-container">
-                  <div className="p-i-c">
-                  <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${imgUser}`} alt="profile" />
-                  </div>
-                  <div className="editbutton">
+        <div className="subnav">
+          <div className="p-img-container">
+            <div className="p-i-c">
+              <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${imgUser}`} alt="profile" />
+            </div>
+            <div className="editbutton">
 
-                    <label For="p-image">
-                      <MdOutlineModeEdit />
-                    </label>
-                    <input 
-                      type="file"
-                      hidden
-                      id='p-image'
-                      name='p-image'
-                      onChange={(e)=>{setUser({...user, img: e.target.files[0]})}}
-                    />
-                    
-                  </div>
-                  {user.img?.name && 
-                  <h1 style={{color: 'red' , textAlign: 'center'}}>
-                    {user.img.name}
-                  </h1>
-                  }
+              <label For="p-image">
+                <MdOutlineModeEdit />
+              </label>
+              <input
+                type="file"
+                hidden
+                id='p-image'
+                name='p-image'
+                onChange={(e) => { setUser({ ...user, img: e.target.files[0] }) }}
+              />
 
-                </div>
-                <h1>{user.name}</h1>
-                <div className="subnav-header">
-                  <button
-                    className={showPersonal ? 'btn-subnav-header active' : 'btn-subnav-header'}
-                    onClick={() => setShowPersonal(true)}
-                  >
-                    {t('per-info')}
-                  </button>
-                  <button
-                    className={!showPersonal ? 'btn-subnav-header active' : 'btn-subnav-header'}
-                    onClick={() => setShowPersonal(false)}
-                  >
-                    {t('ser-reged')}
-                  </button>
-                </div>
+            </div>
+            {user.img?.name &&
+              <h1 style={{ color: 'red', textAlign: 'center' }}>
+                {user.img.name}
+              </h1>
+            }
 
-                {showPersonal ?
-                  <ProfileInfo
-                    user={user}
-                    setUser={setUser}
-                    edituser={edituser}
-                  />
-                  :
-                    <ServiceInfo User={user}/>
-                }
-              </div>
-           
+          </div>
+          <h1>{user.name}</h1>
+          <div className="subnav-header">
+            <button
+              className={showPersonal ? 'btn-subnav-header active' : 'btn-subnav-header'}
+              onClick={() => setShowPersonal(true)}
+            >
+              {t('per-info')}
+            </button>
+            <button
+              className={!showPersonal ? 'btn-subnav-header active' : 'btn-subnav-header'}
+              onClick={() => setShowPersonal(false)}
+            >
+              {t('ser-reged')}
+            </button>
+          </div>
+
+          {showPersonal ?
+            <ProfileInfo
+              user={user}
+              setUser={setUser}
+              edituser={edituser}
+            />
+            :
+            <ServiceInfo User={user} />
+          }
+        </div>
+
       </div>
     </>
   )

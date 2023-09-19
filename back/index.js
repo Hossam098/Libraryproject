@@ -24,7 +24,7 @@ app.use(express.json());
 
 
 app.use(cors({
-  origin:  'http://localhost:3000',
+  origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
   maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day

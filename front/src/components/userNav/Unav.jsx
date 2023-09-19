@@ -1,4 +1,4 @@
-import { useState, useEffect,} from 'react'
+import { useState, useEffect, } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineDown, AiOutlineRight } from 'react-icons/ai'
 import './unav.css'
@@ -28,7 +28,7 @@ const Unav = () => {
     const [services, setServices] = useState([])
     const [user, setUser] = useState({})
 
-  
+
 
 
 
@@ -66,10 +66,10 @@ const Unav = () => {
         }
 
     }, [])
-    
 
 
-   
+
+
 
     const handleLogout = () => {
         try {
@@ -93,8 +93,8 @@ const Unav = () => {
 
     return (
         <nav className='UNAV' style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'ltr' } : { direction: 'rtl' }}>
-            <div className={localStorage.getItem('i18nextLng')=== 'ar'?"menu r":"menu l"}
-                onClick={()=>{toggleMenu(); setShowServices(false);}}
+            <div className={localStorage.getItem('i18nextLng') === 'ar' ? "menu r" : "menu l"}
+                onClick={() => { toggleMenu(); setShowServices(false); }}
             >
                 <span></span>
                 <span></span>
@@ -102,14 +102,14 @@ const Unav = () => {
             </div>
             <div className="right" >
                 {logged ? (<li>
-                    <a href="#" onClick={()=>{toggleServices(); setShowMenu(false);}} onBlur={()=>{setServices(false)}}>
+                    <a href="#" onClick={() => { toggleServices(); setShowMenu(false); }} onBlur={() => { setServices(false) }}>
                         <div className="profile-image">
                             <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${user.img}`} alt="" />
                         </div>
                     </a>
                     {showServices && (
                         <ul className="dropdown" style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}>
-                            <li><Link to='/profile' onClick={()=>{setShowServices(false);}}><RxAvatar /> {t('profile')}</Link></li>
+                            <li><Link to='/profile' onClick={() => { setShowServices(false); }}><RxAvatar /> {t('profile')}</Link></li>
                             <li><TbLanguage /><Toggle /></li>
                             <hr />
                             <li onClick={handleLogout} className='logout'><FiLogOut /> {t('logout')}</li>
@@ -125,16 +125,16 @@ const Unav = () => {
             <div className="left">
                 <ul className={`left${showMenu ? ' open' : ''}`}>
                     <li>
-                        <NavLink to="/" onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('Home')}</NavLink>
+                        <NavLink to="/" onClick={() => { setShowMenu(false); setShowServices(false) }}>{t('Home')}</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/contact" onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('contact')}</NavLink>
+                        <NavLink to="/contact" onClick={() => { setShowMenu(false); setShowServices(false) }}>{t('contact')}</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/about" onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('about-us')}</NavLink>
+                        <NavLink to="/about" onClick={() => { setShowMenu(false); setShowServices(false) }}>{t('about-us')}</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/allServices"  onClick={()=>{setShowMenu(false); setShowServices(false)}}>
+                        <NavLink to="/allServices" onClick={() => { setShowMenu(false); setShowServices(false) }}>
                             {t('services')}
                         </NavLink>
                     </li>
@@ -144,7 +144,7 @@ const Unav = () => {
                                 <p style={{ color: 'gray', cursor: "not-allowed" }}>{t('services-status')}</p>
                                 :
 
-                                <NavLink to="/Myservices" onClick={()=>{setShowMenu(false); setShowServices(false)}}>{t('services-status')}</NavLink>
+                                <NavLink to="/Myservices" onClick={() => { setShowMenu(false); setShowServices(false) }}>{t('services-status')}</NavLink>
                             }
                         </li>
                     )}

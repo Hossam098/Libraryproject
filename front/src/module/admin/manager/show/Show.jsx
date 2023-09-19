@@ -219,10 +219,10 @@ const ShowA = () => {
         } else if (+user.role === 2 && (+updatedAction.ser_id !== 8 || +updatedAction.ser_id !== 7)) {
           updatedAction.column = 'status';
           updatedAction.status = 3;
-        }else if (+user.role === 1 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
+        } else if (+user.role === 1 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
           updatedAction.column = 'manager_status';
           updatedAction.status = 3;
-        }else if (+user.role === 2 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
+        } else if (+user.role === 2 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
           updatedAction.column = 'status';
           updatedAction.status = 4;
         }
@@ -324,9 +324,9 @@ const ShowA = () => {
         app_id: dataArray[3]
       };
 
-      if (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7 || +user.status === 0 ) {
+      if (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7 || +user.status === 0) {
         updatedAction.status = 4;
-      }else if (+updatedAction.ser_id !== 8 || +updatedAction.ser_id !== 7 || +user.status === 0 ) {
+      } else if (+updatedAction.ser_id !== 8 || +updatedAction.ser_id !== 7 || +user.status === 0) {
         updatedAction.status = 3;
       }
 
@@ -552,7 +552,7 @@ const ShowA = () => {
                 </div>
                 : null
             }
-            {user.manager_status == null && (user.status == 2 ||user.status == 0) ?
+            {user.manager_status == null && (user.status == 2 || user.status == 0) ?
               <div className='status'>
                 <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
                 <input
@@ -623,7 +623,7 @@ const ShowA = () => {
                 </div>
                 : null
             }
-            
+
 
 
           </div>
@@ -706,13 +706,13 @@ const ShowA = () => {
                 {user.level == 0 ? "ماجستير" : user.level == 1 ? "دكتوراه" : null}
               </td>
             </tr>
-            {user.academic &&(
-            <tr>
-              <td> الشعبه </td>
-              <td>
-                {user.academic}
-              </td>
-            </tr>
+            {user.academic && (
+              <tr>
+                <td> الشعبه </td>
+                <td>
+                  {user.academic}
+                </td>
+              </tr>
             )}
           </table>
         </div>
@@ -979,18 +979,18 @@ const ShowA = () => {
 
 
           <div className="resp">
-            <h2><span style={{ color: "#19355A" }}>{t('res-code')}</span>: {user.payment_code ? 
-            user.payment_code :
-            user.status == 0 ?  (
-              <input
-                type="text"
-                name="" id=""
-                placeholder='ادخل كود الدفع'
-                onChange={(e) => { setPayment_code(e.target.value) }}
-              />
-            )
-            : "لم يتم ارسال كود الدفع بعد"
-          }</h2>
+            <h2><span style={{ color: "#19355A" }}>{t('res-code')}</span>: {user.payment_code ?
+              user.payment_code :
+              user.status == 0 ? (
+                <input
+                  type="text"
+                  name="" id=""
+                  placeholder='ادخل كود الدفع'
+                  onChange={(e) => { setPayment_code(e.target.value) }}
+                />
+              )
+                : "لم يتم ارسال كود الدفع بعد"
+            }</h2>
 
           </div>
 
@@ -1087,7 +1087,7 @@ const ShowA = () => {
               </button>
             </div>
           ) : null}
-          {payment_code && user.status == 0? (
+          {payment_code && user.status == 0 ? (
             <div className="resp two">
               <button
                 disabled={disabled}

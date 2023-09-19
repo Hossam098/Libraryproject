@@ -309,7 +309,7 @@ const Ser1 = ({ ser }) => {
                                         {t(`service${id}-step-two.research`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image2">
-                                    <BsFilePdf className="img-icom" />
+                                        <BsFilePdf className="img-icom" />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"
@@ -344,7 +344,7 @@ const Ser1 = ({ ser }) => {
                                         {t(`service${id}-step-two.research-en`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image3">
-                                    <BsFilePdf className="img-icom" />
+                                        <BsFilePdf className="img-icom" />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"
@@ -379,7 +379,7 @@ const Ser1 = ({ ser }) => {
                                         {t(`service${id}-step-two.research-word`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image4">
-                                    <BsFileEarmarkWord className="img-icom" />
+                                        <BsFileEarmarkWord className="img-icom" />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"
@@ -414,7 +414,7 @@ const Ser1 = ({ ser }) => {
                                         {t(`service${id}-step-two.research-word-en`)}
                                     </span>
                                     <label className='upload-image' htmlFor="upload-image5">
-                                    <BsFileEarmarkWord className="img-icom" />
+                                        <BsFileEarmarkWord className="img-icom" />
                                         <p>{t('click-here')}</p>
                                     </label>
                                     <input type="file"

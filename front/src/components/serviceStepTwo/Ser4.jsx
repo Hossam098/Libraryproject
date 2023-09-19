@@ -15,7 +15,7 @@ import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 
 const Ser4 = ({ ser }) => {
     const id = ser.service_id;
-    const id2 = ser.ser_magazine ;
+    const id2 = ser.ser_magazine;
     const number = ser.files_numbers;
     const status = ser.status;
     const navigate = useNavigate();
@@ -163,7 +163,7 @@ const Ser4 = ({ ser }) => {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
         }
-        
+
         const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
         const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
@@ -199,7 +199,7 @@ const Ser4 = ({ ser }) => {
 
         const formData = new FormData();
         formData.append('payment_photo', data.payment_photo)
-       
+
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
         formData.append('files_numbers', number)
@@ -386,7 +386,7 @@ const Ser4 = ({ ser }) => {
                                     disabled={disabled}
                                     onClick={confirmf} className='sub-now'>{t('submet')}</button>
                             </div>
-                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit } />}
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
                             <div className="inputt " >
 
                                 <div className="select-img two">
@@ -512,11 +512,11 @@ const Ser4 = ({ ser }) => {
                                     ))
                                 }
 
-                                
-                                
-                                
 
-                                
+
+
+
+
 
                             </div>
                             {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}

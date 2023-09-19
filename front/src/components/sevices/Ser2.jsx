@@ -26,14 +26,14 @@ const Ser2 = ({ ser }) => {
     let status = 0
     if (id === undefined) {
         id = ser.service_id;
-        id2 = ser.ser_formation ;
+        id2 = ser.ser_formation;
         status = ser.status;
     }
     console.log(id)
     console.log(id2)
     console.log(status)
     console.log(ser)
-    
+
     const [data, setData] = useState({
         level: '',
         photo_college_letter: '',
@@ -112,7 +112,7 @@ const Ser2 = ({ ser }) => {
             setMsg(t('uploading'))
 
             try {
-                axios.post(`${API_URL}/payment`,formData, {
+                axios.post(`${API_URL}/payment`, formData, {
                     withCredentials: true,
                     onUploadProgress: (ProgressEvent) => {
                         setDisabled(true)
@@ -148,7 +148,7 @@ const Ser2 = ({ ser }) => {
             }
 
         } else if (status == 4) {
-        
+
             setConfirm(false)
             if (data.level == '' && data.level !== 0) {
                 setError(t(`service${id}-step-two-err.level`))
@@ -207,55 +207,55 @@ const Ser2 = ({ ser }) => {
             }
         }
     }
-        const confirmf = () => {
-            setConfirm(true)
-        }
+    const confirmf = () => {
+        setConfirm(true)
+    }
 
 
-        return (
-            <div className="inst">
-                <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
-                    <div className="inst-container">
-                        <img src="../assets/mini-logo.png" alt="" />
-                        <div className="information-service_body" >
-                            <h1>{t('service2-name')}</h1>
-                            <hr style={{ width: "60%" }} />
-                            <img src={Serimg} alt="" className='ImageServicee' width={'50%'} />
+    return (
+        <div className="inst">
+            <div className='req' style={localStorage.getItem('i18nextLng') == 'en' ? { direction: 'ltr' } : { direction: 'rtl' }}>
+                <div className="inst-container">
+                    <img src="../assets/mini-logo.png" alt="" />
+                    <div className="information-service_body" >
+                        <h1>{t('service2-name')}</h1>
+                        <hr style={{ width: "60%" }} />
+                        <img src={Serimg} alt="" className='ImageServicee' width={'50%'} />
 
-                            <div className="inputt">
+                        <div className="inputt">
 
-                                <select
-                                    name=""
-                                    id=""
-                                    value={data.level}
-                                    onChange={(e) => { setData({ ...data, level: e.target.value }) }}
-                                >
-                                    <option value="">{t('level')}</option>
-                                    <option value="0">{t('master')}</option>
-                                    <option value="1">{t('phd')}</option>
-                                </select>
+                            <select
+                                name=""
+                                id=""
+                                value={data.level}
+                                onChange={(e) => { setData({ ...data, level: e.target.value }) }}
+                            >
+                                <option value="">{t('level')}</option>
+                                <option value="0">{t('master')}</option>
+                                <option value="1">{t('phd')}</option>
+                            </select>
 
 
-                                <div className="select-img">
-                                    <span className="title-upload">
-                                        {t('letter')}
-                                    </span>
-                                    <label className='upload-image' htmlFor="upload-image">
-                                        <BiImageAdd className='img-icom' />
-                                        <p>{t('click-here')}</p>
-                                    </label>
-                                    <input type="file"
-                                        hidden
-                                        id='upload-image'
-                                        name='upload-image'
-                                        onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
-                                    />
-                                    {data.photo_college_letter &&
-                                        <div>
-                                            <p className='upload-image value'>
-                                                {data.photo_college_letter.name ? data.photo_college_letter.name : data.photo_college_letter}
-                                            </p>
-                                            <button className='upload-image openPdf' 
+                            <div className="select-img">
+                                <span className="title-upload">
+                                    {t('letter')}
+                                </span>
+                                <label className='upload-image' htmlFor="upload-image">
+                                    <BiImageAdd className='img-icom' />
+                                    <p>{t('click-here')}</p>
+                                </label>
+                                <input type="file"
+                                    hidden
+                                    id='upload-image'
+                                    name='upload-image'
+                                    onChange={(e) => { setData({ ...data, photo_college_letter: e.target.files[0] }) }}
+                                />
+                                {data.photo_college_letter &&
+                                    <div>
+                                        <p className='upload-image value'>
+                                            {data.photo_college_letter.name ? data.photo_college_letter.name : data.photo_college_letter}
+                                        </p>
+                                        <button className='upload-image openPdf'
                                             onClick={() => {
                                                 if (data.photo_college_letter.name) {
                                                     return window.open(URL.createObjectURL(data.photo_college_letter))
@@ -263,35 +263,35 @@ const Ser2 = ({ ser }) => {
                                                     return window.open(`http://localhost:5000/${ser.national_id}/${data.photo_college_letter}`)
                                                 }
                                             }}
-                                            >{t('open')}</button>
-                                            <AiFillCloseCircle
-                                                onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
-                                                style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
+                                        >{t('open')}</button>
+                                        <AiFillCloseCircle
+                                            onClick={() => { setData({ ...data, photo_college_letter: '' }) }}
+                                            style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
-                                        </div>
-                                    }
-                                </div>
+                                    </div>
+                                }
                             </div>
-                            {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
-
-                            <div className="progress">
-                                {progress.started && <progress max="100" value={progress.value}></progress>}
-                                {msg && <p>{msg}</p>}
-                            </div>
-                            <button
-                                disabled={disabled}
-                                onClick={confirmf} className='sub-now'>
-                                    {status !== 4 ? t('sub-now') : t('edit-btn')}
-                                </button>
                         </div>
-                        {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
+                        {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
 
-
+                        <div className="progress">
+                            {progress.started && <progress max="100" value={progress.value}></progress>}
+                            {msg && <p>{msg}</p>}
+                        </div>
+                        <button
+                            disabled={disabled}
+                            onClick={confirmf} className='sub-now'>
+                            {status !== 4 ? t('sub-now') : t('edit-btn')}
+                        </button>
                     </div>
+                    {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
+
+
                 </div>
-
             </div>
-        )
-    }
 
-    export default Ser2
+        </div>
+    )
+}
+
+export default Ser2

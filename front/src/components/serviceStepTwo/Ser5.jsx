@@ -15,7 +15,7 @@ import PopupConfirmMsg from '../../components/error/PopupConfirmMsg'
 
 const Ser5 = ({ ser }) => {
     const id = ser.service_id;
-    const id2 = ser.ser_upgrade  ;
+    const id2 = ser.ser_upgrade;
     const number = ser.files_numbers;
     const status = ser.status;
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Ser5 = ({ ser }) => {
     const [data, setData] = useState({
         payment_photo: '',
         service_id: id,
-        research_list:"",
+        research_list: "",
         application_id: id2,
     })
     const [words, setwords] = useState({
@@ -190,7 +190,7 @@ const Ser5 = ({ ser }) => {
             setError(t(`service${id}-step-two-err.research_list`))
             return
         }
-        
+
         const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
         const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
@@ -241,7 +241,7 @@ const Ser5 = ({ ser }) => {
         const formData = new FormData();
         formData.append('payment_photo', data.payment_photo)
         formData.append('research_list', data.research_list)
-       
+
         formData.append('service_id', data.service_id)
         formData.append('application_id', data.application_id)
         formData.append('files_numbers', number)
@@ -324,7 +324,7 @@ const Ser5 = ({ ser }) => {
 
     }
 
-   
+
 
 
 
@@ -349,7 +349,7 @@ const Ser5 = ({ ser }) => {
                                     disabled={disabled}
                                     onClick={confirmf} className='sub-now'>{t('submet')}</button>
                             </div>
-                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit } />}
+                            {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
                             <div className="inputt " >
 
                                 <div className="select-img ">
@@ -550,11 +550,11 @@ const Ser5 = ({ ser }) => {
                                     ))
                                 }
 
-                                
-                                
-                                
 
-                                
+
+
+
+
 
                             </div>
                             {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}

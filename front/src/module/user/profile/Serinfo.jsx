@@ -368,30 +368,30 @@ const Serinfo = ({ service, User }) => {
                 <h2><span style={{ color: "#AD8700" }}>{t('res-code')}</span>: {data.payment_code}</h2>
             }
             {(data.status == 5 || data.status == 6) &&
-            <>
-            {data.response_text &&
-                <h2><span style={{ color: "#AD8700" }}>{t('notes')}</span> : {data.response_text}</h2>
-            }
-            <div className="inputt " style={{ gridTemplateColumns: "1fr", gridGap: "0px" }}>
-                {data.response_pdf &&
-                    <div className='inputt-atch' style={{ justifyContent: "space-evenly" }}>
-                        <h2>{t('att-res')}</h2>
-                        <div className="atch-btns">
-                            <button
-                                className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.response_pdf}`) }}
-                                style={{ background: "#19355A" }} class="atch-btn">{t('open')}
-                            </button>
-                            <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.response_pdf}`) }}
-                                style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
-                            </button>
-                        </div>
+                <>
+                    {data.response_text &&
+                        <h2><span style={{ color: "#AD8700" }}>{t('notes')}</span> : {data.response_text}</h2>
+                    }
+                    <div className="inputt " style={{ gridTemplateColumns: "1fr", gridGap: "0px" }}>
+                        {data.response_pdf &&
+                            <div className='inputt-atch' style={{ justifyContent: "space-evenly" }}>
+                                <h2>{t('att-res')}</h2>
+                                <div className="atch-btns">
+                                    <button
+                                        className="atch-btn-open"
+                                        onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.response_pdf}`) }}
+                                        style={{ background: "#19355A" }} class="atch-btn">{t('open')}
+                                    </button>
+                                    <button
+                                        onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.response_pdf}`) }}
+                                        style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
+                                    </button>
+                                </div>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
-            </>
-}
+                </>
+            }
 
         </div>
     )

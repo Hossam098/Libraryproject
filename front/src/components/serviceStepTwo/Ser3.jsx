@@ -80,10 +80,10 @@ const Ser3 = ({ ser }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    
+
                 })
                 .catch((err) => {
-                  
+
                     setDisabled(true)
                     navigate('/login')
                 })
