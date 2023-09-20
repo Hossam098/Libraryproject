@@ -209,10 +209,10 @@ const AShow = () => {
                     ser_id: dataArray[1],
                     ser_name: dataArray[2],
                     app_id: dataArray[3],
-                    status: +user.status == 0? 4 :3 
+                    status: +user.status == 0 ? 4 : 3
                 };
 
-                
+
                 setAction(updatedAction);
                 setConfirm(true);
                 axios.defaults.withCredentials = true;
@@ -254,10 +254,10 @@ const AShow = () => {
                     ser_id: dataArray[1],
                     ser_name: dataArray[2],
                     app_id: dataArray[3],
-                    status:6,
+                    status: 6,
                 };
 
-                
+
 
                 setAction(updatedAction);
                 setConfirm(true);
@@ -269,7 +269,7 @@ const AShow = () => {
                     })
                     .then((res) => {
                         window.location.reload()
-                        
+
                     })
                     .catch((error) => {
                         setDisabled(false);
@@ -288,6 +288,48 @@ const AShow = () => {
         } else {
             setErrors('يجب ادخال سبب');
         }
+    };
+    const handewait = () => {
+
+        try {
+            const updatedAction = {
+                ...action,
+                student_id: dataArray[0],
+                ser_id: dataArray[1],
+                ser_name: dataArray[2],
+                app_id: dataArray[3],
+                status: 2,
+            };
+
+
+
+            setAction(updatedAction);
+            setConfirm(true);
+            axios.defaults.withCredentials = true;
+
+            axios
+                .put(`${API_URL}/admin/acceptApplicantforadmin`, updatedAction, {
+                    withCredentials: true
+                })
+                .then((res) => {
+                    window.location.reload()
+
+                })
+                .catch((error) => {
+                    setDisabled(false);
+                    if (error.response && error.response.status === 401) {
+                        navigate('/AdminLogin');
+                    } else if (error.response && error.response.status === 400) {
+                        setErrors(error.response.data.msg);
+                    } else {
+                        setErrors('حدث خطأ ما');
+                    }
+                });
+        } catch (error) {
+            setDisabled(false);
+            setErrors('حدث خطأ ما');
+        }
+
     };
     return (
         <>
@@ -315,6 +357,8 @@ const AShow = () => {
                                     className='edit-input'
                                     onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                                 />
+                            <button onClick={handewait} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+
                             </div>
                             : null
                         }
@@ -339,6 +383,8 @@ const AShow = () => {
                                     onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                                 />
 
+                                <button onClick={handewait} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+
 
 
                             </div>
@@ -358,12 +404,15 @@ const AShow = () => {
 
                                     <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
                                     <input
-                                    disabled={disabled}
-                                    type="text"
-                                    placeholder='سبب التعديل'
-                                    className='edit-input'
-                                    onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
-                                />
+                                        disabled={disabled}
+                                        type="text"
+                                        placeholder='سبب التعديل'
+                                        className='edit-input'
+                                        onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
+                                    />
+
+                                    <button onClick={handewait} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+
                                 </div>
                                 : null
                         }
@@ -742,7 +791,7 @@ const AShow = () => {
                         <h2><span style={{ color: "#19355A" }}>{t('notes')}</span>
                             {(user.response_text && user.response_text !== "null" && user.status !== 0) ?
                                 user.response_text :
-                                ( user.response_text === null && user.status == 0) ?
+                                (user.response_text === null && user.status == 0) ?
                                     <h3>
                                         لم يتم ارسال ملاحظات بعد
                                     </h3>
@@ -771,7 +820,7 @@ const AShow = () => {
                                         className="atch-btn atch-btn2">Download
                                     </button>
                                 </div>) :
-                                (user.response_pdf === null && user.status == 2 ) ? (
+                                (user.response_pdf === null && user.status == 2) ? (
                                     <div className="select-img">
                                         <label className='upload-image' htmlFor="upload-image">
                                             <BiImageAdd className='img-icom' />
