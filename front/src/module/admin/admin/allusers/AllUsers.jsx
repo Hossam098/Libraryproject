@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import img from '../../../../images/mini-logo.png'
-
+import { API_URL } from '../../../../config';
 
 
 const AllUsers = () => {
@@ -15,22 +15,22 @@ const AllUsers = () => {
 
     localStorage.setItem('i18nextLng', 'ar')
 
-    //   useEffect(() => {
-    //     try {
-    //       axios.defaults.withCredentials = true
-    //       axios.get('http://localhost:5000/manager/getallApplicantsReviewed', { withCredentials: true })
-    //         .then((res) => {
-    //           setStudent(res.data)
-    //           // setFilter(res.data)
-    //           // setFilter2(res.data)
-    //         }).catch((error) => {
-    //           if (error.response.status === 401) navigate('/ManagerLogin')
-    //           navigate('/ManagerLogin')
-    //         })
-    //     } catch (error) {
-    //     }
+      useEffect(() => {
+        try {
+          axios.defaults.withCredentials = true
+          axios.get(`${API_URL}/admin/getallApplicantsShow`, { withCredentials: true })
+            .then((res) => {
+              setStudent(res.data)
+              // setFilter(res.data)
+              // setFilter2(res.data)
+            }).catch((error) => {
+              if (error.response.status === 401) navigate('/AdminLOgin')
+              navigate('/AdminLOgin')
+            })
+        } catch (error) {
+        }
 
-    //   }, [])
+      }, [])
 
     const [filter, setFilter] = useState(student);
 
@@ -125,7 +125,7 @@ const AllUsers = () => {
                                         <td>
                                             <button >
 
-                                                <Link to={`/admin/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}>تفاصيل</Link>
+                                                <Link to={`/Admin/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}>تفاصيل</Link>
                                             </button>
                                         </td>
                                     </tr>
