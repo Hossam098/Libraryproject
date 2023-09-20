@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './slider.css'
 import { BsFillBarChartFill } from "react-icons/bs"
+import axios from 'axios'
+import { API_URL } from '../../config';
+
 
 const Slider = () => {
 
     const [isExpanded, setExpanded] = useState(true)
-    const [isMobile, setIsMobile] = useState(false);
+    const [services, setServices] = useState({});
     useEffect(() => {
         const handleResize = () => {
           if(window.innerWidth < 768){
@@ -21,6 +24,23 @@ const Slider = () => {
           window.removeEventListener('resize', handleResize); // Cleanup the event listener
         };
       }, []);
+      useEffect(() => {
+
+        axios.defaults.withCredentials = true
+        try {
+            axios.get(`${API_URL}/user/getAllServices`, { withCredentials: true })
+                .then((res) => {
+                    console.log(res.data)
+                    setServices(res.data)
+                })
+                .catch((err) => {
+                    console.log(err)
+
+                })
+        } catch (err) {
+            console.log(err)
+        }
+    }, [])
 
 
   return (
@@ -45,10 +65,25 @@ const Slider = () => {
             </button>
         </div>
     </div>
-
+    {isExpanded && (
     <div className="charts">
+      {/* <ul>
+        {services.map((item)=>{
+          <li>
+            {}
+          </li>
+        })}
+      </ul> */}<ul>
+                    {Array.isArray(services) && services.map((service, index) => {
+                      return(
+                        <li>{service.service_name_ar}</li>
+                        )
+                    })}
+                    </ul>
+
         
     </div>
+    )}
 </div>
   )
 }

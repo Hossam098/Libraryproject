@@ -7,6 +7,8 @@
     color: white;
 
     transition: .4s;
+    display: flex;
+    flex-direction: column;
 }
 .side-nav-container-NO{
     width: 55px;
@@ -87,3 +89,13 @@ display: none;
     width: 25px;
     transform:  translate(0px, -10px) rotate(30deg);
    }
+
+.side-nav-container .charts{
+    font-size: 1rem;
+    margin: auto 0;
+}
+
+.side-nav-container .charts li{
+    
+    margin: 1rem 0;
+}
