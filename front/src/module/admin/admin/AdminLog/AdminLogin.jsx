@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { API_URL } from '../../../../config';
 import { Link, useNavigate } from 'react-router-dom';
-import PopupError from '../../../../components/error/PopupError';
+import PopupError from '../../../../components/error/PopupErrorMsg';
 
 
 
@@ -33,38 +33,43 @@ const AdminLogin = () => {
 
 
 
-  // useEffect(() => {
-  //   axios.defaults.withCredentials = true
+  useEffect(() => {
+    axios.defaults.withCredentials = true
     
-  //   if (Object.keys(errors).length === 0 && isSubmitting) {
-  //     axios.defaults.withCredentials = true
-  //     try {
-  //       axios.post(`${API_URL}/authmanager/login`, user, { withCredentials: true })
-  //         .then((res) => {
-  //           console.log("logged")
-  //           if (res.data.login == true) {
-  //             localStorage.setItem('token', res.data.token)
-  //             navigate('/manager')
-  //           }
-  //         })
-  //         .catch((err) => {
-  //           if(err.response.status == 401){
-  //             navigate('/ManagerLogin')
-  //           }
-  //           console.log(err.response.data.message[0])
-  //           setErrors2(err.response.data.message[0])
+    if (Object.keys(errors).length === 0 && isSubmitting) {
+      axios.defaults.withCredentials = true
+      try {
+        axios.post(`${API_URL}/authadmin/login`, user, { withCredentials: true })
+          .then((res) => {
+            console.log(res.data)
+            if (res.data.login == true && res.data.firstLogin== false) {
+              localStorage.setItem('token', res.data.token)
+              navigate('/admin')
+            }
+            if ( res.data.firstLogin) {
+              localStorage.setItem('token', res.data.token)
+              navigate('/AdminReset')
+            }
 
-  //         })
+          })
+          .catch((err) => {
+            if(err.response.status == 401){
+              navigate('/ManagerLogin')
+            }
+            console.log(err.response.data.message[0])
+            setErrors2(err.response.data.message[0])
+
+          })
 
 
-  //     } catch (err) {
-  //       console.log(err)
-  //     }
+      } catch (err) {
+        console.log(err)
+      }
 
-  //   } else {
-  //     console.log(errors)
-  //   }
-  // }, [errors]);
+    } else {
+      console.log(errors)
+    }
+  }, [errors]);
 
 
 
@@ -163,7 +168,6 @@ const AdminLogin = () => {
 
                 <input type="submit" value="تسجيل الدخول" />
 
-                <Link style={{ color: "black", marginTop: "2rem", display: "block" }}>forget password</Link>
               </form>
 
             </div>

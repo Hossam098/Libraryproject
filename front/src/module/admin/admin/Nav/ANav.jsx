@@ -11,9 +11,9 @@ const ANav = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    axios.get(`${API_URL}/authmanager/logout`, { withCredentials: true })
+    axios.get(`${API_URL}/authadmin/logout`, { withCredentials: true })
       .then((res) => {
-        navigate('/ManagerLogin')
+        navigate('/AdminLOgin')
       }).catch((error) => {
         console.log(error.response)
       })
@@ -33,7 +33,7 @@ const ANav = () => {
           <NavLink to='' > احصائيات </NavLink>
           </li>
           <li>
-            <NavLink to='Admin/all'> المستخدمين </NavLink>
+            <NavLink to='/Admin/all'> المستخدمين </NavLink>
           </li>
           <li>
             <NavLink to='/' > ييبيبيب </NavLink>

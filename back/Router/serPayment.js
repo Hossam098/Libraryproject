@@ -473,7 +473,7 @@ serPayment.put('/paymentEdit/:id/:id2',
             }
 
             /****     check file type pdf or img      ****/
-
+            
             if (req.file) {
                 const file = req.file;
                 const ext = file.filename.split(".").pop();
@@ -484,6 +484,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                     return res.status(400).json({ message: error });
                 }
             }
+
 
             if (id == 1) {
                 const sqlSelect = "SELECT * FROM registration_services WHERE id = ?";
@@ -537,14 +538,17 @@ serPayment.put('/paymentEdit/:id/:id2',
                     return res.status(400).json({ message: error });
                 }
             } else if (id == 2) {
+                
                 const sqlSelect = "SELECT * FROM formation_service WHERE id = ?";
                 const result = await query(sqlSelect, id2);
                 if (result.length > 0) {
+                    
                     const form = {
                         level: req.body.level ? req.body.level : result[0].level,
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-                    if(req.file.filename){
+                    
+                    if(req.file){
                         fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
                             if (err) {
                                 console.error(err)
@@ -553,6 +557,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                         }
                         )
                     }
+                    
                     const sqlUpdate = "UPDATE formation_service SET ? WHERE id = ?";
                     const result2 = await query(sqlUpdate, [form, id2]);
                     if (result2.affectedRows > 0) {
@@ -595,7 +600,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                     const personal = {
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-                    if(req.file.filename ){
+                    if(req.file ){
                         fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
                             if (err) {
                                 console.error(err)
@@ -647,7 +652,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                     const magazine = {
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-                    if(req.file.filename ){
+                    if(req.file ){
                         fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
                             if (err) {
                                 console.error(err)
@@ -699,7 +704,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                     const upgrade_service = {
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-                    if(req.file.filename ){
+                    if(req.file){
                         fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
                             if (err) {
                                 console.error(err)
@@ -751,7 +756,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                     const best = {
                         photo_college_letter: req.file ? req.file.filename : result[0].photo_college_letter,
                     }
-                    if(req.file.filename ){
+                    if(req.file ){
                         fs.unlinkSync(`./public/imgs/${req.national_id}/${result[0].photo_college_letter}`, (err) => {
                             if (err) {
                                 console.error(err)

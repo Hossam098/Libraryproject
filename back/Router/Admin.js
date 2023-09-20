@@ -97,8 +97,7 @@ Admin.put('/acceptApplicantforadmin',
         try {
             
             if (req.body.reason !== "") {
-                const sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? , response_pdf = null
-             WHERE ${req.body.ser_name} = ?`;
+                const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null WHERE ${req.body.ser_name} = ?`;
                 const value = [req.body.status, req.body.reason, req.body.app_id];
                 const result = await query(sqlUpdate, value);
                 if (result.affectedRows > 0) {

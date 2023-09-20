@@ -4,14 +4,16 @@ import { AiOutlineUser } from "react-icons/ai"
 import Slider from '../../../../components/Slider/Slider';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { API_URL } from '../../../../config';
-import axios from 'axios'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 
 const Charts = () => {
 
   const [isExpanded, setExpanded] = useState(false)
   const [filter, setfilter] = useState([])
-  
+  const navigate = useNavigate();
+
 
   // const [service, setfilter] = useState([])
   useEffect(() => {
@@ -24,10 +26,10 @@ const Charts = () => {
                 setfilter(res.data)
                 setFilter2(res.data)
             })
-            .catch((err) => {
-                console.log(err)
-
-            })
+            .catch((error) => {
+                if (error.response.status === 401) navigate('/AdminLOgin')
+                navigate('/AdminLOgin')}
+            )
     } catch (err) {
         console.log(err)
     }

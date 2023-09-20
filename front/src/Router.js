@@ -142,11 +142,11 @@ import AdminReset from "./module/admin/admin/AdminLog/AdminReset.jsx";
               element:<Charts/>,  
             },
             {
-              path:"Admin/all",
+              path:"/Admin/all",
               element:<AllUsers/>,  
             },
             {
-              path:"Admin/show/:id",
+              path:"/Admin/show/:id",
               element:<AShow/>,  
             },
             
