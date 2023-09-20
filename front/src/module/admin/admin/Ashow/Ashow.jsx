@@ -131,13 +131,13 @@ const AShow = () => {
                     .then((res) => {
                         setProgress(prevState => ({ ...prevState, started: false }))
                         setMsg(res.data.msg)
-                        navigate('/manager')
+                        indow.location.reload();
                     }
                     ).catch((error) => {
                         setDisabled(false)
                         setProgress(prevState => ({ ...prevState, started: false }))
                         if (error.response.status == 401)
-                            navigate('/ManagerLogin')
+                            navigate('/adminLogin')
                         else if (error.response.status == 400)
                             setErrors(error.response.data.message)
                         else

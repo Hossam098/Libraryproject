@@ -128,9 +128,11 @@ Admin.put('/acceptApplicant/:id',
             const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
             const value = [req.body.app_id];
             const result = await query(sqlSelect, value);
-            if (result[0].role === 1) {
-                console.log(1)
+            console.log(1)
+            if (result[0]) {
+                console.log(2)
                 if (result.length > 0) {
+                    console.log(3)
                     const Data = {
                         response_text: req.body.response_text,
                         response_pdf: req.file ? req.file.filename : null,

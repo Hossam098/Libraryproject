@@ -66,7 +66,6 @@ const StudentListadmin = () => {
       axios.defaults.withCredentials = true
       axios.put(`${API_URL}/manager/AssignManager`, selected, { withCredentials: true })
         .then((res) => {
-          console.log(res.data)
           window.location.reload()
         }
         ).catch((error) => {
