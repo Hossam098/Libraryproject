@@ -1,6 +1,7 @@
 import express from "express";
 import query from '../Database/DBConnection.js';
 import { body, validationResult } from "express-validator";
+import checkAdmin from "../MiddleWare/checkAdmin.js";
 
 
 
@@ -9,6 +10,7 @@ Admin.use(express.Router());
 
 
 Admin.get('/getallApplicants',
+    checkAdmin,
     async (req, res) => {
         let error = [];
         try {
