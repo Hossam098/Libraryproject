@@ -18,7 +18,7 @@ const Reviewed = () => {
   useEffect(() => {
     try {
       axios.defaults.withCredentials = true
-      axios.get('http://localhost:5000/manager/getallApplicantsReviewed', { withCredentials: true })
+      axios.get('http://localhost:5000/manager/getallApplicants', { withCredentials: true })
         .then((res) => {
           setStudent(res.data)
           setFilter(res.data)
@@ -65,6 +65,7 @@ const Reviewed = () => {
     return appid;
   }
 
+  console.log(student[0]?.service_id)
 
   return (
     <div className='super-container'>
@@ -86,14 +87,20 @@ const Reviewed = () => {
             id=""
           >
             <option value="">فلتره</option>
-            { 
-            <option value="0"> منظر كود دفع </option>
+            {(student[0]?.status === 0 || student[0]?.status === 4) &&
+              <>
+                <option value="0"> منظر كود دفع </option>
+                <option value="4"> قيد التعديل </option>
+              </>
             }
-            <option value="2"> قيد الانتظار </option>
-            <option value="3"> قيد التعديل </option>
-            <option value="4"> قيد التعديل </option>
-            <option value="5"> مقبول </option>
-            <option value="6"> مرفوض </option>
+            {student[0]?.status !== 0 && student[0]?.status !== 4 &&
+              <>
+                <option value="2"> قيد الانتظار </option>
+                <option value="3"> قيد التعديل </option>
+                <option value="5"> مقبول </option>
+                <option value="6"> مرفوض </option>
+              </>
+            }
           </select>
 
         </div>
