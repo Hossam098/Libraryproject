@@ -7,9 +7,10 @@ import session from 'express-session';
 import query from './Database/DBConnection.js';
 import user from './Router/userCRUD.js';
 import userAuth from './Authentication/userAuth.js';
+import managerAuth from './Authentication/managerAuth.js';
+import adminAuth from './Authentication/adminAuth.js';
 import serPayment from './Router/serPayment.js';
 import serviceStepTwo from './Router/serviceStepTwo.js';
-import managerAuth from './Authentication/managerAuth.js';
 import manager from './Router/manager.js';
 import Admin from './Router/Admin.js';
 import path from 'path';
@@ -56,6 +57,9 @@ app.use('', serviceStepTwo);
 
 app.use('/auth', userAuth);
 app.use('/authmanager', managerAuth);
+app.use('/authadmin', adminAuth);
+
+
 app.use('/user', user);
 app.use('/manager', manager);
 app.use('/admin', Admin);
