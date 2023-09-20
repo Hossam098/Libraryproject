@@ -32,7 +32,7 @@ Admin.get('/getallApplicantsShow',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = `SELECT * FROM submit `;
+            const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id ";
             const result = await query(sqlSelect);
             if (result.length > 0) {
                 return res.status(200).json(result);
