@@ -11,6 +11,7 @@ import serPayment from './Router/serPayment.js';
 import serviceStepTwo from './Router/serviceStepTwo.js';
 import managerAuth from './Authentication/managerAuth.js';
 import manager from './Router/manager.js';
+import Admin from './Router/Admin.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 // import corsMiddleware from 'cors'
@@ -57,6 +58,7 @@ app.use('/auth', userAuth);
 app.use('/authmanager', managerAuth);
 app.use('/user', user);
 app.use('/manager', manager);
+app.use('/admin', Admin);
 
 const PORT = process.env.PORT || 5000;
 
