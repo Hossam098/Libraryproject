@@ -7,12 +7,16 @@ import { BarChart } from '@mui/x-charts/BarChart';
 const Charts = () => {
 
   const [isExpanded, setExpanded] = useState(false)
+  const [filter, setfilter] = useState("")
 
 
   return (
     <div className='chart-Grid'>
       <div className="filter">
-        <Slider />
+        <Slider 
+          filter={filter}
+          setfilter={setfilter}
+        />
       </div>
       <div className="charts">
         <div className="widget_container">

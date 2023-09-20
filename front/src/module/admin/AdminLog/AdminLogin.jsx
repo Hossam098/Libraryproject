@@ -34,38 +34,38 @@ const AdminLogin = () => {
 
 
 
-  useEffect(() => {
-    axios.defaults.withCredentials = true
+  // useEffect(() => {
+  //   axios.defaults.withCredentials = true
     
-    if (Object.keys(errors).length === 0 && isSubmitting) {
-      axios.defaults.withCredentials = true
-      try {
-        axios.post(`${API_URL}/authmanager/login`, user, { withCredentials: true })
-          .then((res) => {
-            console.log("logged")
-            if (res.data.login == true) {
-              localStorage.setItem('token', res.data.token)
-              navigate('/manager')
-            }
-          })
-          .catch((err) => {
-            if(err.response.status == 401){
-              navigate('/ManagerLogin')
-            }
-            console.log(err.response.data.message[0])
-            setErrors2(err.response.data.message[0])
+  //   if (Object.keys(errors).length === 0 && isSubmitting) {
+  //     axios.defaults.withCredentials = true
+  //     try {
+  //       axios.post(`${API_URL}/authmanager/login`, user, { withCredentials: true })
+  //         .then((res) => {
+  //           console.log("logged")
+  //           if (res.data.login == true) {
+  //             localStorage.setItem('token', res.data.token)
+  //             navigate('/manager')
+  //           }
+  //         })
+  //         .catch((err) => {
+  //           if(err.response.status == 401){
+  //             navigate('/ManagerLogin')
+  //           }
+  //           console.log(err.response.data.message[0])
+  //           setErrors2(err.response.data.message[0])
 
-          })
+  //         })
 
 
-      } catch (err) {
-        console.log(err)
-      }
+  //     } catch (err) {
+  //       console.log(err)
+  //     }
 
-    } else {
-      console.log(errors)
-    }
-  }, [errors]);
+  //   } else {
+  //     console.log(errors)
+  //   }
+  // }, [errors]);
 
 
 
