@@ -21,10 +21,13 @@ import StudentListadmin from "./module/admin/manager/studentList/StudentList.jsx
 import Review from "./module/admin/manager/review/Review.jsx";
 import Show from "./module/admin/manager/show/Show.jsx"
 import Reviewed from "./module/admin/manager/reviewed/Reviewed.jsx";
-import AdminLogin from "./module/admin/AdminLog/AdminLogin.jsx";
+import AdminLogin from "./module/admin/admin/AdminLog/AdminLogin.jsx";
 import Admin from "./module/admin/admin/Admin.jsx";
 import  Charts  from "./module/admin/admin/charts/Charts.jsx";
 import All from "./module/admin/manager/all/All.jsx"
+import AllUsers from "./module/admin/admin/allusers/AllUsers.jsx";
+import AShow from "./module/admin/admin/Ashow/Ashow.jsx";
+import AdminReset from "./module/admin/admin/AdminLog/AdminReset.jsx";
 
   
   const Router = createBrowserRouter([
@@ -99,6 +102,10 @@ import All from "./module/admin/manager/all/All.jsx"
           element:<AdminLogin/>        
         },
         {
+          path:"/AdminReset",
+          element:<AdminReset/>        
+        },
+        {
           path:"/manager",
           element:<Manager/>,   
           children:[
@@ -133,6 +140,14 @@ import All from "./module/admin/manager/all/All.jsx"
             {
               path:"",
               element:<Charts/>,  
+            },
+            {
+              path:"Admin/all",
+              element:<AllUsers/>,  
+            },
+            {
+              path:"Admin/show/:id",
+              element:<AShow/>,  
             },
             
           ]     
