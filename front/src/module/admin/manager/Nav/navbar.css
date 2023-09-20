@@ -9,17 +9,18 @@
     padding: 1rem;
 }
 
-.mnav .active{
-    color: #AD8700;
-}
-.mnav .active::after{
+.dmin .active {
+    color: #AD8700 !important;
+  }
+  
+.dmin .active::after {
     content: '';
     width: 0;
     height: 2px;
     background: #AD8700;
     display: block;
     transition: 0.2s linear;
-}
+  }
 
 .dmin nav button {
     font-size: 15px;
@@ -47,6 +48,13 @@
 }
 
 .dmin nav ul li a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    font-size: 17px;
+    transition: 0.1s;
+}
+.dmin nav ul li a.active {
     text-decoration: none;
     color: #000;
     font-weight: 600;

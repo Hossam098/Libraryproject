@@ -118,11 +118,11 @@ const Unav = () => {
                 </li>) : (
                     <>
                         <li><Toggle /></li>
-                        <li><li onClick={handleLogin} style={{ fontSize: '1.5rem', cursor: "pointer" }}><FiLogIn />{t('Login')}</li></li>
+                        <li><li onClick={handleLogin} style={{ fontSize: '1rem', cursor: "pointer" }}><FiLogIn />{t('Login')}</li></li>
                     </>
                 )}
             </div>
-            <div className="left">
+            <div className="left" style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' } : { direction: 'ltr' }}>
                 <ul className={`left${showMenu ? ' open' : ''}`}>
                     <li>
                         <NavLink to="/" onClick={() => { setShowMenu(false); setShowServices(false) }}>{t('Home')}</NavLink>

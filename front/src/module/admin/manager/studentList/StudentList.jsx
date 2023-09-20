@@ -244,7 +244,7 @@ const StudentListadmin = () => {
                     {
                       item.role !== null && item.role !== "" ?
                         <td>
-                          <button className='delete' onClick={() => handleDelete(item)}>حذف</button>
+                          <button className='delete' onClick={() => handleDelete(item)}>ازالة الموظف</button>
                         </td>
                         : null
                     }

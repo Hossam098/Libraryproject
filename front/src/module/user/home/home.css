@@ -19,7 +19,7 @@ main {
 
 .services {
     /* background: #19355A; */
-    border-radius: 2rem;
+    border-radius: 20px;
     background-color: #fff;
     /* border: 1px solid #4db5ff; */
     /* height: fit-content; */
@@ -52,7 +52,7 @@ main {
 .service__head {
     /* background: #AD8700; */
     padding: 2rem;
-    border-radius: 2rem;
+    border-radius: 5px;
     /* box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1); */
 }
 

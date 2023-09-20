@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './navbar.css'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { API_URL } from '../../../../config'
 
 
 const Nav = () => {
+
 
   const navigate = useNavigate();
 
@@ -18,25 +19,43 @@ const Nav = () => {
         console.log(error.response)
       })
   }
-
+  const [active, setActive] = useState('home_active')
 
   return (
     <div className="dmin">
-      <nav className=''>
+      <nav className='mnav'>
         <button
           onClick={logout}
           className="btn">
-          <NavLink style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</NavLink>
+          <Link style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</Link>
         </button>
-        <ul>
+        <ul style={{ direction: "rtl" }}>
           <li>
-            <NavLink to='/manager/reviewed'> الطلبات التي تمت مراجعتها </NavLink>
+            <Link 
+            onClick={() => setActive('all_active')}
+            className={active === 'all_active' ? 'active' : ''}
+            exact to='/manager/all'
+            > عرض جميع الطلبات </Link>
           </li>
           <li>
-            <NavLink to='/manager'> مراجعه الطلبات </NavLink>
+            <Link 
+            onClick={() => setActive('home_active')}
+            className={active === 'home_active' ? 'active' : ''}
+            exact to='/manager'
+            > توزيع الطلبات </Link>
           </li>
           <li>
-            <NavLink to='/manager/list' >  عرض جميع الطلبات </NavLink>
+            <Link 
+            onClick={() => setActive('LIST_active')}
+            className={active === 'LIST_active' ? 'active' : ''}
+            to='/manager/Review'> الطلبات الموزعة لك  </Link>
+          </li>
+          <li>
+           
+            <Link
+            onClick={() => setActive('REVIWED_active')}
+            className={active === 'REVIWED_active' ? 'active' : ''}
+            to='/manager/reviewed'> الطلبات التي تمت مراجعتها </Link>
           </li>
         </ul>
       </nav>

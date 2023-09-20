@@ -55,8 +55,8 @@ const Home = () => {
             <main>
 
                 <div className="intro-txt" style={localStorage.getItem('i18nextLng') == 'en' ? { alignItems: 'flex-start' } : { alignItems: 'flex-end', textAlign: 'right' }}>
-                    <h1>{t('lib')}</h1>
-                    <h2>{t('helwan-uni')}</h2>
+                    <h1>{t('helwan-uni')}</h1>
+                    <h2>{t('lib')}</h2>
                     <h3 style={{ width: '50%' }}>
                         {t('info-lib')}
                     </h3>
@@ -70,7 +70,7 @@ const Home = () => {
 
                 <div className="services__container">
                     {Array.isArray(services) && services.map((service, index) => {
-                        if (index >= 4) {
+                        if (index >= 3) {
                             return null; // Skip rendering for index >= 5
                         }
                         return (
