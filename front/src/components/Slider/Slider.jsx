@@ -5,7 +5,7 @@ import axios from 'axios'
 import { API_URL } from '../../config';
 
 
-const Slider = () => {
+const Slider = ({filter, setfilter}) => {
 
     const [isExpanded, setExpanded] = useState(true)
     const [services, setServices] = useState({});
@@ -76,7 +76,9 @@ const Slider = () => {
       </ul> */}<ul>
                     {Array.isArray(services) && services.map((service, index) => {
                       return(
-                        <li>{service.service_name_ar}</li>
+                        <li 
+                          onClick={()=>{setfilter(service.id)}}
+                        >{service.service_name_ar}</li>
                         )
                     })}
                     </ul>

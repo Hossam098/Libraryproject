@@ -7,6 +7,7 @@
     color: white;
 
     transition: .4s;
+
     display: flex;
     flex-direction: column;
 }
@@ -95,7 +96,21 @@ display: none;
     margin: auto 0;
 }
 
-.side-nav-container .charts li{
-    
+.side-nav-container .charts li{  
     margin: 1rem 0;
+    background-color: #4881ca;
+    padding: 3px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .3s;
+}
+.side-nav-container .charts li:hover{  
+    background-color: #3162a1;
+}
+.side-nav-container .charts {
+    display: grid;
+}
+.side-nav-container .charts ul{
+    display: grid;
+    justify-content: space-between;
 }
