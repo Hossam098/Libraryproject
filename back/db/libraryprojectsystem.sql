@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2023 at 09:57 AM
+-- Generation Time: Sep 20, 2023 at 03:24 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.2
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `libraryprojectsystem`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -108,7 +121,8 @@ CREATE TABLE `grant_service` (
 
 INSERT INTO `grant_service` (`id`, `message_pdf_en`, `message_word_en`, `message_pdf_ar`, `message_word_ar`, `decision`, `level`) VALUES
 (3, '', '', '10_1693669246101.pdf', '10_1693669251022.docx', '10_1693669244455.pdf', 0),
-(4, '', '', '10_1693673724472.pdf', '10_1693669504811.docx', '10_1693669504796.pdf', 1);
+(4, '', '', '10_1693673724472.pdf', '10_1693669504811.docx', '10_1693669504796.pdf', 1),
+(5, '', '', '123456789_1694708237240.pdf', '123456789_1694708237242.doc', '123456789_1694708237239.pdf', 1);
 
 -- --------------------------------------------------------
 
@@ -129,7 +143,8 @@ CREATE TABLE `knowledge_bank_service` (
 --
 
 INSERT INTO `knowledge_bank_service` (`id`, `subscription_status`, `proof_of_subscription`, `level`, `academic`) VALUES
-(6, NULL, NULL, 0, 'evwefwevew');
+(6, NULL, NULL, 0, 'evwefwevew'),
+(7, NULL, NULL, 1, 'rwerwerwe');
 
 -- --------------------------------------------------------
 
@@ -181,23 +196,24 @@ CREATE TABLE `manager` (
   `mname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `service_id` int(11) NOT NULL
+  `service_id` int(11) NOT NULL,
+  `role` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `manager`
 --
 
-INSERT INTO `manager` (`id`, `mname`, `email`, `password`, `service_id`) VALUES
-(2, 'micheal', 'michael@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 1),
-(3, 'nader', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 2),
-(4, 'mm', 'mm@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 3),
-(5, 'nn', 'nn@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 4),
-(6, 'bb', 'bb@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 5),
-(7, 'vv', 'vv@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 6),
-(8, 'cc', 'cc@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 7),
-(9, 'zz', 'zz@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 8),
-(10, 'ff', 'ff@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 9);
+INSERT INTO `manager` (`id`, `mname`, `email`, `password`, `service_id`, `role`) VALUES
+(2, 'micheal', 'michael@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 1, 0),
+(3, 'nader', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 2, 0),
+(4, 'mm', 'mm@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 3, 0),
+(5, 'nn', 'nn@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 4, 0),
+(6, 'bb', 'bb@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 5, 0),
+(7, 'vv', 'vv@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 6, 0),
+(8, 'cc', 'cc@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 7, 0),
+(9, 'zz', 'zz@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 8, 0),
+(10, 'ff', 'ff@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', 9, 0);
 
 -- --------------------------------------------------------
 
@@ -265,7 +281,14 @@ CREATE TABLE `registration_services` (
 
 INSERT INTO `registration_services` (`id`, `level`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`) VALUES
 (20, 0, '10_1693576871975.jpg', '10_1693576790107.jpg', '10_1693576969390.pdf', '10_1693576871986.docx', '10_1693581857712.pdf', '10_1693581857735.docx', '10_1693576871987.jpg'),
-(21, 0, '10_1693927133210.jpg', '10_1693927035324.png', '10_1693927133213.pdf', '10_1693927133238.docx', '10_1693927133215.pdf', '10_1693927133239.docx', '10_1693927133240.pdf');
+(21, 0, '10_1693927133210.jpg', '10_1693927035324.png', '10_1693927133213.pdf', '10_1693927133238.docx', '10_1693927133215.pdf', '10_1693927133239.docx', '10_1693927133240.pdf'),
+(22, 1, '1_1694421208216.jpg', '123456_1694420316360.jpg', '1_1694421208244.pdf', '1_1694421208249.docx', NULL, NULL, '1_1694421208251.jpg'),
+(23, 1, '102020_1694461810641.jpg', '102020_1694461611979.jpg', '102020_1694464605170.pdf', '102020_1694461810680.doc', NULL, NULL, '102020_1694464605726.jpg'),
+(24, 0, '123456789_1694520251371.jpg', '123456789_1694519968467.jpg', '123456789_1694520251397.pdf', '123456789_1694520251398.doc', NULL, NULL, '123456789_1694520251399.jpg'),
+(25, 1, '123456789_1694700488490.jpg', '123456789_1694522967537.jpg', '123456789_1694700488496.pdf', '123456789_1694700488502.doc', NULL, NULL, '123456789_1694700488505.jpg'),
+(26, 0, '30000000000000_1695107484612.png', '30000000000000_1695106994176.pdf', '30000000000000_1695107494498.pdf', '30000000000000_1695107501980.docx', NULL, NULL, '30000000000000_1695107557314.pdf'),
+(27, 0, '30208010103651_1695128466914.docx', '30208010103651_1695127448759.docx', '30208010103651_1695128466919.pdf', '30208010103651_1695128477142.docx', NULL, NULL, '30208010103651_1695128479124.docx'),
+(28, 0, NULL, '123456789_1695205224842.jpg', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -313,7 +336,7 @@ CREATE TABLE `submit` (
   `ser_knowledge` int(11) DEFAULT NULL,
   `ser_magazine` int(11) DEFAULT NULL,
   `ser_best` int(11) DEFAULT NULL,
-  `payment_code` int(11) DEFAULT NULL,
+  `payment_code` varchar(255) DEFAULT NULL,
   `status` int(11) NOT NULL COMMENT '0 => req code\r\n1 => sent code\r\n2 => req steptwo\r\n3 => edit step two\r\n4 => edit req code att\r\n5 => acc\r\n6 => reg',
   `files_numbers` int(11) DEFAULT NULL,
   `response_text` varchar(255) DEFAULT NULL,
@@ -334,16 +357,25 @@ CREATE TABLE `submit` (
 --
 
 INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `response_date`, `user_id`, `service_id`, `role`, `manager_id`, `manager_status`) VALUES
-(32, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1212121212, 5, NULL, 'cc', '10_1694364661065.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-05', 3, 1, 1, 2, 1),
-(33, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, 312312345, 2, NULL, 'sdv', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-03', 3, 2, 1, 3, 3),
+(32, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1212121212', 5, NULL, 'cc', '10_1694364661065.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-05', 3, 1, 1, 2, 1),
+(33, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, '312312345', 2, NULL, 'sdv', '10_1693576871975.jpg', '2023-09-01', '2023-09-01', '2023-09-01', '2023-09-03', 3, 2, 1, 3, 3),
 (34, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, NULL, 3, 5, 'iiui', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', '2023-09-05', 3, 3, 2, 4, NULL),
-(35, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, 4343453, 2, 2, 'dfbfdbfd', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 4, NULL, NULL, NULL),
-(36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, 56566, 1, 2, NULL, NULL, '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 6, NULL, NULL, NULL),
+(35, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, '4343453', 2, 2, 'dfbfdbfd', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 4, NULL, NULL, NULL),
+(36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, '56566', 1, 2, NULL, NULL, '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 6, NULL, NULL, NULL),
 (37, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 2, 2, 'خطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\nخطاب قبول البحث الاول في حاله ان البحث لم ينشر بعد\n', '10_1693576871975.jpg', '2023-09-02', '2023-09-02', '2023-09-02', NULL, 3, 5, NULL, NULL, NULL),
-(39, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, 5655, 5, NULL, 'KLLKL', '10_1694367412359.jpg', NULL, '2023-09-02', '2023-09-02', NULL, 3, 7, 2, 2, NULL),
-(40, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 8, NULL, NULL, NULL),
-(41, 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 453453, 3, NULL, NULL, NULL, '2023-09-05', '2023-09-05', NULL, NULL, 3, 1, 1, 2, 3),
-(42, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, NULL, 3, 2, 'sca', NULL, '2023-09-10', NULL, NULL, NULL, 3, 3, NULL, NULL, NULL);
+(39, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, '5655', 5, NULL, 'KLLKL', '10_1694367412359.jpg', NULL, '2023-09-02', '2023-09-02', NULL, 3, 7, 2, 2, NULL),
+(40, NULL, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2023-09-02', '2023-09-02', NULL, 3, 8, 1, 4, NULL),
+(41, 21, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '453453', 3, NULL, NULL, NULL, '2023-09-05', '2023-09-05', NULL, NULL, 3, 1, 1, 2, 3),
+(42, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, NULL, 3, 2, 'sca', NULL, '2023-09-10', NULL, NULL, NULL, 3, 3, NULL, NULL, NULL),
+(43, 22, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '123456789', 5, NULL, 'cacss', '123456_1694422074564.jpg', '2023-09-11', '2023-09-11', NULL, NULL, 4, 1, 1, 3, 1),
+(44, 23, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '752767886786', 2, NULL, 'scascasc', NULL, '2023-09-11', '2023-09-11', '2023-09-11', NULL, 5, 1, NULL, NULL, 3),
+(45, 24, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '21321513', 5, NULL, 'acsas', '123456789_1694521071450.jpg', '2023-09-12', '2023-09-12', '2023-09-12', NULL, 6, 1, 1, 2, 1),
+(46, 25, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '534534534345', 5, NULL, 'fsefse', '123456789_1694703354273.jpg', '2023-09-12', '2023-09-14', '2023-09-14', NULL, 6, 1, 1, 3, 1),
+(47, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 5, NULL, 'sdcsdv', '123456789_1694709873634.jpg', NULL, '2023-09-14', '2023-09-14', NULL, 6, 7, 1, 2, 1),
+(48, NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, 5, NULL, 'wetwewetwe', NULL, NULL, '2023-09-16', '2023-09-16', NULL, 6, 8, 1, 3, 1),
+(49, 26, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '101010', 5, NULL, 'lll', NULL, '2023-09-19', '2023-09-19', NULL, NULL, 7, 1, 1, 3, 1),
+(50, 27, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023', 5, NULL, 'اعععععععع', '30208010103651_1695131103647.pdf', '2023-09-19', '2023-09-19', NULL, NULL, 8, 1, 1, 2, 1),
+(51, 28, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '2023-09-20', NULL, NULL, NULL, 6, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -442,11 +474,23 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `national_id`, `phone`, `nationality`, `university`, `faculity`, `department`, `img`) VALUES
 (1, 'nader', 'das@info.com', '5531', '56165606', 68165, 'klnklmk', 'cscsd', 'dsc', '', ''),
 (2, 'v', 'dscsd@csc.css', '$2b$10$G7JMtmC/OcOJHenwtDhLruV3fprBbfZYO8iGR0Y3ySe7siDDIYe52', '452452', 45451, 'zdc', 'dcs', 'casc', '', ''),
-(3, 'نادر ممدوح شاكر عبدالمحسن', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_1693576790107.jpg');
+(3, 'نادر ممدوح شاكر عبدالمحسن', 'nader@info.com', '$2b$10$eItknlVFspntipdZgd/WZOH/bK3c6ml1wff8VJ5MVPfXzqJYMfBuO', '10', 1000, 'مصري', '1', 'ري', 'يرر', '10_1693576790107.jpg'),
+(4, 'nemo', 'nemo@info.edu.eg', '$2b$10$FeZZlw1ibZktI2MFXKuhGeoHAbubyCreWzHGAa21T4B8jB4n0voHC', '123456', 11232222, 'مصري', '1', 'حاسبات', 'is', ''),
+(5, 'mohamed', 'mohamed@infi.edu.eg', '$2b$10$7HG8L7LYOkibeHKb/Cznoe8uVZ44g77.NHUh0bwleRTgIZXc/eTuS', '102020', 11222212, 'مصري', '1', 'حاسبات', 'علوم حاسب', ''),
+(6, 'nadermamdouh', 'nader@info.edu.eg', '$2b$10$r0maMAWxT/4QLo5D.aFVL.MdIPA5YstSAN2jozhdSv387IjB4mu/C', '123456789', 22313132, 'مصري', 'جامعه القاهره', 'حاسبات', 'علوم حاسب', '123456789_1694523151881.jpg'),
+(7, 'زياد عاصم محمد', 'z@a.edu.eg', '$2b$10$.rSQ0JQ7VhBoVqMLCeEcS.180.oEB3uDSvCcs3cold/wqfHZYUCAm', '30000000000000', 1111636034, 'مصري', '1', 'كلية الهندسة', 'الإلكترونيات و الإتصالات و الحاسبات شعبة هندسة الحاسبات و البرمجيات', '30000000000000_1695106803490.jpg'),
+(8, 'عمر محمد فاروق', 'omr5@info.edu.eg', '$2b$10$eAhummQITdsbJSlYF.cFmeCZ/xeHqLbddIZMRd6KtnJAq8RlWQcP2', '30208010103651', 1022117620, 'مصري dfg', '1', 'حاسبات وذكاء اصطناعي ', 'هندسة برمجيات ', ''),
+(9, '435464', 'a@b.edu.com', '$2b$10$FJXQkTX.P9/mhQ1Y5.pIJ.1mcWK6B4vWn5k2K6pMRWk2qWSXlu7Z2', 'jggnfhg', 10309823, '4545', '75767', '557768', '57656', '');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `best_message_service`
@@ -544,6 +588,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `best_message_service`
 --
 ALTER TABLE `best_message_service`
@@ -559,13 +609,13 @@ ALTER TABLE `formation_service`
 -- AUTO_INCREMENT for table `grant_service`
 --
 ALTER TABLE `grant_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `knowledge_bank_service`
 --
 ALTER TABLE `knowledge_bank_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `magazine_checking_service`
@@ -589,7 +639,7 @@ ALTER TABLE `personal_examination_service`
 -- AUTO_INCREMENT for table `registration_services`
 --
 ALTER TABLE `registration_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -601,7 +651,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `submit`
 --
 ALTER TABLE `submit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `sub_manager`
@@ -619,7 +669,7 @@ ALTER TABLE `upgrade_service`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
