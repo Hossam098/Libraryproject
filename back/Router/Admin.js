@@ -12,17 +12,7 @@ Admin.get('/getallApplicants',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = `SELECT 
-            submit.status, 
-            submit.ser_best, 
-            submit.ser_magazine ,
-            submit.ser_knowledge ,
-            submit.ser_upgrade ,
-            submit.ser_personal ,
-            submit.ser_grant ,
-            submit.ser_formation ,
-            submit.ser_reg ,
-            FROM submit `;
+            const sqlSelect = `SELECT submit.status, submit.ser_best, submit.ser_magazine ,submit.ser_knowledge ,submit.ser_upgrade ,submit.ser_personal ,submit.ser_grant ,submit.ser_formation ,submit.ser_reg,submit.service_id FROM submit `;
             const result = await query(sqlSelect);
             if (result.length > 0) {
                 return res.status(200).json(result);

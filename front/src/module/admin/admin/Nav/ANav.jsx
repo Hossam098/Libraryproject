@@ -28,15 +28,15 @@ const ANav = () => {
           className="btn">
           <NavLink style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</NavLink>
         </button>
-        <ul>
+        <ul style={{direction:"rtl"}}>
           <li>
-          <NavLink to='/' > احصائيات </NavLink>
+          <NavLink to='' > احصائيات </NavLink>
           </li>
           <li>
-            <NavLink to='/يسي'>  المخططات </NavLink>
+            <NavLink to='/يسي'> المستخدمين </NavLink>
           </li>
           <li>
-            <NavLink to='/manager/list' > ييبيبيب </NavLink>
+            <NavLink to='/' > ييبيبيب </NavLink>
           </li>
         </ul>
       </nav>

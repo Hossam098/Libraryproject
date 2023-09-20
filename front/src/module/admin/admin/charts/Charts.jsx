@@ -1,21 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './charts.css'
 import { AiOutlineUser } from "react-icons/ai"
 import Slider from '../../../../components/Slider/Slider';
 import { BarChart } from '@mui/x-charts/BarChart';
+import { API_URL } from '../../../../config';
+import axios from 'axios'
+
 
 const Charts = () => {
 
   const [isExpanded, setExpanded] = useState(false)
-  const [filter, setfilter] = useState("")
+  const [filter, setfilter] = useState([])
+  
 
+  // const [service, setfilter] = useState([])
+  useEffect(() => {
 
+    axios.defaults.withCredentials = true
+    try {
+        axios.get(`${API_URL}/admin/getallApplicants`, { withCredentials: true })
+            .then((res) => {
+                console.log(res.data)
+                setfilter(res.data)
+                setFilter2(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+
+            })
+    } catch (err) {
+        console.log(err)
+    }
+}, [])
+
+const [filter2, setFilter2] = useState(filter);
+console.log(filter2)
   return (
+
     <div className='chart-Grid'>
       <div className="filter">
         <Slider 
           filter={filter}
           setfilter={setfilter}
+          filter2={filter2}
+          setfilter2={setFilter2}
         />
       </div>
       <div className="charts">
@@ -25,35 +53,76 @@ const Charts = () => {
               <AiOutlineUser />
               <p>عدد المستخدمين</p>
             </div>
-            <h2>23,400</h2>
+            <h2>{
+              filter2?.length
+              }</h2>
           </article>
           <article className="widget">
             <div className="widget-header">
               <AiOutlineUser />
               <p>عدد المقبولين</p>
             </div>
-            <h2>23,443</h2>
+            <h2>{
+              filter2?.filter((item)=>(+item.status==5)).length
+              }</h2>
           </article>
           <article className="widget">
             <div className="widget-header">
               <AiOutlineUser />
               <p>عدد المرفوضين</p>
             </div>
-            <h2>13,423</h2>
+            <h2>
+              {filter2?.filter((item)=>(+item.status==6)).length}
+            </h2>
           </article>
+
+          <article className="widget">
+            <div className="widget-header">
+              <AiOutlineUser />
+              <p>عدد الموجودين ب قائمه انتظار كود </p>
+            </div>
+            <h2>
+              {filter2?.filter((item)=>(+item.status==0)).length}
+            </h2>
+          </article>
+          <article className="widget">
+            <div className="widget-header">
+              <AiOutlineUser />
+              <p> عدد الحاصلين على كود دفع </p>
+            </div>
+            <h2>
+              {filter2?.filter((item)=>(+item.status==1)).length}
+            </h2>
+          </article>
+
           <article className="widget">
             <div className="widget-header">
               <AiOutlineUser />
               <p>عدد الموجودين ب قائمه الانتظار</p>
             </div>
-            <h2>25,423</h2>
+            <h2>
+              {filter2?.filter((item)=>(+item.status==2)).length}
+            </h2>
           </article>
+
           <article className="widget">
             <div className="widget-header">
               <AiOutlineUser />
               <p>عدد الموجودين ب قائمه التعديل</p>
             </div>
-            <h2>25,423</h2>
+            <h2>
+              {filter2?.filter((item)=>(+item.status==3)).length}
+            </h2>
+          </article>
+
+          <article className="widget">
+            <div className="widget-header">
+              <AiOutlineUser />
+              <p>قائمه التعديل على مرفقات كود الدفع</p>
+            </div>
+            <h2>
+              {filter2?.filter((item)=>(+item.status==4)).length}
+            </h2>
           </article>
         </div>
         <div className="chart" style={{ width: '100%' }}>
@@ -61,13 +130,20 @@ const Charts = () => {
             xAxis={[
               {
                 id: 'barCategories',
-                data: ['خدمه المنح', ' خدمه التشكيل ', 'خدمه الترقيه', ' خدمه التسجيل ', ' فحص احسن رساله علميه ', ' الفحص الشخصي ', ' فحص النشر '],
+                data: ['خدمه المنح', ' خدمه التشكيل ', 'خدمه الترقيه', ' خدمه التسجيل ', ' فحص احسن رساله علميه ', ' الفحص الشخصي ', ' فحص النشر ','بنك المعرفه'],
                 scaleType: 'band',
               },
             ]}
             series={[
               {
-                data: [220, 120, 300, 80, 130, 266, 190],
+                data: [filter?.filter((item)=>(item.ser_grant)).length,
+                  filter?.filter((item)=>(item.ser_formation)).length,
+                  filter?.filter((item)=>(item.ser_upgrade)).length,
+                  filter?.filter((item)=>(item.ser_reg)).length,
+                  filter?.filter((item)=>(item.ser_best)).length,
+                  filter?.filter((item)=>(item.ser_personal)).length,
+                  filter?.filter((item)=>(item.ser_magazine)).length,
+                  filter?.filter((item)=>(item.ser_knowledge)).length],
               },
             ]}
 
