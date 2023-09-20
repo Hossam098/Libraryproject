@@ -2,6 +2,7 @@ import express from "express";
 import query from '../Database/DBConnection.js';
 import { body, validationResult } from "express-validator";
 import checkAdmin from "../MiddleWare/checkAdmin.js";
+import upload from "../MiddleWare/Uplodeimgs.js";
 
 
 
@@ -113,7 +114,46 @@ Admin.put('/acceptApplicantforadmin',
     }
 )
 
-
+Admin.put('/acceptApplicant/:id',
+    upload.single('response_pdf'),
+    checkAdmin,
+    body('ser_name').notEmpty().withMessage('يجب ادخال اسم الخدمه'),
+    body('app_id').notEmpty().withMessage('يجب ادخال رقم الطلب'),
+    body('ser_id').notEmpty().withMessage('يجب ادخال رقم الخدمه'),
+    body('student_id').notEmpty().withMessage('يجب ادخال رقم الطالب'),
+    body('response_text').notEmpty().withMessage('يجب ادخال السبب'),
+    async (req, res) => {
+        let error = [];
+        try {
+            console.log(req.body.national_id);
+            const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
+            const value = [req.body.app_id];
+            const result = await query(sqlSelect, value);
+            if (result[0].role === 1) {
+                console.log(1)
+                if (result.length > 0) {
+                    const Data = {
+                        response_text: req.body.response_text,
+                        response_pdf: req.file ? req.file.filename : null,
+                        status: 5,
+                    }
+                    const sqlUpdate = `UPDATE submit SET ? WHERE ${req.body.ser_name} = ? AND service_id = ? AND user_id = ?`;
+                    const value = [Data, req.body.app_id, req.body.ser_id, req.body.student_id];
+                    const result = await query(sqlUpdate, value);
+                    if (result.affectedRows > 0) {
+                        return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
+                    }
+                }
+                else {
+                    return res.status(200).json({ message: "لا يوجد طلبات" });
+                }
+            } 
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
 
 
 
