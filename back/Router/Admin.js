@@ -46,6 +46,48 @@ Admin.get('/getallApplicantsShow',
     }
 )
 
+Admin.get('/getuserbyid/:serId/:serNam/:stId/:appId',
+    checkAdmin,
+    async (req, res) => {
+        try {
+            const serId = req.params.serId
+            const serNam = req.params.serNam
+            const stId = req.params.stId
+            const appId = req.params.appId
+
+            console.log(appId, stId, serNam, serId)
+            let ser_table = ""
+            if (serNam === 'ser_reg') {
+                ser_table = "registration_services"
+            } else if (serNam == 'ser_formation') {
+                ser_table = 'formation_service'
+            } else if (serNam == 'ser_grant') {
+                ser_table = 'grant_service'
+            } else if (serNam == 'ser_personal') {
+                ser_table = 'personal_examination_service'
+            } else if (serNam == 'ser_upgrade') {
+                ser_table = 'upgrade_service'
+            } else if (serNam == 'ser_knowledge') {
+                ser_table = 'knowledge_bank_service'
+            } else if (serNam == 'ser_magazine') {
+                ser_table = 'magazine_checking_service'
+            } else if (serNam == 'ser_best') {
+                ser_table = 'best_message_service'
+            }
+
+
+            const sqlSelect = `SELECT submit.* , users.* , services.* , ${ser_table}.* FROM submit JOIN users ON submit.user_id = users.id JOIN services ON submit.service_id = services.id JOIN ${ser_table} ON submit.${serNam} = ${ser_table}.id WHERE submit.${serNam} = ?  AND users.id = ? AND submit.service_id = ? `;
+            const result = await query(sqlSelect, [appId, stId, serId]);
+            if (result.length > 0) {
+                return res.status(200).json(result[0]);
+            } else {
+                return res.status(400).json({ message: "لا يوجد طلبات" });
+            }
+        } catch (errors) {
+            return res.status(500).json({ message: errors });
+        }
+    }
+)
 
 
 
