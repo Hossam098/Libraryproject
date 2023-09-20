@@ -33,7 +33,7 @@ const ANav = () => {
           <NavLink to='' > احصائيات </NavLink>
           </li>
           <li>
-            <NavLink to='/يسي'> المستخدمين </NavLink>
+            <NavLink to='Admin/all'> المستخدمين </NavLink>
           </li>
           <li>
             <NavLink to='/' > ييبيبيب </NavLink>

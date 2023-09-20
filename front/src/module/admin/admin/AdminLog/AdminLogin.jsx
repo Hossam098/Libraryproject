@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { useTranslation } from 'react-i18next';
-
 import axios from 'axios';
-import { API_URL } from '../../../config';
+import { API_URL } from '../../../../config';
 import { Link, useNavigate } from 'react-router-dom';
-import PopupError from '../../../components/error/PopupError';
+import PopupError from '../../../../components/error/PopupError';
 
 
 
