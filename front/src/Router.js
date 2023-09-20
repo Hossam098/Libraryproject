@@ -24,6 +24,7 @@ import Reviewed from "./module/admin/manager/reviewed/Reviewed.jsx";
 import AdminLogin from "./module/admin/AdminLog/AdminLogin.jsx";
 import Admin from "./module/admin/admin/Admin.jsx";
 import  Charts  from "./module/admin/admin/charts/Charts.jsx";
+import All from "./module/admin/manager/all/All.jsx"
 
   
   const Router = createBrowserRouter([
@@ -103,15 +104,21 @@ import  Charts  from "./module/admin/admin/charts/Charts.jsx";
           children:[
             {
               path:"",
-              element:<Review/>,  
+              element:<StudentListadmin/>
+              ,  
+            },
+            {
+              path:"/manager/all",
+              element:<All/>
+              ,  
             },
             {
               path:"/manager/reviewed",
               element:<Reviewed/>,  
             },
             {
-              path:"/manager/list",
-              element:<StudentListadmin/>,  
+              path:"/manager/Review",
+              element:<Review/>,  
             },
             {
               path:"/manager/show/:id",

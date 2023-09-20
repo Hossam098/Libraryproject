@@ -219,9 +219,10 @@ const ShowA = () => {
         } else if (+user.role === 2 && (+updatedAction.ser_id !== 8 || +updatedAction.ser_id !== 7)) {
           updatedAction.column = 'status';
           updatedAction.status = 3;
+          updatedAction.role = 2;
         } else if (+user.role === 1 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
           updatedAction.column = 'manager_status';
-          updatedAction.status = 3;
+          updatedAction.status = 4;
         } else if (+user.role === 2 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
           updatedAction.column = 'status';
           updatedAction.status = 4;
@@ -281,6 +282,7 @@ const ShowA = () => {
         } else if (user.role === 2) {
           updatedAction.column = 'status';
           updatedAction.status = 6;
+          updatedAction.role = 2;
         }
 
         setAction(updatedAction);

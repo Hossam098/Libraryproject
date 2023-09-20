@@ -266,7 +266,7 @@ manager.put('/acceptApplicantforManager',
             console.log(req.body.ser_id);
             console.log('///////');
             console.log(req.service_id);
-            if ((req.body.column === "status") && (+req.body.ser_id !== +req.service_id)) {
+            if ((req.body.column === "status") && (+req.body.ser_id !== +req.service_id)&& +req.body.role !== 2) {
                 return res.status(400).json({ message: "لا تملك صلاحية القيام بهذا الامر" });
             }
             let status = ''
