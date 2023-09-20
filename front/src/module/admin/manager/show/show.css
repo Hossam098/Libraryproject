@@ -185,4 +185,24 @@ h2 > input{
     border: 2px solid #19355a;
     direction: rtl;
 }
+@media(max-width: 760px) {
+    .data-container{
+        grid-template-columns: 2fr 4fr;
+    }
+    .status > input,
+    .status > button,
+    .status > p{
+        font-size: .5rem;
+    }
+}
+@media(max-width: 500px) {
+    .data-container{
+        grid-template-columns: 1fr;
+    }
+    .status > input,
+    .status > button,
+    .status > p{
+        font-size: 1.3rem;
+    }
+}
 

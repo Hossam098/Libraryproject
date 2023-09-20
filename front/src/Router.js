@@ -28,6 +28,7 @@ import All from "./module/admin/manager/all/All.jsx"
 import AllUsers from "./module/admin/admin/allusers/AllUsers.jsx";
 import AShow from "./module/admin/admin/Ashow/Ashow.jsx";
 import AdminReset from "./module/admin/admin/AdminLog/AdminReset.jsx";
+import AdminsList from "./module/admin/admin/adminslist/AdminsList.jsx";
 
   
   const Router = createBrowserRouter([
@@ -149,13 +150,14 @@ import AdminReset from "./module/admin/admin/AdminLog/AdminReset.jsx";
               path:"/Admin/show/:id",
               element:<AShow/>,  
             },
+            {
+              path:"/Admin/admins",
+              element:<AdminsList/>,  
+            },
             
           ]     
         },
-        {
-          path:"/SuperAdmin",
-          element:<SuperAdmin/>        
-        }
+        
       ]
     },
     
