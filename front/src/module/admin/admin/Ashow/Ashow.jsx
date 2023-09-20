@@ -131,7 +131,7 @@ const AShow = () => {
                     .then((res) => {
                         setProgress(prevState => ({ ...prevState, started: false }))
                         setMsg(res.data.msg)
-                        indow.location.reload();
+                        window.location.reload();
                     }
                     ).catch((error) => {
                         setDisabled(false)
@@ -306,6 +306,15 @@ const AShow = () => {
                             <div className='status'>
                                 <p style={{ background: "rgb(35, 175, 110)" }}> تم قبول الطلب </p>
                                 <p style={{ background: "rgb(35, 175, 110)" }}>{user.response_text}</p>
+
+                                <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
+                                <input
+                                    disabled={disabled}
+                                    type="text"
+                                    placeholder='سبب التعديل'
+                                    className='edit-input'
+                                    onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
+                                />
                             </div>
                             : null
                         }
@@ -346,6 +355,15 @@ const AShow = () => {
                                 <div className='status'>
                                     <p style={{ background: "rgb(175, 35, 35)" }}> سبب الرفض </p>
                                     <p style={{ background: "rgb(175, 35, 35)" }}> {user.response_text} </p>
+
+                                    <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
+                                    <input
+                                    disabled={disabled}
+                                    type="text"
+                                    placeholder='سبب التعديل'
+                                    className='edit-input'
+                                    onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
+                                />
                                 </div>
                                 : null
                         }
