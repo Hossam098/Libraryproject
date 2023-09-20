@@ -89,7 +89,29 @@ Admin.get('/getuserbyid/:serId/:serNam/:stId/:appId',
     }
 )
 
-
+Admin.put('/acceptApplicantforadmin',
+    checkAdmin,
+    async (req, res) => {
+        let error = [];
+        try {
+            
+            if (req.body.reason !== "") {
+                const sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? , response_pdf = null
+             WHERE ${req.body.ser_name} = ?`;
+                const value = [req.body.status, req.body.reason, req.body.app_id];
+                const result = await query(sqlUpdate, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم طلب التعديل بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
 
 
 
