@@ -18,22 +18,17 @@ main {
 }
 
 .services {
-    /* background: #19355A; */
     border-radius: 20px;
     background-color: #fff;
-    /* border: 1px solid #4db5ff; */
-    /* height: fit-content; */
     transition: all 400ms ease;
     box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.2);
     animation: fade-iin .7s ease-in-out;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-/* .services:hover{
-    background: transparent;
-    border-color: #2c2c6c;
-    cursor: default;
-} */
+
 #services h2 {
     width: 100%;
     text-align: center;
@@ -64,6 +59,7 @@ main {
 
 .service__list {
     padding: 2rem;
+    
 }
 
 .service__list .li-article {
@@ -115,7 +111,6 @@ button.bttn {
 .bttn:hover {
     background: #fff;
     color: #19355A;
-    border: 1px solid #AD8700;
     transition: ease-in-out 0.5s all;
 }
 

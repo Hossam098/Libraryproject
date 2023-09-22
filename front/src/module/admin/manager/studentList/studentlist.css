@@ -62,12 +62,32 @@
 }
 
 .student-container {
-    display: grid;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     direction: rtl;
 }
-
+.student-container table td{
+    width:fit-content;
+}
+.add-manager{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+}
+.add-manager input,
+.add-manager select,
+.add-manager option,
+.add-manager button{
+    border: 1px soild #000;
+    border-radius: 5px;
+    width: 300px;
+    height: 3rem;
+    font-size: 1.1rem;
+}
 .student-container table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -76,7 +96,17 @@
     background: white;
     color: black;
 }
-
+.ser-select{
+    border: none;
+    background-color: transparent;
+    border-radius: 5px;
+    height: 3rem;
+    font-size: 1.1rem;
+}
+textarea{
+    resize: none;
+    height: 200px;
+}
 
 .student-container button {
     font-size: 15px;
@@ -86,6 +116,7 @@
     color: white;
     border: none;
     cursor: pointer;
+    margin:  3px;
 }
 
 .student-container button:hover {
@@ -102,7 +133,6 @@
 }
 
 
-
 .super-container{
     width: 100%;
     display: flex;
@@ -114,7 +144,6 @@
 
 .super-container img {
     width: 15%;
-    /* margin: 10px auto; */
     z-index: -1;
 }
 
@@ -197,7 +226,6 @@
     text-align: center;
     padding: 5px 0;
     width: 100%;
-    /* font-size: 1rem; */
 }
 
 .data-table .input-cell:focus {
@@ -222,8 +250,6 @@
     border-radius: 10px;
 }
 .cotainer-stu button {
-    font-size: 1.5rem;
-    padding: 10px 30px;
     border-radius: 15px;
     background: #19355A;
     color: white;
@@ -233,7 +259,7 @@
     transition: ease-in-out 0.5s all;
 }
 td .delete{
-    background:  red;
+    background:  rgb(231, 69, 69);
 }
 td button.delete:hover{
     color:  red;

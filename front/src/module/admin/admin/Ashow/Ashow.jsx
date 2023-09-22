@@ -209,7 +209,7 @@ const AShow = () => {
                     ser_id: dataArray[1],
                     ser_name: dataArray[2],
                     app_id: dataArray[3],
-                    status: +user.status == 0 ? 4 : 3
+                    status: (+user.status == 0 || +user.service_id == 7 || +user.service_id == 8)  ? 4 : 3
                 };
 
 

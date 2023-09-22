@@ -11,6 +11,8 @@ import Serimg from '../../images/serIMG.png'
 import PopupErrorMsg from '../error/PopupErrorMsg'
 import PopupConfirmMsg from '../error/PopupConfirmMsg'
 import { AiFillCloseCircle } from 'react-icons/ai'
+import { BsFilePdf, BsFileEarmarkWord } from 'react-icons/bs'
+
 
 
 const Ser7 = ({ ser }) => {
@@ -307,7 +309,7 @@ const Ser7 = ({ ser }) => {
                                     {t('service7-step3')}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image1">
-                                    <BiImageAdd className='img-icom' />
+                                    <BsFilePdf className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
@@ -343,7 +345,7 @@ const Ser7 = ({ ser }) => {
                                     {t('service7-step4.1')}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image">
-                                    <BiImageAdd className='img-icom' />
+                                    <BsFileEarmarkWord className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"
@@ -378,7 +380,7 @@ const Ser7 = ({ ser }) => {
                                     {t('service7-step4.2')}
                                 </span>
                                 <label className='upload-image' htmlFor="upload-image2">
-                                    <BiImageAdd className='img-icom' />
+                                    <BsFilePdf className='img-icom' />
                                     <p>{t('click-here')}</p>
                                 </label>
                                 <input type="file"

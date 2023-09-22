@@ -77,6 +77,12 @@ const Serinfo = ({ service, User }) => {
     }, [id])
     const number = data.files_numbers;
 
+    const increaseDateByOneDay = (date) => {
+        const currentDate = new Date(date);
+        currentDate.setDate(currentDate.getDate() + 1);
+        return currentDate.toISOString().slice(0, 10);
+      };
+
     return (
 
         <div className='subnav-contentt' style={{ width: "80%" }}>
@@ -94,9 +100,7 @@ const Serinfo = ({ service, User }) => {
 
                 </div>
             }
-            {/* {data.edit_date &&
-                <h3>{t('date-edit')} : {data.edit_date.slice(0, 10)}</h3>
-            } */}
+           
             {!data.req_code_date && data.submit_date &&
                 <h3><span style={{ color: "#AD8700" }}>{t('date-attach')}</span> : {data.submit_date.slice(0, 10)}</h3>
             }
@@ -362,7 +366,7 @@ const Serinfo = ({ service, User }) => {
             <h1>{t('response')}</h1>
             <hr style={{ width: "100%" }} />
             {data.response_date &&
-                <h2><span style={{ color: "#AD8700" }}>{t('date-response')} </span> : {data.response_date.slice(0, 10)}</h2>
+                <h2><span style={{ color: "#AD8700" }}>{t('date-response')} </span> :  {(increaseDateByOneDay(data.response_date.slice(0, 10)))}</h2>
             }
             {data.payment_code &&
                 <h2><span style={{ color: "#AD8700" }}>{t('res-code')}</span>: {data.payment_code}</h2>
