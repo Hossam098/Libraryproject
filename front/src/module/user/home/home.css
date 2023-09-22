@@ -95,7 +95,7 @@ main {
 
 button.bttn {
     color: #fff;
-    border: none;
+    border: 1px solid #AD8700;
     margin: auto;
     background: #AD8700;
     font-size: 1.2rem;
@@ -107,6 +107,12 @@ button.bttn {
 }
 
 .bttn a:hover {
+    background: #fff;
+    color: #19355A;
+    border: 1px solid #AD8700;
+    transition: ease-in-out 0.5s all;
+}
+.bttn:hover {
     background: #fff;
     color: #19355A;
     border: 1px solid #AD8700;

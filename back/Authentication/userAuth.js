@@ -53,7 +53,7 @@ userAuth.post('/register',
             const sqlSelect = "SELECT * FROM users WHERE email = ? OR national_id = ?";
             const result = await query(sqlSelect, [req.body.email, req.body.national_id]);
             if (result.length > 0) {
-                error.push("User already exists");
+                error.push("البريد الالكتروني او الرقم القومي مسجل مسبقا");
                 return res.status(400).json({ message: error});
             }
             let uni = req.body.university;
@@ -82,7 +82,7 @@ userAuth.post('/register',
             if (result2.affectedRows > 0) {
                 return res.status(201).json({ message: "User registered successfully" });
             } else {
-                error.push("User registration failed");
+                error.push("حدث خطأ ما");
                 return res.status(400).json({ message: error });
             }
 
@@ -124,11 +124,11 @@ userAuth.post('/login',
                     return res.status(200).json({ login: true, token: token });
 
                 } else {
-                    error.push("Password is incorrect");
+                    error.push("كلمة المرور غير صحيحة");
                     return res.status(400).json({ message: error });
                 }
             } else {
-                error.push("User doesn't exist");
+                error.push("البريد الالكتروني غير مسجل مسبقا");
                 return res.status(400).json({ message: error });
             }
 
