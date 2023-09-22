@@ -163,6 +163,7 @@ Admin.put('/acceptApplicant/:id',
 Admin.put('/watingApplicant/:id',
     async (req, res) => {
         try {
+            console.log()
             const id = req.params.id;
             if (+req.body.status === 2) {
                 const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
@@ -175,17 +176,17 @@ Admin.put('/watingApplicant/:id',
                     if (fs.existsSync(filePath)) {
                         fs.unlinkSync(filePath);
                     }
-
+                }
                     const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
-                    const value = [req.body.status, req.body.reason, req.body.app_id];
-                    const result = await query(sqlUpdate, value);
+                    const value2 = [req.body.status, req.body.reason, req.body.app_id];
+                    const result = await query(sqlUpdate, value2);
                     if (result.affectedRows > 0) {
                         return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
                     } else {
                         return res.status(400).json({ message: " حدث خطأ ما" });
                     }
                 }
-            }
+            
         } catch (errors) {
             return res.status(500).json({ message: errors });
         }

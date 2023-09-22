@@ -124,10 +124,8 @@ const AdminsList = () => {
             <img src={img} alt="img" />
             <section className='cotainer-stu'>
 
-
-
                 <div className="student-container">
-                    <div className="add-department add-p">
+                    <div className="add-manager">
                         <h3 style={{ fontSize: "1.5rem" }}></h3>
                         <input
                             id='add-p'
@@ -200,8 +198,28 @@ const AdminsList = () => {
                                             updatedManagers[index] = { ...manager, email: e.target.value };
                                             setManagers(updatedManagers);
                                         }} /></td>
-                                    <td>{manager.service_name_ar}</td>
-                                    <td><button onClick={() => { handleEditm1(index) }}>تعديل</button></td>
+                                    <td>
+                                        <select 
+                                        name=""
+                                        id=""
+                                        className='ser-select'
+                                        value={manager.service_id}
+                                        >
+                                         {
+                                            services.map((service)=>(
+                                                <option
+                                                    value={service.id}                                                
+                                                >{service.service_name_ar}
+                                                </option>
+                                            ))
+                                         }   
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => { handleEditm1(index) }}>تعديل</button>
+                                        <button className='delete' onClick={() => { handleEditm1(index) }}>حذف الموظف</button>
+                                    </td>
+                                    
                                 </tr>
 
                             )
@@ -212,6 +230,79 @@ const AdminsList = () => {
                     </table>
                 </div>
             </section>
+            <section className='cotainer-stu'>
+                <div className="student-container">
+                    <h2>ادارة الخدمات</h2>
+                    <table className="data-table">
+                        <tr>
+                            <th>  الخدمة </th>
+                            <th> البريد الالكترونى </th>
+                            
+                            <th> تشغيل</th>
+                            <th> تعديل</th>
+
+                        </tr>
+
+                        {services.map((service, index) => {
+
+                            return (
+                                <tr key={index}>
+                                    <td>
+                                        <input 
+                                        className='input-cell' 
+                                        type="text" 
+                                        value={service.service_name_ar} 
+                                        placeholder={service.service_name_ar} 
+                                        onChange={(e) => {
+                                            const updatedservices = [...services];
+                                            updatedservices[index] = { ...service, service_name_ar: e.target.value };
+                                            setServices(updatedservices);
+                                        }} />
+                                        </td>
+                                    <td>
+                                        <textarea 
+                                        className='input-cell' 
+                                        type="text" 
+                                        value={service.pref_ar} 
+                                        placeholder={service.pref_ar} 
+                                        onChange={(e) => {
+                                            const updatedservices = [...services];
+                                            updatedservices[index] = { ...service, pref_ar: e.target.value };
+                                            setServices(updatedservices);
+                                        }} /></td>
+                                    
+                                    <td>{service.enabled == 1?
+                                        <button 
+                                        onChange={(e) => {
+                                            const updatedservices = [...services];
+                                            updatedservices[index] = { ...service, pref_ar: 0 };
+                                            setServices(updatedservices);
+                                        }}
+                                        >ايقاف</button>
+                                        :
+                                        <button 
+                                        onChange={(e) => {
+                                            const updatedservices = [...services];
+                                            updatedservices[index] = { ...service, pref_ar: 1 };
+                                            setServices(updatedservices);
+                                        }}
+                                        >تشغيل</button>
+                                    }
+                                    </td>
+                                    <td>
+                                        <button onClick={() => { handleEditm1(index) }}>تعديل</button>
+                                    </td>
+                                    
+                                </tr>
+
+                            )
+                        }
+                        )}
+
+
+                    </table>
+                </div>
+                </section>
 
         </div>
     )
