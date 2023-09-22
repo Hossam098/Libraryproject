@@ -53,11 +53,12 @@ ul {
     align-items: center;
     gap: .3rem;
     border-bottom: 1px solid #19355A;
+    transition: ease-in-out 0.5s all;
 }
 
 .dropdown li:hover {
     border-bottom: 1px solid;
-    transition: 0.5s;
+    transition: ease-in-out 0.5s all;
 }
 
 .dropdown {

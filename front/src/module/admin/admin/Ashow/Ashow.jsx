@@ -308,7 +308,7 @@ const AShow = () => {
             axios.defaults.withCredentials = true;
 
             axios
-                .put(`${API_URL}/admin/acceptApplicantforadmin`, updatedAction, {
+                .put(`${API_URL}/admin/watingApplicant/${user.national_id}`, updatedAction, {
                     withCredentials: true
                 })
                 .then((res) => {
@@ -357,7 +357,7 @@ const AShow = () => {
                                     className='edit-input'
                                     onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                                 />
-                            <button onClick={handewait} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+                                <button onClick={handewait} className='wait-edit'> اعادة الى قائمة الانتظار </button>
 
                             </div>
                             : null

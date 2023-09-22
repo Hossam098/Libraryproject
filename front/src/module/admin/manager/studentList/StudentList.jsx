@@ -153,6 +153,7 @@ const StudentListadmin = () => {
             onChange={(e) => { setRole(e.target.value) }}
           >
             <option value="">الصلاحيات</option>
+            
             <option value="1"> مراجعه فقط </option>
             <option value="2"> تحكم كامل </option>
           </select>
@@ -179,6 +180,7 @@ const StudentListadmin = () => {
           <table className="data-table">
             <thead>
               <tr>
+                <th>التسلسل</th>
                 <th>اسم الطالب</th>
                 <th> نوع الخدمه </th>
                 <th>تاريخ التقديم</th>
@@ -191,6 +193,7 @@ const StudentListadmin = () => {
               {student.length > 0 && student.map((item, index) => (
                 !item.admin_id && (
                   <tr key={item.student_id}>
+                    <td>{index + 1}</td>
                     <td>{item.name}</td>
                     <td>{item.service_name_ar}</td>
                     <td>{item.status === 0 ? item.req_code_date?.slice(0,10) : item.submit_date?.slice(0,10)}</td>

@@ -57,11 +57,13 @@
 .main .main-content .main-content-btn {
     text-decoration: none;
     color: white;
+    transition: ease-in-out 0.5s all;
+
 }
 
 .main .main-content .main-content-btn:hover {
     background: #AD8700;
-    transition: 0.2s;
+    transition: ease-in-out 0.5s all;
 }
 
 

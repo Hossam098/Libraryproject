@@ -7,9 +7,9 @@ html{
   box-sizing: border-box;
   font-family: 'MyFont';
   src: url('./assets/uni-id/GESSTextLight.otf') format('opentype');
-  font-weight: normal;
+  font-weight: normal ;
   font-style: normal;
-  
+  font-size: 95%;
 }
 h1,
 h2,
@@ -18,9 +18,10 @@ h4,
 h5,
 h6{
   font-family: 'MyFont';
-  src: url('./assets/uni-id/GESSTwoMedium-Medium.otf') format('opentype');
-  font-weight: normal;
+  src: url('./assets/uni-id/GE-SS-Text-Medium.otf') format('opentype');
+  font-weight: normal ;
   font-style: normal;
+  font-size: 1.5rem;
 }
 a{
   text-decoration: none;
@@ -58,6 +59,6 @@ a{
 @font-face {
   font-family: 'MyFont';
   src: url('./assets/uni-id/GE-SS-Text-Medium.otf') format('opentype');
-  font-weight: normal;
+  font-weight: normal ;
   font-style: normal;
 }

@@ -46,13 +46,15 @@
     background: #19355A;
     color: white;
     cursor: pointer;
-    transition: .7s ease;
+    transition: ease-in-out 0.5s all;
 }
 
 .moreinfo:hover {
     border: 2px solid #19355A;
     background-color: #fff;
     color: #19355A;
+    transition: ease-in-out 0.5s all;
+
 }
 
 .moreinfo:hover a {
@@ -88,7 +90,7 @@
 
 .student-container button:hover {
     background: #AD8700;
-    transition: 0.2s;
+    transition: ease-in-out 0.5s all;
 }
 
 .filter {
@@ -228,6 +230,7 @@
     border: 2px solid transparent;
     cursor: pointer;
     animation: ease-in-out 0.5s all;
+    transition: ease-in-out 0.5s all;
 }
 td .delete{
     background:  red;

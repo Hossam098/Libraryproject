@@ -142,7 +142,7 @@
     font-weight: bold;
     border-radius: 10px;
     color: white;
-    transition: .7s ease;
+    transition: ease-in-out 0.5s all;
     border: 2px solid transparent;
     cursor: pointer;
 }
@@ -156,6 +156,8 @@
     color: rgb(35, 175, 110);
     background-color: #fff;
     border: 2px solid rgb(35, 175, 110);
+    transition: ease-in-out 0.5s all;
+
 }
 
 .image-con .ref {
@@ -166,6 +168,8 @@
     color: rgb(175, 35, 35);
     background-color: #fff;
     border: 2px solid rgb(175, 35, 35);
+    transition: ease-in-out 0.5s all;
+
 }
 
 h2 > input{
@@ -181,7 +185,7 @@ h2 > input{
     font-size: 1.3rem;
     font-weight: bold;
     border-radius: 10px;
-    transition: .7s ease;
+    transition: ease-in-out 0.5s all;
     border: 2px solid #19355a;
     direction: rtl;
 }

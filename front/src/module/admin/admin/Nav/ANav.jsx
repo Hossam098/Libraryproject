@@ -26,17 +26,17 @@ const ANav = () => {
         <button
           onClick={logout}
           className="btn">
-          <NavLink style={{ color: "white", textDecoration: "none" }}> تسجيل الخروج</NavLink>
+           تسجيل الخروج
         </button>
-        <ul style={{direction:"rtl"}}>
+        <ul style={{ direction: "rtl" }}>
           <li>
-          <NavLink to='' > احصائيات </NavLink>
+            <NavLink to='' > احصائيات </NavLink>
           </li>
           <li>
             <NavLink to='/Admin/all'> المستخدمين </NavLink>
           </li>
           <li>
-            <NavLink to='/Admin/admins' > الادمنز </NavLink>
+            <NavLink to='/Admin/admins' > الموظفين </NavLink>
           </li>
         </ul>
       </nav>

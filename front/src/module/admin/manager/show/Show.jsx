@@ -79,8 +79,8 @@ const ShowA = () => {
   const downloadPDF = () => {
     const inpput = pdfRef.current;
     html2canvas(inpput).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jspdf('l', 'px', 'a4', true);
+      const imgData = canvas.toDataURL('image/png' || 'image/jpg' || 'image/svg' || 'image/gif' || 'image/jpeg' || 'image/webp');
+      const pdf = new jspdf('l', 'pc', 'a4', true);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgwidth = canvas.width;
@@ -88,7 +88,7 @@ const ShowA = () => {
       const ratio = imgwidth / imgheight >= pdfWidth / pdfHeight ? pdfWidth / imgwidth : pdfHeight / imgheight;
       const imgx = (pdfWidth - imgwidth * ratio) / 2;
       const imgy = (pdfHeight - imgheight * ratio) / 2;
-      pdf.addImage(imgData, 'PNG', imgx, imgy, imgwidth * ratio, imgheight * ratio);
+      pdf.addImage(imgData, 'jpg', imgx, imgy, imgwidth * ratio, imgheight * ratio);
       pdf.save('download.pdf');
     })
   }
@@ -204,6 +204,7 @@ const ShowA = () => {
 
   const handleEdit = () => {
     if (action.reason !== '') {
+      
       try {
         const updatedAction = {
           ...action,
@@ -223,9 +224,11 @@ const ShowA = () => {
         } else if (+user.role === 1 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
           updatedAction.column = 'manager_status';
           updatedAction.status = 4;
+          updatedAction.role = 2;
         } else if (+user.role === 2 && (+updatedAction.ser_id == 8 || +updatedAction.ser_id == 7)) {
           updatedAction.column = 'status';
           updatedAction.status = 4;
+          updatedAction.role = 2;
         }
 
         if (+user.status === 0) {
@@ -595,7 +598,7 @@ const ShowA = () => {
 
                 </div>
                 :
-                ((user.manager_status == 3 && user.status == 3) || (user.manager_status == null && user.status == 3)) ?
+                ((user.manager_status == 3 && user.status == 3) || (user.manager_status == null && (user.status == 3 || user.status == 4))) ?
                   <div className='status'>
                     <p style={{ background: "rgb(0, 60, 112)" }}> سبب التعديل </p>
                     <p style={{ background: "rgb(0, 60, 112)" }}> {user.response_text} </p>
@@ -630,7 +633,7 @@ const ShowA = () => {
 
           </div>
 
-          <table className="data-table" style={{ direction: "rtl" }}>
+          <table className="data-table" style={{ direction: "rtl" }} >
             <tr>
               <th> معلومات اساسيه </th>
               <th> البيانات </th>
@@ -661,9 +664,15 @@ const ShowA = () => {
               </td>
             </tr>
             <tr>
-              <td>القم القومى</td>
+              <td>الرقم القومى</td>
               <td>
                 {user.national_id}
+              </td>
+            </tr>
+            <tr>
+              <td>الجامعه</td>
+              <td>
+                {+user.university === 1 ? 'جامعه حلوان' : user.university}
               </td>
             </tr>
             <tr>
@@ -995,113 +1004,117 @@ const ShowA = () => {
             }</h2>
 
           </div>
+          {(+user.status !== 1 || +user.status !== 4) && (
+            <>
+              <div className="resp">
+                <h2><span style={{ color: "#19355A" }}>{t('notes')}</span>
+                  {(user.response_text && user.response_text !== "null" && user.status !== 0) ?
+                    user.response_text :
+                    (user.manager_status === null && user.response_pdf === null && user.status == 0) ?
+                      <h3>
+                        لم يتم ارسال ملاحظات بعد
+                      </h3>
+                      :
+                      <input
+                        type="text"
+                        name=""
+                        id=""
+                        placeholder='ادخل ملاحظاتك'
+                        onChange={(e) => { setResponse({ ...response, response_text: e.target.value }) }}
+                      />
+                  }
+                </h2>
+              </div>
+              <div className="resp">
 
-          <div className="resp">
-            <h2><span style={{ color: "#19355A" }}>{t('notes')}</span>
-              {(user.response_text && user.response_text !== "null" && user.status !== 0) ?
-                user.response_text :
-                (user.manager_status === null && user.response_pdf === null && user.status == 0) ?
-                  <h3>
-                    لم يتم ارسال ملاحظات بعد
-                  </h3>
-                  :
-                  <input
-                    type="text"
-                    name=""
-                    id=""
-                    placeholder='ادخل ملاحظاتك'
-                    onChange={(e) => { setResponse({ ...response, response_text: e.target.value }) }}
-                  />
-              }
-            </h2>
-          </div>
-          <div className="resp">
+                <div className='inputt-atch'>
+                  {(user.response_pdf !== null) && user.status !== 0 ?
+                    (<div className="atch-btns">
+                      <button
+                        onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
+                        className="atch-btn">Open
+                      </button>
+                      <button
+                        onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
+                        className="atch-btn atch-btn2">Download
+                      </button>
+                    </div>) :
+                    (user.manager_status === null && user.response_pdf === null && user.status !== 0) ? (
+                      <div className="select-img">
+                        <label className='upload-image' htmlFor="upload-image">
+                          <BiImageAdd className='img-icom' />
+                          <p>{t('click-here')}</p>
+                        </label>
+                        <input type="file"
+                          hidden
+                          id='upload-image'
+                          name='upload-image'
+                          onChange={(e) => { setResponse({ ...response, response_pdf: e.target.files[0] }) }}
+                        />
+                        {response.response_pdf &&
+                          <div>
+                            <p className='upload-image value'>
+                              {response.response_pdf.name ? response.response_pdf.name : response.response_pdf}
+                            </p>
+                            <button className='upload-image openPdf'
+                              onClick={() => {
+                                window.open(URL.createObjectURL(response.response_pdf))
+                              }}
+                            >{t('open')}</button>
+                            <AiFillCloseCircle
+                              onClick={() => { setResponse({ ...response, response_pdf: '' }) }}
+                              style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
 
-            <div className='inputt-atch'>
-              {(user.response_pdf !== null) && user.status !== 0 ?
-                (<div className="atch-btns">
-                  <button
-                    onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
-                    className="atch-btn">Open
-                  </button>
-                  <button
-                    onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
-                    className="atch-btn atch-btn2">Download
-                  </button>
-                </div>) :
-                (user.manager_status === null && user.response_pdf === null && user.status !== 0) ? (
-                  <div className="select-img">
-                    <label className='upload-image' htmlFor="upload-image">
-                      <BiImageAdd className='img-icom' />
-                      <p>{t('click-here')}</p>
-                    </label>
-                    <input type="file"
-                      hidden
-                      id='upload-image'
-                      name='upload-image'
-                      onChange={(e) => { setResponse({ ...response, response_pdf: e.target.files[0] }) }}
-                    />
-                    {response.response_pdf &&
-                      <div>
-                        <p className='upload-image value'>
-                          {response.response_pdf.name ? response.response_pdf.name : response.response_pdf}
-                        </p>
-                        <button className='upload-image openPdf'
-                          onClick={() => {
-                            window.open(URL.createObjectURL(response.response_pdf))
-                          }}
-                        >{t('open')}</button>
-                        <AiFillCloseCircle
-                          onClick={() => { setResponse({ ...response, response_pdf: '' }) }}
-                          style={{ color: '#ad8700', fontSize: '2rem', cursor: 'pointer' }} />
-
+                          </div>
+                        }
                       </div>
-                    }
-                  </div>
-                ) : ((user.manager_status !== null && user.response_pdf === null) || user.status == 0) ? (
-                  <h3>
-                    لم يتم ارسال ملف الرد بعد
-                  </h3>
+                    ) : ((user.manager_status !== null && user.response_pdf === null) || user.status == 0) ? (
+                      <h3>
+                        لم يتم ارسال ملف الرد بعد
+                      </h3>
 
-                ) : null
+                    ) : null
 
-              }
-              <h2><span style={{ color: "#19355A" }}>{t('att-res')}</span> </h2>
+                  }
+                  <h2><span style={{ color: "#19355A" }}>{t('att-res')}</span> </h2>
 
+                </div>
+
+              </div>
+            </>
+          )}
+
+
+              <div className="progress">
+                {progress.started && <progress max="100" value={progress.value}></progress>}
+                {msg && <p>{msg}</p>}
+              </div>
+              {response.response_pdf || response.response_text ? (
+                <div className="resp two">
+                  <button
+                    disabled={disabled}
+                    className='atch-btn atch-btn2'
+                    style={{ width: "50%" }}
+                    onClick={handelAccept}
+                  >
+                    ارسال
+                  </button>
+                </div>
+              ) : null}
+              {payment_code && user.status == 0 ? (
+                <div className="resp two">
+                  <button
+                    disabled={disabled}
+                    className='atch-btn atch-btn2'
+                    style={{ width: "50%" }}
+                    onClick={handelAcceptpayment}
+                  >
+                    ارسال كود الدفع
+                  </button>
+                </div>
+              ) : null}
             </div>
 
-          </div>
-
-
-          <div className="progress">
-            {progress.started && <progress max="100" value={progress.value}></progress>}
-            {msg && <p>{msg}</p>}
-          </div>
-          {response.response_pdf || response.response_text ? (
-            <div className="resp two">
-              <button
-                disabled={disabled}
-                className='atch-btn atch-btn2'
-                style={{ width: "50%" }}
-                onClick={handelAccept}
-              >
-                ارسال
-              </button>
-            </div>
-          ) : null}
-          {payment_code && user.status == 0 ? (
-            <div className="resp two">
-              <button
-                disabled={disabled}
-                className='atch-btn atch-btn2'
-                style={{ width: "50%" }}
-                onClick={handelAcceptpayment}
-              >
-                ارسال كود الدفع
-              </button>
-            </div>
-          ) : null}
-        </div>
 
       </section>
       {errors && <PopupErrorMsg message={errors} onClose={handleCloseError} />}

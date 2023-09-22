@@ -57,11 +57,13 @@
 
 .profile-container .subnav .subnav-header .btn-subnav-header.active {
     color: #AD8700;
+    transition: ease-in-out 0.5s all;
+
 }
 
 .profile-container .subnav .subnav-header .btn-subnav-header:hover {
     color: #19355A;
-    transition: 0.1s;
+    transition: ease-in-out 0.5s all;
 }
 
 .profile-container .subnav .subnav-contentt {

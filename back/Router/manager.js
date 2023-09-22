@@ -287,14 +287,17 @@ manager.put('/acceptApplicantforManager',
             console.log(req.body.ser_id);
             console.log('///////');
             console.log(req.service_id);
-            if ((req.body.column === "status") && (+req.body.ser_id !== +req.service_id)&& +req.body.role !== 2) {
-                return res.status(400).json({ message: "لا تملك صلاحية القيام بهذا الامر" });
+            if (req.service_id !== 9) {
+                if ((req.body.column === "status") && (+req.body.ser_id !== +req.service_id) && +req.body.role !== 2) {
+                    return res.status(400).json({ message: "لا تملك صلاحية القيام بهذا الامر" });
+                }
             }
             let status = ''
             if (req.body.status === null) { status = ', response_pdf = null'; }
-            if((req.body.status == null && req.body.column === "manager_status") && +req.body.ser_id !== +req.service_id){
+            if ((req.body.status == null && req.body.column === "manager_status") && +req.body.ser_id !== +req.service_id) {
                 return res.status(400).json({ message: "لا تملك صلاحية القيام بهذا الامر" });
             }
+
 
 
             if (req.body.reason === "") {
@@ -355,7 +358,7 @@ manager.get('/getallApplicants',
     async (req, res) => {
         let error = [];
         try {
-            
+
             if (req.service_id !== 9) {
                 const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.service_id = ? ";
                 const value = [req.service_id];

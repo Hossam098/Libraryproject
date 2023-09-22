@@ -3,6 +3,7 @@ import query from '../Database/DBConnection.js';
 import { body, validationResult } from "express-validator";
 import checkAdmin from "../MiddleWare/checkAdmin.js";
 import upload from "../MiddleWare/Uplodeimgs.js";
+import fs from 'fs';
 
 
 
@@ -95,7 +96,10 @@ Admin.put('/acceptApplicantforadmin',
     async (req, res) => {
         let error = [];
         try {
-            
+            if (req.body.reason === "" && req.body.status !== 2) {
+                return res.status(400).json({ message: "يجب ادخال السبب" });
+            }
+
             if (req.body.reason !== "") {
                 const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null WHERE ${req.body.ser_name} = ?`;
                 const value = [req.body.status, req.body.reason, req.body.app_id];
@@ -148,7 +152,7 @@ Admin.put('/acceptApplicant/:id',
                 else {
                     return res.status(200).json({ message: "لا يوجد طلبات" });
                 }
-            } 
+            }
         } catch (errors) {
             error.push(errors);
             return res.status(500).json({ message: error });
@@ -156,6 +160,58 @@ Admin.put('/acceptApplicant/:id',
     }
 )
 
+Admin.put('/watingApplicant/:id',
+    async (req, res) => {
+        try {
+            const id = req.params.id;
+            if (+req.body.status === 2) {
+                const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
+                const value = [req.body.app_id];
+                const result1 = await query(sqlSelect, value);
+                console.log(result1[0].response_pdf)
+                if (result1 && result1.length > 0 && result1[0].response_pdf) {
+                    console.log(result1[0])
+                    const filePath = `./public/imgs/${id}/${result1[0].response_pdf}`;
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                    }
 
+                    const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
+                    const value = [req.body.status, req.body.reason, req.body.app_id];
+                    const result = await query(sqlUpdate, value);
+                    if (result.affectedRows > 0) {
+                        return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
+                    } else {
+                        return res.status(400).json({ message: " حدث خطأ ما" });
+                    }
+                }
+            }
+        } catch (errors) {
+            return res.status(500).json({ message: errors });
+        }
+    }
+)
+
+Admin.get('/getallManagers',
+    checkAdmin,
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT manager.* , services.service_name_ar FROM manager INNER JOIN services ON manager.service_id = services.id";
+            const result = await query(sqlSelect);
+            if (result.length > 0) {
+                for (let i = 0; i < result.length; i++) {
+                    delete result[i].password;
+                }
+                return res.status(200).json(result);
+            } else {
+                return res.status(200).json({ message: "لا يوجد مديرين" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
 
 export default Admin;

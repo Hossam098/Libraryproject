@@ -5,11 +5,12 @@
     border: none;
     color: white;
     background-color: #19355A;
+    transition: ease-in-out 0.5s all;
 }
 
 .toggle-lang:hover {
     box-shadow: 0 0 10px #19355A;
-    transition: 0.5s;
+    transition: ease-in-out 0.5s all;
     cursor: pointer;
 }
 

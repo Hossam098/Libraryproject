@@ -29,11 +29,13 @@
     color: white;
     border: none;
     cursor: pointer;
+    transition: ease-in-out 0.5s all;
+
 }
 
 .dmin nav button:hover {
     background: #AD8700;
-    transition: 0.2s;
+    transition: ease-in-out 0.5s all;
 }
 
 .dmin nav ul {
@@ -51,7 +53,7 @@
     color: #000;
     font-weight: 600;
     font-size: 17px;
-    transition: 0.1s;
+    transition: ease-in-out 0.5s all;
 }
 
 .dmin nav ul li a::after {

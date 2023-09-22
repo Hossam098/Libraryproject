@@ -39,11 +39,12 @@
     border: none;
     color: #fff;
     overflow: visible;
-    transition: all .3s ease-in-out;
+    transition: ease-in-out 0.5s all;
 }
 
 .icons-cont .icon:hover {
     background-color: #AD8700;
+    transition: ease-in-out 0.5s all;
 }
 
 @media(max-width: 760px) {

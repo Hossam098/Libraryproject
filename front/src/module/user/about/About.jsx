@@ -11,20 +11,26 @@ const About = () => {
   return (
     <div className='about'>
       <div className='intro-text'>
-        <h1>{t('aboutus.title')}</h1>
-        <h3>{t('aboutus.h3')}</h3>
-        <h4>{t('aboutus.p')}</h4>
+        <h1 style={{ fontSize: '2.5rem' }}>
+          {t('aboutus.title')}
+        </h1>
+        <h3 style={{ fontSize: '1.8rem' }}>
+          {t('aboutus.h3')}
+        </h3>
+        <h4>
+          {t('aboutus.p')}
+        </h4>
       </div>
       <section className='grid-3'>
         <div className="about-cont"
-          style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' ,textAlign:"right"} : { direction: 'ltr' ,textAlign:"left"}}
+          style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl', textAlign: "right" } : { direction: 'ltr', textAlign: "left" }}
         >
           <span></span>
           <h2>{t('aboutus.us')}</h2>
           <p>{t('aboutus.us-p')}</p>
         </div>
         <div className="about-cont"
-          style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' ,textAlign:"right"} : { direction: 'ltr' ,textAlign:"left"}}
+          style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl', textAlign: "right" } : { direction: 'ltr', textAlign: "left" }}
         >
           <span></span>
           <h2>{t('aboutus.our-message')}</h2>
@@ -38,7 +44,7 @@ const About = () => {
           </p>
         </div>
         <div className="about-cont"
-          style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl' ,textAlign:"right"} : { direction: 'ltr' ,textAlign:"left"}}
+          style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl', textAlign: "right" } : { direction: 'ltr', textAlign: "left" }}
         >
           <span></span>
           <h2>{t('aboutus.our-goals')}</h2>
@@ -73,7 +79,7 @@ const About = () => {
           </ol>
         </div>
       </section>
-      <Coplaints/>
+      <Coplaints />
 
     </div>
   )

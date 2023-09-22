@@ -15,11 +15,12 @@ const Coplaints = () => {
                 <p>
                     {t('complains.p')}
                 </p>
-                <button className="c-button">
+                <img src={QR} alt="" className='QR' />
+
+            </div>
+            <button className="c-button">
                     {t('click-here')}
                 </button>
-            </div>
-            <img src={QR} alt="" className='QR' />
         </div>
     )
 }

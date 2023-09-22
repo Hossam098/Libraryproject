@@ -90,6 +90,7 @@ main {
     margin: 1rem auto 0 auto;
     padding: 0.7rem 1.5rem;
     border-radius: 10px;
+    border: 1px solid #AD8700;
 }
 
 button.bttn {
@@ -101,13 +102,15 @@ button.bttn {
     padding: 0.7rem .5rem;
     border-radius: 10px;
     cursor: pointer;
+    transition: ease-in-out 0.5s all;
+
 }
 
 .bttn a:hover {
-    cursor: pointer;
-    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.1);
-    transform: translateY(-1px);
-    transition: all 0.3s ease-in-out;
+    background: #fff;
+    color: #19355A;
+    border: 1px solid #AD8700;
+    transition: ease-in-out 0.5s all;
 }
 
 .service__list-icon {
@@ -141,17 +144,17 @@ button.bttn {
 
 .intro-txt h1 {
     font-size: 3.5rem;
-    font-weight: bolder;
+    /* font-weight: bolder; */
 }
 
 .intro-txt h2 {
     font-size: 2.5rem;
-    font-weight: bolder;
+    /* font-weight: bolder; */
 }
 
 .intro-txt h3 {
     font-size: 1.2rem;
-    font-weight: bolder;
+    /* font-weight: bolder; */
 }
 
 #services .more-Services {

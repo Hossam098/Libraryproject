@@ -89,11 +89,13 @@
 .main .main-content .main-content-btn {
     text-decoration: none;
     color: white;
+    transition: ease-in-out 0.5s all;
+
 }
 
 .main .main-content .main-content-btn:hover {
     background: #AD8700;
-    transition: 0.2s;
+    transition: ease-in-out 0.5s all;
 }
 
 
@@ -130,13 +132,15 @@
     border-radius: 10px;
     border: 1px solid #AD8700;
     cursor: pointer;
+    transition: ease-in-out 0.5s all;
+
 }
 
 .main-content-form input[type=submit]:hover {
     background: #fff;
     color: #19355A;
     border: 1px solid #AD8700;
-    transition: 0.5s;
+    transition: ease-in-out 0.5s all;
 }
 
 .input-container {
@@ -154,7 +158,7 @@
 .input-container .input label {
     color: #19355A;
     padding: 5px;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 input,

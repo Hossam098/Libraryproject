@@ -23,14 +23,16 @@
     padding: .5rem;
     font-size: 1.2rem;
     border-radius: 10px;
-    transition: .3s ease-out;
+    transition: ease-in-out 0.5s all;
     align-self: center;
-    margin: 0 auto 0 0;
+    /* margin: 0 auto 0 0; */
     
 }
 
 .c-button:hover {
     background-color: #AD8700;
+    transition: ease-in-out 0.5s all;
+    cursor: pointer;
 }
 
 .QR {
@@ -44,6 +46,7 @@
 }
 .flex-row >p{
     width: 80%;
+    font-size: 1.2rem;
 }
 
 @media(max-width: 760px) {

@@ -41,7 +41,7 @@
 
 .inst h1 {
     font-size: 1.5rem;
-    font-weight: 600;
+    /* font-weight: 600; */
     text-align: center;
     margin-top: 1rem;
 }
@@ -75,13 +75,15 @@
     background-color: #AD8700;
     color: #fff;
     cursor: pointer;
+    border: 1px solid #AD8700;
+    transition: ease-in-out 0.5s all;
 }
 
 .sub-now:hover {
-    box-shadow: 0 2rem 1rem rgba(0, 0, 0, 0.2);
-    transform: translateY(-1px);
-    transition: all 0.3s ease-in-out;
-
+    background: #fff;
+    color: #19355A;
+    border: 1px solid #AD8700;
+    transition: ease-in-out 0.5s all;
 }
 
 @media (max-width:910px) {

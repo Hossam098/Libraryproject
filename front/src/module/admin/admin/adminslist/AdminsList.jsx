@@ -22,55 +22,31 @@ const AdminsList = () => {
         faculty_id: '',
         type: ''
     })
-    //   axios.defaults.withCredentials = true
-    //   useEffect(() => {
-    //     axios.get('http://localhost:5000/superadmin/allFaculty', { withCredentials: true })
-    //       .then((res) => {
-    //         setFacuality(res.data)
-    //       }).catch((error) => {
-    //         if (error.response.data.admin === false) {
-    //           navigate('/superAdminLogin')
-    //         }
+    axios.defaults.withCredentials = true
+    useEffect(() => {
+        axios.get('http://localhost:5000/admin/getallManagers', { withCredentials: true })
+            .then((res) => {
+                setManagers(res.data)
+            }).catch((error) => {
+                if (error.response.status === 401) navigate('/AdminLogin')
+                navigate('/AdminLogin')
+            })
 
-    //       })
-
-    //     axios.get('http://localhost:5000/superadmin/allmanager2', { withCredentials: true })
-    //       .then((res) => {
-    //         setManagers(res.data)
-    //       }
-    //       ).catch((error) => {
-    //         if (error.response.data.Admin === false) {
-    //           navigate('/superAdminLogin')
-    //         }
-    //       }
-    //       )
-
-    //     axios.get('http://localhost:5000/superadmin/allmanager1', { withCredentials: true })
-    //       .then((res) => {
-    //         setManagers2(res.data)
-    //       }
-    //       ).catch((error) => {
-
-    //         if (error.response.data.Admin === false) {
-    //           navigate('/superAdminLogin')
-    //         }
-    //       }
-    //       )
-    //   }, [])
+    }, [])
     useEffect(() => {
 
         axios.defaults.withCredentials = true
         try {
-          axios.get(`${API_URL}/user/getAllServices`, { withCredentials: true })
-            .then((res) => {
-              setServices(res.data)
-            })
-            .catch((err) => {
-    
-            })
+            axios.get(`${API_URL}/user/getAllServices`, { withCredentials: true })
+                .then((res) => {
+                    setServices(res.data)
+                })
+                .catch((err) => {
+
+                })
         } catch (err) {
         }
-      }, [])
+    }, [])
 
 
 
@@ -201,17 +177,30 @@ const AdminsList = () => {
 
                             return (
                                 <tr key={index}>
-                                    <td><input className='input-cell' type="text" value={manager.manager_name} placeholder={manager.manager_name} onChange={(e) => {
-                                        const updatedManagers = [...managers];
-                                        updatedManagers[index] = { ...manager, manager_name: e.target.value };
-                                        setManagers(updatedManagers);
-                                    }} /></td>
-                                    <td><input className='input-cell' type="text" value={manager.manager_email} placeholder={manager.manager_email} onChange={(e) => {
-                                        const updatedManagers = [...managers];
-                                        updatedManagers[index] = { ...manager, manager_email: e.target.value };
-                                        setManagers(updatedManagers);
-                                    }} /></td>
-                                    <td>{manager.faculty_name_ar}</td>
+                                    <td>
+                                        <input 
+                                        className='input-cell' 
+                                        type="text" 
+                                        value={manager.mname} 
+                                        placeholder={manager.mname} 
+                                        onChange={(e) => {
+                                            const updatedManagers = [...managers];
+                                            updatedManagers[index] = { ...manager, mname: e.target.value };
+                                            setManagers(updatedManagers);
+                                        }} />
+                                        </td>
+                                    <td>
+                                        <input 
+                                        className='input-cell' 
+                                        type="text" 
+                                        value={manager.email} 
+                                        placeholder={manager.email} 
+                                        onChange={(e) => {
+                                            const updatedManagers = [...managers];
+                                            updatedManagers[index] = { ...manager, email: e.target.value };
+                                            setManagers(updatedManagers);
+                                        }} /></td>
+                                    <td>{manager.service_name_ar}</td>
                                     <td><button onClick={() => { handleEditm1(index) }}>تعديل</button></td>
                                 </tr>
 

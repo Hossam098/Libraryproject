@@ -32,25 +32,25 @@ adminAuth.post('/login',
                 if (req.body.password == result[0].password) {
                     res.status(200).json({ login: true, firstLogin: true });
                 } else {
-                    
-                const match = await bcrypt.compare(req.body.password, result[0].password);
-                if (match) {
-                    const payload = {
-                        id : result[0].id,
-                        email: result[0].email,
-                        type : "admin"
-                    };
-                    const token = jwt.sign(payload, key);
-                    req.session.token ="Bearer "+ token;
-                    return res.status(200).json({ login: true, token: token , firstLogin: false});
 
-                } else {
-                    error.push("Password is incorrect");
-                    return res.status(400).json({ message: error });
-                }
+                    const match = await bcrypt.compare(req.body.password, result[0].password);
+                    if (match) {
+                        const payload = {
+                            id: result[0].id,
+                            email: result[0].email,
+                            type: "admin"
+                        };
+                        const token = jwt.sign(payload, key);
+                        req.session.token = "Bearer " + token;
+                        return res.status(200).json({ login: true, token: token, firstLogin: false });
+
+                    } else {
+                        error.push("كلمة السر غير صحيحه");
+                        return res.status(400).json({ message: error });
+                    }
                 }
             } else {
-                error.push("Manager doesn't exist");
+                error.push("الادمن غير موجود");
                 return res.status(400).json({ message: error });
             }
 
@@ -58,7 +58,7 @@ adminAuth.post('/login',
             error.push(errors);
             return res.status(500).json({ message: error });
         }
-});
+    });
 
 adminAuth.post('/firstlogin',
     body('email').notEmpty().withMessage('الايميل مطلوب').isEmail().withMessage('Email is invalid'),
@@ -101,7 +101,7 @@ adminAuth.post('/firstlogin',
             error.push(errors);
             return res.status(500).json({ message: error });
         }
-});
+    });
 
 
 adminAuth.get('/logout', (req, res) => {

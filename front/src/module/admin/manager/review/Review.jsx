@@ -98,6 +98,8 @@ const Review = () => {
             <table className="data-table">
               <thead>
                 <tr>
+                <th>التسلسل</th>
+
                   <th>اسم الطالب</th>
                   <th> نوع الخدمه </th>
                   <th>تاريخ التقديم</th>
@@ -108,14 +110,22 @@ const Review = () => {
               <tbody>
                 {student.length > 0 && student.map((item, index) => (
                   <tr key={item.student_id}>
+                    <td>{index + 1}</td>
                     <td>{item.name}</td>
                     <td>{item.service_name_ar}</td>
                     <td>{item.status === 0 ? item.req_code_date?.slice(0, 10) : item.submit_date?.slice(0, 10)}</td>
                     <td>{item.status === 0 ? "منتظر كود دفع" : item.status === 1 ? "في انتظار رفع المرفقات" : item.status === 2 ? "في انتظار رد المكتبه" : item.status === 3 ? "قيد التعديل" : item.status === 4 ? "قيد التعديل" : item.status === 5 ? "مقبول" : item.status === 6 ? "مرفوض" : null}</td>
                     <td>
-                      <button >
+                    <button 
+                      onClick={() => {
+                        navigate(`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`)
+                      }
+                      }>
 
-                        <Link to={`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}>تفاصيل</Link>
+
+                        {/* <Link to={`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}> */}
+                          تفاصيل
+                        {/* </Link> */}
                       </button>
                     </td>
                   </tr>

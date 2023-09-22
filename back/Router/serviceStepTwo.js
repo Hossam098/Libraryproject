@@ -350,9 +350,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile(req);
                             error.push("Please upload image or pdf or word");
@@ -435,12 +433,15 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                 const sql = `UPDATE registration_services SET ? WHERE id = ? `;
                 const value = [data, id2];
                 const result = await query(sql, value);
+                let submit_date = resultSelect[0].status === 1 ? new Date() : resultSelect[0].submit_date;
+                let edit_date = resultSelect[0].status !== 1 ? new Date() : resultSelect[0].edit_date; 
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
                         response_text : null ,
                         manager_status: null ,
-                        submit_date: new Date(),
+                        submit_date: submit_date,
+                        edit_date: edit_date,
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_reg = ? AND user_id = ?';
                     const value2 = [submit, id, id2, req.id];

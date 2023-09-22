@@ -86,6 +86,10 @@ console.log(manager.role)
           </li>
           }
         </ul>
+
+        <h1 style={{ color: "#19355a", fontWeight: "600" }}>
+          {manager.mname}
+        </h1>
       </nav>
     </div>
 

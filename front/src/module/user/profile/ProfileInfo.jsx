@@ -53,7 +53,7 @@ const ProfileInfo = (props) => {
                 <h3>{t('uni')}</h3>
                 <input
                     type="text"
-                    value={props.user.university}
+                    value={+props.user.university === 1 ?t('helwan-uni') : props.user.university}
                     onChange={(e) => { props.setUser({ ...props.user, university: e.target.value }) }}
                 />
             </div>

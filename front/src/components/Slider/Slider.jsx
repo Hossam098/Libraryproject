@@ -49,7 +49,7 @@ const Slider = ({ filter, setfilter, filter2, setfilter2 }) => {
           {isExpanded && (
             <div className="nav-logo">
               < BsFillBarChartFill className='icon' />
-              <h2>المخططات</h2>
+              <h2>الخدمات</h2>
             </div>
           )}
           <button
@@ -67,6 +67,9 @@ const Slider = ({ filter, setfilter, filter2, setfilter2 }) => {
           <ul>
             <li onClick={() => { setfilter2(filter) }}>الكل</li>
             {Array.isArray(services) && services.map((service, index) => {
+              if (index >= 8) {
+                return null; // Skip rendering for index >= 5
+            }
               return (
                 <li
                   onClick={() => {

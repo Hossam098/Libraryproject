@@ -121,7 +121,7 @@ const Myser = () => {
                                                     : service.status == 1 ?
                                                         <>
                                                             <div className="contiue">
-                                                                <span>payment code </span>
+                                                                <h3>{t('payment-code')}</h3>
                                                                 <div className="code wait-txt">
                                                                     {service.payment_code}
                                                                 </div>

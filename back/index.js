@@ -52,6 +52,7 @@ dotenv.config({ path: './.env' });
 app.use(bodyParser.json());
 app.use(express.static('public/imgs'));
 
+
 app.use('', serPayment);
 app.use('', serviceStepTwo);
 
