@@ -30,6 +30,7 @@ import AShow from "./module/admin/admin/Ashow/Ashow.jsx";
 import AdminReset from "./module/admin/admin/AdminLog/AdminReset.jsx";
 import AdminsList from "./module/admin/admin/adminslist/AdminsList.jsx";
 import UserReset from "./module/user/login/UserReset.jsx";
+import ManagerReset from "./module/admin/Alogin/ManagerReset.jsx";
 
   
   const Router = createBrowserRouter([
@@ -112,8 +113,8 @@ import UserReset from "./module/user/login/UserReset.jsx";
           element:<UserReset/>        
         },
         {
-          path:"/resetpassword",
-          element:<UserReset/>        
+          path:"/managerReset",
+          element:<ManagerReset/>        
         },
         {
           path:"/manager",
@@ -121,7 +122,7 @@ import UserReset from "./module/user/login/UserReset.jsx";
           children:[
             {
               path:"",
-              element:<StudentListadmin/>
+              element:<Review/>
               ,  
             },
             {
@@ -136,6 +137,10 @@ import UserReset from "./module/user/login/UserReset.jsx";
             {
               path:"/manager/Review",
               element:<Review/>,  
+            },
+            {
+              path:"/manager/list",
+              element:<StudentListadmin/>,  
             },
             {
               path:"/manager/show/:id",

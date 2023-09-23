@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { API_URL } from '../../../config';
 import { Link, useNavigate } from 'react-router-dom';
-import PopupError from '../../../components/error/PopupError';
+import PopupError from '../../../components/error/PopupErrorMsg';
 
 
 
@@ -42,9 +42,11 @@ const ManagerLogin = () => {
       try {
         axios.post(`${API_URL}/authmanager/login`, user, { withCredentials: true })
           .then((res) => {
-            if (res.data.login == true) {
+            if (res.data.login == true && res.data.firstLogin == false) {
               localStorage.setItem('token', res.data.token)
               navigate('/manager')
+            }else if(res.data.login == true && res.data.firstLogin == true){
+              navigate('/managerReset')
             }
           })
           .catch((err) => {
@@ -166,7 +168,7 @@ const ManagerLogin = () => {
 
                 <input type="submit" value="تسجيل الدخول" />
 
-                <Link style={{ color: "black", marginTop: "2rem", display: "block" }}>forget password</Link>
+                <Link  to="/managerReset" style={{ color: "black", marginTop: "1rem", display: "block",fontSize:"1.5rem" }}> تغيير كلمه المرور </Link>
               </form>
 
             </div>

@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import { API_URL } from '../../../../config';
+import { API_URL } from '../../../config';
 import { Link, useNavigate } from 'react-router-dom';
-import PopupError from '../../../../components/error/PopupErrorMsg';
+import PopupError from '../../../components/error/PopupErrorMsg';
 
 
 
@@ -43,10 +43,10 @@ const ManagerReset = () => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       axios.defaults.withCredentials = true
       try {
-        axios.post(`${API_URL}/authadmin/firstlogin`, user, { withCredentials: true })
+        axios.post(`${API_URL}/authmanager/firstlogin`, user, { withCredentials: true })
           .then((res) => {
             if (res.status == 200) {
-                navigate('/AdminLOgin')
+                navigate('/managerLOgin')
             }
             
           })
