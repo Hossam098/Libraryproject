@@ -339,7 +339,9 @@ const AdminsList = () => {
                         </tr>
 
                         {services.map((service, index) => {
-
+                            if (index >= 8) {
+                                return null; // Skip rendering for index >= 5
+                            }
                             return (
                                 <tr key={index}>
                                     <td style={{ width: "15%" }}>

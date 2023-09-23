@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { API_URL } from '../../../config';
 import { Link, useNavigate } from 'react-router-dom';
-import PopupError from '../../../components/error/PopupError';
+import PopupError from '../../../components/error/PopupErrorMsg';
+import Toggle from '../../../components/togglrLang/Toggle';
+
 
 
 
@@ -20,11 +22,9 @@ const UserReset = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [user, setUser] = useState({
     email: "",
-    password:"",
-    newPassword:"",
-    confirmPassword: "",
-
-   
+    national_id: "",
+    newpassword: "",
+    checkpassword: "",
   })
 
 
@@ -39,20 +39,19 @@ const UserReset = () => {
 
   useEffect(() => {
     axios.defaults.withCredentials = true
-    
+
     if (Object.keys(errors).length === 0 && isSubmitting) {
       axios.defaults.withCredentials = true
       try {
-        axios.post(`${API_URL}/authadmin/firstlogin`, user, { withCredentials: true })
+        axios.put(`${API_URL}/auth/resetpassword`, user, { withCredentials: true })
           .then((res) => {
             if (res.status == 200) {
-                navigate('/AdminLOgin')
+              navigate('/login')
             }
-            
           })
           .catch((err) => {
-            if(err.response.status == 401){
-              navigate('/ManagerLogin')
+            if (err.response.status == 401) {
+              navigate('/login')
             }
             console.log(err.response.data.message[0])
             setErrors2(err.response.data.message[0])
@@ -89,26 +88,24 @@ const UserReset = () => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
 
     if (!values.email) {
-        errors.email = "يرجى ادخال البريد الالكترونى";
-      } else if (!regex.test(values.email)) {
-        errors.email = "البريد الالكترونى غير صالح";
-      }
-
-    if (!values.password) {
-      errors.password = `${t('pass-err')}`;
-    } else if (values.password.length < 7) {
-      errors.password = `${t('pass-err-min')}`;
+      errors.email = "يرجى ادخال البريد الالكترونى";
+    } else if (!regex.test(values.email)) {
+      errors.email = "البريد الالكترونى غير صالح";
     }
 
-    if (!values.newPassword) {
-        errors.newPassword = "يرجى ادخال  كلمه المرور الجديدة";
-      }
-    if (!values.confirmPassword) {
-        errors.confirmPassword = " يرجى اعاده ادخال كلمه المرور ";
-      }
+    if (!values.national_id) {
+      errors.national_id = `${t('n-id-err')}`;
+    }
 
-    if (values.newPassword !== values.confirmPassword) {
-        errors.re_password = " كلمه المرور غير متطابقه ";
+    if (!values.newpassword) {
+      errors.newpassword = "يرجى ادخال  كلمه المرور الجديدة";
+    }
+    if (!values.checkpassword) {
+      errors.checkpassword = " يرجى اعاده ادخال كلمه المرور ";
+    }
+
+    if (values.newpassword !== values.checkpassword) {
+      errors.checkpassword = " كلمه المرور غير متطابقه ";
     }
 
     return errors; // Add this line to return the errors object
@@ -124,7 +121,7 @@ const UserReset = () => {
             onClose={handleCloseError}
           />
         )}
-        
+
         <div className="main-content" style={{ boxShadow: "0 0 15px #000" }}>
           <div className="main-content-logo" >
             <img src="./assets/mini-logo.png" alt="" className='img' />
@@ -135,81 +132,91 @@ const UserReset = () => {
               <form onSubmit={handleSubmit}>
                 <div className="input-login-container" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl", textAlign: "right" } : { direction: "ltr", textAlign: "left" }}>
 
-                  <div class="input" >
-                  <label> البريد الالكترونى </label>
-                    <input
-                        style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
-                        type='email'
-                        className={errors.email ? 'error-in' : ''}
-                        placeholder="ادخل البريد الالكترونى"
-                        value={user.email}
-                        onChange={(e) => { setUser({ ...user, email: e.target.value }) }}
-                      />
-                    <p className='error'>{errors.email}</p>
-                  </div>
+
                   <div class="input" >
 
-                  <label>كلمه المرور</label>
-                    <input
-                        style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
-                        type={showPassword ? 'text' : 'password'}
-                        className={errors.password ? 'error-in' : ''}
-                        placeholder=" ادخل كلمه المرور القديمه "
-                        value={user.password}
-                        onChange={(e) => { setUser({ ...user, password: e.target.value }) }}
-                      />
-                    <p className='error'>{errors.password}</p>
-                  </div>
-                  <div className="input">
-                  <label>{t('pass')} </label>
-                  <div
-                    className={`passwordcontainer ${errors.newPassword ? 'error-in' : ''}`}
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
-                  >
+                    <label>{t('n-id')}</label>
                     <input
                       style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
-                      type={showPassword ? 'text' : 'password'}
-                      className={errors.newPassword ? 'error-in' : ''}
-                      placeholder={t('e-pass')}
-                      value={user.newPassword}
-                      onChange={(e) => { setUser({ ...user, newPassword: e.target.value }) }}
+                      type='text'
+                      className={errors.national_id ? 'error-in' : ''}
+                      placeholder={t('e-n-id')}
+                      value={user.national_id}
+                      onChange={(e) => { setUser({ ...user, national_id: e.target.value }) }}
                     />
-
-                    <span onClick={togglePasswordVisibility}>
-                      {showPassword ? <HiEyeOff style={{ color: "#19355A" }} /> : <HiEye style={{ color: "#19355A" }} />}
-                    </span>
+                    <p className='error'>{errors.national_id}</p>
                   </div>
-                  <p className='error'>{errors.newPassword}</p>
-                </div>
+
+
+
+                  <div class="input" >
+                    <label>  {t('email')} </label>
+                    <input
+                      style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                      type='email'
+                      className={errors.email ? 'error-in' : ''}
+                      placeholder={t('e-email')}
+                      value={user.email}
+                      onChange={(e) => { setUser({ ...user, email: e.target.value }) }}
+                    />
+                    <p className='error'>{errors.email}</p>
+                  </div>
+
+
 
                   <div className="input">
-                    <label> اعد ادخال كلمه المرور </label>
+                    <label>{t('pass')} </label>
                     <div
-                      className={`passwordcontainer ${errors.confirmPassword ? 'error-in' : ''}`}
+                      className={`passwordcontainer ${errors.newpassword ? 'error-in' : ''}`}
+                      style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    >
+                      <input
+                        style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                        type={showPassword ? 'text' : 'password'}
+                        className={errors.newpassword ? 'error-in' : ''}
+                        placeholder={t('e-pass')}
+                        value={user.newpassword}
+                        onChange={(e) => { setUser({ ...user, newpassword: e.target.value }) }}
+                      />
+
+                      <span onClick={togglePasswordVisibility}>
+                        {showPassword ? <HiEyeOff style={{ color: "#19355A" }} /> : <HiEye style={{ color: "#19355A" }} />}
+                      </span>
+                    </div>
+                    <p className='error'>{errors.newpassword}</p>
+                  </div>
+
+                  <div className="input">
+                    <label> {t('re-pass')}</label>
+                    <div
+                      className={`passwordcontainer ${errors.checkpassword ? 'error-in' : ''}`}
                       style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
                     >
                       <input
                         style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
                         type='password'
-                        className={errors.confirmPassword ? 'error-in' : ''}
-                        placeholder="ادخل كلمه المرور"
-                        value={user.confirmPassword}
-                        onChange={(e) => { setUser({ ...user, confirmPassword: e.target.value }) }}
+                        className={errors.checkpassword ? 'error-in' : ''}
+                        placeholder={t('e-re-pass')}
+                        value={user.checkpassword}
+                        onChange={(e) => { setUser({ ...user, checkpassword: e.target.value }) }}
                       />
 
                     </div>
-                    <p className='error'>{errors.confirmPassword}</p>
+                    <p className='error'>{errors.checkpassword}</p>
                   </div>
 
                 </div>
 
-                <input type="submit" value="تسجيل الدخول" />
+                <input type="submit" value={t('change-pass')} />
 
               </form>
 
             </div>
           </div>
         </div>
+      </div>
+      <div className="lang">
+        <Toggle />
       </div>
     </div>
   )
