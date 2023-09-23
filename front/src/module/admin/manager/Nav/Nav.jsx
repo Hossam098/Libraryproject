@@ -64,7 +64,7 @@ const Nav = () => {
             <Link 
             onClick={() => setActive('home_active')}
             className={active === 'home_active' ? 'active' : ''}
-            exact to='/manager'
+            exact to='/manager/list'
             > توزيع الطلبات </Link>
           </li>
           }
