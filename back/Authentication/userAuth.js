@@ -158,6 +158,51 @@ userAuth.get('/check',
     
 });
 
+userAuth.put('/resetpassword',
+    body('email').notEmpty().withMessage('Email is required').isEmail().withMessage('Email is invalid'),
+    body('national_id').notEmpty().withMessage('National ID is required'),
+    body('newpassword').notEmpty().withMessage('Password is required').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+    body('checkpassword').notEmpty().withMessage('checkpassword is required').isLength({ min: 8 }).withMessage('checkpassword must be at least 8 characters'),
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+
+            if (req.body.newpassword !== req.body.checkpassword) {
+                error.push("Password doesn't match");
+                return res.status(400).json({ message: error });
+            }
+
+            const sqlSelect = "SELECT * FROM users WHERE email = ? AND national_id = ?";
+            const result = await query(sqlSelect, [req.body.email, req.body.national_id]);
+            if (result.length > 0) {
+                const sqlUpdate = "UPDATE users SET password = ? WHERE id = ?";
+                const result2 = await query(sqlUpdate, [await bcrypt.hash(req.body.newpassword, 10), req.id]);
+                if (result2.affectedRows > 0) {
+                    return res.status(201).json({ message: "Password changed successfully" });
+                } else {
+                    error.push("حدث خطأ ما");
+                    return res.status(400).json({ message: error });
+                }
+            } else {
+                error.push("البريد الالكتروني او الرقم القومي غير مسجل مسبقا");
+                return res.status(400).json({ message: error });
+            }
+
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
 userAuth.get('/logout', (req, res) => {
     req.session.destroy();
     res.status(200).json({ message: "User logged out successfully" });
