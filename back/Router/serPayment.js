@@ -511,6 +511,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                         if (result3.length > 0) {
                             const submitData = {
                                 status: 0,
+                                response_text: null,
                                 edit_date: new Date(),
                             }
                             const sqlUpdate2 = "UPDATE submit SET ? WHERE ser_reg = ? AND user_id = ?";
@@ -566,6 +567,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                         if (result3.length > 0) {
                             const submitData = {
                                 status: 0,
+                                response_text: null,
                                 edit_date: new Date(),
                             }
 
@@ -618,6 +620,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                             const submitData = {
                                 files_numbers: req.body.files_numbers ? req.body.files_numbers : result3[0].files_numbers,
                                 status: 0,
+                                response_text: null,
                                 edit_date: new Date(),
                             }
 
@@ -670,6 +673,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                             const submitData = {
                                 files_numbers: req.body.files_numbers ? req.body.files_numbers : result3[0].files_numbers,
                                 status: 0,
+                                response_text: null,
                                 edit_date: new Date(),
                             }
 
@@ -722,6 +726,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                             const submitData = {
                                 files_numbers: req.body.files_numbers ? req.body.files_numbers : result3[0].files_numbers,
                                 status: 0,
+                                response_text: null,
                                 edit_date: new Date(),
                             }
 
@@ -774,6 +779,7 @@ serPayment.put('/paymentEdit/:id/:id2',
                             const submitData = {
                                 files_numbers: req.body.files_numbers ? req.body.files_numbers : result3[0].files_numbers,
                                 status: 0,
+                                response_text: null,
                                 edit_date: new Date(),
                             }
 
