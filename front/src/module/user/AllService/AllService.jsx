@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import Footer from '../../../components/footer/Footer'
 import '../home/home.css'
-import Unav from '../../../components/userNav/Unav'
 import { BiCheck } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { API_URL } from '../../../config'
 import { useTranslation } from 'react-i18next';
+import PopupError from '../../../components/error/PopupErrorMsg'
+
 
 const AllService = () => {
     const id = "1";
     const [services, setServices] = useState([])
     const { t } = useTranslation();
-
+    const [error, setError] = useState()
     useEffect(() => {
         axios.defaults.withCredentials = true
         try {
@@ -36,10 +36,18 @@ const AllService = () => {
         const currentLanguage = localStorage.getItem('i18nextLng');
         return currentLanguage == 'en' ? service.pref : service.pref_ar;
       };
+      const handleCloseError = () => {
+        setError('');
+      };
 
     return (
         <div>
-        
+              {error && (
+        <PopupError
+          message={error}
+          onClose={handleCloseError}
+        />
+      )}
             <section id='services' style={localStorage.getItem('i18nextLng') == 'en' ? {direction: 'ltr'} : {direction: 'rtl'}}>
                 <h2>{t('services-title')}</h2>
                 <h2 style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.5', width: '80%', textAlign: 'center' , opacity: '0.8'}}>
@@ -64,9 +72,19 @@ const AllService = () => {
                                         {getTranslatedServicePref(service)}
                                         </p>
                                     </li>
-                                    <li className='bttn'>
+                                    
+                                    {service.enabled?
+                                        <li className='bttn'>
                                         <Link to={`/instructions/${service.id}`}>{t('more-det')}</Link>
                                     </li>
+                                    :
+                                    <li 
+                                        className='bttn'
+                                        onClick={()=>{setError(t('stop'))}}
+                                    >
+                                        <Link>{t('more-det')}</Link>
+                                    </li>
+                                    }
                                 </ul>
                             </article>
                         )
@@ -76,7 +94,6 @@ const AllService = () => {
                    
                 </div>
             </section>
-            {/* <Footer /> */}
         </div>
     )
 }

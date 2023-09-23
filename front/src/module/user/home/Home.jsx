@@ -10,12 +10,14 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Coplaints from '../../../components/complains/Coplaints'
 import Profit from '../../../components/profit/Profit'
+import PopupError from '../../../components/error/PopupErrorMsg'
 
 const Home = () => {
     const id = "1";
     const [services, setServices] = useState([])
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const [error, setError] = useState()
 
     useEffect(() => {
 
@@ -46,11 +48,20 @@ const Home = () => {
     const handleNavegate = () => {
         navigate('/allServices')
     }
+    const handleCloseError = () => {
+        setError('');
+      };
 
 
 
     return (
         <div>
+            {error && (
+        <PopupError
+          message={error}
+          onClose={handleCloseError}
+        />
+      )}
             <main>
 
                 <div className="intro-txt" style={localStorage.getItem('i18nextLng') == 'en' ? { alignItems: 'flex-start' } : { alignItems: 'flex-end', textAlign: 'right' }}>
@@ -85,9 +96,19 @@ const Home = () => {
                                             {getTranslatedServicePref(service)}
                                         </p>
                                     </li>
-                                    <li className='bttn'>
+                                    {service.enabled?
+                                        <li className='bttn'>
                                         <Link to={`/instructions/${service.id}`}>{t('more-det')}</Link>
                                     </li>
+                                    :
+                                    <li 
+                                        className='bttn'
+                                        onClick={()=>{setError(t('stop'))}}
+                                    >
+                                        <Link>{t('more-det')}</Link>
+                                    </li>
+                                    }
+                                    
                                 </ul>
                             </article>
 

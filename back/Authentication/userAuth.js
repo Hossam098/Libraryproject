@@ -163,7 +163,6 @@ userAuth.put('/resetpassword',
     body('national_id').notEmpty().withMessage('National ID is required'),
     body('newpassword').notEmpty().withMessage('Password is required').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
     body('checkpassword').notEmpty().withMessage('checkpassword is required').isLength({ min: 8 }).withMessage('checkpassword must be at least 8 characters'),
-    checkUser,
     async (req, res) => {
         let error = [];
         try {
@@ -183,10 +182,10 @@ userAuth.put('/resetpassword',
             const sqlSelect = "SELECT * FROM users WHERE email = ? AND national_id = ?";
             const result = await query(sqlSelect, [req.body.email, req.body.national_id]);
             if (result.length > 0) {
-                const sqlUpdate = "UPDATE users SET password = ? WHERE id = ?";
-                const result2 = await query(sqlUpdate, [await bcrypt.hash(req.body.newpassword, 10), req.id]);
+                const sqlUpdate = "UPDATE users SET password = ? WHERE national_id = ?";
+                const result2 = await query(sqlUpdate, [await bcrypt.hash(req.body.newpassword, 10), req.body.national_id]);
                 if (result2.affectedRows > 0) {
-                    return res.status(201).json({ message: "Password changed successfully" });
+                    return res.status(200).json({ message: "Password changed successfully" });
                 } else {
                     error.push("حدث خطأ ما");
                     return res.status(400).json({ message: error });

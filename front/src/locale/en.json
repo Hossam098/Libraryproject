@@ -1,6 +1,9 @@
 {
     "welcome": "Welcome to the central library of Helwan University",
     "reg": "Register now",
+    "change-pass": "change password",
+    "forget": "Forgot your password ?",
+    "stop": "The service is temporarily stopped",
     "cont": "Continue",
     "cerate": "Create account",
     "Login": "Login",

@@ -36,7 +36,7 @@ const ANav = () => {
             <NavLink to='/Admin/all'> المستخدمين </NavLink>
           </li>
           <li>
-            <NavLink to='/Admin/admins' > الموظفين </NavLink>
+            <NavLink to='/Admin/admins' > لوحة التحكم </NavLink>
           </li>
         </ul>
       </nav>

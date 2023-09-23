@@ -8,7 +8,6 @@ import { API_URL } from '../../../config';
 import { Link, useNavigate } from 'react-router-dom';
 import PopupError from '../../../components/error/PopupError';
 import mini from '../../../images/mini-logo.png'
-import uni from '../../../images/uni-logo.png'
 
 
 const Login = () => {
@@ -167,7 +166,7 @@ const Login = () => {
               <Link to="/" style={{ marginTop: "1rem", display: "block" }} className="link">{t('Home')}</Link>
 
               </div>
-              <Link style={{ color: "black", marginTop: "2rem", display: "block" }} to="/resetpassword">forget password</Link>
+              <Link style={{ color: "black", marginTop: "1rem", display: "block", fontSize:"1.3rem" }} to="/resetpassword">{t('forget')}</Link>
             </form>
 
           </div>

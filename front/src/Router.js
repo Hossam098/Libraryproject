@@ -112,6 +112,10 @@ import UserReset from "./module/user/login/UserReset.jsx";
           element:<UserReset/>        
         },
         {
+          path:"/resetpassword",
+          element:<UserReset/>        
+        },
+        {
           path:"/manager",
           element:<Manager/>,   
           children:[
