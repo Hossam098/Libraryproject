@@ -264,8 +264,14 @@ Admin.put('/updateManager',
             const value = [req.body.id];
             const result = await query(sqlSelect, value);
             if (result.length > 0) {
-                const sqlUpdate = `UPDATE manager SET mname = ? , email = ? , service_id = ? WHERE id = ?`;
-                const value = [req.body.mname, req.body.email, req.body.service_id, req.body.id];
+                const Data = {
+                    mname: req.body.mname,
+                    email: req.body.email,
+                    service_id: req.body.service_id,
+                    password: 12345678,
+                }
+                const sqlUpdate = `UPDATE manager SET ? WHERE id = ?`;
+                const value = [Data, req.body.id];
                 const result = await query(sqlUpdate, value);
                 if (result.affectedRows > 0) {
                     return res.status(200).json({ message: "تم تعديل المدير بنجاح" });
