@@ -418,6 +418,67 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                 let translation = req.files.translation ? req.files.translation[0].filename : resultSelect[0].translation_paper;
 
 
+                if(req.files.payment_photo && resultSelect[0].photo_payment_receipt != null){
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].photo_payment_receipt}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile(req);
+                            console.error(err)
+                            return
+                        }
+                    })
+                }
+                if(req.files.research && resultSelect[0].research_plan_ar_pdf != null){
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_plan_ar_pdf}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile(req);
+                            console.error(err)
+                            return
+                        }
+                    })
+                }
+                if(req.files.research_en && resultSelect[0].research_plan_en_pdf != null){
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_plan_en_pdf}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile(req);
+                            console.error(err)
+                            return
+                        }
+                    })
+                }
+                if(req.files.research_word && resultSelect[0].research_plan_ar_word != null){
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_plan_ar_word}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile(req);
+                            console.error(err)
+                            return
+                        }
+                    })
+                }
+                if(req.files.research_word_en && resultSelect[0].research_plan_en_word != null){
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_plan_en_word}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile(req);
+                            console.error(err)
+                            return
+                        }
+                    })
+                }
+                if(req.files.translation && resultSelect[0].translation_paper != null){
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].translation_paper}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile(req);
+                            console.error(err)
+                            return
+                        }
+                    })
+                }
+                
 
 
                 const data = {
