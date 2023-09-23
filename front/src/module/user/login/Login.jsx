@@ -167,7 +167,7 @@ const Login = () => {
               <Link to="/" style={{ marginTop: "1rem", display: "block" }} className="link">{t('Home')}</Link>
 
               </div>
-              <Link style={{ color: "black", marginTop: "2rem", display: "block" }}>forget password</Link>
+              <Link style={{ color: "black", marginTop: "2rem", display: "block" }} to="/resetpassword">forget password</Link>
             </form>
 
           </div>

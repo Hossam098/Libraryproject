@@ -29,6 +29,7 @@ import AllUsers from "./module/admin/admin/allusers/AllUsers.jsx";
 import AShow from "./module/admin/admin/Ashow/Ashow.jsx";
 import AdminReset from "./module/admin/admin/AdminLog/AdminReset.jsx";
 import AdminsList from "./module/admin/admin/adminslist/AdminsList.jsx";
+import UserReset from "./module/user/login/UserReset.jsx";
 
   
   const Router = createBrowserRouter([
@@ -105,6 +106,10 @@ import AdminsList from "./module/admin/admin/adminslist/AdminsList.jsx";
         {
           path:"/AdminReset",
           element:<AdminReset/>        
+        },
+        {
+          path:"/resetpassword",
+          element:<UserReset/>        
         },
         {
           path:"/manager",
