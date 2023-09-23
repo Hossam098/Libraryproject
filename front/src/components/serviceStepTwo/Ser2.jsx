@@ -17,8 +17,7 @@ const Ser2 = ({ ser }) => {
     const id = ser.service_id;
     const id2 = ser.ser_formation;
     const status = ser.status;
-    console.log(status)
-    console.log(id)
+
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -43,7 +42,7 @@ const Ser2 = ({ ser }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -82,7 +81,6 @@ const Ser2 = ({ ser }) => {
             }
         }
 
-        console.log(data)
     }, [])
 
 
@@ -101,7 +99,6 @@ const Ser2 = ({ ser }) => {
     const handleSubmit = () => {
         setConfirm(false)
         axios.defaults.withCredentials = true
-        console.log(data)
         if (!data.payment_photo) {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
@@ -158,7 +155,7 @@ const Ser2 = ({ ser }) => {
 
             )
                 .then((res) => {
-                    console.log(res.data)
+
                     alert("done")
                     navigate(`/`)
 
@@ -238,7 +235,7 @@ const Ser2 = ({ ser }) => {
                                                     if (data.payment_photo.name) {
                                                         return window.open(URL.createObjectURL(data.payment_photo))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.payment_photo}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -274,7 +271,7 @@ const Ser2 = ({ ser }) => {
                                                     if (data.research.name) {
                                                         return window.open(URL.createObjectURL(data.research))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.research}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -310,7 +307,7 @@ const Ser2 = ({ ser }) => {
                                                     if (data.research_word.name) {
                                                         return window.open(URL.createObjectURL(data.research_word))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.research_word}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -345,7 +342,7 @@ const Ser2 = ({ ser }) => {
                                                     if (data.form.name) {
                                                         return window.open(URL.createObjectURL(data.form))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.form}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.form}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>

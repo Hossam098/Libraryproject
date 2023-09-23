@@ -46,16 +46,13 @@ const Serinfo = ({ service, User }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    // console.log(res)
                 })
                 .catch((err) => {
-                    // console.log(err)
                     navigate('/login')
                 })
 
 
         } catch (err) {
-            // console.log(err)
         }
 
 
@@ -71,7 +68,6 @@ const Serinfo = ({ service, User }) => {
         } catch (err) {
             console.log(err)
         }
-        console.log(data)
 
 
     }, [id])
@@ -81,7 +77,7 @@ const Serinfo = ({ service, User }) => {
         const currentDate = new Date(date);
         currentDate.setDate(currentDate.getDate() + 1);
         return currentDate.toISOString().slice(0, 10);
-      };
+    };
 
     return (
 
@@ -100,7 +96,7 @@ const Serinfo = ({ service, User }) => {
 
                 </div>
             }
-           
+
             {!data.req_code_date && data.submit_date &&
                 <h3><span style={{ color: "#AD8700" }}>{t('date-attach')}</span> : {data.submit_date.slice(0, 10)}</h3>
             }
@@ -118,11 +114,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.photo_payment_receipt}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.photo_payment_receipt}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.photo_payment_receipt}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.photo_payment_receipt}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -134,11 +130,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.photo_college_letter}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.photo_college_letter}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.photo_college_letter}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.photo_college_letter}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -150,11 +146,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_pdf}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.research_plan_ar_pdf}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_pdf}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.research_plan_ar_pdf}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -166,11 +162,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_word}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.research_plan_ar_word}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_ar_word}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.research_plan_ar_word}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -182,11 +178,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_word}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.research_plan_en_word}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_word}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.research_plan_en_word}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -198,11 +194,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_pdf}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.research_plan_en_pdf}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.research_plan_en_pdf}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.research_plan_en_pdf}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -214,11 +210,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.translation_paper}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.translation_paper}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.translation_paper}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.translation_paper}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -230,11 +226,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.message_word_ar}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.message_word_ar}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.message_word_ar}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.message_word_ar}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -246,11 +242,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.message_pdf_ar}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.message_pdf_ar}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.message_pdf_ar}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.message_pdf_ar}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -262,11 +258,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.quote_check_form}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.quote_check_form}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.quote_check_form}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.quote_check_form}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -278,11 +274,11 @@ const Serinfo = ({ service, User }) => {
                         <div className="atch-btns">
                             <button
                                 className="atch-btn-open"
-                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.decision}`) }}
+                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.decision}`) }}
                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                             </button>
                             <button
-                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.decision}`) }}
+                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.decision}`) }}
                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                             </button>
                         </div>
@@ -306,11 +302,11 @@ const Serinfo = ({ service, User }) => {
                                     <div className="atch-btns">
                                         <button
                                             className="atch-btn-open"
-                                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_word`]}`) }}
+                                            onClick={() => { openImage(`${API_URL}/${User.national_id}/${data[`research${i + 1}_image_word`]}`) }}
                                             style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                                         </button>
                                         <button
-                                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_word`]}`) }}
+                                            onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data[`research${i + 1}_image_word`]}`) }}
                                             style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                                         </button>
                                     </div>
@@ -321,11 +317,11 @@ const Serinfo = ({ service, User }) => {
                                     <h3>{t(`service${id}-step-two.pdf${i + 1}`)}</h3>
                                     <div className="atch-btns">
                                         <button
-                                            onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`) }}
+                                            onClick={() => { openImage(`${API_URL}/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`) }}
                                             style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                                         </button>
                                         <button
-                                            onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`) }}
+                                            onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`) }}
                                             style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                                         </button>
                                     </div>
@@ -337,11 +333,11 @@ const Serinfo = ({ service, User }) => {
                                         <h3>{t(`service${id}-step-two.acceptance_letter${i + 1}`)}</h3>
                                         <div className="atch-btns">
                                             <button
-                                                onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`) }}
+                                                onClick={() => { openImage(`${API_URL}/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`) }}
                                                 style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                                             </button>
                                             <button
-                                                onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`) }}
+                                                onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`) }}
                                                 style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                                             </button>
                                         </div>
@@ -383,11 +379,11 @@ const Serinfo = ({ service, User }) => {
                                 <div className="atch-btns">
                                     <button
                                         className="atch-btn-open"
-                                        onClick={() => { openImage(`http://localhost:5000/${User.national_id}/${data.response_pdf}`) }}
+                                        onClick={() => { openImage(`${API_URL}/${User.national_id}/${data.response_pdf}`) }}
                                         style={{ background: "#19355A" }} class="atch-btn">{t('open')}
                                     </button>
                                     <button
-                                        onClick={() => { downloadImage(`http://localhost:5000/${User.national_id}/${data.response_pdf}`) }}
+                                        onClick={() => { downloadImage(`${API_URL}/${User.national_id}/${data.response_pdf}`) }}
                                         style={{ background: "#AD8700" }} class="atch-btn">{t('download')}
                                     </button>
                                 </div>

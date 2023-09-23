@@ -84,9 +84,18 @@
 .add-manager button{
     border: 1px soild #000;
     border-radius: 5px;
-    width: 300px;
+    width: 100%;
     height: 3rem;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+    padding: 0 1rem;
+    text-align: center;
+}
+.add-manager button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem !important;
+    transition: ease-in-out 0.5s all;
 }
 .student-container table {
     font-family: arial, sans-serif;
@@ -96,18 +105,27 @@
     background: white;
     color: black;
 }
+.super-container table th {
+    font-size: 1.5rem;
+    padding: 1rem;
+    text-align: center;
+}
 .ser-select{
     border: none;
     background-color: transparent;
     border-radius: 5px;
     height: 3rem;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
 }
 textarea{
     resize: none;
     height: 200px;
 }
-
+.table-title-h2{
+    font-size: 2.5rem;
+    margin: 1rem 0;
+    color: #AD8700;
+}
 .student-container button {
     font-size: 15px;
     padding: 15px;
@@ -139,7 +157,7 @@ textarea{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
 }
 
 .super-container img {
@@ -255,12 +273,24 @@ textarea{
     color: white;
     border: 2px solid transparent;
     cursor: pointer;
-    animation: ease-in-out 0.5s all;
+    font-size: 1.2rem;
+    width: 100%;
     transition: ease-in-out 0.5s all;
 }
 td .delete{
-    background:  rgb(231, 69, 69);
+    background:  red
 }
+td .enable{
+    background:  #ad8700;
+    border: 2px solid #ad8700
+}
+
+td .enable:hover{
+    color:  #ad8700 !important; 
+    border: 2px solid #ad8700 !important;
+}
+
+
 td button.delete:hover{
     color:  red;
     border: 2px solid red;

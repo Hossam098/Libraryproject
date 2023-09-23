@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 const ProfileInfo = (props) => {
 
     const [t] = useTranslation();
-    console.log(props)
 
     return (
         <div className="subnav-content">

@@ -38,7 +38,6 @@ const Ser3 = ({ ser }) => {
         service_id: id
     })
 
-    console.log(files_numbers)
 
 
     useEffect(() => {
@@ -46,7 +45,7 @@ const Ser3 = ({ ser }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -79,7 +78,6 @@ const Ser3 = ({ ser }) => {
     }, [])
 
 
-    console.log(data)
 
     const handleCloseError = () => {
         setError('')
@@ -106,7 +104,6 @@ const Ser3 = ({ ser }) => {
 
 
             axios.defaults.withCredentials = true
-            console.log(data)
             const formData = new FormData();
             formData.append('photo_college_letter', data.photo_college_letter);
             formData.append('files_numbers', data.files_numbers);
@@ -126,7 +123,7 @@ const Ser3 = ({ ser }) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res.data)
+
                         alert("done")
                         navigate(`/`)
                     })
@@ -167,7 +164,6 @@ const Ser3 = ({ ser }) => {
             }
 
             axios.defaults.withCredentials = true
-            console.log(data)
             const formData = new FormData();
             formData.append('files_numbers', data.files_numbers);
             if (data.photo_college_letter?.name) {
@@ -188,7 +184,7 @@ const Ser3 = ({ ser }) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res.data)
+
                         alert("done")
                         navigate(`/`)
                     })
@@ -271,7 +267,7 @@ const Ser3 = ({ ser }) => {
                                                     if (data.photo_college_letter.name) {
                                                         return window.open(URL.createObjectURL(data.photo_college_letter))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.photo_college_letter}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.photo_college_letter}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>

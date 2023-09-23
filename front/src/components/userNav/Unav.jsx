@@ -39,7 +39,7 @@ const Unav = () => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                     setLogged(true)
                     setUser(res.data.user)
 
@@ -53,7 +53,7 @@ const Unav = () => {
 
             axios.get(`${API_URL}/getallwaiting`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res.data)
+
                     setServices(res.data)
                 })
                 .catch((err) => {
@@ -75,7 +75,7 @@ const Unav = () => {
         try {
             axios.get(`${API_URL}/auth/logout`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                     localStorage.removeItem('token')
                     window.location.href = '/login'
                 })
@@ -104,7 +104,7 @@ const Unav = () => {
                 {logged ? (<li>
                     <a href="#" onClick={() => { toggleServices(); setShowMenu(false); }} onBlur={() => { setServices(false) }}>
                         <div className="profile-image">
-                            <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${user.img}`} alt="" />
+                            <img src={user.img == "" || user.img == null ? profileimg : `${API_URL}/${user.national_id}/${user.img}`} alt="" />
                         </div>
                     </a>
                     {showServices && (

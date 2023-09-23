@@ -123,7 +123,6 @@ const StudentListadmin = () => {
     axios
       .put(`${API_URL}/manager/deleteManager`, updatedDeleted, { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
         window.location.reload()
       })
       .catch((error) => {

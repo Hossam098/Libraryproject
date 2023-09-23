@@ -143,9 +143,7 @@ const Ser3 = ({ ser }) => {
 
     }, [])
 
-    console.log(data)
-    console.log(words)
-    console.log(pdfs)
+
 
 
     const handleCloseError = () => {
@@ -162,15 +160,7 @@ const Ser3 = ({ ser }) => {
     const handleSubmit = () => {
         setConfirm(false)
         axios.defaults.withCredentials = true
-        console.log(data)
-        // if (!data.payment_photo) {
-        //     setError(t(`service${id}-step-two-err.payment-photo`))
-        //     return
-        // }
-        // if (!data.accept_date) {
-        //     setError(t(`service${id}-step-two-err.accept-date`))
-        //     return
-        // }
+
         const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
         const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
 
@@ -260,7 +250,7 @@ const Ser3 = ({ ser }) => {
 
             )
                 .then((res) => {
-                    console.log(res.data)
+
                     alert("done")
                     navigate(`/`)
 
@@ -338,7 +328,7 @@ const Ser3 = ({ ser }) => {
                                                     if (data.payment_photo.name) {
                                                         return window.open(URL.createObjectURL(data.payment_photo))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.payment_photo}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -382,7 +372,7 @@ const Ser3 = ({ ser }) => {
                                                                 if (words[`word${i + 1}`].name) {
                                                                     return window.open(URL.createObjectURL(words[`word${i + 1}`]))
                                                                 } else {
-                                                                    return window.open(`http://localhost:5000/${ser.national_id}/${words[`word${i + 1}`]}`)
+                                                                    return window.open(`${API_URL}/${ser.national_id}/${words[`word${i + 1}`]}`)
                                                                 }
                                                             }}
                                                         >{t('open')}</button>
@@ -422,7 +412,7 @@ const Ser3 = ({ ser }) => {
                                                                 if (pdfs[`pdf${i + 1}`].name) {
                                                                     return window.open(URL.createObjectURL(pdfs[`pdf${i + 1}`]))
                                                                 } else {
-                                                                    return window.open(`http://localhost:5000/${ser.national_id}/${pdfs[`pdf${i + 1}`]}`)
+                                                                    return window.open(`${API_URL}/${ser.national_id}/${pdfs[`pdf${i + 1}`]}`)
                                                                 }
                                                             }}
                                                         >{t('open')}</button>

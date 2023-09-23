@@ -42,7 +42,6 @@ const ManagerLogin = () => {
       try {
         axios.post(`${API_URL}/authmanager/login`, user, { withCredentials: true })
           .then((res) => {
-            console.log("logged")
             if (res.data.login == true) {
               localStorage.setItem('token', res.data.token)
               navigate('/manager')

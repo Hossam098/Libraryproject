@@ -41,7 +41,6 @@ const AdminLogin = () => {
       try {
         axios.post(`${API_URL}/authadmin/login`, user, { withCredentials: true })
           .then((res) => {
-            console.log(res.data)
             if (res.data.login == true && res.data.firstLogin== false) {
               localStorage.setItem('token', res.data.token)
               navigate('/admin')

@@ -23,7 +23,6 @@ const Instructons = () => {
       axios.defaults.withCredentials = true
       axios.get(`${API_URL}/auth/check`, { withCredentials: true })
         .then((res) => {
-          console.log(res)
           setLogged(true)
         })
         .catch((err) => {

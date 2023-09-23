@@ -103,7 +103,6 @@ user.get('/getuserbyid/:serId/:serNam/:stId/:appId',
             const stId = req.params.stId
             const appId = req.params.appId
 
-            console.log(appId, stId, serNam, serId)
             let ser_table = ""
             if (serNam === 'ser_reg') {
                 ser_table = "registration_services"

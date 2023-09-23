@@ -29,10 +29,7 @@ const Ser1 = ({ ser }) => {
         id2 = ser.ser_reg;
         status = ser.status;
     }
-    console.log(id)
-    console.log(id2)
-    console.log(status)
-    console.log(ser)
+
 
     const [data, setData] = useState({
         level: '',
@@ -46,7 +43,7 @@ const Ser1 = ({ ser }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -61,7 +58,6 @@ const Ser1 = ({ ser }) => {
             try {
                 axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
                     .then((res) => {
-                        console.log(res.data.level)
                         setData({
                             level: res.data.level,
                             photo_college_letter: res.data.photo_college_letter,
@@ -122,7 +118,7 @@ const Ser1 = ({ ser }) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res.data)
+
                         alert("done")
                         window.location.href = '/Myservices';
                     })
@@ -181,7 +177,7 @@ const Ser1 = ({ ser }) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res.data)
+
                         alert("done")
                         navigate(`/`)
                     })
@@ -260,7 +256,7 @@ const Ser1 = ({ ser }) => {
                                                 if (data.photo_college_letter.name) {
                                                     return window.open(URL.createObjectURL(data.photo_college_letter))
                                                 } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.photo_college_letter}`)
+                                                    return window.open(`${API_URL}/${ser.national_id}/${data.photo_college_letter}`)
                                                 }
                                             }}
                                         >{t('open')}</button>

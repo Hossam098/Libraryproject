@@ -55,7 +55,7 @@ const ShowA = () => {
   const [user, setUser] = useState({})
   axios.defaults.withCredentials = true
   useEffect(() => {
-    axios.get(`http://localhost:5000/user/getuserbyid/${data.ser_id}/${data.ser_name}/${data.student_id}/${data.app_id}`, { withCredentials: true })
+    axios.get(`${API_URL}/user/getuserbyid/${data.ser_id}/${data.ser_name}/${data.student_id}/${data.app_id}`, { withCredentials: true })
       .then((res) => {
         setUser(res.data)
       }).catch((error) => {
@@ -204,7 +204,7 @@ const ShowA = () => {
 
   const handleEdit = () => {
     if (action.reason !== '') {
-      
+
       try {
         const updatedAction = {
           ...action,
@@ -532,7 +532,7 @@ const ShowA = () => {
         </div>
         <div className="data-container" ref={pdfRef}>
           <div className='image-con'>
-            <img src={user.img ? `http://localhost:5000/${user.national_id}/${user.img}` : pimg} alt="img" className='imagee' />
+            <img src={user.img ? `${API_URL}/${user.national_id}/${user.img}` : pimg} alt="img" className='imagee' />
 
             {user.manager_status == 1 && user.status !== 5 ?
               <div className='status'>
@@ -742,11 +742,11 @@ const ShowA = () => {
               <td> صوره ايصال الدفع </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.photo_payment_receipt}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.photo_payment_receipt}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.photo_payment_receipt}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.photo_payment_receipt}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -758,11 +758,11 @@ const ShowA = () => {
               <td> {t('letter')} </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.photo_college_letter}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.photo_college_letter}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.photo_college_letter}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.photo_college_letter}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -774,11 +774,11 @@ const ShowA = () => {
               <td> {t('research')} </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.research_plan_ar_pdf}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.research_plan_ar_pdf}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -790,11 +790,11 @@ const ShowA = () => {
               <td>{t('research-word')}</td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.research_plan_ar_word}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.research_plan_ar_word}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.research_plan_ar_word}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.research_plan_ar_word}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -806,11 +806,11 @@ const ShowA = () => {
               <td> {t('research-word-en')} </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.research_plan_en_word}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.research_plan_en_word}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.research_plan_en_word}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.research_plan_en_word}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -822,11 +822,11 @@ const ShowA = () => {
               <td> {t('research-en')} </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.research_plan_en_pdf}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.research_plan_en_pdf}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -838,11 +838,11 @@ const ShowA = () => {
               <td>{t('translation')}</td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.translation_paper}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.translation_paper}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.translation_paper}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.translation_paper}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -854,11 +854,11 @@ const ShowA = () => {
               <td> {t('service2-step-two.research-word')} </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.message_word_ar}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.message_word_ar}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.message_word_ar}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.message_word_ar}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -870,11 +870,11 @@ const ShowA = () => {
               <td> {t('service2-step-two.research')} </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.message_pdf_ar}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.message_pdf_ar}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.message_pdf_ar}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.message_pdf_ar}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -886,11 +886,11 @@ const ShowA = () => {
               <td> {t('service2-step-two.form')} </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.quote_check_form}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.quote_check_form}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.quote_check_form}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.quote_check_form}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -902,11 +902,11 @@ const ShowA = () => {
               <td> {t('service7-step3')} </td>
               <td className='att-row'>
                 <button
-                  onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.decision}`) }}
+                  onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.decision}`) }}
                   class="atch-btn">Open
                 </button>
                 <button
-                  onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.decision}`) }}
+                  onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.decision}`) }}
                   class="atch-btn atch-btn2">Download
                 </button>
 
@@ -921,11 +921,11 @@ const ShowA = () => {
                     <td> {t(`service${user.service_id}-step-two.word${i + 1}`)} </td>
                     <td className='att-row'>
                       <button
-                        onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user[`research${i + 1}_image_word`]}`) }}
+                        onClick={() => { openImage(`${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`) }}
                         class="atch-btn">Open
                       </button>
                       <button
-                        onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user[`research${i + 1}_image_word`]}`) }}
+                        onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`) }}
                         class="atch-btn atch-btn2">Download
                       </button>
 
@@ -937,11 +937,11 @@ const ShowA = () => {
                     <td> {t(`service${user.service_id}-step-two.pdf${i + 1}`)} </td>
                     <td className='att-row'>
                       <button
-                        onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`) }}
+                        onClick={() => { openImage(`${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`) }}
                         class="atch-btn">Open
                       </button>
                       <button
-                        onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`) }}
+                        onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`) }}
                         class="atch-btn atch-btn2">Download
                       </button>
 
@@ -955,11 +955,11 @@ const ShowA = () => {
                       <td>{t(`service${user.service_id}-step-two.acceptance_letter${i + 1}`)} </td>
                       <td className='att-row'>
                         <button
-                          onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`) }}
+                          onClick={() => { openImage(`${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`) }}
                           class="atch-btn">Open
                         </button>
                         <button
-                          onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`) }}
+                          onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`) }}
                           class="atch-btn atch-btn2">Download
                         </button>
 
@@ -1031,11 +1031,11 @@ const ShowA = () => {
                   {(user.response_pdf !== null) && user.status !== 0 ?
                     (<div className="atch-btns">
                       <button
-                        onClick={() => { openImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
+                        onClick={() => { openImage(`${API_URL}/${user.national_id}/${user.response_pdf}`) }}
                         className="atch-btn">Open
                       </button>
                       <button
-                        onClick={() => { downloadImage(`http://localhost:5000/${user.national_id}/${user.response_pdf}`) }}
+                        onClick={() => { downloadImage(`${API_URL}/${user.national_id}/${user.response_pdf}`) }}
                         className="atch-btn atch-btn2">Download
                       </button>
                     </div>) :
@@ -1085,35 +1085,35 @@ const ShowA = () => {
           )}
 
 
-              <div className="progress">
-                {progress.started && <progress max="100" value={progress.value}></progress>}
-                {msg && <p>{msg}</p>}
-              </div>
-              {response.response_pdf || response.response_text ? (
-                <div className="resp two">
-                  <button
-                    disabled={disabled}
-                    className='atch-btn atch-btn2'
-                    style={{ width: "50%" }}
-                    onClick={handelAccept}
-                  >
-                    ارسال
-                  </button>
-                </div>
-              ) : null}
-              {payment_code && user.status == 0 ? (
-                <div className="resp two">
-                  <button
-                    disabled={disabled}
-                    className='atch-btn atch-btn2'
-                    style={{ width: "50%" }}
-                    onClick={handelAcceptpayment}
-                  >
-                    ارسال كود الدفع
-                  </button>
-                </div>
-              ) : null}
+          <div className="progress">
+            {progress.started && <progress max="100" value={progress.value}></progress>}
+            {msg && <p>{msg}</p>}
+          </div>
+          {response.response_pdf || response.response_text ? (
+            <div className="resp two">
+              <button
+                disabled={disabled}
+                className='atch-btn atch-btn2'
+                style={{ width: "50%" }}
+                onClick={handelAccept}
+              >
+                ارسال
+              </button>
             </div>
+          ) : null}
+          {payment_code && user.status == 0 ? (
+            <div className="resp two">
+              <button
+                disabled={disabled}
+                className='atch-btn atch-btn2'
+                style={{ width: "50%" }}
+                onClick={handelAcceptpayment}
+              >
+                ارسال كود الدفع
+              </button>
+            </div>
+          ) : null}
+        </div>
 
 
       </section>

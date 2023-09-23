@@ -27,7 +27,6 @@ const Ser5 = ({ ser }) => {
     const [confirm, setConfirm] = useState(false)
     const [isMaxWidth, setIsMaxWidth] = useState(false);
 
-    console.log(number)
 
     const [data, setData] = useState({
         payment_photo: '',
@@ -90,7 +89,7 @@ const Ser5 = ({ ser }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -162,9 +161,7 @@ const Ser5 = ({ ser }) => {
 
     }, [])
 
-    console.log(data)
-    console.log(words)
-    console.log(pdfs)
+
 
 
     const handleCloseError = () => {
@@ -181,7 +178,6 @@ const Ser5 = ({ ser }) => {
     const handleSubmit = () => {
         setConfirm(false)
         axios.defaults.withCredentials = true
-        console.log(data)
         if (!data.payment_photo) {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
@@ -298,7 +294,7 @@ const Ser5 = ({ ser }) => {
 
             )
                 .then((res) => {
-                    console.log(res.data)
+
                     alert("done")
                     navigate(`/`)
 
@@ -376,7 +372,7 @@ const Ser5 = ({ ser }) => {
                                                     if (data.payment_photo.name) {
                                                         return window.open(URL.createObjectURL(data.payment_photo))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.payment_photo}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -411,7 +407,7 @@ const Ser5 = ({ ser }) => {
                                                     if (data.research_list.name) {
                                                         return window.open(URL.createObjectURL(data.research_list))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_list}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.research_list}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -455,7 +451,7 @@ const Ser5 = ({ ser }) => {
                                                                 if (words[`word${i + 1}`].name) {
                                                                     return window.open(URL.createObjectURL(words[`word${i + 1}`]))
                                                                 } else {
-                                                                    return window.open(`http://localhost:5000/${ser.national_id}/${words[`word${i + 1}`]}`)
+                                                                    return window.open(`${API_URL}/${ser.national_id}/${words[`word${i + 1}`]}`)
                                                                 }
                                                             }}
                                                         >{t('open')}</button>
@@ -495,7 +491,7 @@ const Ser5 = ({ ser }) => {
                                                                 if (pdfs[`pdf${i + 1}`].name) {
                                                                     return window.open(URL.createObjectURL(pdfs[`pdf${i + 1}`]))
                                                                 } else {
-                                                                    return window.open(`http://localhost:5000/${ser.national_id}/${pdfs[`pdf${i + 1}`]}`)
+                                                                    return window.open(`${API_URL}/${ser.national_id}/${pdfs[`pdf${i + 1}`]}`)
                                                                 }
                                                             }}
                                                         >{t('open')}</button>
@@ -535,7 +531,7 @@ const Ser5 = ({ ser }) => {
                                                                 if (pdfs[`pdf${i + 1}`].name) {
                                                                     return window.open(URL.createObjectURL(pdfs[`pdf${i + 11}`]))
                                                                 } else {
-                                                                    return window.open(`http://localhost:5000/${ser.national_id}/${pdfs[`pdf${i + 11}`]}`)
+                                                                    return window.open(`${API_URL}/${ser.national_id}/${pdfs[`pdf${i + 11}`]}`)
                                                                 }
                                                             }}
                                                         >{t('open')}</button>

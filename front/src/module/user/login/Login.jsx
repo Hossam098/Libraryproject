@@ -38,7 +38,6 @@ const Login = () => {
   useEffect(() => {
     axios.get(`${API_URL}/auth/check`, { withCredentials: true })
       .then((res) => {
-        console.log(res)
         setLogged(true)
         navigate('/')
       })
@@ -52,7 +51,6 @@ const Login = () => {
       try {
         axios.post(`${API_URL}/auth/login`, user, { withCredentials: true })
           .then((res) => {
-            console.log("logged")
             if (res.data.login == true) {
               localStorage.setItem('token', res.data.token)
               navigate('/')

@@ -37,7 +37,6 @@ const Reviewed = () => {
   const [filter2, setFilter2] = useState(student);
 
 
-  console.log(student)
 
   const sername = (item) => {
     const ser_name = item.ser_reg !== null ?
@@ -66,7 +65,6 @@ const Reviewed = () => {
     return appid;
   }
 
-  console.log(student[0]?.service_id)
 
   return (
     <div className='super-container'>

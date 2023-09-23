@@ -41,7 +41,7 @@ const Ser8 = ({ ser }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -73,7 +73,6 @@ const Ser8 = ({ ser }) => {
         }
     }, [])
 
-    console.log(data)
     const handleCloseError = () => {
         setError('')
         setConfirm(false)
@@ -156,7 +155,7 @@ const Ser8 = ({ ser }) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res.data)
+
                         alert("done")
                         navigate(`/`)
                     })

@@ -20,28 +20,28 @@ const Charts = () => {
 
     axios.defaults.withCredentials = true
     try {
-        axios.get(`${API_URL}/admin/getallApplicants`, { withCredentials: true })
-            .then((res) => {
-                console.log(res.data)
-                setfilter(res.data)
-                setFilter2(res.data)
-            })
-            .catch((error) => {
-                if (error.response.status === 401) navigate('/AdminLOgin')
-                navigate('/AdminLOgin')}
-            )
-    } catch (err) {
-        console.log(err)
-    }
-}, [])
+      axios.get(`${API_URL}/admin/getallApplicants`, { withCredentials: true })
+        .then((res) => {
 
-const [filter2, setFilter2] = useState(filter);
-console.log(filter2)
+          setfilter(res.data)
+          setFilter2(res.data)
+        })
+        .catch((error) => {
+          if (error.response.status === 401) navigate('/AdminLOgin')
+          navigate('/AdminLOgin')
+        }
+        )
+    } catch (err) {
+      console.log(err)
+    }
+  }, [])
+
+  const [filter2, setFilter2] = useState(filter);
   return (
 
     <div className='chart-Grid'>
       <div className="filter">
-        <Slider 
+        <Slider
           filter={filter}
           setfilter={setfilter}
           filter2={filter2}
@@ -57,7 +57,7 @@ console.log(filter2)
             </div>
             <h2>{
               filter2?.length
-              }</h2>
+            }</h2>
           </article>
           <article className="widget">
             <div className="widget-header">
@@ -65,8 +65,8 @@ console.log(filter2)
               <p>عدد المقبولين</p>
             </div>
             <h2>{
-              filter2?.filter((item)=>(+item.status==5)).length
-              }</h2>
+              filter2?.filter((item) => (+item.status == 5)).length
+            }</h2>
           </article>
           <article className="widget">
             <div className="widget-header">
@@ -74,7 +74,7 @@ console.log(filter2)
               <p>عدد المرفوضين</p>
             </div>
             <h2>
-              {filter2?.filter((item)=>(+item.status==6)).length}
+              {filter2?.filter((item) => (+item.status == 6)).length}
             </h2>
           </article>
 
@@ -84,7 +84,7 @@ console.log(filter2)
               <p>عدد الموجودين ب قائمه انتظار كود </p>
             </div>
             <h2>
-              {filter2?.filter((item)=>(+item.status==0)).length}
+              {filter2?.filter((item) => (+item.status == 0)).length}
             </h2>
           </article>
           <article className="widget">
@@ -93,7 +93,7 @@ console.log(filter2)
               <p> عدد الحاصلين على كود دفع </p>
             </div>
             <h2>
-              {filter2?.filter((item)=>(+item.status==1)).length}
+              {filter2?.filter((item) => (+item.status == 1)).length}
             </h2>
           </article>
 
@@ -103,7 +103,7 @@ console.log(filter2)
               <p>عدد الموجودين ب قائمه الانتظار</p>
             </div>
             <h2>
-              {filter2?.filter((item)=>(+item.status==2)).length}
+              {filter2?.filter((item) => (+item.status == 2)).length}
             </h2>
           </article>
 
@@ -113,7 +113,7 @@ console.log(filter2)
               <p>عدد الموجودين ب قائمه التعديل</p>
             </div>
             <h2>
-              {filter2?.filter((item)=>(+item.status==3)).length}
+              {filter2?.filter((item) => (+item.status == 3)).length}
             </h2>
           </article>
 
@@ -123,7 +123,7 @@ console.log(filter2)
               <p>قائمه التعديل على مرفقات كود الدفع</p>
             </div>
             <h2>
-              {filter2?.filter((item)=>(+item.status==4)).length}
+              {filter2?.filter((item) => (+item.status == 4)).length}
             </h2>
           </article>
         </div>
@@ -132,20 +132,20 @@ console.log(filter2)
             xAxis={[
               {
                 id: 'barCategories',
-                data: ['خدمه المنح', ' خدمه التشكيل ', 'خدمه الترقيه', ' خدمه التسجيل ', ' فحص احسن رساله علميه ', ' الفحص الشخصي ', ' فحص النشر ','بنك المعرفه'],
+                data: ['خدمه المنح', ' خدمه التشكيل ', 'خدمه الترقيه', ' خدمه التسجيل ', ' فحص احسن رساله علميه ', ' الفحص الشخصي ', ' فحص النشر ', 'بنك المعرفه'],
                 scaleType: 'band',
               },
             ]}
             series={[
               {
-                data: [filter?.filter((item)=>(item.ser_grant)).length,
-                  filter?.filter((item)=>(item.ser_formation)).length,
-                  filter?.filter((item)=>(item.ser_upgrade)).length,
-                  filter?.filter((item)=>(item.ser_reg)).length,
-                  filter?.filter((item)=>(item.ser_best)).length,
-                  filter?.filter((item)=>(item.ser_personal)).length,
-                  filter?.filter((item)=>(item.ser_magazine)).length,
-                  filter?.filter((item)=>(item.ser_knowledge)).length],
+                data: [filter?.filter((item) => (item.ser_grant)).length,
+                filter?.filter((item) => (item.ser_formation)).length,
+                filter?.filter((item) => (item.ser_upgrade)).length,
+                filter?.filter((item) => (item.ser_reg)).length,
+                filter?.filter((item) => (item.ser_best)).length,
+                filter?.filter((item) => (item.ser_personal)).length,
+                filter?.filter((item) => (item.ser_magazine)).length,
+                filter?.filter((item) => (item.ser_knowledge)).length],
               },
             ]}
 

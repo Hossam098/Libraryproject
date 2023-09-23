@@ -31,7 +31,6 @@ const Profile = () => {
     try {
       axios.get(`${API_URL}/user/getuser`, { withCredentials: true })
         .then((res) => {
-          console.log(res.data)
           setUser(res.data)
           setImgUser(res.data.img)
         })
@@ -62,7 +61,6 @@ const Profile = () => {
     try {
       axios.put(`${API_URL}/user/updateuser`, formData, { withCredentials: true })
         .then((res) => {
-          console.log(res.data)
           window.location.reload()
         })
         .catch((err) => {
@@ -88,7 +86,7 @@ const Profile = () => {
         <div className="subnav">
           <div className="p-img-container">
             <div className="p-i-c">
-              <img src={user.img == "" || user.img == null ? profileimg : `http://localhost:5000/${user.national_id}/${imgUser}`} alt="profile" />
+              <img src={user.img == "" || user.img == null ? profileimg : `${API_URL}/${user.national_id}/${imgUser}`} alt="profile" />
             </div>
             <div className="editbutton">
 

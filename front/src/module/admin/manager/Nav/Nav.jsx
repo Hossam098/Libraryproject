@@ -16,7 +16,7 @@ const Nav = () => {
     try {
       
       axios.defaults.withCredentials = true
-      axios.get('http://localhost:5000/manager/getMyInfo', { withCredentials: true })
+      axios.get(`${API_URL}/manager/getMyInfo`, { withCredentials: true })
         .then((res) => {
           setManager(res.data)
         }).catch((error) => {
@@ -29,7 +29,6 @@ const Nav = () => {
 
   }, [])
 
-console.log(manager.role)
 
 
   const logout = () => {

@@ -32,7 +32,7 @@ const Myser = () => {
     const [id, setId] = useState(0)
     const [service, setService] = useState([])
     const [status, setStatus] = useState(0)
-    
+
 
     const { t } = useTranslation();
     useEffect(() => {
@@ -41,7 +41,7 @@ const Myser = () => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -49,7 +49,6 @@ const Myser = () => {
                 })
             axios.get(`${API_URL}/getallwaiting`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res.data)
                     setServices(res.data)
                 })
                 .catch((err) => {
@@ -72,7 +71,6 @@ const Myser = () => {
 
     const handleRoute = (id) => {
         setStep2(true)
-        console.log(id)
     }
 
 
@@ -105,61 +103,43 @@ const Myser = () => {
                                 }
 
                                 return (
-                                    service.status === 5 || service.status === 6 ? null : 
-                                    <div className="inst"><div className="inst-container">
-                                        <div className="information-service"  >
-                                            <div className="information-service_body" style={{ backgroundColor: '#fff', color: '#000', width: '100%' }}>
-                                                <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
-                                                <hr style={{ width: "60%" }} />
-                                                <img src={service.status == 1 ? codeIMG : img} alt="" style={{ width: '50%' }} />
+                                    service.status === 5 || service.status === 6 ? null :
+                                        <div className="inst"><div className="inst-container">
+                                            <div className="information-service"  >
+                                                <div className="information-service_body" style={{ backgroundColor: '#fff', color: '#000', width: '100%' }}>
+                                                    <h1 style={{ fontSize: "2rem" }}>{getTranslatedServiceName(service)}</h1>
+                                                    <hr style={{ width: "60%" }} />
+                                                    <img src={service.status == 1 ? codeIMG : img} alt="" style={{ width: '50%' }} />
 
-                                                {service.status == 0 ?
-                                                    <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                                        <GiSandsOfTime />
-                                                        {t('service1-step3')}
-                                                    </h2>
-                                                    : service.status == 1 ?
-                                                        <>
-                                                            <div className="contiue">
-                                                                <h3>{t('payment-code')}</h3>
-                                                                <div className="code wait-txt">
-                                                                    {service.payment_code}
-                                                                </div>
-                                                                <button className="waitbtn-edit"
-                                                                    onClick={() => {
-                                                                        handleRoute(service.service_id)
-                                                                        setId(service.service_id)
-                                                                        console.log(id)
-                                                                        setService(service)
-                                                                    }}
-                                                                >
-                                                                    {t('continue')}
-                                                                </button>
-                                                            </div>
-                                                        </>
-                                                        : service.status == 2 ?
-                                                            <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
-                                                                <GiSandsOfTime />
-                                                                {t('wait-res')}
-                                                            </h2>
-                                                            : service.status == 3 ?
-                                                                <>
-                                                                    <h2 className='wait-txt'>
-                                                                        <GiSandsOfTime />
-                                                                        {service.response_text}
-                                                                    </h2>
+                                                    {service.status == 0 ?
+                                                        <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
+                                                            <GiSandsOfTime />
+                                                            {t('service1-step3')}
+                                                        </h2>
+                                                        : service.status == 1 ?
+                                                            <>
+                                                                <div className="contiue">
+                                                                    <h3>{t('payment-code')}</h3>
+                                                                    <div className="code wait-txt">
+                                                                        {service.payment_code}
+                                                                    </div>
                                                                     <button className="waitbtn-edit"
                                                                         onClick={() => {
                                                                             handleRoute(service.service_id)
                                                                             setId(service.service_id)
-                                                                            console.log(id)
                                                                             setService(service)
                                                                         }}
                                                                     >
-                                                                        {t('wait-edit')}
+                                                                        {t('continue')}
                                                                     </button>
-                                                                </>
-                                                                : service.status == 4 ?
+                                                                </div>
+                                                            </>
+                                                            : service.status == 2 ?
+                                                                <h2 style={{ backgroundColor: '#AD8700', color: '#000', borderRadius: '10px', padding: '10px', fontSize: '2rem', fontWeight: '500', lineHeight: '1.5', width: '80%' }}>
+                                                                    <GiSandsOfTime />
+                                                                    {t('wait-res')}
+                                                                </h2>
+                                                                : service.status == 3 ?
                                                                     <>
                                                                         <h2 className='wait-txt'>
                                                                             <GiSandsOfTime />
@@ -169,19 +149,34 @@ const Myser = () => {
                                                                             onClick={() => {
                                                                                 handleRoute(service.service_id)
                                                                                 setId(service.service_id)
-                                                                                console.log(id)
                                                                                 setService(service)
-                                                                                setStatus(service.status)
                                                                             }}
                                                                         >
                                                                             {t('wait-edit')}
                                                                         </button>
                                                                     </>
-                                                                    : null}
+                                                                    : service.status == 4 ?
+                                                                        <>
+                                                                            <h2 className='wait-txt'>
+                                                                                <GiSandsOfTime />
+                                                                                {service.response_text}
+                                                                            </h2>
+                                                                            <button className="waitbtn-edit"
+                                                                                onClick={() => {
+                                                                                    handleRoute(service.service_id)
+                                                                                    setId(service.service_id)
+                                                                                    setService(service)
+                                                                                    setStatus(service.status)
+                                                                                }}
+                                                                            >
+                                                                                {t('wait-edit')}
+                                                                            </button>
+                                                                        </>
+                                                                        : null}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    </div>)
+                                        </div>)
                             })
                         }
 

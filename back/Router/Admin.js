@@ -57,7 +57,6 @@ Admin.get('/getuserbyid/:serId/:serNam/:stId/:appId',
             const stId = req.params.stId
             const appId = req.params.appId
 
-            console.log(appId, stId, serNam, serId)
             let ser_table = ""
             if (serNam === 'ser_reg') {
                 ser_table = "registration_services"
@@ -128,15 +127,11 @@ Admin.put('/acceptApplicant/:id',
     async (req, res) => {
         let error = [];
         try {
-            console.log(req.body.national_id);
             const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
             const value = [req.body.app_id];
             const result = await query(sqlSelect, value);
-            console.log(1)
             if (result[0]) {
-                console.log(2)
                 if (result.length > 0) {
-                    console.log(3)
                     const Data = {
                         response_text: req.body.response_text,
                         response_pdf: req.file ? req.file.filename : null,
@@ -163,30 +158,27 @@ Admin.put('/acceptApplicant/:id',
 Admin.put('/watingApplicant/:id',
     async (req, res) => {
         try {
-            console.log()
             const id = req.params.id;
             if (+req.body.status === 2) {
                 const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
                 const value = [req.body.app_id];
                 const result1 = await query(sqlSelect, value);
-                console.log(result1[0].response_pdf)
                 if (result1 && result1.length > 0 && result1[0].response_pdf) {
-                    console.log(result1[0])
                     const filePath = `./public/imgs/${id}/${result1[0].response_pdf}`;
                     if (fs.existsSync(filePath)) {
                         fs.unlinkSync(filePath);
                     }
                 }
-                    const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
-                    const value2 = [req.body.status, req.body.reason, req.body.app_id];
-                    const result = await query(sqlUpdate, value2);
-                    if (result.affectedRows > 0) {
-                        return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
-                    } else {
-                        return res.status(400).json({ message: " حدث خطأ ما" });
-                    }
+                const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
+                const value2 = [req.body.status, req.body.reason, req.body.app_id];
+                const result = await query(sqlUpdate, value2);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
                 }
-            
+            }
+
         } catch (errors) {
             return res.status(500).json({ message: errors });
         }
@@ -214,5 +206,186 @@ Admin.get('/getallManagers',
         }
     }
 )
+
+
+
+
+Admin.post('/addManager',
+    body('mname').notEmpty().withMessage('يجب ادخال اسم المدير'),
+    body('email').notEmpty().withMessage('يجب ادخال البريد الالكتروني').isEmail().withMessage('يجب ادخال البريد الالكتروني بشكل صحيح'),
+    body('service_id').notEmpty().withMessage('يجب ادخال رقم الخدمه'),
+    checkAdmin,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: errors.array() });
+            }
+            const sqlSelect = `SELECT * FROM manager WHERE email = ?`;
+            const value = [req.body.email];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                return res.status(400).json({ message: "يوجد مدير بهذا الايميل" });
+            } else {
+                const Data = {
+                    mname: req.body.mname,
+                    email: req.body.email,
+                    password: "12345678",
+                    service_id: req.body.service_id,
+                }
+                const sqlInsert = `INSERT INTO manager SET ?`;
+                const result = await query(sqlInsert, Data);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم اضافه المدير بنجاح" });
+                }
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+
+Admin.put('/updateManager',
+    body('mname').notEmpty().withMessage('يجب ادخال اسم المدير'),
+    body('email').notEmpty().withMessage('يجب ادخال البريد الالكتروني').isEmail().withMessage('يجب ادخال البريد الالكتروني بشكل صحيح'),
+    body('service_id').notEmpty().withMessage('يجب ادخال رقم الخدمه'),
+    body('id').notEmpty().withMessage('يجب ادخال رقم المدير'),
+    checkAdmin,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: errors.array() });
+            }
+            const sqlSelect = `SELECT * FROM manager WHERE id = ?`;
+            const value = [req.body.id];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                const sqlUpdate = `UPDATE manager SET mname = ? , email = ? , service_id = ? WHERE id = ?`;
+                const value = [req.body.mname, req.body.email, req.body.service_id, req.body.id];
+                const result = await query(sqlUpdate, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم تعديل المدير بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            } else {
+                return res.status(400).json({ message: "لا يوجد مدير بهذا الايميل" });
+            }
+
+
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+Admin.delete('/deleteManager/:id',
+    checkAdmin,
+    async (req, res) => {
+        let error = [];
+        try {
+            const id = req.params.id;
+            const sqlSelect = `SELECT * FROM manager WHERE id = ?`;
+            const value = [id];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                const sqlDelete = `DELETE FROM manager WHERE id = ?`;
+                const value = [id];
+                const result = await query(sqlDelete, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم حذف المدير بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            } else {
+                return res.status(400).json({ message: "لا يوجد مدير بهذا الايميل" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+
+
+Admin.put('/updateService',
+    body('service_name_ar').notEmpty().withMessage('يجب ادخال اسم الخدمه'),
+    body('service_name').notEmpty().withMessage('يجب ادخال اسم الخدمه'),
+    body('pref_ar').notEmpty().withMessage('يجب ادخال وصف الخدمه'),
+    body('pref').notEmpty().withMessage('يجب ادخال وصف الخدمه'),
+    body('id').notEmpty().withMessage('يجب ادخال رقم الخدمه'),
+    checkAdmin,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: errors.array() });
+            }
+            const sqlSelect = `SELECT * FROM services WHERE id = ?`;
+            const value = [req.body.id];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                const Data = {
+                    service_name_ar: req.body.service_name_ar,
+                    service_name: req.body.service_name,
+                    pref_ar: req.body.pref_ar,
+                    pref: req.body.pref,
+                }
+                const sqlUpdate = `UPDATE services SET ? WHERE id = ?`;
+                const value = [Data, req.body.id];
+                const result = await query(sqlUpdate, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم تعديل الخدمه بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+
+Admin.put('/enableService',
+    body('id').notEmpty().withMessage('يجب ادخال رقم الخدمه'),
+    body('enabled').notEmpty().withMessage('يجب ادخال حاله الخدمه'),
+    checkAdmin,
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: errors.array() });
+            }
+            const sqlSelect = `SELECT * FROM services WHERE id = ?`;
+            const value = [req.body.id];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                let enabled = +req.body.enabled === 1 ? 0 : 1;
+                const Data = {
+                    enabled: enabled,
+                }
+                const sqlUpdate = `UPDATE services SET ? WHERE id = ?`;
+                const value = [Data, req.body.id];
+                const result = await query(sqlUpdate, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم تعديل الخدمه بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+
 
 export default Admin;

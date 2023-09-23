@@ -1,4 +1,4 @@
-import React ,{useEffect}from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import Unav from '../../../components/userNav/Unav';
 import Footer from '../../../components/footer/Footer';
@@ -21,12 +21,11 @@ import './serviceStepTwo.css'
 
 
 
-const ServiceStepTwo = (ID , Ser) => {
-    const  id  = ID.ID
-    const {id2} = useParams();
+const ServiceStepTwo = (ID, Ser) => {
+    const id = ID.ID
+    const { id2 } = useParams();
     const navigate = useNavigate();
 
-    console.log(id)
 
     const ser = ID.Ser
 
@@ -37,7 +36,7 @@ const ServiceStepTwo = (ID , Ser) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -50,24 +49,23 @@ const ServiceStepTwo = (ID , Ser) => {
     }, [])
 
     const serviceStepTwo = (id) => {
-        console.log(id)
         switch (id) {
             case 1:
                 return <Ser1 ser={ser} />;
             case 2:
-                return <Ser2 ser={ser}/>;
+                return <Ser2 ser={ser} />;
             case 3:
-                return <Ser3 ser={ser}/>;
+                return <Ser3 ser={ser} />;
             case 4:
-                return <Ser4 ser={ser}/>;
+                return <Ser4 ser={ser} />;
             case 5:
-                return <Ser5 ser={ser}/>;
+                return <Ser5 ser={ser} />;
             case 6:
-                return <Ser6 ser={ser}/>;
+                return <Ser6 ser={ser} />;
             case 7:
                 return <Ser7 />;
             case 8:
-                return <Ser8 ser={ser}/>;
+                return <Ser8 ser={ser} />;
 
 
             default:
@@ -76,11 +74,11 @@ const ServiceStepTwo = (ID , Ser) => {
     }
 
     return (
-        <div style={{backgroundColor:'#fff'}}>
-            
+        <div style={{ backgroundColor: '#fff' }}>
+
             {/* <div className="Cont-Serv"> */}
-                {/* <img src={Serimg} alt="" className='ImageserviceStepTwo'/> */}
-                {serviceStepTwo(id)}
+            {/* <img src={Serimg} alt="" className='ImageserviceStepTwo'/> */}
+            {serviceStepTwo(id)}
             {/* </div> */}
             {/* <Footer /> */}
         </div>

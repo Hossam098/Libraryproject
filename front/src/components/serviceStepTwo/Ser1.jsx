@@ -17,8 +17,7 @@ const Ser1 = ({ ser }) => {
     const id = ser.service_id;
     const id2 = ser.ser_reg;
     const status = ser.status;
-    console.log(status)
-    console.log(ser)
+
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [error, setError] = useState('')
@@ -45,7 +44,7 @@ const Ser1 = ({ ser }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -86,7 +85,6 @@ const Ser1 = ({ ser }) => {
 
 
     }, [])
-    console.log(data)
 
 
 
@@ -107,7 +105,6 @@ const Ser1 = ({ ser }) => {
     const handleSubmit = () => {
         setConfirm(false)
         axios.defaults.withCredentials = true
-        console.log(data)
         if (!data.payment_photo) {
             setError(t(`service${id}-step-two-err.payment-photo`))
             return
@@ -181,7 +178,7 @@ const Ser1 = ({ ser }) => {
 
             )
                 .then((res) => {
-                    console.log(res.data)
+
                     alert("done")
                     navigate(`/`)
 
@@ -258,7 +255,7 @@ const Ser1 = ({ ser }) => {
                                                     if (data.payment_photo.name) {
                                                         return window.open(URL.createObjectURL(data.payment_photo))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.payment_photo}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.payment_photo}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -293,7 +290,7 @@ const Ser1 = ({ ser }) => {
                                                     if (data.translation.name) {
                                                         return window.open(URL.createObjectURL(data.translation))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.translation}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.translation}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -328,7 +325,7 @@ const Ser1 = ({ ser }) => {
                                                     if (data.research.name) {
                                                         return window.open(URL.createObjectURL(data.research))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.research}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -363,7 +360,7 @@ const Ser1 = ({ ser }) => {
                                                     if (data.research_en.name) {
                                                         return window.open(URL.createObjectURL(data.research_en))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_en}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.research_en}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -398,7 +395,7 @@ const Ser1 = ({ ser }) => {
                                                     if (data.research_word.name) {
                                                         return window.open(URL.createObjectURL(data.research_word))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.research_word}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>
@@ -433,7 +430,7 @@ const Ser1 = ({ ser }) => {
                                                     if (data.research_word_en.name) {
                                                         return window.open(URL.createObjectURL(data.research_word_en))
                                                     } else {
-                                                        return window.open(`http://localhost:5000/${ser.national_id}/${data.research_word_en}`)
+                                                        return window.open(`${API_URL}/${ser.national_id}/${data.research_word_en}`)
                                                     }
                                                 }}
                                             >{t('open')}</button>

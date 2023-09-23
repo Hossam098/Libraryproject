@@ -94,27 +94,10 @@ manager.put('/AssignManager',
                 });
                 return res.status(400).json({ message: error });
             }
-            // console.log(req.body); 
-            // [
-            //     {
-            //       student_id: 3,
-            //       managerid: '2',
-            //       service_id: 1,
-            //       aplecationId: 20,
-            //       role: '1'
-            //     },
-            //     {
-            //       student_id: 3,
-            //       managerid: '2',
-            //       service_id: 1,
-            //       aplecationId: 21,
-            //       role: '1'
-            //     }
-            //   ]
+            
 
             for (const obj of req.body) {
                 const { student_id, managerid, service_id, aplecationId, role, ser_name } = obj;
-                console.log(obj);
                 const sqlUpdate = `UPDATE submit SET role = ? , manager_id = ? WHERE user_id = ? AND service_id = ? AND ${obj.ser_name} = ?`;
                 const value = [role, managerid, student_id, service_id, aplecationId];
                 await query(sqlUpdate, value);
@@ -202,10 +185,7 @@ manager.put('/deleteManager',
                 });
                 return res.status(400).json({ message: error });
             }
-            console.log(req.body.ser_name);
-            console.log(req.body.service_id);
-            console.log(req.body.student_id);
-            console.log(req.body.aplecationId);
+            
 
             const sqlUpdate = `UPDATE submit SET manager_id = Null , role = Null WHERE service_id = ? AND user_id = ? AND ${req.body.ser_name} = ?`;
             const value = [req.body.service_id, req.body.student_id, req.body.aplecationId];
@@ -227,12 +207,10 @@ manager.put('/acceptApplicant/:id',
         let error = [];
         try {
 
-            console.log(req.body.national_id);
             const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
             const value = [req.body.app_id];
             const result = await query(sqlSelect, value);
             if (result[0].role === 1) {
-                console.log(1)
                 if (result.length > 0) {
                     const Data = {
                         response_text: req.body.response_text,
@@ -244,17 +222,13 @@ manager.put('/acceptApplicant/:id',
                     const result = await query(sqlUpdate, value);
                     if (result.affectedRows > 0) {
                         return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
-                        console.log(2)
                     }
                 }
                 else {
                     return res.status(200).json({ message: "لا يوجد طلبات" });
                 }
-                console.log(3)
             } else if (result[0].role === 2) {
-                console.log(4)
                 if (result.length > 0) {
-                    console.log(5)
                     const Data = {
                         response_text: req.body.response_text,
                         response_pdf: req.file.filename,
@@ -284,9 +258,7 @@ manager.put('/acceptApplicantforManager',
     async (req, res) => {
         let error = [];
         try {
-            console.log(req.body.ser_id);
-            console.log('///////');
-            console.log(req.service_id);
+        
             if (req.service_id !== 9) {
                 if ((req.body.column === "status") && (+req.body.ser_id !== +req.service_id) && +req.body.role !== 2) {
                     return res.status(400).json({ message: "لا تملك صلاحية القيام بهذا الامر" });
@@ -301,23 +273,14 @@ manager.put('/acceptApplicantforManager',
 
 
             if (req.body.reason === "") {
-                console.log(1)
                 const sqlUpdate = `UPDATE submit SET ${req.body.column} = ?  WHERE ${req.body.ser_name} = ? AND service_id = ? AND user_id = ?`;
-                console.log(sqlUpdate);
                 const value = [req.body.status, req.body.app_id, req.body.ser_id, req.body.student_id];
                 const result = await query(sqlUpdate, value);
                 if (result.affectedRows > 0) {
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
                 }
             } else if (req.body.reason !== "") {
-                console.log(2)
-                console.log(req.body.status, req.body.reason, req.body.app_id, req.id, req.body.column, req.body.ser_name);
-                // const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
-                // const value1 = [req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
-                // const result1 = await query(sqlSelect, value1);
-                // if (result1.length > 0) {
-                //     console.log(result1);
-                // }
+                
                 const sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status}
              WHERE ${req.body.ser_name} = ?`;
                 const value = [req.body.status, req.body.reason, req.body.app_id];

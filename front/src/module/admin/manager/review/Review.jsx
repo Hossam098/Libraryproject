@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import img from '../../../../images/mini-logo.png'
+import { API_URL } from '../../../../config'
 
 
 
@@ -18,7 +19,7 @@ const Review = () => {
   useEffect(() => {
     try {
       axios.defaults.withCredentials = true
-      axios.get('http://localhost:5000/manager/getallApplicantsAssigned', { withCredentials: true })
+      axios.get(`${API_URL}/manager/getallApplicantsAssigned`, { withCredentials: true })
         .then((res) => {
           setStudent(res.data)
           // setFilter(res.data)
@@ -36,7 +37,6 @@ const Review = () => {
   // const [filter2, setFilter2] = useState(student);
 
 
-  console.log(student)
 
   const sername = (item) => {
     const ser_name = item.ser_reg !== null ?

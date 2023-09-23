@@ -49,7 +49,7 @@ const Register = () => {
   useEffect(() => {
     axios.get(`${API_URL}/auth/check`, { withCredentials: true })
       .then((res) => {
-        console.log(res)
+
         setLogged(true)
         navigate('/')
       })
@@ -62,8 +62,7 @@ const Register = () => {
       axios.defaults.withCredentials = true;
       axios.post(`${API_URL}/auth/register`, user, { withCredentials: true })
         .then((res) => {
-          console.log("logged");
-          console.log(res);
+          ;
           navigate('/login');
         })
         .catch((err) => {
@@ -143,7 +142,7 @@ const Register = () => {
         <img src="./assets/uni-logo.png" alt="" />
       </div> */}
 
-      <div className="main-content" style={{boxShadow: "0 0 15px #000"}}>
+      <div className="main-content" style={{ boxShadow: "0 0 15px #000" }}>
         <div className="main-content-logo">
           <img src="./assets/mini-logo.png" alt="" />
         </div>

@@ -23,7 +23,6 @@ const Home = () => {
         try {
             axios.get(`${API_URL}/user/getAllServices`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res.data)
                     setServices(res.data)
                 })
                 .catch((err) => {

@@ -1,4 +1,4 @@
-import React ,{useEffect}from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import Unav from '../../../components/userNav/Unav';
 import Footer from '../../../components/footer/Footer';
@@ -21,7 +21,7 @@ import './service.css'
 
 
 
-const Service = (ID , Ser) => {
+const Service = (ID, Ser) => {
     let { id } = useParams();
     const navigate = useNavigate();
 
@@ -29,9 +29,8 @@ const Service = (ID , Ser) => {
         id = ID.ID
     }
     const ser = ID.Ser
-    
 
-    console.log(id);
+
 
     useEffect(() => {
         axios.defaults.withCredentials = true
@@ -39,7 +38,7 @@ const Service = (ID , Ser) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -52,40 +51,39 @@ const Service = (ID , Ser) => {
     }, [])
 
     const Service = (id) => {
-        console.log(id)
         switch (id) {
             case '1':
                 return <Ser1 />;
             case 1:
-                return <Ser1 ser={ser}/>;
+                return <Ser1 ser={ser} />;
             case '2':
                 return <Ser2 />;
             case 2:
-                return <Ser2 ser={ser}/>;
+                return <Ser2 ser={ser} />;
             case '3':
                 return <Ser3 />;
             case 3:
-                return <Ser3 ser={ser}/>;
+                return <Ser3 ser={ser} />;
             case '4':
                 return <Ser4 />;
             case 4:
-                return <Ser4 ser={ser}/>;
+                return <Ser4 ser={ser} />;
             case '5':
                 return <Ser5 />;
             case 5:
-                return <Ser5 ser={ser}/>;
+                return <Ser5 ser={ser} />;
             case '6':
                 return <Ser6 />;
             case 6:
-                return <Ser6 ser={ser}/>;
+                return <Ser6 ser={ser} />;
             case '7':
                 return <Ser7 />;
             case 7:
-                return <Ser7 ser={ser}/>;
+                return <Ser7 ser={ser} />;
             case '8':
                 return <Ser8 />;
             case 8:
-                return <Ser8 ser={ser}/>;
+                return <Ser8 ser={ser} />;
 
 
             default:
@@ -94,11 +92,11 @@ const Service = (ID , Ser) => {
     }
 
     return (
-        <div style={{backgroundColor:'#fff'}}>
-            
+        <div style={{ backgroundColor: '#fff' }}>
+
             {/* <div className="Cont-Serv"> */}
-                {/* <img src={Serimg} alt="" className='ImageService'/> */}
-                {Service(id)}
+            {/* <img src={Serimg} alt="" className='ImageService'/> */}
+            {Service(id)}
             {/* </div> */}
             {/* <Footer /> */}
         </div>

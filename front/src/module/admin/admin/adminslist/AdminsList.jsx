@@ -5,26 +5,26 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import img from '../../../../images/mini-logo.png'
 import { API_URL } from '../../../../config';
+import PopupErrorMsg from '../../../../components/error/PopupErrorMsg';
+import { t } from 'i18next';
 
 
 const AdminsList = () => {
 
     const navigate = useNavigate()
     const [services, setServices] = React.useState([]);
-    const [error, setErroe] = React.useState("");
+    const [error, setError] = React.useState("");
 
     const [managers, setManagers] = React.useState([])
     const [managers2, setManagers2] = React.useState([])
     const [addManager, setAddManager] = React.useState({
-        manager_name: '',
-        manager_email: '',
-        password: '',
-        faculty_id: '',
-        type: ''
+        mname: '',
+        email: '',
+        service_id: '',
     })
     axios.defaults.withCredentials = true
     useEffect(() => {
-        axios.get('http://localhost:5000/admin/getallManagers', { withCredentials: true })
+        axios.get(`${API_URL}/admin/getallManagers`, { withCredentials: true })
             .then((res) => {
                 setManagers(res.data)
             }).catch((error) => {
@@ -51,50 +51,134 @@ const AdminsList = () => {
 
 
 
-
-    // const handleEdit = (index) => {
-    //     let con = window.confirm('هل انت متاكد من التعديل')
-    //     if (con) {
-    //         axios.post('http://localhost:5000/superadmin/updatefaculty', facuality[index], { withCredentials: true })
-    //             .then((res) => {
-    //                 window.location.reload()
-    //             }).catch((error) => {
-    //             })
-    //     }
-    // }
-
-    const handleEditm1 = (index) => {
-        let con = window.confirm('هل انت متاكد من التعديل')
-        if (con) {
-            axios.put('http://localhost:5000/superadmin/updatemanager1', managers[index], { withCredentials: true })
-                .then((res) => {
-                    window.location.reload()
-                }).catch((error) => {
-                })
+    const handleEditManager = async (index) => {
+        try {
+            if (managers[index].mname == '') return setError('ادخل اسم الموظف')
+            if (managers[index].email == '') return setError('ادخل البريد الالكترونى')
+            if (managers[index].service_id == '') return setError('اختر الخدمة')
+            let con = window.confirm('هل انت متاكد من التعديل')
+            if (con) {
+                await axios.put(`${API_URL}/admin/updateManager`, managers[index], { withCredentials: true })
+                    .then((res) => {
+                        window.location.reload()
+                    }).catch((error) => {
+                        if (error.response.status === 401) navigate('/AdminLogin')
+                        setError(error.response.data.message[0].msg)
+                        console.log(error.response.data.message[0].msg)
+                    })
+            }
+        } catch (err) {
+            if (err.response.status === 401) navigate('/AdminLogin')
+            console.log(err)
+            setError(err)
         }
     }
 
-    const handleEditm2 = (index) => {
-        let con = window.confirm('هل انت متاكد من التعديل')
-        if (con) {
-            axios.put('http://localhost:5000/superadmin/updatemanager2', managers2[index], { withCredentials: true })
-                .then((res) => {
-                    window.location.reload()
-                }).catch((error) => {
-                })
+    const handleDeleteManger = (index) => {
+        try {
+            let con = window.confirm('هل انت متاكد من الحذف')
+            if (con) {
+                axios.delete(`${API_URL}/admin/deleteManager/${managers[index].id}`, { withCredentials: true })
+                    .then((res) => {
+                        window.location.reload()
+                    }).catch((error) => {
+                        if (error.response.status === 401) navigate('/AdminLogin')
+                        setError(error.response.data.message[0].msg)
+                    })
+            }
+        } catch (err) {
+            if (err.response.status === 401) navigate('/AdminLogin')
+            setError(err)
         }
     }
+
+    const addM = () => {
+        if (addManager.mname !== '' && addManager.email !== '' && addManager.service_id !== '') {
+            let con = window.confirm('هل انت متاكد من اضافه الموظف')
+            if (con) {
+                axios.post(`${API_URL}/admin/addManager`, addManager, { withCredentials: true })
+                    .then((res) => {
+                        setError('تم اضافه الموظف')
+                        window.location.reload()
+                    }).catch((error) => {
+                        if (error.response.status === 401) navigate('/AdminLogin')
+                        setError(error.response.data.message[0].msg)
+                    })
+            }
+        } else {
+            if (addManager.mname == '') {
+                return setError('ادخل اسم الموظف')
+            }
+            if (addManager.email == '') {
+                return setError('ادخل البريد الالكترونى')
+            }
+            if (addManager.service_id == '') {
+                return setError('اختر الخدمة')
+            }
+        }
+    }
+
+    const handleEdits2 = (index) => {
+        try {
+            if (services[index].service_name_ar == '') return setError('ادخل اسم الخدمة بالعربى')
+            if (services[index].pref_ar == '') return setError('ادخل وصف الخدمة بالعربى')
+            if (services[index].service_name == '') return setError('ادخل اسم الخدمة بالانجليزى')
+            if (services[index].pref == '') return setError('ادخل وصف الخدمة بالانجليزى')
+
+
+            let con = window.confirm('هل انت متاكد من التعديل')
+            if (con) {
+                axios.put(`${API_URL}/admin/updateService`, services[index], { withCredentials: true })
+                    .then((res) => {
+                        setError('تم التعديل')
+
+                        window.location.reload()
+                    }).catch((error) => {
+                        if (error.response.status === 401) navigate('/AdminLogin')
+                        setError(error.response.data.message[0].msg)
+                    })
+            }
+        } catch (err) {
+            if (err.response.status === 401) navigate('/AdminLogin')
+            setError(err)
+        }
+    }
+
+    const handleEnable = (index) => {
+        try {
+            let con = window.confirm('هل انت متاكد من التعديل ')
+            if (con) {
+                axios.put(`${API_URL}/admin/enableService`, services[index], { withCredentials: true })
+                    .then((res) => {
+                        setError('تم ')
+                        window.location.reload()
+                    }).catch((error) => {
+                        if (error.response.status === 401) navigate('/AdminLogin')
+                        setError(error.response.data.message[0].msg)
+                    })
+            }
+        } catch (err) {
+            if (err.response.status === 401) navigate('/AdminLogin')
+            setError(err)
+        }
+    }
+
+
+
+
+
+
 
     const addm1 = () => {
         if (document.querySelector('.add-p input').value !== '' && document.querySelector('.add-p select').value !== '') {
             let con = window.confirm('هل انت متاكد من اضافه الموظف')
             if (con) {
-                axios.post('http://localhost:5000/superadmin/addmanager1', addManager, { withCredentials: true })
+                axios.post(`${API_URL}/superadmin/addmanager1`, addManager, { withCredentials: true })
                     .then((res) => {
                         alert('تم اضافه الموظف')
                         window.location.reload()
                     }).catch((error) => {
-                        setErroe(error.response.data.errors.msg)
+                        setError(error.response.data.errors.msg)
                     })
             }
         } else {
@@ -105,19 +189,23 @@ const AdminsList = () => {
     const addm2 = () => {
         let con = window.confirm('هل انت متاكد من اضافه الموظف')
         if (con) {
-            axios.post('http://localhost:5000/superadmin/addmanager2', addManager, { withCredentials: true })
+            axios.post(`${API_URL}/superadmin/addmanager2`, addManager, { withCredentials: true })
                 .then((res) => {
                     alert('تم اضافه الموظف')
                     window.location.reload()
                 }).catch((error) => {
-                    setErroe(error.response.data.errors.msg)
+                    setError(error.response.data.errors.msg)
                 })
         }
     }
 
+    const handleClose = () => {
+        setError("")
+    }
 
 
 
+    console.log(error)
 
     return (
         <div className='super-container'>
@@ -126,23 +214,22 @@ const AdminsList = () => {
 
                 <div className="student-container">
                     <div className="add-manager">
-                        <h3 style={{ fontSize: "1.5rem" }}></h3>
+                        <h3 className='table-title-h2'> اضافه موظف </h3>
                         <input
+                            style={{ fontSize: "1.5rem" }}
                             id='add-p'
-                            onChange={(e) => { setAddManager({ ...addManager, manager_name: e.target.value }) }}
+                            onChange={(e) => { setAddManager({ ...addManager, mname: e.target.value }) }}
                             type="text"
                             placeholder='اسم الموظف' />
                         <input
+                            style={{ fontSize: "1.5rem" }}
                             id='add-p'
-                            onChange={(e) => { setAddManager({ ...addManager, manager_email: e.target.value }) }}
+                            onChange={(e) => { setAddManager({ ...addManager, email: e.target.value }) }}
                             type="email"
                             placeholder='البريد الالكترونى' />
-                        <input
-                            id='add-p'
-                            onChange={(e) => { setAddManager({ ...addManager, password: e.target.value }) }}
-                            type="text"
-                            placeholder='كلمه المرور' />
-                        <select onChange={(e) => { setAddManager({ ...addManager, faculty_id: e.target.value }) }}>
+
+                        <select
+                            onChange={(e) => { setAddManager({ ...addManager, service_id: e.target.value }) }}>
                             <option value=""> الخدمة </option>
                             {
                                 services.map((item) => {
@@ -154,14 +241,16 @@ const AdminsList = () => {
                             }
                         </select>
 
-                        {error ? <p > يرجى ادخال بيانات الموظف</p> : null}
                         <button
-                            onClick={addm1}
+                            onClick={() => { addM() }}
                             className="add"> <MdAdd />  اضافه الموظف
                         </button>
 
                     </div>
-
+                    <hr style={{ width: "80%", margin: "2rem 0" }} />
+                    <h2 className='table-title-h2'>
+                        ادارة الموظفين
+                    </h2>
                     <table className="data-table">
                         <tr>
                             <th> اسم الموظف </th>
@@ -176,50 +265,54 @@ const AdminsList = () => {
                             return (
                                 <tr key={index}>
                                     <td>
-                                        <input 
-                                        className='input-cell' 
-                                        type="text" 
-                                        value={manager.mname} 
-                                        placeholder={manager.mname} 
-                                        onChange={(e) => {
-                                            const updatedManagers = [...managers];
-                                            updatedManagers[index] = { ...manager, mname: e.target.value };
-                                            setManagers(updatedManagers);
-                                        }} />
-                                        </td>
+                                        <input
+                                            className='input-cell'
+                                            type="text"
+                                            value={manager.mname}
+                                            placeholder={manager.mname}
+                                            onChange={(e) => {
+                                                const updatedManagers = [...managers];
+                                                updatedManagers[index] = { ...manager, mname: e.target.value };
+                                                setManagers(updatedManagers);
+                                            }} />
+                                    </td>
                                     <td>
-                                        <input 
-                                        className='input-cell' 
-                                        type="text" 
-                                        value={manager.email} 
-                                        placeholder={manager.email} 
-                                        onChange={(e) => {
-                                            const updatedManagers = [...managers];
-                                            updatedManagers[index] = { ...manager, email: e.target.value };
-                                            setManagers(updatedManagers);
-                                        }} /></td>
+                                        <input
+                                            className='input-cell'
+                                            type="text"
+                                            value={manager.email}
+                                            placeholder={manager.email}
+                                            onChange={(e) => {
+                                                const updatedManagers = [...managers];
+                                                updatedManagers[index] = { ...manager, email: e.target.value };
+                                                setManagers(updatedManagers);
+                                            }} />
+                                    </td>
                                     <td>
-                                        <select 
-                                        name=""
-                                        id=""
-                                        className='ser-select'
-                                        value={manager.service_id}
+                                        <select
+                                            name=""
+                                            id=""
+                                            className='ser-select'
+                                            value={manager.service_id}
+                                            onChange={(e) => {
+                                                const updatedManagers = [...managers];
+                                                updatedManagers[index] = { ...manager, service_id: e.target.value };
+                                                setManagers(updatedManagers);
+                                            }}
                                         >
-                                         {
-                                            services.map((service)=>(
-                                                <option
-                                                    value={service.id}                                                
-                                                >{service.service_name_ar}
+                                            {services.map((service) => (
+                                                <option value={service.id}>
+                                                    {service.service_name_ar}
                                                 </option>
                                             ))
-                                         }   
+                                            }
                                         </select>
                                     </td>
                                     <td>
-                                        <button onClick={() => { handleEditm1(index) }}>تعديل</button>
-                                        <button className='delete' onClick={() => { handleEditm1(index) }}>حذف الموظف</button>
+                                        <button onClick={() => { handleEditManager(index) }}>تعديل</button>
+                                        <button className='delete' onClick={() => { handleDeleteManger(index) }}>حذف الموظف</button>
                                     </td>
-                                    
+
                                 </tr>
 
                             )
@@ -230,16 +323,18 @@ const AdminsList = () => {
                     </table>
                 </div>
             </section>
-            <section className='cotainer-stu'>
+            <section className='cotainer-stu' style={{ marginTop: "2rem" }}>
                 <div className="student-container">
-                    <h2>ادارة الخدمات</h2>
+                    <h2 className='table-title-h2'>
+                        ادارة الخدمات
+                    </h2>
                     <table className="data-table">
                         <tr>
-                            <th>  الخدمة </th>
-                            <th> البريد الالكترونى </th>
-                            
-                            <th> تشغيل</th>
-                            <th> تعديل</th>
+                            <th> اسم الخدمة بالعربى </th>
+                            <th> اسم الخدمة بالانجليزى </th>
+                            <th> الوصف بالعربى </th>
+                            <th> الوصف بالانجليزى </th>
+                            <th> التحكم </th>
 
                         </tr>
 
@@ -247,52 +342,74 @@ const AdminsList = () => {
 
                             return (
                                 <tr key={index}>
-                                    <td>
-                                        <input 
-                                        className='input-cell' 
-                                        type="text" 
-                                        value={service.service_name_ar} 
-                                        placeholder={service.service_name_ar} 
-                                        onChange={(e) => {
-                                            const updatedservices = [...services];
-                                            updatedservices[index] = { ...service, service_name_ar: e.target.value };
-                                            setServices(updatedservices);
-                                        }} />
-                                        </td>
-                                    <td>
-                                        <textarea 
-                                        className='input-cell' 
-                                        type="text" 
-                                        value={service.pref_ar} 
-                                        placeholder={service.pref_ar} 
-                                        onChange={(e) => {
-                                            const updatedservices = [...services];
-                                            updatedservices[index] = { ...service, pref_ar: e.target.value };
-                                            setServices(updatedservices);
-                                        }} /></td>
-                                    
-                                    <td>{service.enabled == 1?
-                                        <button 
-                                        onChange={(e) => {
-                                            const updatedservices = [...services];
-                                            updatedservices[index] = { ...service, pref_ar: 0 };
-                                            setServices(updatedservices);
-                                        }}
-                                        >ايقاف</button>
-                                        :
-                                        <button 
-                                        onChange={(e) => {
-                                            const updatedservices = [...services];
-                                            updatedservices[index] = { ...service, pref_ar: 1 };
-                                            setServices(updatedservices);
-                                        }}
-                                        >تشغيل</button>
-                                    }
+                                    <td style={{ width: "15%" }}>
+                                        <textarea
+                                            className='input-cell'
+                                            type="text"
+                                            value={service.service_name_ar}
+                                            placeholder={service.service_name_ar}
+                                            onChange={(e) => {
+                                                const updatedservices = [...services];
+                                                updatedservices[index] = { ...service, service_name_ar: e.target.value };
+                                                setServices(updatedservices);
+                                            }} />
+                                    </td>
+                                    <td style={{ width: "15%" }}>
+                                        <textarea
+                                            className='input-cell'
+                                            type="text"
+                                            value={service.service_name}
+                                            placeholder={service.service_name}
+                                            onChange={(e) => {
+                                                const updatedservices = [...services];
+                                                updatedservices[index] = { ...service, service_name: e.target.value };
+                                                setServices(updatedservices);
+                                            }} />
                                     </td>
                                     <td>
-                                        <button onClick={() => { handleEditm1(index) }}>تعديل</button>
+                                        <textarea
+                                            className='input-cell'
+                                            type="text"
+                                            value={service.pref_ar}
+                                            placeholder={service.pref_ar}
+                                            onChange={(e) => {
+                                                const updatedservices = [...services];
+                                                updatedservices[index] = { ...service, pref_ar: e.target.value };
+                                                setServices(updatedservices);
+                                            }} />
                                     </td>
-                                    
+                                    <td>
+                                        <textarea
+                                            className='input-cell'
+                                            type="text"
+                                            value={service.pref}
+                                            placeholder={service.pref}
+                                            onChange={(e) => {
+                                                const updatedservices = [...services];
+                                                updatedservices[index] = { ...service, pref: e.target.value };
+                                                setServices(updatedservices);
+                                            }} />
+                                    </td>
+                                    <td style={{ width: "15%" }}>
+                                        <button onClick={() => { handleEdits2(index) }}>تعديل</button>
+
+                                        {+service.enabled == 1 ?
+                                            <button
+                                                className='delete'
+                                                onClick={() => { handleEnable(index) }}
+                                            >
+                                                ايقاف مؤقت للخدمة
+                                            </button>
+                                            :
+                                            <button
+                                                className='enable'
+                                                onClick={() => { handleEnable(index) }}
+                                            >
+                                                تشغيل الخدمة
+                                            </button>
+                                        }
+                                    </td>
+
                                 </tr>
 
                             )
@@ -302,7 +419,8 @@ const AdminsList = () => {
 
                     </table>
                 </div>
-                </section>
+            </section>
+            {error && <PopupErrorMsg message={error} onClose={handleClose} />}
 
         </div>
     )

@@ -45,7 +45,7 @@ const Ser7 = ({ ser }) => {
         try {
             axios.get(`${API_URL}/auth/check`, { withCredentials: true })
                 .then((res) => {
-                    console.log(res)
+
                 })
                 .catch((err) => {
                     console.log(err)
@@ -56,7 +56,6 @@ const Ser7 = ({ ser }) => {
                 try {
                     axios.get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
                         .then((res) => {
-                            console.log(res.data.level)
                             setData({
                                 level: res.data.level,
                                 decision: res.data.decision,
@@ -79,7 +78,6 @@ const Ser7 = ({ ser }) => {
         } catch (err) {
             console.log(err)
         }
-        console.log(data)
     }, [])
 
 
@@ -89,7 +87,6 @@ const Ser7 = ({ ser }) => {
         setConfirm(false)
     };
     const handleSubmit = () => {
-        console.log(data)
         if (status !== 4) {
             setConfirm(false)
             if (!data.level) {
@@ -131,7 +128,6 @@ const Ser7 = ({ ser }) => {
             }
 
             axios.defaults.withCredentials = true
-            console.log(data)
             const formData = new FormData();
             formData.append('level', data.level);
             formData.append('decision', data.decision);
@@ -152,7 +148,7 @@ const Ser7 = ({ ser }) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res.data)
+
                         alert("done")
                         navigate(`/`)
                     })
@@ -219,7 +215,6 @@ const Ser7 = ({ ser }) => {
 
 
             axios.defaults.withCredentials = true
-            console.log(data)
             const formData = new FormData();
             formData.append('level', data.level);
             if (data.decision?.name) {
@@ -246,7 +241,7 @@ const Ser7 = ({ ser }) => {
                     }
                 })
                     .then((res) => {
-                        console.log(res.data)
+
                         alert("done")
                         navigate(`/`)
                     })
@@ -328,7 +323,7 @@ const Ser7 = ({ ser }) => {
                                                 if (data.decision.name) {
                                                     return window.open(URL.createObjectURL(data.decision))
                                                 } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.decision}`)
+                                                    return window.open(`${API_URL}/${ser.national_id}/${data.decision}`)
                                                 }
                                             }}
                                         >{t('open')}</button>
@@ -364,7 +359,7 @@ const Ser7 = ({ ser }) => {
                                                 if (data.word.name) {
                                                     return window.open(URL.createObjectURL(data.word))
                                                 } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.word}`)
+                                                    return window.open(`${API_URL}/${ser.national_id}/${data.word}`)
                                                 }
                                             }}
                                         >{t('open')}</button>
@@ -399,7 +394,7 @@ const Ser7 = ({ ser }) => {
                                                 if (data.pdf.name) {
                                                     return window.open(URL.createObjectURL(data.pdf))
                                                 } else {
-                                                    return window.open(`http://localhost:5000/${ser.national_id}/${data.pdf}`)
+                                                    return window.open(`${API_URL}/${ser.national_id}/${data.pdf}`)
                                                 }
                                             }}
                                         >{t('open')}</button>

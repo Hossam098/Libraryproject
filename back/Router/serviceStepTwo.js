@@ -168,7 +168,6 @@ const handleDeleteFile5 = (req) => {
         const path2 = `./public/imgs/${req.national_id}/${pdf}`;
         for (let i = 0; i < 2; i++) {
             if (word != null && i == 0) {
-                console.log(path);
                 fs.unlinkSync(path, (err) => {
                     if (err) {
                         console.error(err)
@@ -926,10 +925,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
 
     async (req, res) => {
         let error = [];
-        console.log(1);
         try {
-            console.log(2);
-
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 handleDeleteFile5(req);
@@ -946,9 +942,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
             const valueSelect = [id, id2, req.id];
             const resultSelect = await query(sqlSelect, valueSelect);
             if (resultSelect.length > 0) {
-                console.log(3);
                 if (resultSelect[0].status == 1) {
-                    console.log(4);
                     if (!req.files.payment_photo) {
                         handleDeleteFile5(req);
                         error.push("Please upload payment_photo");
@@ -962,7 +956,6 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                         }
                     }
                     if(!req.files.research_list){
-                        console.log(5);
                         handleDeleteFile5(req);
                         error.push("Please upload research_list");
                         return res.status(400).json({ message: error });
@@ -975,7 +968,6 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                         }
                     }
                     for (let i = 1; i <= req.body.files_numbers; i++) {
-                        console.log(6);
                         if (!req.files[`word${i}`]) {
                             handleDeleteFile5(req);
                             error.push(`Please upload word${i}`);
@@ -990,7 +982,6 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                         }
                     }
                     for (let i = 1; i <= req.body.files_numbers; i++) {
-                        console.log(7);
                         if (!req.files[`pdf${i}`]) {
                             handleDeleteFile5(req);
                             error.push(`Please upload pdf${i}`);
@@ -1020,11 +1011,8 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                 }
 
                 let payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : resultSelect[0].photo_payment_receipt;
-                console.log(req.files);
                 let research_list = req.files.research_list ? req.files.research_list[0].filename : resultSelect[0].research_list;
 
-                console.log(req.files);
-                console.log(resultSelect[0]);
                 let word1 = req.files.word1 ? req.files.word1[0].filename : resultSelect[0].research1_image_word;
                 let word2 = req.files.word2 ? req.files.word2[0].filename : resultSelect[0].research2_image_word;
                 let word3 = req.files.word3 ? req.files.word3[0].filename : resultSelect[0].research3_image_word;
@@ -1057,7 +1045,6 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                 let pdf20 = req.files.pdf20 ? req.files.pdf20[0].filename : resultSelect[0].acceptance_letter10;
 
 
-                console.log(5);
 
                 const data = {
                     photo_payment_receipt: payment_photo,
@@ -1094,7 +1081,6 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                     acceptance_letter10: pdf20,
 
                 }
-                console.log(6);
 
 
                 const sql = `UPDATE upgrade_service SET ? WHERE id = ? `;
@@ -1474,7 +1460,6 @@ serviceStepTwo.put("/StepTwoSer7edit/:id/:id2",
                     decision: decision,
                     level: req.body.level ? req.body.level : resultSelect[0].level,
                 }
-                console.log(1)
                 const sql = `UPDATE grant_service SET ? WHERE id = ? `;
                 const value = [grant, id2];
                 const result = await query(sql, value);
