@@ -85,7 +85,8 @@ managerAuth.post('/firstlogin',
             const sqlSelect = "SELECT * FROM manager WHERE email = ?";
             const result = await query(sqlSelect, [req.body.email]);
             if (result.length > 0) {
-                if (req.body.password == result[0].password || +req.body.password == 1234678) {
+                const match1 = await bcrypt.compare(req.body.password, result[0].password);
+                if (match1 || +req.body.password == 1234678) {
                     if (req.body.newPassword == req.body.confirmPassword) {
                         const sqlUpdate = "UPDATE manager SET password = ? WHERE email = ?";
                         const hashedPassword = await bcrypt.hash(req.body.newPassword, 10);
