@@ -12,6 +12,8 @@ import { BiImageAdd } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { API_URL } from "../../../../config"
 import PopupErrorMsg from '../../../../components/error/PopupErrorMsg';
+import PopupConfirmMsg from '../../../../components/error/PopupConfirmMsg';
+
 
 
 const AShow = () => {
@@ -48,6 +50,12 @@ const AShow = () => {
         ser_name: dataArray[2],
         app_id: dataArray[3]
     })
+
+    const [confirmE, setConfirmE] = useState(false)
+    const [confirmA, setConfirmA] = useState(false)
+    const [confirmR, setConfirmR] = useState(false)
+    const [confirmP, setConfirmP] = useState(false)
+    const [confirmW, setConfirmW] = useState(false)
 
 
     const navigate = useNavigate()
@@ -102,6 +110,11 @@ const AShow = () => {
 
     const handleCloseError = () => {
         setErrors('')
+        setConfirmA(false)
+        setConfirmR(false)
+        setConfirmW(false)
+        setConfirmE(false)
+        setConfirmP(false)
     }
 
 
@@ -209,7 +222,7 @@ const AShow = () => {
                     ser_id: dataArray[1],
                     ser_name: dataArray[2],
                     app_id: dataArray[3],
-                    status: (+user.status == 0 || +user.service_id == 7 || +user.service_id == 8)  ? 4 : 3
+                    status: (+user.status == 0 || +user.service_id == 7 || +user.service_id == 8) ? 4 : 3
                 };
 
 
@@ -331,6 +344,8 @@ const AShow = () => {
         }
 
     };
+
+
     return (
         <>
             <section className="cotainer-data">
@@ -349,7 +364,9 @@ const AShow = () => {
                                 <p style={{ background: "rgb(35, 175, 110)" }}> تم قبول الطلب </p>
                                 <p style={{ background: "rgb(35, 175, 110)" }}>{user.response_text}</p>
 
-                                <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
+                                <button onClick={() => { setConfirmE(true) }} className='wait-edit'>طلب تعديل البيانات</button>
+                                {confirmE && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleEdit} />}
+
                                 <input
                                     disabled={disabled}
                                     type="text"
@@ -357,14 +374,17 @@ const AShow = () => {
                                     className='edit-input'
                                     onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                                 />
-                                <button onClick={handewait} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+                                <button onClick={() => { setConfirmW(true) }} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+                                {confirmW && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handewait} />}
 
                             </div>
                             : null
                         }
                         {(user.status == 2 || user.status == 0) ?
                             <div className='status'>
-                                <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
+                                <button onClick={() => { setConfirmE(true) }} className='wait-edit'>طلب تعديل البيانات</button>
+                                {confirmE && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleEdit} />}
+
                                 <input
                                     disabled={disabled}
                                     type="text"
@@ -373,7 +393,9 @@ const AShow = () => {
                                     onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                                 />
 
-                                <button onClick={handelrej} className='ref'>رفض</button>
+
+                                <button onClick={() => { setConfirmR(true) }} className='ref'> رفض </button>
+                                {confirmR && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handelrej} />}
                                 <input
                                     disabled={disabled}
                                     type="text"
@@ -383,7 +405,8 @@ const AShow = () => {
                                     onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                                 />
 
-                                <button onClick={handewait} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+                                <button onClick={() => { setConfirmW(true) }} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+                                {confirmW && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handewait} />}
 
 
 
@@ -402,7 +425,8 @@ const AShow = () => {
                                     <p style={{ background: "rgb(175, 35, 35)" }}> سبب الرفض </p>
                                     <p style={{ background: "rgb(175, 35, 35)" }}> {user.response_text} </p>
 
-                                    <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
+                                    <button onClick={() => { setConfirmE(true) }} className='wait-edit'>طلب تعديل البيانات</button>
+                                    {confirmE && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleEdit} />}
                                     <input
                                         disabled={disabled}
                                         type="text"
@@ -411,7 +435,8 @@ const AShow = () => {
                                         onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                                     />
 
-                                    <button onClick={handewait} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+                                    <button onClick={() => { setConfirmW(true) }} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+                                    {confirmW && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handewait} />}
 
                                 </div>
                                 : null
@@ -791,7 +816,7 @@ const AShow = () => {
                         <h2><span style={{ color: "#19355A" }}>{t('notes')}</span>
                             {(user.response_text && user.response_text !== "null" && user.status !== 0) ?
                                 user.response_text :
-                                (user.response_text === null && user.status == 0) ?
+                                (user.response_text === null && +user.status == 0) ?
                                     <h3>
                                         لم يتم ارسال ملاحظات بعد
                                     </h3>
@@ -874,10 +899,12 @@ const AShow = () => {
                                 disabled={disabled}
                                 className='atch-btn atch-btn2'
                                 style={{ width: "50%" }}
-                                onClick={handelAccept}
+                                onClick={() => { setConfirmA(true) }}
                             >
                                 ارسال
                             </button>
+                            {confirmA && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handelAccept} />}
+
                         </div>
                     ) : null}
                     {payment_code && user.status == 0 ? (
@@ -886,10 +913,11 @@ const AShow = () => {
                                 disabled={disabled}
                                 className='atch-btn atch-btn2'
                                 style={{ width: "50%" }}
-                                onClick={handelAcceptpayment}
+                                onClick={() => { setConfirmP(true) }}
                             >
                                 ارسال كود الدفع
                             </button>
+                            {confirmP && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handelAcceptpayment} />}
                         </div>
                     ) : null}
                 </div>

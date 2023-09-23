@@ -419,8 +419,6 @@ const Ser7 = ({ ser }) => {
                         </button>
                     </div>
                     {confirm && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleSubmit} />}
-
-
                 </div>
             </div>
 
