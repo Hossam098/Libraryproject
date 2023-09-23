@@ -2,7 +2,7 @@ import React from 'react';
 import './PopupError.css';
 import { useTranslation } from 'react-i18next';
 
-const PopupConfirmMsg = ({ message, onClose, onSubmit }) => {
+const PopupConfirmMsg = ({ message, onClose, onSubmit, blue }) => {
 
 
   const [t] = useTranslation();
@@ -15,13 +15,12 @@ const PopupConfirmMsg = ({ message, onClose, onSubmit }) => {
         <div className="popup-error-close" onClick={onClose}>
           &#10006;
         </div>
-
-
-        {/* <button className="popup-login-button" onClick={handleLogin} style={{width: '100%'}}>
-        {t('Login')}
-        </button> */}
         <div>
-          <button className="popup-login-button" onClick={onSubmit} style={{ width: '100%', background: "#19355A" }}>
+          <button
+            className="popup-login-button"
+            onClick={onSubmit}
+            style={{ width: '100%', background: blue ? "#19355A"  : null}}
+          >
             {t('confirm')}
           </button>
           <button className="popup-login-button" onClick={onClose} style={{ width: '100%' }}>

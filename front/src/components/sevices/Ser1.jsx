@@ -79,7 +79,6 @@ const Ser1 = ({ ser }) => {
 
 
 
-    console.log(data)
     const handleCloseError = () => {
         setError('')
         setConfirm(false)

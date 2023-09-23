@@ -13,6 +13,8 @@ import { BiImageAdd } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { API_URL } from "../../../../config"
 import PopupErrorMsg from '../../../../components/error/PopupErrorMsg';
+import PopupConfirmMsg from '../../../../components/error/PopupConfirmMsg';
+
 
 
 const ShowA = () => {
@@ -25,6 +27,13 @@ const ShowA = () => {
   const [confirm, setConfirm] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const [payment_code, setPayment_code] = useState('')
+
+
+  const [confirmE, setConfirmE] = useState(false)
+    const [confirmA, setConfirmA] = useState(false)
+    const [confirmR, setConfirmR] = useState(false)
+    const [confirmP, setConfirmP] = useState(false)
+    const [confirmW, setConfirmW] = useState(false)
 
   const dataArray = id.split(",");
   const [response, setResponse] = useState({
@@ -103,7 +112,12 @@ const ShowA = () => {
 
   const handleCloseError = () => {
     setErrors('')
-  }
+    setConfirmA(false)
+    setConfirmR(false)
+    setConfirmW(false)
+    setConfirmE(false)
+    setConfirmP(false)
+}
 
 
 

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import img from '../../../../images/mini-logo.png'
 import { API_URL } from '../../../../config';
 import PopupErrorMsg from '../../../../components/error/PopupErrorMsg';
-import { t } from 'i18next';
+import PopupConfirmMsg from '../../../../components/error/PopupConfirmMsg';
 
 
 const AdminsList = () => {
@@ -16,7 +16,10 @@ const AdminsList = () => {
     const [error, setError] = React.useState("");
 
     const [managers, setManagers] = React.useState([])
-    const [managers2, setManagers2] = React.useState([])
+
+    const [confirm, setConfirm] = React.useState(false)
+    const [disabled, setDisabled] = React.useState(false)
+
     const [addManager, setAddManager] = React.useState({
         mname: '',
         email: '',
@@ -94,8 +97,7 @@ const AdminsList = () => {
 
     const addM = () => {
         if (addManager.mname !== '' && addManager.email !== '' && addManager.service_id !== '') {
-            let con = window.confirm('هل انت متاكد من اضافه الموظف')
-            if (con) {
+            
                 axios.post(`${API_URL}/admin/addManager`, addManager, { withCredentials: true })
                     .then((res) => {
                         setError('تم اضافه الموظف')
@@ -104,7 +106,7 @@ const AdminsList = () => {
                         if (error.response.status === 401) navigate('/AdminLogin')
                         setError(error.response.data.message[0].msg)
                     })
-            }
+            
         } else {
             if (addManager.mname == '') {
                 return setError('ادخل اسم الموظف')
@@ -164,27 +166,10 @@ const AdminsList = () => {
     }
 
 
-
-
-
-
-
-    const addm1 = () => {
-        if (document.querySelector('.add-p input').value !== '' && document.querySelector('.add-p select').value !== '') {
-            let con = window.confirm('هل انت متاكد من اضافه الموظف')
-            if (con) {
-                axios.post(`${API_URL}/superadmin/addmanager1`, addManager, { withCredentials: true })
-                    .then((res) => {
-                        alert('تم اضافه الموظف')
-                        window.location.reload()
-                    }).catch((error) => {
-                        setError(error.response.data.errors.msg)
-                    })
-            }
-        } else {
-            alert('ادخل بيانات  الموظف')
-        }
-    }
+    const handleCloseError = () => {
+        setError('')
+        setConfirm(false)
+    };
 
     const addm2 = () => {
         let con = window.confirm('هل انت متاكد من اضافه الموظف')
@@ -242,9 +227,10 @@ const AdminsList = () => {
                         </select>
 
                         <button
-                            onClick={() => { addM() }}
+                            onClick={() => {setConfirm(true) }}
                             className="add"> <MdAdd />  اضافه الموظف
                         </button>
+                        {confirm && <PopupConfirmMsg message={"هل انت متأكد من اضافه الموظف ؟"} onClose={handleCloseError} onSubmit={addM} />}
 
                     </div>
                     <hr style={{ width: "80%", margin: "2rem 0" }} />
@@ -260,7 +246,7 @@ const AdminsList = () => {
 
                         </tr>
 
-                        {managers.map((manager, index) => {
+                        {managers.length>0 && managers.map((manager, index) => {
 
                             return (
                                 <tr key={index}>
