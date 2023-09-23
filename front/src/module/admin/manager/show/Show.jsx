@@ -24,16 +24,19 @@ const ShowA = () => {
   const [rejRes, SetRejRes] = useState("")
   const [msg, setMsg] = useState('')
   const [progress, setProgress] = useState({ started: false, value: 0 })
-  const [confirm, setConfirm] = useState(false)
   const [disabled, setDisabled] = useState(false)
+  const [confirm, setConfirm] = useState(false)
   const [payment_code, setPayment_code] = useState('')
 
 
-  const [confirmE, setConfirmE] = useState(false)
-    const [confirmA, setConfirmA] = useState(false)
-    const [confirmR, setConfirmR] = useState(false)
-    const [confirmP, setConfirmP] = useState(false)
-    const [confirmW, setConfirmW] = useState(false)
+  const [confirmE1, setConfirmE1] = useState(false)
+  const [confirmE2, setConfirmE2] = useState(false)
+  const [confirmA1, setConfirmA1] = useState(false)
+  const [confirmA2, setConfirmA2] = useState(false)
+  const [confirmR1, setConfirmR1] = useState(false)
+  const [confirmR2, setConfirmR2] = useState(false)
+  const [confirmReturn, setConfirmReturn] = useState(false)
+  const [confirmP, setConfirmP] = useState(false)
 
   const dataArray = id.split(",");
   const [response, setResponse] = useState({
@@ -112,12 +115,16 @@ const ShowA = () => {
 
   const handleCloseError = () => {
     setErrors('')
-    setConfirmA(false)
-    setConfirmR(false)
-    setConfirmW(false)
-    setConfirmE(false)
+    setConfirm(false)
+    setConfirmA1(false)
+    setConfirmA2(false)
+    setConfirmR1(false)
+    setConfirmR2(false)
+    setConfirmE1(false)
+    setConfirmE2(false)
+    setConfirmReturn(false)
     setConfirmP(false)
-}
+  }
 
 
 
@@ -537,6 +544,14 @@ const ShowA = () => {
 
   return (
     <>
+      {confirmE1 && <PopupConfirmMsg message={"تأكيد طلب التعديل"} onClose={handleCloseError} onSubmit={handleEdit} />}
+      {confirmR1 && <PopupConfirmMsg message={"تأكيد الرفض"} onClose={handleCloseError} onSubmit={handelrej} />}
+      {confirmA1 && <PopupConfirmMsg message={"تأكيد القبول"} onClose={handleCloseError} onSubmit={handelAccept} />}
+      {confirmE2 && <PopupConfirmMsg message={"تأكيد طلب التعديل"} onClose={handleCloseError} onSubmit={handelEdit2} />}
+      {confirmReturn && <PopupConfirmMsg message={"تأكيد الرجوع للمراجعه"} onClose={handleCloseError} onSubmit={handleReturn} />}
+      {confirmA2 && <PopupConfirmMsg message={"تأكيد القبول"} onClose={handleCloseError} onSubmit={handelAccept2} />}
+      {confirmR2 && <PopupConfirmMsg message={"تأكيد الرفض"} onClose={handleCloseError} onSubmit={handelrej2} />}
+      {confirmP && <PopupConfirmMsg message={"تأكيد ارسال كود الدفع"} onClose={handleCloseError} onSubmit={handelAcceptpayment} />}
       <section className="cotainer-data">
         <div className="navv">
           <h2>
@@ -553,11 +568,11 @@ const ShowA = () => {
                 <h2> تأكيد قبول الطلب </h2>
                 <div className="atch-btns">
                   <button
-                    onClick={handelAccept2}
+                    onClick={() => { setConfirmA2(true) }}
                     className="atch-btn">تأكيد
                   </button>
                   <button
-                    onClick={handleReturn}
+                    onClick={() => { setConfirmReturn(true) }}
                     className="atch-btn atch-btn2">يعود للمراجعه مره اخري
                   </button>
                 </div>
@@ -573,7 +588,9 @@ const ShowA = () => {
             }
             {user.manager_status == null && (user.status == 2 || user.status == 0) ?
               <div className='status'>
-                <button onClick={handleEdit} className='wait-edit'>طلب تعديل البيانات</button>
+                <button
+                  onClick={() => { setConfirmE1(true) }}
+                  className='wait-edit'>طلب تعديل البيانات</button>
                 <input
                   disabled={disabled}
                   type="text"
@@ -582,7 +599,9 @@ const ShowA = () => {
                   onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                 />
 
-                <button onClick={handelrej} className='ref'>رفض</button>
+                <button 
+                onClick={() => { setConfirmR1(true) }} 
+                className='ref'>رفض</button>
                 <input
                   disabled={disabled}
                   type="text"
@@ -601,11 +620,11 @@ const ShowA = () => {
                   <h2> تأكيد تعديل الطلب </h2>
                   <div className="atch-btns">
                     <button
-                      onClick={handelEdit2}
+                      onClick={() => { setConfirmE2(true) }}
                       className="atch-btn">تأكيد
                     </button>
                     <button
-                      onClick={handleReturn}
+                      onClick={() => { setConfirmReturn(true) }}
                       className="atch-btn atch-btn2">يعود للمراجعه مره اخري
                     </button>
                   </div>
@@ -621,14 +640,14 @@ const ShowA = () => {
             }
             {(user.manager_status == 2 && user.status == 2) ?
               <div className='status'>
-                <h2> تأكيد رفض الطلب </h2>
+                <h2 style={{ color: "rgb(175, 35, 35)" }}> تأكيد رفض الطلب </h2>
                 <div className="atch-btns">
                   <button
-                    onClick={handelrej2}
+                    onClick={() => { setConfirmR2(true) }}
                     className="atch-btn">تأكيد
                   </button>
                   <button
-                    onClick={handleReturn}
+                    onClick={() => { setConfirmReturn(true) }}
                     className="atch-btn atch-btn2">يعود للمراجعه مره اخري
                   </button>
                 </div>
@@ -725,17 +744,27 @@ const ShowA = () => {
                 {user.service_name_ar}
               </td>
             </tr>
-            <tr>
-              <td>  المرحله </td>
-              <td>
-                {user.level == 0 ? "ماجستير" : user.level == 1 ? "دكتوراه" : null}
-              </td>
-            </tr>
+            {user.level && (
+              <tr>
+                <td>  المرحله </td>
+                <td>
+                  {user.level == 0 ? "ماجستير" : user.level == 1 ? "دكتوراه" : null}
+                </td>
+              </tr>
+            )}
             {user.academic && (
               <tr>
                 <td> الشعبه </td>
                 <td>
                   {user.academic}
+                </td>
+              </tr>
+            )}
+            {user.files_numbers && (
+              <tr>
+                <td> عدد الابحاث </td>
+                <td>
+                  {user.files_numbers}
                 </td>
               </tr>
             )}
@@ -1109,7 +1138,7 @@ const ShowA = () => {
                 disabled={disabled}
                 className='atch-btn atch-btn2'
                 style={{ width: "50%" }}
-                onClick={handelAccept}
+                onClick={() => { setConfirmA1(true) }}
               >
                 ارسال
               </button>
@@ -1121,7 +1150,7 @@ const ShowA = () => {
                 disabled={disabled}
                 className='atch-btn atch-btn2'
                 style={{ width: "50%" }}
-                onClick={handelAcceptpayment}
+                onClick={() => { setConfirmP(true) }}
               >
                 ارسال كود الدفع
               </button>

@@ -73,23 +73,6 @@ const Review = () => {
       <section className='cotainer-stu'>
         <div className="navv">
           <h2>الطلاب</h2>
-          {/* <select
-            onChange={(e) => {
-              const filteredStudents = e.target.value === ''
-                ? student
-                : student.filter((item) => item.status === parseInt(e.target.value));
-              setFilter(filteredStudents);
-              setFilter2(filteredStudents);
-            }}
-            className='filter'
-            name=""
-            id=""
-          >
-            <option value="">فلتره</option>
-            <option value="5">مرفوض من الجامعه</option>
-            <option value="4">موافقه من الجامعه</option>
-            <option value="1">موافقه كليه</option>
-          </select> */}
 
         </div>
         <div className="student-container">
@@ -98,12 +81,12 @@ const Review = () => {
             <table className="data-table">
               <thead>
                 <tr>
-                <th>التسلسل</th>
-
+                  <th>التسلسل</th>
                   <th>اسم الطالب</th>
                   <th> نوع الخدمه </th>
                   <th>تاريخ التقديم</th>
                   <th> حاله الخدمه </th>
+                  <th>الصلاحيه</th>
                   <th>التفاصيل</th>
                 </tr>
               </thead>
@@ -115,16 +98,17 @@ const Review = () => {
                     <td>{item.service_name_ar}</td>
                     <td>{item.status === 0 ? item.req_code_date?.slice(0, 10) : item.submit_date?.slice(0, 10)}</td>
                     <td>{item.status === 0 ? "منتظر كود دفع" : item.status === 1 ? "في انتظار رفع المرفقات" : item.status === 2 ? "في انتظار رد المكتبه" : item.status === 3 ? "قيد التعديل" : item.status === 4 ? "قيد التعديل" : item.status === 5 ? "مقبول" : item.status === 6 ? "مرفوض" : null}</td>
+                    <td>{item.role === 1 ? " مراجعه فقط" : item.role === 2 ? "تحكم كامل" : null}</td>
                     <td>
-                    <button 
-                      onClick={() => {
-                        navigate(`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`)
-                      }
-                      }>
+                      <button
+                        onClick={() => {
+                          navigate(`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`)
+                        }
+                        }>
 
 
                         {/* <Link to={`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}> */}
-                          تفاصيل
+                        تفاصيل
                         {/* </Link> */}
                       </button>
                     </td>

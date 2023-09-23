@@ -348,7 +348,17 @@ const AShow = () => {
 
     return (
         <>
+        {confirmP && <PopupConfirmMsg message={"تأكيد ارسال كود الدفع"} onClose={handleCloseError} onSubmit={handelAcceptpayment} />}
+                            {confirmR && <PopupConfirmMsg message={"تأكيد الرفض"} onClose={handleCloseError} onSubmit={handelrej} />}
+                            {confirmE && <PopupConfirmMsg message={"تأكيد طلب التعديل"} onClose={handleCloseError} onSubmit={handleEdit} />}
+                            {confirmW && <PopupConfirmMsg message={"تأكيد عوده الطلب للانتظار "} onClose={handleCloseError} onSubmit={handewait} />}
+                            {confirmE && <PopupConfirmMsg message={"تأكيد طلب التعديل"} onClose={handleCloseError} onSubmit={handleEdit} />}
+                            {confirmW && <PopupConfirmMsg message={"تأكيد عوده الطلب للانتظار "} onClose={handleCloseError} onSubmit={handewait} />}
+                            {confirmW && <PopupConfirmMsg message={"تأكيد عوده الطلب للانتظار "} onClose={handleCloseError} onSubmit={handewait} />}
+                            {confirmE && <PopupConfirmMsg message={"تأكيد طلب التعديل"} onClose={handleCloseError} onSubmit={handleEdit} />}
+
             <section className="cotainer-data">
+                
                 <div className="navv">
                     <h2>
                         بيانات الطالب
@@ -373,7 +383,7 @@ const AShow = () => {
                                     className='edit-input'
                                     onChange={(e) => { setAction({ ...action, reason: e.target.value }) }}
                                 />
-                                <button onClick={() => { setConfirmW(true) }} className='wait-edit'> اعادة الى قائمة الانتظار </button>
+                                <button onClick={()=>{setConfirmW(true)}} className='wait-edit'> اعادة الى قائمة الانتظار </button>
 
                             </div>
                             : null
@@ -910,15 +920,7 @@ const AShow = () => {
                             >
                                 ارسال كود الدفع
                             </button>
-                            {confirmP && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handelAcceptpayment} />}
-                            {confirmR && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handelrej} />}
-                            {confirmE && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleEdit} />}
-                            {confirmW && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handewait} />}
-                            {confirmE && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleEdit} />}
-                            {confirmW && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handewait} />}
-                            {confirmW && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handewait} />}
-                            {confirmE && <PopupConfirmMsg message={t('confirm-msg')} onClose={handleCloseError} onSubmit={handleEdit} />}
-
+                            
                         </div>
                     ) : null}
                 </div>

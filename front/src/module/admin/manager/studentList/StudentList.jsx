@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { API_URL } from '../../../../config'
 import img from '../../../../images/mini-logo.png'
+import PopupConfirmMsg from '../../../../components/error/PopupConfirmMsg';
 
 const StudentListadmin = () => {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ const StudentListadmin = () => {
   const [admins, setAdmins] = React.useState([])
   const [managerid, setmanagerid] = React.useState("")
   const [role, setRole] = React.useState("")
+  const [confirm, setConfirm] = useState(false)
 
   localStorage.setItem('i18nextLng', 'ar')
 
@@ -133,6 +135,8 @@ const StudentListadmin = () => {
   return (
     <div className='super-container'>
       <img src={img} alt="img" />
+      {confirm && <PopupConfirmMsg message="تأكيد اختيار الموظف" onClose={() => setConfirm(false)} onSubmit={handleUpdate} />}
+
       <section className='cotainer-stu'>
 
         <div className="navv">
@@ -171,7 +175,8 @@ const StudentListadmin = () => {
           </select>
           {selected.length > 0 &&
             <button
-              onClick={handleUpdate}
+            style={{ width: '20%'}}
+              onClick={() => {setConfirm(true)}}
             >تأكيد</button>
           }
         </div>

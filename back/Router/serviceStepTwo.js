@@ -418,7 +418,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                 let translation = req.files.translation ? req.files.translation[0].filename : resultSelect[0].translation_paper;
 
 
-                if(req.files.payment_photo && resultSelect[0].photo_payment_receipt != null){
+                if (req.files.payment_photo && resultSelect[0].photo_payment_receipt != null) {
                     const path = `./public/imgs/${req.national_id}/${resultSelect[0].photo_payment_receipt}`;
                     fs.unlinkSync(path, (err) => {
                         if (err) {
@@ -428,7 +428,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                         }
                     })
                 }
-                if(req.files.research && resultSelect[0].research_plan_ar_pdf != null){
+                if (req.files.research && resultSelect[0].research_plan_ar_pdf != null) {
                     const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_plan_ar_pdf}`;
                     fs.unlinkSync(path, (err) => {
                         if (err) {
@@ -438,7 +438,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                         }
                     })
                 }
-                if(req.files.research_en && resultSelect[0].research_plan_en_pdf != null){
+                if (req.files.research_en && resultSelect[0].research_plan_en_pdf != null) {
                     const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_plan_en_pdf}`;
                     fs.unlinkSync(path, (err) => {
                         if (err) {
@@ -448,7 +448,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                         }
                     })
                 }
-                if(req.files.research_word && resultSelect[0].research_plan_ar_word != null){
+                if (req.files.research_word && resultSelect[0].research_plan_ar_word != null) {
                     const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_plan_ar_word}`;
                     fs.unlinkSync(path, (err) => {
                         if (err) {
@@ -458,7 +458,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                         }
                     })
                 }
-                if(req.files.research_word_en && resultSelect[0].research_plan_en_word != null){
+                if (req.files.research_word_en && resultSelect[0].research_plan_en_word != null) {
                     const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_plan_en_word}`;
                     fs.unlinkSync(path, (err) => {
                         if (err) {
@@ -468,7 +468,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                         }
                     })
                 }
-                if(req.files.translation && resultSelect[0].translation_paper != null){
+                if (req.files.translation && resultSelect[0].translation_paper != null) {
                     const path = `./public/imgs/${req.national_id}/${resultSelect[0].translation_paper}`;
                     fs.unlinkSync(path, (err) => {
                         if (err) {
@@ -478,7 +478,7 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                         }
                     })
                 }
-                
+
 
 
                 const data = {
@@ -494,12 +494,12 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                 const value = [data, id2];
                 const result = await query(sql, value);
                 let submit_date = resultSelect[0].status === 1 ? new Date() : resultSelect[0].submit_date;
-                let edit_date = resultSelect[0].status !== 1 ? new Date() : resultSelect[0].edit_date; 
+                let edit_date = resultSelect[0].status !== 1 ? new Date() : resultSelect[0].edit_date;
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
-                        response_text : null ,
-                        manager_status: null ,
+                        response_text: null,
+                        manager_status: null,
                         submit_date: submit_date,
                         edit_date: edit_date,
                     }
@@ -635,8 +635,8 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
-                        response_text : null ,
-                        manager_status: null ,
+                        response_text: null,
+                        manager_status: null,
                         submit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_formation = ? AND user_id = ?';
@@ -704,9 +704,7 @@ serviceStepTwo.put("/StepTwoSer3/:id/:id2",
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile3(req);
                             error.push("Please upload image or pdf or word");
@@ -793,6 +791,44 @@ serviceStepTwo.put("/StepTwoSer3/:id/:id2",
                     accept_date: (!req.body.accept_date && req.body.puplish_date) ? null : req.body.accept_date ? req.body.accept_date : null,
                 }
 
+                if (req.files.payment_photo && resultSelect[0].photo_payment_receipt != null) {
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].photo_payment_receipt}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile3(req);
+                            console.error(err)
+                            return
+                        }
+                    })
+                }
+                for (let i = 1; i <= 10; i++) {
+                    if (req.files[`word${i}`] && resultSelect[0][`research${i}_image_word`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_word`]}`;
+                        fs.unlinkSync(path, (err) => {
+                            if (err) {
+                                handleDeleteFile3(req);
+                                console.error(err)
+                                return
+                            }
+                        })
+                    }
+                }
+                for (let i = 1; i <= 10; i++) {
+                    if (req.files[`pdf${i}`] && resultSelect[0][`research${i}_image_pdf`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_pdf`]}`;
+                        fs.unlinkSync(path, (err) => {
+                            if (err) {
+                                handleDeleteFile3(req);
+                                console.error(err)
+                                return
+                            }
+                        })
+                    }
+                }
+
+
+                let submitdate = resultSelect[0].status === 1 ? new Date() : resultSelect[0].submit_date;
+                let editdate = resultSelect[0].status !== 1 ? new Date() : resultSelect[0].status === 1 ? null : resultSelect[0].edit_date;
 
                 const sql = `UPDATE personal_examination_service SET ? WHERE id = ? `;
                 const value = [data, id2];
@@ -800,9 +836,10 @@ serviceStepTwo.put("/StepTwoSer3/:id/:id2",
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
-                        response_text : null ,
-                        manager_status: null ,
-                        submit_date: new Date(),
+                        response_text: null,
+                        manager_status: null,
+                        submit_date: submitdate,
+                        edit_date: editdate,
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_personal = ? AND user_id = ?';
                     const value2 = [submit, id, id2, req.id];
@@ -945,16 +982,58 @@ serviceStepTwo.put("/StepTwoSer4/:id/:id2",
 
                 }
 
+                if (req.files.payment_photo && resultSelect[0].photo_payment_receipt != null) {
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].photo_payment_receipt}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile3(req);
+                            console.error(err)
+                            return
+                        }
+                    })
+                }
+
+                for (let i = 1; i <= 10; i++) {
+                    if (req.files[`word${i}`] && resultSelect[0][`research${i}_image_word`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_word`]}`;
+                        fs.unlinkSync(path, (err) => {
+                            if (err) {
+                                handleDeleteFile3(req);
+                                console.error(err)
+                                return
+                            }
+                        })
+                    }
+                }
+                for (let i = 1; i <= 10; i++) {
+                    if (req.files[`pdf${i}`] && resultSelect[0][`research${i}_image_pdf`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_pdf`]}`;
+                        fs.unlinkSync(path, (err) => {
+                            if (err) {
+                                handleDeleteFile3(req);
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
+                }
+
+
 
                 const sql = `UPDATE magazine_checking_service SET ? WHERE id = ? `;
                 const value = [data, id2];
                 const result = await query(sql, value);
                 if (result.affectedRows > 0) {
+                    let submitdate = resultSelect[0].status === 1 ? new Date() : resultSelect[0].submit_date;
+                    let editdate = resultSelect[0].status !== 1 ? new Date() : resultSelect[0].status === 1 ? null : resultSelect[0].edit_date;
+
                     const submit = {
                         status: 2,
-                        response_text : null ,
-                        manager_status : null ,
-                        submit_date: new Date(),
+                        response_text: null,
+                        manager_status: null,
+                        submit_date: submitdate,
+                        edit_date: editdate,
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_magazine  = ? AND user_id = ?';
                     const value2 = [submit, id, id2, req.id];
@@ -1016,11 +1095,11 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                             return res.status(400).json({ message: error });
                         }
                     }
-                    if(!req.files.research_list){
+                    if (!req.files.research_list) {
                         handleDeleteFile5(req);
                         error.push("Please upload research_list");
                         return res.status(400).json({ message: error });
-                    }else{
+                    } else {
                         const ext = req.files.research_list[0].filename.split(".").pop();
                         if (ext !== "pdf" && ext !== "docx" && ext !== "doc" && ext !== "jpg" && ext !== "png" && ext !== "jpeg") {
                             handleDeleteFile5(req);
@@ -1143,16 +1222,82 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
 
                 }
 
+                if (req.files.payment_photo && resultSelect[0].photo_payment_receipt != null) {
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].photo_payment_receipt}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile5(req);
+                            console.error(err)
+                            return
+                        }
+                    }
+                    )
+                }
+                if (req.files.research_list && resultSelect[0].research_list != null) {
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].research_list}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile5(req);
+                            console.error(err)
+                            return
+                        }
+                    }
+                    )
+                }
+                for (let i = 1; i <= 10; i++) {
+                    if (req.files[`word${i}`] && resultSelect[0][`research${i}_image_word`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_word`]}`;
+                        fs.unlinkSync(path, (err) => {
+                            if (err) {
+                                handleDeleteFile5(req);
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
+                }
+                for (let i = 1; i <= 10; i++) {
+                    if (req.files[`pdf${i}`] && resultSelect[0][`research${i}_image_pdf`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_pdf`]}`;
+                        fs.unlinkSync(path , (err) => {
+                            if (err) {
+                                handleDeleteFile5(req);
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
+                }
+                for (let i = 11; i <= 20; i++) {
+                    if (req.files[`pdf${i}`] && resultSelect[0][`acceptance_letter${i - 10}`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`acceptance_letter${i - 10}`]}`;
+                        fs.unlinkSync(path , (err) => {
+                            if (err) {
+                                handleDeleteFile5(req);
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
+                }
+
+
 
                 const sql = `UPDATE upgrade_service SET ? WHERE id = ? `;
                 const value = [data, id2];
                 const result = await query(sql, value);
                 if (result.affectedRows > 0) {
+                    let submitdate = resultSelect[0].status === 1 ? new Date() : resultSelect[0].submit_date;
+                    let editdate = resultSelect[0].status !== 1 ? new Date() : resultSelect[0].status === 1 ? null : resultSelect[0].edit_date;
                     const submit = {
                         status: 2,
-                        response_text : null ,
-                        manager_status: null ,                        
-                        submit_date: new Date(),
+                        response_text: null,
+                        manager_status: null,
+                        submit_date: submitdate,
+                        edit_date: editdate,
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_upgrade   = ? AND user_id = ?';
                     const value2 = [submit, id, id2, req.id];
@@ -1295,15 +1440,57 @@ serviceStepTwo.put("/StepTwoSer6/:id/:id2",
                 }
 
 
+                if (req.files.payment_photo && resultSelect[0].photo_payment_receipt != null) {
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].photo_payment_receipt}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile3(req);
+                            console.error(err)
+                            return
+                        }
+                    }
+                    )
+                }
+                for (let i = 1; i <= 10; i++) {
+                    if (req.files[`word${i}`] && resultSelect[0][`research${i}_image_word`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_word`]}`;
+                        fs.unlinkSync(path, (err) => {
+                            if (err) {
+                                handleDeleteFile3(req);
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
+                }
+                for (let i = 1; i <= 10; i++) {
+                    if (req.files[`pdf${i}`] && resultSelect[0][`research${i}_image_pdf`] != null) {
+                        const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_pdf`]}`;
+                        fs.unlinkSync(path, (err) => {
+                            if (err) {
+                                handleDeleteFile3(req);
+                                console.error(err)
+                                return
+                            }
+                        }
+                        )
+                    }
+                }
+
+
                 const sql = `UPDATE best_message_service SET ? WHERE id = ? `;
                 const value = [data, id2];
                 const result = await query(sql, value);
                 if (result.affectedRows > 0) {
+                    let submitdate = resultSelect[0].status === 1 ? new Date() : resultSelect[0].submit_date;
+                    let editdate = resultSelect[0].status !== 1 ? new Date() : resultSelect[0].status === 1 ? null : resultSelect[0].edit_date;
                     const submit = {
                         status: 2,
-                        response_text : null ,
-                        manager_status: null ,
-                        submit_date: new Date(),
+                        response_text: null,
+                        manager_status: null,
+                        submit_date: submitdate,
+                        edit_date: editdate,
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_best   = ? AND user_id = ?';
                     const value2 = [submit, id, id2, req.id];
@@ -1404,7 +1591,7 @@ serviceStepTwo.post("/StepTwoSer7",
                 return res.status(400).json({ message: error });
             } else {
                 const ext = req.files.decision[0].filename.split(".").pop();
-                if (ext !== "pdf" ) {
+                if (ext !== "pdf") {
                     handleDeleteFile7(req);
                     error.push("Please upload image or pdf or word");
                     return res.status(400).json({ message: error });
@@ -1510,25 +1697,62 @@ serviceStepTwo.put("/StepTwoSer7edit/:id/:id2",
             const valueSelect = [id2];
             const resultSelect = await query(sqlSelect, valueSelect);
             if (resultSelect.length > 0) {
-                
+
                 let word = req.files.word ? req.files.word[0].filename : resultSelect[0].message_word_ar;
                 let pdf = req.files.pdf ? req.files.pdf[0].filename : resultSelect[0].message_pdf_ar;
                 let decision = req.files.decision ? req.files.decision[0].filename : resultSelect[0].decision;
-                
+
                 const grant = {
                     message_word_ar: word,
                     message_pdf_ar: pdf,
                     decision: decision,
                     level: req.body.level ? req.body.level : resultSelect[0].level,
                 }
+
+                if (req.files.word && resultSelect[0].message_word_ar != null) {
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].message_word_ar}`;
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
+                            handleDeleteFile7(req);
+                            console.error(err)
+                            return
+                        }
+                    }
+                    )
+                }
+                if (req.files.pdf && resultSelect[0].message_pdf_ar != null) {
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].message_pdf_ar}`;
+                    fs.unlinkSync(path,(err)=>{
+                        if(err){
+                            handleDeleteFile7(req);
+                            console.error(err)
+                            return
+                        }
+                    }
+                    )
+                }
+                if (req.files.decision && resultSelect[0].decision != null) {
+                    const path = `./public/imgs/${req.national_id}/${resultSelect[0].decision}`;
+                    fs.unlinkSync(path,(err)=>{
+                        if(err){
+                            handleDeleteFile7(req);
+                            console.error(err)
+                            return
+                        }
+                    }
+                    )
+                }
+                
+
+                
                 const sql = `UPDATE grant_service SET ? WHERE id = ? `;
                 const value = [grant, id2];
                 const result = await query(sql, value);
                 if (result.affectedRows > 0) {
                     const submit = {
                         status: 2,
-                        response_text : null ,
-                        manager_status: null ,
+                        response_text: null,
+                        manager_status: null,
                         edit_date: new Date(),
                     }
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_grant = ? AND user_id = ?';
@@ -1549,7 +1773,7 @@ serviceStepTwo.put("/StepTwoSer7edit/:id/:id2",
             }
         } catch (error) {
             handleDeleteFile7(req);
-            return res.status(500).send( error );
+            return res.status(500).send(error);
         }
     }
 );
@@ -1644,8 +1868,8 @@ serviceStepTwo.put("/StepTwoSer8edit/:id/:id2",
                     const submit = {
                         status: 2,
                         edit_date: new Date(),
-                        response_text : null ,
-                        manager_status: null ,
+                        response_text: null,
+                        manager_status: null,
                     }
 
                     const sql2 = 'UPDATE submit SET ? WHERE service_id = ? AND ser_knowledge = ? AND user_id = ?';
