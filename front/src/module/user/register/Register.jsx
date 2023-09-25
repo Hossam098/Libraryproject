@@ -1,25 +1,23 @@
-import { useState, useEffect } from 'react';
-import { HiEye, HiEyeOff } from 'react-icons/hi';
-import Toggle from '../../../components/togglrLang/Toggle';
-import './register.css'
-import { useTranslation } from 'react-i18next';
-import { API_URL } from '../../../config';
-import axios from 'axios'
-import { use } from 'i18next';
-import { useNavigate } from 'react-router-dom';
-import PopupError from '../../../components/error/PopupError';
-import { Link } from 'react-router-dom';
-
+import { useState, useEffect } from "react";
+import { HiEye, HiEyeOff } from "react-icons/hi";
+import Toggle from "../../../components/togglrLang/Toggle";
+import "./register.css";
+import { useTranslation } from "react-i18next";
+import { API_URL } from "../../../config";
+import axios from "axios";
+import { use } from "i18next";
+import { useNavigate } from "react-router-dom";
+import PopupError from "../../../components/error/PopupError";
+import { Link } from "react-router-dom";
 
 const Register = () => {
-
   const navigate = useNavigate();
   const [logged, setLogged] = useState(true);
   const [t] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors2, setErrors2] = useState('');
+  const [errors2, setErrors2] = useState("");
 
   const [user, setUser] = useState({
     name: "",
@@ -33,37 +31,33 @@ const Register = () => {
     other_uni: "",
     faculity: "",
     department: "",
-  })
-
+  });
 
   function togglePasswordVisibility() {
     setShowPassword((prevState) => !prevState);
   }
 
   const handleCloseError = () => {
-    setErrors2('');
+    setErrors2("");
   };
 
-
-
   useEffect(() => {
-    axios.get(`${API_URL}/auth/check`, { withCredentials: true })
+    axios
+      .get(`${API_URL}/auth/check`, { withCredentials: true })
       .then((res) => {
-
-        setLogged(true)
-        navigate('/')
+        setLogged(true);
+        navigate("/Library/");
       })
       .catch((err) => {
-        console.log(err)
-        setLogged(false)
-
-      })
+        console.log(err);
+        setLogged(false);
+      });
     if (Object.keys(errors).length === 0 && isSubmitting) {
       axios.defaults.withCredentials = true;
-      axios.post(`${API_URL}/auth/register`, user, { withCredentials: true })
+      axios
+        .post(`${API_URL}/auth/register`, user, { withCredentials: true })
         .then((res) => {
-          ;
-          navigate('/login');
+          navigate("/Library/login");
         })
         .catch((err) => {
           console.log(err.response.data.message[0]);
@@ -78,66 +72,58 @@ const Register = () => {
     setIsSubmitting(true);
   };
 
-
   const validate = (values) => {
-    const errors = {}
+    const errors = {};
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
     if (!values.name) {
-      errors.name = `${t('name-err')}`
+      errors.name = `${t("name-err")}`;
     }
     if (!values.email) {
-      errors.email = `${t('email-err')}`
+      errors.email = `${t("email-err")}`;
     } else if (!regex.test(values.email)) {
-      errors.email = `${t('email-v-err')}`
-    } else if (!regex.test(values.email) || !values.email.includes('.edu')) {
-      errors.email = `${t('email-t-err')}`;
+      errors.email = `${t("email-v-err")}`;
+    } else if (!regex.test(values.email) || !values.email.includes(".edu")) {
+      errors.email = `${t("email-t-err")}`;
     }
     if (!values.password) {
-      errors.password = `${t('pass-err')}`
+      errors.password = `${t("pass-err")}`;
     } else if (values.password.length < 8) {
-      errors.password = `${t('pass-err-min')}`
+      errors.password = `${t("pass-err-min")}`;
     }
     if (!values.national_id) {
-      errors.national_id = `${t('n-id-err')}`
+      errors.national_id = `${t("n-id-err")}`;
     }
     if (!values.phone) {
-      errors.phone = `${t('phone-err')}`
+      errors.phone = `${t("phone-err")}`;
     }
     if (!values.nationality) {
-      errors.nationality = `${t('nation-err')}`
+      errors.nationality = `${t("nation-err")}`;
     }
     if (!values.university) {
-      errors.university = `${t('uni-err')}`
+      errors.university = `${t("uni-err")}`;
     }
     if (values.university === "0") {
       if (!values.other_uni) {
-        errors.other_uni = `${t('uni-err')}`
+        errors.other_uni = `${t("uni-err")}`;
       }
     }
     if (!values.faculity) {
-      errors.faculity = `${t('fac-err')}`
+      errors.faculity = `${t("fac-err")}`;
     }
     if (!values.department) {
-      errors.department = `${t('dep-err')}`
+      errors.department = `${t("dep-err")}`;
     }
     if (!values.checkpassword) {
-      errors.checkpassword = `${t('re-pass-err')}`
-    } else if ((values.checkpassword !== values.password)) {
-      errors.checkpassword = `${t('pass-match-err')}`
+      errors.checkpassword = `${t("re-pass-err")}`;
+    } else if (values.checkpassword !== values.password) {
+      errors.checkpassword = `${t("pass-match-err")}`;
     }
 
-
-
     return errors;
-  }
+  };
   return (
     <div className="main">
-      {errors2 && (
-        <PopupError
-          message={errors2}
-          onClose={handleCloseError}
-        />
-      )}
+      {errors2 && <PopupError message={errors2} onClose={handleCloseError} />}
       {/* <div className="main-image">
         <img src="./assets/uni-logo.png" alt="" />
       </div> */}
@@ -148,83 +134,110 @@ const Register = () => {
         </div>
         <div class="main-content">
           <div class="main-content-form">
-            <h3>{t('cerate')}</h3>
+            <h3>{t("cerate")}</h3>
             <form onSubmit={handleSubmit}>
-              <div className="input-container" style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl", textAlign: "right" } : { direction: "ltr", textAlign: "left" }}>
-
-
+              <div
+                className="input-container"
+                style={
+                  localStorage.getItem("i18nextLng") == "ar"
+                    ? { direction: "rtl", textAlign: "right" }
+                    : { direction: "ltr", textAlign: "left" }
+                }
+              >
                 <div class="input">
-                  <label>{t('name')} </label>
+                  <label>{t("name")} </label>
                   <input
-
                     style={
-                      localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
                     }
                     type="text"
-                    className={errors.name ? 'error-in' : ''}
-                    placeholder={t('e-name')}
+                    className={errors.name ? "error-in" : ""}
+                    placeholder={t("e-name")}
                     value={user.name}
-                    onChange={(e) => { setUser({ ...user, name: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, name: e.target.value });
+                    }}
                   />
-                  <p className='error'>{errors.name}</p>
+                  <p className="error">{errors.name}</p>
                 </div>
 
-
-                <div class="input" >
-                  <label >{t('email')} </label>
+                <div class="input">
+                  <label>{t("email")} </label>
                   <input
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                     type="text"
-                    className={errors.email ? 'error-in' : ''}
-                    placeholder={t('e-email')}
+                    className={errors.email ? "error-in" : ""}
+                    placeholder={t("e-email")}
                     value={user.email}
-                    onChange={(e) => { setUser({ ...user, email: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, email: e.target.value });
+                    }}
                   />
-                  <p className='error'>{errors.email}</p>
+                  <p className="error">{errors.email}</p>
                 </div>
 
-
                 <div class="input">
-                  <label>{t('n-id')} </label>
+                  <label>{t("n-id")} </label>
                   <input
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                     type="text"
-                    className={errors.national_id ? 'error-in' : ''}
-                    placeholder={t('e-n-id')}
+                    className={errors.national_id ? "error-in" : ""}
+                    placeholder={t("e-n-id")}
                     value={user.national_id}
-                    onChange={(e) => { setUser({ ...user, national_id: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, national_id: e.target.value });
+                    }}
                   />
-                  <p className='error'>{errors.national_id}</p>
+                  <p className="error">{errors.national_id}</p>
                 </div>
 
-
                 <div class="input">
-                  <label>{t('phone')} </label>
+                  <label>{t("phone")} </label>
                   <input
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                     type="text"
-                    className={errors.phone ? 'error-in' : ''}
-                    placeholder={t('e-phone')}
+                    className={errors.phone ? "error-in" : ""}
+                    placeholder={t("e-phone")}
                     value={user.phone}
-                    onChange={(e) => { setUser({ ...user, phone: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, phone: e.target.value });
+                    }}
                   />
-                  <p className='error'>{errors.phone}</p>
+                  <p className="error">{errors.phone}</p>
                 </div>
-
 
                 <div class="input">
-                  <label>{t('nation')} </label>
+                  <label>{t("nation")} </label>
                   <input
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                     type="text"
-                    className={errors.nationality ? 'error-in' : ''}
-                    placeholder={t('e-nation')}
+                    className={errors.nationality ? "error-in" : ""}
+                    placeholder={t("e-nation")}
                     value={user.nationality}
-                    onChange={(e) => { setUser({ ...user, nationality: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, nationality: e.target.value });
+                    }}
                   />
-                  <p className='error'>{errors.nationality}</p>
+                  <p className="error">{errors.nationality}</p>
                 </div>
-
 
                 {/* <div class="input">
                   <label>{t('uni')} </label>
@@ -240,108 +253,152 @@ const Register = () => {
                 </div> */}
 
                 <div className="input">
-                  <label>{t('uni')}</label>
+                  <label>{t("uni")}</label>
                   <select
-                    className={errors.university ? 'error-in' : ''}
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    className={errors.university ? "error-in" : ""}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                     value={user.university}
-                    onChange={(e) => { setUser({ ...user, university: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, university: e.target.value });
+                    }}
                   >
-                    <option value="" >{t('uni')} </option>
-                    <option value="1">{t('helwan-uni')} </option>
-                    <option value="0">{t('other-uni')} </option>
+                    <option value="">{t("uni")} </option>
+                    <option value="1">{t("helwan-uni")} </option>
+                    <option value="0">{t("other-uni")} </option>
                   </select>
-                  <p className='error'>{errors.university}</p>
+                  <p className="error">{errors.university}</p>
                 </div>
-
 
                 {user.university === "0" && (
                   <div class="input">
-                    <label>{t('uni-name')} </label>
+                    <label>{t("uni-name")} </label>
                     <input
-                      style={localStorage.getItem('i18nextLng') === "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                      style={
+                        localStorage.getItem("i18nextLng") === "ar"
+                          ? { direction: "rtl" }
+                          : { direction: "ltr" }
+                      }
                       type="text"
-                      className={errors.other_uni ? 'error-in' : ''}
-                      placeholder={t('e-uni')}
+                      className={errors.other_uni ? "error-in" : ""}
+                      placeholder={t("e-uni")}
                       value={user.other_uni}
-                      onChange={(e) => { setUser({ ...user, other_uni: e.target.value }) }}
+                      onChange={(e) => {
+                        setUser({ ...user, other_uni: e.target.value });
+                      }}
                     />
-                    <p className='error'>{errors.other_uni}</p>
+                    <p className="error">{errors.other_uni}</p>
                   </div>
                 )}
 
-
-
                 <div class="input">
-                  <label>{t('fac')} </label>
+                  <label>{t("fac")} </label>
                   <input
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                     type="text"
-                    className={errors.faculity ? 'error-in' : ''}
-                    placeholder={t('e-fac')}
+                    className={errors.faculity ? "error-in" : ""}
+                    placeholder={t("e-fac")}
                     value={user.faculity}
-                    onChange={(e) => { setUser({ ...user, faculity: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, faculity: e.target.value });
+                    }}
                   />
-                  <p className='error'>{errors.faculity}</p>
+                  <p className="error">{errors.faculity}</p>
                 </div>
 
                 <div class="input">
-                  <label>{t('dep')} </label>
+                  <label>{t("dep")} </label>
                   <input
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                     type="text"
-                    className={errors.department ? 'error-in' : ''}
-                    placeholder={t('e-dep')}
+                    className={errors.department ? "error-in" : ""}
+                    placeholder={t("e-dep")}
                     value={user.department}
-                    onChange={(e) => { setUser({ ...user, department: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, department: e.target.value });
+                    }}
                   />
-                  <p className='error'>{errors.department}</p>
+                  <p className="error">{errors.department}</p>
                 </div>
 
-
                 <div class="input">
-                  <label>{t('pass')} </label>
+                  <label>{t("pass")} </label>
                   <div
-                    className={`passwordcontainer ${errors.password ? 'error-in' : ''}`}
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    className={`passwordcontainer ${
+                      errors.password ? "error-in" : ""
+                    }`}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                   >
                     <input
-                      style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
-                      type={showPassword ? 'text' : 'password'}
-                      className={errors.password ? 'error-in' : ''}
-                      placeholder={t('e-pass')}
+                      style={
+                        localStorage.getItem("i18nextLng") == "ar"
+                          ? { direction: "rtl" }
+                          : { direction: "ltr" }
+                      }
+                      type={showPassword ? "text" : "password"}
+                      className={errors.password ? "error-in" : ""}
+                      placeholder={t("e-pass")}
                       value={user.password}
-                      onChange={(e) => { setUser({ ...user, password: e.target.value }) }}
+                      onChange={(e) => {
+                        setUser({ ...user, password: e.target.value });
+                      }}
                     />
 
                     <span onClick={togglePasswordVisibility}>
-                      {showPassword ? <HiEyeOff style={{ color: "#19355A" }} /> : <HiEye style={{ color: "#19355A" }} />}
+                      {showPassword ? (
+                        <HiEyeOff style={{ color: "#19355A" }} />
+                      ) : (
+                        <HiEye style={{ color: "#19355A" }} />
+                      )}
                     </span>
                   </div>
-                  <p className='error'>{errors.password}</p>
+                  <p className="error">{errors.password}</p>
                 </div>
-
 
                 <div class="input">
-                  <label>{t('re-pass')} </label>
+                  <label>{t("re-pass")} </label>
                   <input
-                    style={localStorage.getItem('i18nextLng') == "ar" ? { direction: "rtl" } : { direction: "ltr" }}
+                    style={
+                      localStorage.getItem("i18nextLng") == "ar"
+                        ? { direction: "rtl" }
+                        : { direction: "ltr" }
+                    }
                     type="password"
-                    className={errors.checkpassword ? 'error-in' : ''}
-                    placeholder={t('e-re-pass')}
+                    className={errors.checkpassword ? "error-in" : ""}
+                    placeholder={t("e-re-pass")}
                     value={user.checkpassword}
-                    onChange={(e) => { setUser({ ...user, checkpassword: e.target.value }) }}
+                    onChange={(e) => {
+                      setUser({ ...user, checkpassword: e.target.value });
+                    }}
                   />
-                  <p className='error'>{errors.checkpassword}</p>
+                  <p className="error">{errors.checkpassword}</p>
                 </div>
-
               </div>
-              <input type="submit" value={t('create')} style={{ marginBottom: "1rem" }} />
+              <input
+                type="submit"
+                value={t("create")}
+                style={{ marginBottom: "1rem" }}
+              />
             </form>
 
-            <Link to="/login" className="link">{t('login-link')}</Link>
-
-
+            <Link to="/Library/login" className="link">
+              {t("login-link")}
+            </Link>
           </div>
         </div>
       </div>
@@ -349,7 +406,7 @@ const Register = () => {
         <Toggle />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

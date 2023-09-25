@@ -28,10 +28,7 @@ const Profit = () => {
                     <FaUserGraduate className='icon' />
                     <p>طلاب الدراسات العليا والباحثون</p>
                 </div>
-                {/* <div className="icon-cont">                
-                <FaRegNewspaper className='icon'/>
-                <p>المجلات والدوريات العلمية</p>
-            </div> */}
+                
                 <div className="icon-cont">
                     <ImOffice className='icon' />
                     <p>الجامعات والمعاهد الخاصة والأهلية</p>

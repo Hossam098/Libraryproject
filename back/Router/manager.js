@@ -202,7 +202,7 @@ manager.put('/deleteManager',
 manager.put('/acceptApplicant/:id',
     upload.single('response_pdf'),
     checkmanager,
-    body('national_id').notEmpty().withMessage('يجب ادخال نص الرد'),
+    body('national_id').notEmpty().withMessage('يجب ادخال الرقم القومي'),
     async (req, res) => {
         let error = [];
         try {
@@ -216,6 +216,7 @@ manager.put('/acceptApplicant/:id',
                         response_text: req.body.response_text,
                         response_pdf: req.file ? req.file.filename : null,
                         manager_status: 1,
+                        response_date : new Date()
                     }
                     const sqlUpdate = `UPDATE submit SET ? WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
                     const value = [Data, req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
@@ -233,6 +234,7 @@ manager.put('/acceptApplicant/:id',
                         response_text: req.body.response_text,
                         response_pdf: req.file.filename,
                         status: 5,
+                        response_date : new Date()
                     }
                     const sqlUpdate = `UPDATE submit SET ? WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
                     const value = [Data, req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
@@ -343,6 +345,37 @@ manager.get('/getallApplicants',
         } catch (errors) {
             error.push(errors);
             return res.status(500).json({ message: error });
+        }
+    }
+)
+
+manager.put('/watingApplicant/:id',
+    checkmanager,
+    async (req, res) => {
+        try {
+            const id = req.params.id;
+            if (+req.body.status === 2) {
+                const sqlSelect = `SELECT * FROM submit WHERE ${req.body.ser_name} = ?`;
+                const value = [req.body.app_id];
+                const result1 = await query(sqlSelect, value);
+                if (result1 && result1.length > 0 && result1[0].response_pdf) {
+                    const filePath = `./public/imgs/${id}/${result1[0].response_pdf}`;
+                    if (fs.existsSync(filePath)) {
+                        fs.unlinkSync(filePath);
+                    }
+                }
+                const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
+                const value2 = [req.body.status, req.body.reason, req.body.app_id];
+                const result = await query(sqlUpdate, value2);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            }
+
+        } catch (errors) {
+            return res.status(500).json({ message: errors });
         }
     }
 )

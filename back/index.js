@@ -26,6 +26,7 @@ app.use(express.json());
 
 
 app.use(cors({
+  // origin: 'https://eservices.helwan.edu.eg',
   origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
@@ -65,8 +66,9 @@ app.use('/user', user);
 app.use('/manager', manager);
 app.use('/admin', Admin);
 
+// const PORT = process.env.PORT || 8090;
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log("Server is running on port", PORT);
+  console.log("Server is running on port ", PORT);
 });
