@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../../config";
 
+
 const Nav = () => {
   const navigate = useNavigate();
   const [manager, setManager] = useState([]);
@@ -43,7 +44,7 @@ const Nav = () => {
       <nav className="mnav">
         <button onClick={logout} className="btn">
           <Link style={{ color: "white", textDecoration: "none" }}>
-            {" "}
+            
             تسجيل الخروج
           </Link>
         </button>
@@ -57,8 +58,7 @@ const Nav = () => {
                   exact
                   to="/Library/manager/all"
                 >
-                  {" "}
-                  عرض جميع الطلبات{" "}
+                  عرض جميع الطلبات
                 </Link>
               </li>
               {+manager.service_id !== 9 && (
@@ -69,8 +69,7 @@ const Nav = () => {
                     exact
                     to="/Library/manager/list"
                   >
-                    {" "}
-                    توزيع الطلبات{" "}
+                    توزيع الطلبات
                   </Link>
                 </li>
               )}
@@ -82,8 +81,7 @@ const Nav = () => {
               className={active === "LIST_active" ? "active" : ""}
               to="/Library/manager/Review"
             >
-              {" "}
-              الطلبات الموزعة لك{" "}
+              الطلبات الموزعة لك
             </Link>
           </li>
           {manager.role === 0 && manager.service_id !== 9 && (
@@ -93,11 +91,19 @@ const Nav = () => {
                 className={active === "REVIWED_active" ? "active" : ""}
                 to="/Library/manager/reviewed"
               >
-                {" "}
-                الطلبات التي تمت مراجعتها{" "}
+                الطلبات التي تمت مراجعتها
               </Link>
             </li>
           )}
+            <li>
+              <Link
+                onClick={() => setActive("CONTACT_active")}
+                className={active === "CONTACT_active" ? "active" : ""}
+                to="/Library/manager/contact"
+              >
+                الرسائل
+              </Link>
+            </li>
         </ul>
 
         <h1 style={{ color: "#19355a", fontWeight: "600" }}>{manager.mname}</h1>

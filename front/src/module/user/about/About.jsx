@@ -9,31 +9,38 @@ const About = () => {
 
 
   return (
-    <div className='about'>
+    <div className='about' id='services' >
       <div className='intro-text'>
-        <h1 style={{ fontSize: '2.5rem' }}>
+        <h2 style={{ fontSize: '2.5rem' ,margin: 'auto' }}>
           {t('aboutus.title')}
-        </h1>
-        <h3 style={{ fontSize: '1.8rem' }}>
+        </h2>
+        <h2 style={{ fontSize: '1.8rem',margin: 'auto' }}>
           {t('aboutus.h3')}
-        </h3>
-        <h4>
+        </h2>
+        <h2 style={{
+            fontSize: "1.5rem",
+            fontWeight: "400",
+            lineHeight: "1.5",
+            textAlign: "center",
+            opacity: "0.8",
+            margin: 'auto auto 1rem auto'
+          }}>
           {t('aboutus.p')}
-        </h4>
+        </h2>
       </div>
       <section className='grid-3'>
         <div className="about-cont"
           style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl', textAlign: "right" } : { direction: 'ltr', textAlign: "left" }}
         >
           <span></span>
-          <h2>{t('aboutus.us')}</h2>
+          <h1>{t('aboutus.us')}</h1>
           <p>{t('aboutus.us-p')}</p>
         </div>
         <div className="about-cont"
           style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl', textAlign: "right" } : { direction: 'ltr', textAlign: "left" }}
         >
           <span></span>
-          <h2>{t('aboutus.our-message')}</h2>
+          <h1>{t('aboutus.our-message')}</h1>
           <p>
             <span>{t('aboutus.our-vision')}:</span>
             {t('aboutus.our-vision-p')}
@@ -47,7 +54,7 @@ const About = () => {
           style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl', textAlign: "right" } : { direction: 'ltr', textAlign: "left" }}
         >
           <span></span>
-          <h2>{t('aboutus.our-goals')}</h2>
+          <h1>{t('aboutus.our-goals')}</h1>
           <ol>
             <li>
               {t('aboutus.our-goals-1')}

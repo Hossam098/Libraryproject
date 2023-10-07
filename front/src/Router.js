@@ -31,6 +31,13 @@ import AdminReset from "./module/admin/admin/AdminLog/AdminReset.jsx";
 import AdminsList from "./module/admin/admin/adminslist/AdminsList.jsx";
 import UserReset from "./module/user/login/UserReset.jsx";
 import ManagerReset from "./module/admin/Alogin/ManagerReset.jsx";
+import Send from "./module/user/contact/Send.jsx";
+import Showmsg from "./module/user/contact/Show.jsx";
+import ContactManager from "./module/admin/manager/contact/Contact.jsx";
+import ShowManager from "./module/admin/manager/contact/Show.jsx";
+import SendManager from "./module/admin/manager/contact/Send.jsx";
+
+
 
 const Router = createBrowserRouter([
   {
@@ -51,7 +58,20 @@ const Router = createBrowserRouter([
           },
           {
             path: "/Library/contact",
-            element: <Contact />,
+            children: [
+              {
+                path: "",
+                element: <Contact />,
+              },
+              {
+                path: "/Library/contact/send",
+                element: <Send />,
+              },
+              {
+                path: "/Library/contact/show",
+                element: <Showmsg/>,
+              },
+            ],
           },
           {
             path: "/Library/profile",
@@ -142,6 +162,18 @@ const Router = createBrowserRouter([
           {
             path: "/Library/manager/show/:id",
             element: <Show />,
+          },
+          {
+            path: "/Library/manager/contact",
+            element: <ContactManager />,
+          },
+          {
+            path: "/Library/manager/showmsg",
+            element: <ShowManager />,
+          },
+          {
+            path: "/Library/manager/sendmsg",
+            element: <SendManager />,
           },
         ],
       },

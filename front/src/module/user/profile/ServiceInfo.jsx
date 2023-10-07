@@ -54,7 +54,7 @@ const ServiceInfo = ({ User }) => {
             </tr>
           </thead>
           <tbody>
-            {services.map((ser) => {
+            {Array.isArray(services) && services.map((ser) => {
               return (
                 <tr>
                   <td>

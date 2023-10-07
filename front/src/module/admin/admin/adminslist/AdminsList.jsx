@@ -244,7 +244,7 @@ const AdminsList = () => {
               }}
             >
               <option value=""> الخدمة </option>
-              {services.map((item) => {
+              {services.length > 0 && services?.map((item) => {
                 return (
                   <option value={item.id}> {item.service_name_ar} </option>
                 );
@@ -323,7 +323,7 @@ const AdminsList = () => {
                           setManagers(updatedManagers);
                         }}
                       >
-                        {services.map((service) => (
+                        {Array.isArray(services) && services.map((service) => (
                           <option value={service.id}>
                             {service.service_name_ar}
                           </option>

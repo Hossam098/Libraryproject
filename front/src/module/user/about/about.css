@@ -5,11 +5,10 @@
     width: 90%;
     margin: 0 auto;
     justify-content: center;
+    transition: ease-in-out 0.5s all;
 }
 
-.intro-text {
-    padding: 4rem 1rem;
-}
+
 
 .intro-text h1,
 .intro-text h4,
@@ -26,11 +25,12 @@
     -webkit-box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.26);
     -moz-box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.26);
     box-shadow: 0px 0px 10px -1px rgba(0, 0, 0, 0.26);
+    animation: fade-iin .7s ease-in-out
 }
 
-.about-cont h2 {
-    color: #AD8700;
-    font-size: 2rem;
+.about-cont h1 {
+    color: #AD8700 !important;
+    font-size: 2rem !important;
 }
 
 .about-cont>span {

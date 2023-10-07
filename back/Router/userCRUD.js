@@ -136,6 +136,62 @@ user.get('/getuserbyid/:serId/:serNam/:stId/:appId',
     }
 )
 
+user.post('/contactUs',
+    checkUser,
+    body('service_id').notEmpty().withMessage('service_id is required'),
+    body('selectedReson').notEmpty().withMessage('selectedReson is required'),
+    body('message').notEmpty().withMessage('message is required'),
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.errors.forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+            const contactUsData = {
+                user_id: req.id,
+                service_id: req.body.service_id,
+                reson: req.body.selectedReson,
+                message: req.body.message,
+            }
+
+            const sqlInsert = "INSERT INTO messages SET ?";
+            const result = await query(sqlInsert, [contactUsData]);
+            if (result.affectedRows > 0) {
+                return res.status(200).json({ message: "Contact us added successfully" });
+            } else {
+                error.push("Contact us not added");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
+user.get('/getusermessages',
+    checkUser,
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT messages.* , services.* FROM messages JOIN services ON messages.service_id = services.id WHERE messages.user_id = ?";
+            const result = await query(sqlSelect, [req.id]);
+            if (result.length > 0) {
+                return res.status(200).json(result);
+            } else {
+                error.push("No messages found");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
 
 
 

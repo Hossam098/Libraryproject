@@ -76,7 +76,17 @@ const Myser = () => {
     <div>
       <section id="services">
         <h2>{t("waiting-list")}</h2>
-        {services.map((service) => {
+        <h2 style={{
+            fontSize: "1.5rem",
+            fontWeight: "400",
+            lineHeight: "1.5",
+            textAlign: "center",
+            opacity: "0.8",
+            margin: 'auto auto 1rem auto'
+          }}>
+          {t("ser-status-notes")} 
+        </h2>
+        {Array.isArray(services) && services.map((service) => {
           let type = 0;
           if (service.ser_reg != null) {
             type = service.ser_reg;

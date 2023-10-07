@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import './contact.css'
+// import './contact.css'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import { Oval } from 'react-loading-icons'
 import { useNavigate } from 'react-router-dom'
-import PopupErrorMsg from '../../../components/error/PopupErrorMsg'
-import PopupError from '../../../components/error/PopupError'
-import { API_URL } from '../../../config'
-import img from '../../../images/Email campaign-amico 1.png'
+import PopupError from '../../../../components/error/PopupError'
+import { API_URL } from '../../../../config'
+import img from '../../../../images/Email campaign-amico 1.png'
 
 
 
@@ -22,26 +21,12 @@ const Contact = () => {
 
 
   useEffect(() => {
-    axios.defaults.withCredentials = true
-    try {
-      axios
-        .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => { })
-        .catch((err) => {
-          console.log(err);
-          setLogged(true)
-          setLoading(true)
-
-        });
-
-    } catch (err) {
-      console.log(err)
-    }
+    
   }, [])
 
 
   const handleReturn = () => {
-    navigate('/Library/login')
+    navigate('/Library/managerlogin')
   }
 
 
@@ -50,14 +35,12 @@ const Contact = () => {
 
 
   return (
-    <div className="inst" style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'right', direction: 'rtl' } : { textAlign: 'left', direction: 'ltr' }}>
+    <div className="inst" style={{ textAlign: 'right', direction: 'rtl' }}>
       {logged && <PopupError message={t('err-Login')} onClose={handleReturn} />}
 
 
-      {/* <h2 style={{ fontSize: '2.5rem', color: '#19355a', margin: '2rem auto' }}>
-        {t('contact-head')}
-      </h2> */}
-      <div className="information-service_body" style={{ width: '100%' }}>
+      
+      <div className="information-service_body" >
       <img src={img} alt="contact" style={{ width: '80%', height: 'auto' }} />
 
         {loading && logged ?
@@ -68,18 +51,18 @@ const Contact = () => {
               <button
                 className='select-service-btn'
                 onClick={() => {
-                  navigate('/Library/contact/send')
+                  navigate('/Library/manager/showmsg')
                 }}
               >
-                {t('send-msg')}
+                الرسائل التي تم الرد عليها
               </button>
               <button
                 className='select-service-btn'
                 onClick={() => {
-                  navigate('/Library/contact/show')
+                  navigate('/Library/manager/sendmsg')
                 }}
               >
-                {t('msgs')}
+                الرسائل التي لم يتم الرد عليها
               </button>
 
 

@@ -243,29 +243,29 @@ Admin.post('/addManager',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ message: errors.array() });
             }
-            const sqlSelect = `SELECT * FROM manager WHERE email = ? AND mname = ?`;
+            const sqlSelect = `SELECT * FROM manager WHERE email = ? OR mname = ?`;
             const value = [req.body.email, req.body.mname];
             const result = await query(sqlSelect, value);
             if (result.length > 0) {
                 return res.status(400).json({ message: "يوجد مدير بهذا الايميل او الاسم" });
             } else {
                 let Data = {}
-                if(req.body.service_id ){
-                Data = {
-                    mname: req.body.mname,
-                    email: req.body.email,
-                    password: "12345678",
-                    service_id: req.body.service_id,
+                if (req.body.service_id) {
+                    Data = {
+                        mname: req.body.mname,
+                        email: req.body.email,
+                        password: "12345678",
+                        service_id: req.body.service_id,
+                    }
+                } else {
+                    Data = {
+                        mname: req.body.mname,
+                        email: req.body.email,
+                        password: "12345678",
+                        role: 1,
+                        service_id: null,
+                    }
                 }
-            }else{
-                Data = {
-                    mname: req.body.mname,
-                    email: req.body.email,
-                    password: "12345678",
-                    role: 1,
-                    service_id: null,
-                }
-            }
                 const sqlInsert = `INSERT INTO manager SET ?`;
                 const result = await query(sqlInsert, Data);
                 if (result.affectedRows > 0) {
@@ -296,22 +296,29 @@ Admin.put('/updateManager',
             const result = await query(sqlSelect, value);
             if (result.length > 0) {
                 let Data = {}
-                if(req.body.service_id ){
-                Data = {
-                    mname: req.body.mname,
-                    email: req.body.email,
-                    service_id: req.body.service_id,
-                    password: 12345678,
+                if (req.body.service_id) {
+                    Data = {
+                        mname: req.body.mname,
+                        email: req.body.email,
+                        service_id: req.body.service_id,
+                        password: 12345678,
+                    }
+                } else {
+                    Data = {
+                        mname: req.body.mname,
+                        email: req.body.email,
+                        role: 1,
+                        service_id: null,
+                        password: 12345678,
+                    }
                 }
-            }else{
-                Data = {
-                    mname: req.body.mname,
-                    email: req.body.email,
-                    role: 1,
-                    service_id: null,
-                    password: 12345678,
+                const sqlSelect2 = `SELECT * FROM manager WHERE email = ? OR mname = ?`;
+                const value2 = [req.body.email, req.body.mname];
+                const result2 = await query(sqlSelect2, value2);
+                if (result2.length > 0) {
+                    return res.status(400).json({ message: "يوجد مدير بهذا الايميل او الاسم" });
                 }
-            }
+
                 const sqlUpdate = `UPDATE manager SET ? WHERE id = ?`;
                 const value = [Data, req.body.id];
                 const result = await query(sqlUpdate, value);

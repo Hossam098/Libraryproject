@@ -21,7 +21,7 @@ h6{
   src: url('./assets/uni-id/GE-SS-Text-Medium.otf') format('opentype');
   font-weight: normal ;
   font-style: normal;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 a{
   text-decoration: none;
@@ -48,7 +48,7 @@ a{
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: black;
+  background: #19355a;
   border-radius: 5px;
 }
 

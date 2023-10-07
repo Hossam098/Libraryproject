@@ -94,7 +94,7 @@ manager.put('/AssignManager',
                 });
                 return res.status(400).json({ message: error });
             }
-            
+
 
             for (const obj of req.body) {
                 const { student_id, managerid, service_id, aplecationId, role, ser_name } = obj;
@@ -185,7 +185,7 @@ manager.put('/deleteManager',
                 });
                 return res.status(400).json({ message: error });
             }
-            
+
 
             const sqlUpdate = `UPDATE submit SET manager_id = Null , role = Null WHERE service_id = ? AND user_id = ? AND ${req.body.ser_name} = ?`;
             const value = [req.body.service_id, req.body.student_id, req.body.aplecationId];
@@ -216,7 +216,7 @@ manager.put('/acceptApplicant/:id',
                         response_text: req.body.response_text,
                         response_pdf: req.file ? req.file.filename : null,
                         manager_status: 1,
-                        response_date : new Date()
+                        response_date: new Date()
                     }
                     const sqlUpdate = `UPDATE submit SET ? WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
                     const value = [Data, req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
@@ -234,7 +234,7 @@ manager.put('/acceptApplicant/:id',
                         response_text: req.body.response_text,
                         response_pdf: req.file.filename,
                         status: 5,
-                        response_date : new Date()
+                        response_date: new Date()
                     }
                     const sqlUpdate = `UPDATE submit SET ? WHERE ${req.body.ser_name} = ? AND manager_id = ? AND service_id = ? AND user_id = ?`;
                     const value = [Data, req.body.app_id, req.id, req.body.ser_id, req.body.student_id];
@@ -260,7 +260,7 @@ manager.put('/acceptApplicantforManager',
     async (req, res) => {
         let error = [];
         try {
-        
+
             if (req.service_id !== 9) {
                 if ((req.body.column === "status") && (+req.body.ser_id !== +req.service_id) && +req.body.role !== 2) {
                     return res.status(400).json({ message: "لا تملك صلاحية القيام بهذا الامر" });
@@ -282,7 +282,7 @@ manager.put('/acceptApplicantforManager',
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
                 }
             } else if (req.body.reason !== "") {
-                
+
                 const sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status}
              WHERE ${req.body.ser_name} = ?`;
                 const value = [req.body.status, req.body.reason, req.body.app_id];
@@ -379,5 +379,57 @@ manager.put('/watingApplicant/:id',
         }
     }
 )
+
+manager.get('/getusermessages',
+    checkmanager,
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT messages.* , services.service_name_ar , users.name, manager.mname FROM messages INNER JOIN services ON messages.service_id = services.id INNER JOIN users ON messages.user_id = users.id INNER JOIN manager ON messages.manager_id = manager.id WHERE messages.service_id = ? ORDER BY messages.id DESC ";
+            const result = await query(sqlSelect, [req.service_id]);
+            if (result.length > 0) {
+                return res.status(200).json(result);
+            } else {
+                error.push("No messages found");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
+manager.put('/sendresponse',
+    checkmanager,
+    body('message_id').notEmpty().withMessage('يجب ادخال رقم الرسالة'),
+    body('response').notEmpty().withMessage('يجب ادخال الرد'),
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM messages WHERE id = ? ";
+            const value = [req.body.message_id];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                const sqlUpdate = `UPDATE messages SET response = ? , manager_id = ? , response_date = ? WHERE id = ?`;
+                const value = [req.body.response, req.id, new Date(), req.body.message_id];
+                const result = await query(sqlUpdate, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم ارسال الرد بنجاح" });
+                }else{
+                    return res.status(400).json({ message: "حدث خطأ ما" });
+                }
+            }
+            else {
+                error.push("No messages found");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
 
 export default manager;
