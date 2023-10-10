@@ -3,7 +3,7 @@ import { MdAdd } from "react-icons/md";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import img from "../../../../images/mini-logo.png";
+import img from "../../../../images/librarylog.jpg";
 import { API_URL } from "../../../../config";
 import PopupErrorMsg from "../../../../components/error/PopupErrorMsg";
 import PopupConfirmMsg from "../../../../components/error/PopupConfirmMsg";
@@ -44,9 +44,9 @@ const AdminsList = () => {
         if (error.response.status === 401) navigate("/Library/AdminLogin");
         navigate("/Library/AdminLogin");
       });
-      if(error){
-        setConfirm(false);
-      }
+    if (error) {
+      setConfirm(false);
+    }
   }, []);
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -531,7 +531,7 @@ const AdminsList = () => {
           </table>
         </div>
       </section>
-      {error  && <PopupErrorMsg message={error} onClose={handleCloseError} />}
+      {error && <PopupErrorMsg message={error} onClose={handleCloseError} />}
     </div>
   );
 };

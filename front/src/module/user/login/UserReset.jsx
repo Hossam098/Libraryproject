@@ -97,7 +97,7 @@ const UserReset = () => {
 
         <div className="main-content" style={{ boxShadow: "0 0 15px #000" }}>
           <div className="main-content-logo">
-            <img src="./assets/mini-logo.png" alt="" className="img" />
+            <img src="./assets/librarylog.jpg" alt="" className="img" />
           </div>
           <div className="main-content">
             <div className="main-content-form">
@@ -152,9 +152,8 @@ const UserReset = () => {
                   <div className="input">
                     <label>{t("pass")} </label>
                     <div
-                      className={`passwordcontainer ${
-                        errors.newpassword ? "error-in" : ""
-                      }`}
+                      className={`passwordcontainer ${errors.newpassword ? "error-in" : ""
+                        }`}
                       style={
                         localStorage.getItem("i18nextLng") == "ar"
                           ? { direction: "rtl" }
@@ -190,9 +189,8 @@ const UserReset = () => {
                   <div className="input">
                     <label> {t("re-pass")}</label>
                     <div
-                      className={`passwordcontainer ${
-                        errors.checkpassword ? "error-in" : ""
-                      }`}
+                      className={`passwordcontainer ${errors.checkpassword ? "error-in" : ""
+                        }`}
                       style={
                         localStorage.getItem("i18nextLng") == "ar"
                           ? { direction: "rtl" }

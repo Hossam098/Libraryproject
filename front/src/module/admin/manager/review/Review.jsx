@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import img from "../../../../images/mini-logo.png";
+import img from "../../../../images/librarylog.jpg";
 import { API_URL } from "../../../../config";
 
 const Review = () => {
@@ -28,7 +28,7 @@ const Review = () => {
           if (error.response.status === 401) navigate("/Library/ManagerLogin");
           navigate("/Library/ManagerLogin");
         });
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   // const [filter, setFilter] = useState(student);
@@ -39,20 +39,20 @@ const Review = () => {
       item.ser_reg !== null
         ? "ser_reg"
         : item.ser_formation !== null
-        ? "ser_formation"
-        : item.ser_grant !== null
-        ? "ser_grant"
-        : item.ser_personal !== null
-        ? "ser_personal"
-        : item.ser_upgrade !== null
-        ? "ser_upgrade"
-        : item.ser_knowledge !== null
-        ? "ser_knowledge"
-        : item.ser_magazine !== null
-        ? "ser_magazine"
-        : item.ser_best !== null
-        ? "ser_best"
-        : null;
+          ? "ser_formation"
+          : item.ser_grant !== null
+            ? "ser_grant"
+            : item.ser_personal !== null
+              ? "ser_personal"
+              : item.ser_upgrade !== null
+                ? "ser_upgrade"
+                : item.ser_knowledge !== null
+                  ? "ser_knowledge"
+                  : item.ser_magazine !== null
+                    ? "ser_magazine"
+                    : item.ser_best !== null
+                      ? "ser_best"
+                      : null;
 
     return ser_name;
   };
@@ -61,20 +61,20 @@ const Review = () => {
       item.ser_reg !== null
         ? item.ser_reg
         : item.ser_formation !== null
-        ? item.ser_formation
-        : item.ser_grant !== null
-        ? item.ser_grant
-        : item.ser_personal !== null
-        ? item.ser_personal
-        : item.ser_upgrade !== null
-        ? item.ser_upgrade
-        : item.ser_knowledge !== null
-        ? item.ser_knowledge
-        : item.ser_magazine !== null
-        ? item.ser_magazine
-        : item.ser_best !== null
-        ? item.ser_best
-        : null;
+          ? item.ser_formation
+          : item.ser_grant !== null
+            ? item.ser_grant
+            : item.ser_personal !== null
+              ? item.ser_personal
+              : item.ser_upgrade !== null
+                ? item.ser_upgrade
+                : item.ser_knowledge !== null
+                  ? item.ser_knowledge
+                  : item.ser_magazine !== null
+                    ? item.ser_magazine
+                    : item.ser_best !== null
+                      ? item.ser_best
+                      : null;
 
     return appid;
   };
@@ -118,32 +118,31 @@ const Review = () => {
                         {item.status === 0
                           ? "منتظر كود دفع"
                           : item.status === 1
-                          ? "في انتظار رفع المرفقات"
-                          : item.status === 2
-                          ? "في انتظار رد المكتبه"
-                          : item.status === 3
-                          ? "قيد التعديل"
-                          : item.status === 4
-                          ? "قيد التعديل"
-                          : item.status === 5
-                          ? "مقبول"
-                          : item.status === 6
-                          ? "مرفوض"
-                          : null}
+                            ? "في انتظار رفع المرفقات"
+                            : item.status === 2
+                              ? "في انتظار رد المكتبه"
+                              : item.status === 3
+                                ? "قيد التعديل"
+                                : item.status === 4
+                                  ? "قيد التعديل"
+                                  : item.status === 5
+                                    ? "مقبول"
+                                    : item.status === 6
+                                      ? "مرفوض"
+                                      : null}
                       </td>
                       <td>
                         {item.role === 1
                           ? " مراجعه فقط"
                           : item.role === 2
-                          ? "تحكم كامل"
-                          : null}
+                            ? "تحكم كامل"
+                            : null}
                       </td>
                       <td>
                         <button
                           onClick={() => {
                             navigate(
-                              `/Library/manager/show/${item.user_id},${
-                                item.service_id
+                              `/Library/manager/show/${item.user_id},${item.service_id
                               },${sername(item)},${app_id(item)}`
                             );
                           }}

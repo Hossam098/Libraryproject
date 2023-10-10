@@ -74,7 +74,7 @@ const Ser6 = ({ ser }) => {
     try {
       axios
         .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => {})
+        .then((res) => { })
         .catch((err) => {
           console.log(err);
           setDisabled(true);
@@ -331,7 +331,7 @@ const Ser6 = ({ ser }) => {
         }
       >
         <div className="inst-container">
-          <img src="../../assets/mini-logo.png" alt="" />
+          <img src="../../assets/librarylog.jpg" alt="" />
           <div className="information-service_body">
             <h1>{t(`service${id}-name`)}</h1>
             <hr style={{ width: "60%" }} />
@@ -454,8 +454,7 @@ const Ser6 = ({ ser }) => {
                                 );
                               } else {
                                 return window.open(
-                                  `${API_URL}/${ser.national_id}/${
-                                    words[`word${i + 1}`]
+                                  `${API_URL}/${ser.national_id}/${words[`word${i + 1}`]
                                   }`
                                 );
                               }
@@ -513,8 +512,7 @@ const Ser6 = ({ ser }) => {
                                 );
                               } else {
                                 return window.open(
-                                  `${API_URL}/${ser.national_id}/${
-                                    pdfs[`pdf${i + 1}`]
+                                  `${API_URL}/${ser.national_id}/${pdfs[`pdf${i + 1}`]
                                   }`
                                 );
                               }

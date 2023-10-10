@@ -92,7 +92,7 @@ const ManagerLogin = () => {
 
         <div className="main-content" style={{ boxShadow: "0 0 15px #000" }}>
           <div className="main-content-logo">
-            <img src="./assets/mini-logo.png" alt="" className="img" />
+            <img src="./assets/librarylog.jpg" alt="" className="img" />
           </div>
           <div className="main-content">
             <div className="main-content-form">
@@ -128,9 +128,8 @@ const ManagerLogin = () => {
                   <div className="input">
                     <label>كلمه المرور</label>
                     <div
-                      className={`passwordcontainer ${
-                        errors.password ? "error-in" : ""
-                      }`}
+                      className={`passwordcontainer ${errors.password ? "error-in" : ""
+                        }`}
                       style={
                         localStorage.getItem("i18nextLng") == "ar"
                           ? { direction: "rtl" }

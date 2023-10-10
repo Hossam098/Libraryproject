@@ -42,7 +42,7 @@ const Ser1 = ({ ser }) => {
     try {
       axios
         .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => {})
+        .then((res) => { })
         .catch((err) => {
           console.log(err);
           setDisabled(true);
@@ -210,7 +210,7 @@ const Ser1 = ({ ser }) => {
         }
       >
         <div className="inst-container">
-          <img src="../../assets/mini-logo.png" alt="" />
+          <img src="../../assets/librarylog.jpg" alt="" />
           <div className="information-service_body">
             <h1>{t(`service${id}-name`)}</h1>
             <hr style={{ width: "60%" }} />

@@ -130,7 +130,7 @@ const Register = () => {
 
       <div className="main-content" style={{ boxShadow: "0 0 15px #000" }}>
         <div className="main-content-logo">
-          <img src="./assets/mini-logo.png" alt="" />
+          <img src="./assets/librarylog.jpg" alt="" />
         </div>
         <div class="main-content">
           <div class="main-content-form">

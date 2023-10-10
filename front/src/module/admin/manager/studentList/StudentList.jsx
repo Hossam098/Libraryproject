@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { API_URL } from "../../../../config";
-import img from "../../../../images/mini-logo.png";
+import img from "../../../../images/librarylog.jpg";
 import PopupConfirmMsg from "../../../../components/error/PopupConfirmMsg";
 
 const StudentListadmin = () => {
@@ -45,7 +45,7 @@ const StudentListadmin = () => {
           if (error.response.status === 401) navigate("/Library/ManagerLogin");
           navigate("/Library/ManagerLogin");
         });
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   // const [filter, setFilter] = useState(student);
@@ -77,7 +77,7 @@ const StudentListadmin = () => {
         .catch((error) => {
           console.log(error.response);
         });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleDelete = (item) => {
@@ -89,38 +89,38 @@ const StudentListadmin = () => {
         item.ser_reg !== null
           ? item.ser_reg
           : item.ser_formation !== null
-          ? item.ser_formation
-          : item.ser_grant !== null
-          ? item.ser_grant
-          : item.ser_personal !== null
-          ? item.ser_personal
-          : item.ser_upgrade !== null
-          ? item.ser_upgrade
-          : item.ser_knowledge !== null
-          ? item.ser_knowledge
-          : item.ser_magazine !== null
-          ? item.ser_magazine
-          : item.ser_best !== null
-          ? item.ser_best
-          : null,
+            ? item.ser_formation
+            : item.ser_grant !== null
+              ? item.ser_grant
+              : item.ser_personal !== null
+                ? item.ser_personal
+                : item.ser_upgrade !== null
+                  ? item.ser_upgrade
+                  : item.ser_knowledge !== null
+                    ? item.ser_knowledge
+                    : item.ser_magazine !== null
+                      ? item.ser_magazine
+                      : item.ser_best !== null
+                        ? item.ser_best
+                        : null,
       ser_name:
         item.ser_reg !== null
           ? "ser_reg"
           : item.ser_formation !== null
-          ? "ser_formation"
-          : item.ser_grant !== null
-          ? "ser_grant"
-          : item.ser_personal !== null
-          ? "ser_personal"
-          : item.ser_upgrade !== null
-          ? "ser_upgrade"
-          : item.ser_knowledge !== null
-          ? "ser_knowledge"
-          : item.ser_magazine !== null
-          ? "ser_magazine"
-          : item.ser_best !== null
-          ? "ser_best"
-          : null,
+            ? "ser_formation"
+            : item.ser_grant !== null
+              ? "ser_grant"
+              : item.ser_personal !== null
+                ? "ser_personal"
+                : item.ser_upgrade !== null
+                  ? "ser_upgrade"
+                  : item.ser_knowledge !== null
+                    ? "ser_knowledge"
+                    : item.ser_magazine !== null
+                      ? "ser_magazine"
+                      : item.ser_best !== null
+                        ? "ser_best"
+                        : null,
     };
 
     setDeleted(updatedDeleted);
@@ -228,33 +228,33 @@ const StudentListadmin = () => {
                           {item.status === 0
                             ? "منتظر كود دفع"
                             : item.status === 1
-                            ? "في انتظار رفع المرفقات"
-                            : item.status === 2
-                            ? "في انتظار رد المكتبه"
-                            : item.status === 3
-                            ? "قيد التعديل"
-                            : item.status === 4
-                            ? "قيد التعديل"
-                            : item.status === 5
-                            ? "مقبول"
-                            : item.status === 6
-                            ? "مرفوض"
-                            : null}
+                              ? "في انتظار رفع المرفقات"
+                              : item.status === 2
+                                ? "في انتظار رد المكتبه"
+                                : item.status === 3
+                                  ? "قيد التعديل"
+                                  : item.status === 4
+                                    ? "قيد التعديل"
+                                    : item.status === 5
+                                      ? "مقبول"
+                                      : item.status === 6
+                                        ? "مرفوض"
+                                        : null}
                         </td>
                         {item.role !== null && item.role !== "" ? (
                           <td>
                             {item.role === 1
                               ? "مراجعه فقط"
                               : item.role === 2
-                              ? "تحكم كامل"
-                              : null}
+                                ? "تحكم كامل"
+                                : null}
                           </td>
                         ) : (
                           <td> لم يتم تعين صلاحيات للموطف </td>
                         )}
 
                         {(managerid && role && item.role == null) ||
-                        item.role == "" ? (
+                          item.role == "" ? (
                           <td>
                             <input
                               onClick={(e) => {
@@ -269,39 +269,39 @@ const StudentListadmin = () => {
                                         item.ser_reg !== null
                                           ? item.ser_reg
                                           : item.ser_formation !== null
-                                          ? item.ser_formation
-                                          : item.ser_grant !== null
-                                          ? item.ser_grant
-                                          : item.ser_personal !== null
-                                          ? item.ser_personal
-                                          : item.ser_upgrade !== null
-                                          ? item.ser_upgrade
-                                          : item.ser_knowledge !== null
-                                          ? item.ser_knowledge
-                                          : item.ser_magazine !== null
-                                          ? item.ser_magazine
-                                          : item.ser_best !== null
-                                          ? item.ser_best
-                                          : null,
+                                            ? item.ser_formation
+                                            : item.ser_grant !== null
+                                              ? item.ser_grant
+                                              : item.ser_personal !== null
+                                                ? item.ser_personal
+                                                : item.ser_upgrade !== null
+                                                  ? item.ser_upgrade
+                                                  : item.ser_knowledge !== null
+                                                    ? item.ser_knowledge
+                                                    : item.ser_magazine !== null
+                                                      ? item.ser_magazine
+                                                      : item.ser_best !== null
+                                                        ? item.ser_best
+                                                        : null,
                                       role: role,
                                       ser_name:
                                         item.ser_reg !== null
                                           ? "ser_reg"
                                           : item.ser_formation !== null
-                                          ? "ser_formation"
-                                          : item.ser_grant !== null
-                                          ? "ser_grant"
-                                          : item.ser_personal !== null
-                                          ? "ser_personal"
-                                          : item.ser_upgrade !== null
-                                          ? "ser_upgrade"
-                                          : item.ser_knowledge !== null
-                                          ? "ser_knowledge"
-                                          : item.ser_magazine !== null
-                                          ? "ser_magazine"
-                                          : item.ser_best !== null
-                                          ? "ser_best"
-                                          : null,
+                                            ? "ser_formation"
+                                            : item.ser_grant !== null
+                                              ? "ser_grant"
+                                              : item.ser_personal !== null
+                                                ? "ser_personal"
+                                                : item.ser_upgrade !== null
+                                                  ? "ser_upgrade"
+                                                  : item.ser_knowledge !== null
+                                                    ? "ser_knowledge"
+                                                    : item.ser_magazine !== null
+                                                      ? "ser_magazine"
+                                                      : item.ser_best !== null
+                                                        ? "ser_best"
+                                                        : null,
                                     },
                                   ]);
                                 } else {
@@ -309,7 +309,7 @@ const StudentListadmin = () => {
                                     prev.filter(
                                       (selectedItem) =>
                                         selectedItem.student_id !==
-                                          item.user_id ||
+                                        item.user_id ||
                                         selectedItem.managerid !== managerid ||
                                         selectedItem.role !== role
                                     )

@@ -7,7 +7,7 @@ import axios from "axios";
 import { API_URL } from "../../../config";
 import { Link, useNavigate } from "react-router-dom";
 import PopupError from "../../../components/error/PopupError";
-import mini from "../../../images/mini-logo.png";
+import mini from "../../../images/librarylog.jpg";
 
 const Login = () => {
   const [t] = useTranslation();
