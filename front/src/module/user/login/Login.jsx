@@ -133,9 +133,8 @@ const Login = () => {
                 <div className="input">
                   <label>{t("pass")} </label>
                   <div
-                    className={`passwordcontainer ${
-                      errors.password ? "error-in" : ""
-                    }`}
+                    className={`passwordcontainer ${errors.password ? "error-in" : ""
+                      }`}
                     style={
                       localStorage.getItem("i18nextLng") == "ar"
                         ? { direction: "rtl" }
