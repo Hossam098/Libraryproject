@@ -76,7 +76,7 @@ const Send = () => {
     try {
       console.log(data)
       axios
-        .post(`http://localhost:5000/user/contactUs`, data, { withCredentials: true })
+        .post(`${API_URL}/user/contactUs`, data, { withCredentials: true })
         .then((res) => {
           if (res.status === 200) {
             navigate('/Library')
