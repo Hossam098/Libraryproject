@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2023 at 05:33 PM
+-- Generation Time: Oct 14, 2023 at 10:35 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.2
 
@@ -165,7 +165,7 @@ CREATE TABLE `manager` (
   `mname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `service_id` int(11) NOT NULL,
+  `service_id` int(11) DEFAULT NULL,
   `role` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -185,7 +185,34 @@ INSERT INTO `manager` (`id`, `mname`, `email`, `password`, `service_id`, `role`)
 (11, ' ايمان زغلول', 'emanBest@info.com', '12345678', 6, 0),
 (12, ' ايمان زغلول', 'emanCode@info.com', '12345678', 9, 0),
 (13, 'ايمان محمد فتحي', 'emanMohamed@info.com', '$2b$10$KFNaRHq6vpPPhOyCCPBnVOAhEIz8NlUysid3qwc0xrXgjIwuonJS.', 2, 0),
-(14, 'نانا محسن', 'nanamohsen@info.com', '12345678', 2, 0);
+(14, 'نانا محسن', 'nanamohsen@info.com', '12345678', 2, 0),
+(15, 'cvv', 'cvv@info.com', '$2b$10$o.GqMPwhTuQdxwBm5yEpeOE18JmWsGL/8di0OwTJLZDhxiye/GNAG', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  `manager_id` int(11) DEFAULT NULL,
+  `reson` tinyint(1) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `response` varchar(255) DEFAULT NULL,
+  `reson_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `response_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `user_id`, `service_id`, `manager_id`, `reson`, `message`, `response`, `reson_date`, `response_date`) VALUES
+(4, 10, 1, 2, 1, 'الخدمه المختاره : استخراج افادة بأن عنوان مخطط الرسالة ليس مسجل\n', 'لااااااااااااااااااااااا', '2023-10-07 15:47:57', '2023-10-07 16:57:04'),
+(5, 10, 1, 2, 2, 'الخدمه المختاره : استخراج افادة بأن عنوان مخطط الرسالة ليس مسجل\nالسبب المختار : استفسار', 'مشسؤشسكمؤوشكس مؤةكشمسة ؤكمشك ؤمشسكؤةك شمةؤك ةشكمممممممم ممممممممممم شسة ؤمشسؤةسينؤ ىسينىؤنةؤمش ئكمظحجشيؤ وؤ مةؤسؤخشيث ب ررعر سؤسةؤمةخؤصحخ\nؤخؤمةثؤ سكيؤكمسيؤ', '2023-10-07 15:51:58', '2023-10-07 16:59:38');
 
 -- --------------------------------------------------------
 
@@ -239,6 +266,13 @@ CREATE TABLE `registration_services` (
   `translation_paper` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `registration_services`
+--
+
+INSERT INTO `registration_services` (`id`, `level`, `photo_payment_receipt`, `photo_college_letter`, `research_plan_ar_pdf`, `research_plan_ar_word`, `research_plan_en_pdf`, `research_plan_en_word`, `translation_paper`) VALUES
+(31, 0, '10203040_1695653619512.jpg', '10203040_1695653472312.jpg', '10203040_1695653619591.pdf', '10203040_1695653619617.docx', NULL, NULL, '10203040_1695653619618.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -290,10 +324,10 @@ CREATE TABLE `submit` (
   `files_numbers` int(11) DEFAULT NULL,
   `response_text` varchar(255) DEFAULT NULL,
   `response_pdf` varchar(255) DEFAULT NULL,
-  `req_code_date` date DEFAULT NULL,
-  `submit_date` date DEFAULT NULL,
-  `edit_date` date DEFAULT NULL,
-  `response_date` date DEFAULT NULL,
+  `req_code_date` timestamp NULL DEFAULT NULL,
+  `submit_date` timestamp NULL DEFAULT NULL,
+  `edit_date` timestamp NULL DEFAULT NULL,
+  `response_date` timestamp NULL DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   `role` tinyint(1) DEFAULT NULL,
@@ -301,25 +335,12 @@ CREATE TABLE `submit` (
   `manager_status` tinyint(1) DEFAULT NULL COMMENT ' 1    =>  req acc\r\n2     => req rej\r\n3     => req edit step2\r\n4     => req edit step1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `sub_manager`
+-- Dumping data for table `submit`
 --
 
-CREATE TABLE `sub_manager` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sub_manager`
---
-
-INSERT INTO `sub_manager` (`id`, `name`, `email`, `password`) VALUES
-(1, 'fff', 'ffff', 'fff');
+INSERT INTO `submit` (`id`, `ser_reg`, `ser_formation`, `ser_grant`, `ser_personal`, `ser_upgrade`, `ser_knowledge`, `ser_magazine`, `ser_best`, `payment_code`, `status`, `files_numbers`, `response_text`, `response_pdf`, `req_code_date`, `submit_date`, `edit_date`, `response_date`, `user_id`, `service_id`, `role`, `manager_id`, `manager_status`) VALUES
+(57, 31, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '515615615', 5, NULL, '43453', '10203040_1695656074289.jpg', '2023-09-24 21:00:00', '2023-09-24 21:00:00', NULL, '2023-09-25 14:34:34', 10, 1, 2, 15, NULL);
 
 -- --------------------------------------------------------
 
@@ -385,6 +406,15 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `national_id`, `phone`, `nationality`, `university`, `faculity`, `department`, `img`) VALUES
+(10, 'nader', 'nader@info.edu.eg', '$2b$10$L3K4lx.XpVmI0q0MVSxjW.g3kXPTir4g./OvxcxCBX65uAvtyRkHa', '10203040', 2147483647, 'مصري', '1', 'شؤس', 'سؤؤشس', ''),
+(11, 'm1', 'm1@info.vom', '', '', 0, '', '', '', '', ''),
+(12, 'm2', 'm2@info.com', '', '', 0, '', '', '', '', '');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -432,6 +462,15 @@ ALTER TABLE `manager`
   ADD KEY `ser-man` (`service_id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user-message` (`user_id`),
+  ADD KEY `ser-message` (`service_id`),
+  ADD KEY `manager-message` (`manager_id`);
+
+--
 -- Indexes for table `personal_examination_service`
 --
 ALTER TABLE `personal_examination_service`
@@ -466,12 +505,6 @@ ALTER TABLE `submit`
   ADD KEY `ser` (`service_id`),
   ADD KEY `sub` (`role`),
   ADD KEY `man` (`manager_id`);
-
---
--- Indexes for table `sub_manager`
---
-ALTER TABLE `sub_manager`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `upgrade_service`
@@ -529,7 +562,13 @@ ALTER TABLE `magazine_checking_service`
 -- AUTO_INCREMENT for table `manager`
 --
 ALTER TABLE `manager`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `personal_examination_service`
@@ -541,7 +580,7 @@ ALTER TABLE `personal_examination_service`
 -- AUTO_INCREMENT for table `registration_services`
 --
 ALTER TABLE `registration_services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -553,13 +592,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `submit`
 --
 ALTER TABLE `submit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
-
---
--- AUTO_INCREMENT for table `sub_manager`
---
-ALTER TABLE `sub_manager`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `upgrade_service`
@@ -571,7 +604,7 @@ ALTER TABLE `upgrade_service`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -582,6 +615,14 @@ ALTER TABLE `users`
 --
 ALTER TABLE `manager`
   ADD CONSTRAINT `man-ser` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `manager-message` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ser-message` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user-message` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `submit`
