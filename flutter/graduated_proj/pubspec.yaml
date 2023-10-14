@@ -1,0 +1,28 @@
+name: graduated_proj
+description: A new Flutter project.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'  # Updated the SDK version to a newer compatible version
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  file_picker: ^3.0.0  # Updated file_picker to a compatible version
+  image_picker: ^0.8.0+2
+  flutter_animated_icons: ^1.0.0
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
