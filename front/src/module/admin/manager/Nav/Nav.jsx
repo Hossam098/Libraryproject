@@ -61,6 +61,15 @@ const Nav = () => {
                   عرض جميع الطلبات
                 </Link>
               </li>
+              <li>
+              <Link
+                onClick={() => setActive("CONTACT_active")}
+                className={active === "CONTACT_active" ? "active" : ""}
+                to="/Library/manager/contact"
+              >
+                الرسائل
+              </Link>
+            </li>
               {+manager.service_id !== 9 && (
                 <li>
                   <Link
@@ -95,15 +104,7 @@ const Nav = () => {
               </Link>
             </li>
           )}
-            <li>
-              <Link
-                onClick={() => setActive("CONTACT_active")}
-                className={active === "CONTACT_active" ? "active" : ""}
-                to="/Library/manager/contact"
-              >
-                الرسائل
-              </Link>
-            </li>
+            
         </ul>
 
         <h1 style={{ color: "#19355a", fontWeight: "600" }}>{manager.mname}</h1>
