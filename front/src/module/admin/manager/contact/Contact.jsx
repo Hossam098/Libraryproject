@@ -40,7 +40,7 @@ const Contact = () => {
 
 
       
-      <div className="information-service_body" >
+      <div className="information-service_body" style={{ background: '#d9d9d9' }}>
       <img src={img} alt="contact" style={{ width: '80%', height: 'auto' }} />
 
         {loading && logged ?
@@ -49,7 +49,7 @@ const Contact = () => {
             <div className="service-contact">
 
               <button
-                className='select-service-btn'
+                className='select-service-btn2 select-service-btn'
                 onClick={() => {
                   navigate('/Library/manager/showmsg')
                 }}
@@ -57,7 +57,7 @@ const Contact = () => {
                 الرسائل التي تم الرد عليها
               </button>
               <button
-                className='select-service-btn'
+                className='select-service-btn2 select-service-btn'
                 onClick={() => {
                   navigate('/Library/manager/sendmsg')
                 }}

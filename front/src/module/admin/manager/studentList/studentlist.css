@@ -8,7 +8,6 @@
     align-items: center;
     direction: rtl;
     animation: fade-iin .7s ease-in-out
-
 }
 
 .cotainer-data h1 {
@@ -71,19 +70,22 @@
     justify-content: center;
     direction: rtl;
 }
-.student-container table td{
-    width:fit-content;
+
+.student-container table td {
+    width: fit-content;
 }
-.add-manager{
+
+.add-manager {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: .4rem;
 }
+
 .add-manager input,
 .add-manager select,
 .add-manager option,
-.add-manager button{
+.add-manager button {
     border: 1px soild #000;
     border-radius: 5px;
     width: 100%;
@@ -92,13 +94,15 @@
     padding: 0 1rem;
     text-align: center;
 }
-.add-manager button{
+
+.add-manager button {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem !important;
     transition: ease-in-out 0.5s all;
 }
+
 .student-container table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -107,27 +111,32 @@
     background: white;
     color: black;
 }
+
 .super-container table th {
     font-size: 1.5rem;
     padding: 1rem;
     text-align: center;
 }
-.ser-select{
+
+.ser-select {
     border: none;
     background-color: transparent;
     border-radius: 5px;
     height: 3rem;
     font-size: 1.3rem;
 }
-textarea{
+
+textarea {
     resize: none;
     height: 200px;
 }
-.table-title-h2{
+
+.table-title-h2 {
     font-size: 2.5rem;
     margin: 1rem 0;
     color: #AD8700;
 }
+
 .student-container button {
     font-size: 15px;
     padding: 15px;
@@ -136,7 +145,7 @@ textarea{
     color: white;
     border: none;
     cursor: pointer;
-    margin:  3px;
+    margin: 3px;
 }
 
 .student-container button:hover {
@@ -153,7 +162,7 @@ textarea{
 }
 
 
-.super-container{
+.super-container {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -163,8 +172,9 @@ textarea{
 }
 
 .super-container img {
-    width: 15%;
+    width: 12%;
     z-index: -1;
+    margin: 1rem auto;
 }
 
 
@@ -204,9 +214,9 @@ textarea{
     margin: 0 auto;
 }
 
-.profile-table .atch-btn ,
+.profile-table .atch-btn,
 .resp .atch-btn,
-.atch-btns .atch-btn{
+.atch-btns .atch-btn {
     font-size: 20px;
     padding: 5px 8px;
     border: 2px solid #19355A;
@@ -217,21 +227,24 @@ textarea{
     margin: 6px 11px;
     transition: ease-in-out 0.5s all;
 }
+
 .profile-table .atch-btn:hover,
 .atch-btns .atch-btn:hover {
     color: #19355A;
     background-color: #fff;
     border: 2px solid #19355A;
 }
+
 .profile-table .atch-btn2,
 .resp .atch-btn2,
 .atch-btns .atch-btn2 {
     border: 2px solid #AD8700;
     background-color: #AD8700;
 }
+
 .profile-table .atch-btn2:hover,
-.resp .atch-btn2:hover, 
-.atch-btns .atch-btn2:hover{
+.resp .atch-btn2:hover,
+.atch-btns .atch-btn2:hover {
     color: #AD8700;
     background-color: #fff;
     border: 2px solid #AD8700;
@@ -269,6 +282,7 @@ textarea{
     background: #19355A;
     border-radius: 10px;
 }
+
 .cotainer-stu button {
     border-radius: 15px;
     background: #19355A;
@@ -279,22 +293,24 @@ textarea{
     width: 100%;
     transition: ease-in-out 0.5s all;
 }
-td .delete{
-    background:  red
+
+td .delete {
+    background: red
 }
-td .enable{
-    background:  #ad8700;
+
+td .enable {
+    background: #ad8700;
     border: 2px solid #ad8700
 }
 
-td .enable:hover{
-    color:  #ad8700 !important; 
+td .enable:hover {
+    color: #ad8700 !important;
     border: 2px solid #ad8700 !important;
 }
 
 
-td button.delete:hover{
-    color:  red;
+td button.delete:hover {
+    color: red;
     border: 2px solid red;
 }
 
@@ -318,34 +334,47 @@ td button.delete:hover{
         align-items: center;
     }
 }
+
 @media only screen and (max-width: 660px) {
     .data-container {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
+
     .student-container td,
-.student-container th,
-.student-container tr,
-.input-cell ,
-input, 
-.input label,
-.cotainer-stu button{
-    font-size: 1rem;
-}
-.cotainer-stu button{
-    padding: .5rem;
-}
-.navv select,
-.navv h2{
-    font-size: 1rem;
-}
-.navv{
-    justify-content: flex-start;
-    gap: 5px;
-}
-.student-container table {
- 
-    width: 100%;
-}
+    .student-container th,
+    .student-container tr,
+    .input-cell,
+    input,
+    .input label,
+    .cotainer-stu button {
+        font-size: 1rem;
+    }
+
+    .cotainer-stu button {
+        padding: .5rem;
+    }
+
+    .navv select,
+    .navv h2 {
+        font-size: 1rem;
+    }
+
+    .navv {
+        justify-content: flex-start;
+        gap: 5px;
+    }
+
+    .student-container table {
+        width: 100%;
+    }
+    .student-container{
+        overflow-x: scroll;
+    }
+    .super-container img {
+        width: 30%;
+        z-index: -1;
+        margin: 1rem auto;
+    }
 }

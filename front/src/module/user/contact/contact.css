@@ -17,6 +17,11 @@
     transition: ease-in-out 0.5s all;
 }
 
+.select-service-btn2{
+    background: #19355A;
+    border: 1px solid #19355A;
+}
+
 .information-service_body .service-contact{
     display: grid;
     grid-template-columns: 1fr 1fr;
