@@ -399,6 +399,25 @@ manager.get('/getusermessages',
         }
     }
 );
+manager.get('/getusermessagesToShow',
+    checkmanager,
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT messages.* , services.service_name_ar , users.name FROM messages INNER JOIN services ON messages.service_id = services.id INNER JOIN users ON messages.user_id = users.id  WHERE messages.service_id = ? ORDER BY messages.id DESC ";
+            const result = await query(sqlSelect, [req.service_id]);
+            if (result.length > 0) {
+                return res.status(200).json(result);
+            } else {
+                error.push("No messages found");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
 
 manager.put('/sendresponse',
     checkmanager,

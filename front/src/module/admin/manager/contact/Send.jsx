@@ -27,7 +27,7 @@ const Send = () => {
         axios.defaults.withCredentials = true
         try {
             axios
-                .get(`${API_URL}/manager/getusermessages`, { withCredentials: true })
+                .get(`${API_URL}/manager/getusermessagesToShow`, { withCredentials: true })
                 .then((res) => {
                     setData(res.data)
                     setLoading(false)
