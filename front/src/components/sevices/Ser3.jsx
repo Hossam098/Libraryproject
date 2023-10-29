@@ -31,7 +31,7 @@ const Ser3 = ({ ser }) => {
     files_numbers = ser.files_numbers;
   }
   const [data, setData] = useState({
-    photo_college_letter: "",
+    // photo_college_letter: "",
     files_numbers: "",
     service_id: id,
   });
@@ -49,22 +49,22 @@ const Ser3 = ({ ser }) => {
     } catch (err) {
       console.log(err);
     }
-    if (status == 4) {
-      try {
-        axios
-          .get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
-          .then((res) => {
-            setData({
-              photo_college_letter: res.data.photo_college_letter,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    }
+    // if (status == 4) {
+    //   try {
+    //     axios
+    //       .get(`${API_URL}/paymentEdit/${id}/${id2}`, { withCredentials: true })
+    //       .then((res) => {
+    //         setData({
+    //           photo_college_letter: res.data.photo_college_letter,
+    //         });
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
   }, []);
 
   const handleCloseError = () => {
@@ -76,10 +76,10 @@ const Ser3 = ({ ser }) => {
     if (status !== 4) {
       setConfirm(false);
 
-      if (!data.photo_college_letter) {
-        setError(t(`service${id}-step-two-err.letter`));
-        return;
-      }
+      // if (!data.photo_college_letter) {
+      //   setError(t(`service${id}-step-two-err.letter`));
+      //   return;
+      // }
       if (!data.files_numbers) {
         setError(t(`service${id}-step-two-err.files_numbers`));
         return;
@@ -91,7 +91,7 @@ const Ser3 = ({ ser }) => {
 
       axios.defaults.withCredentials = true;
       const formData = new FormData();
-      formData.append("photo_college_letter", data.photo_college_letter);
+      // formData.append("photo_college_letter", data.photo_college_letter);
       formData.append("files_numbers", data.files_numbers);
       formData.append("service_id", data.service_id);
 
@@ -154,10 +154,10 @@ const Ser3 = ({ ser }) => {
       }
     } else if (status == 4) {
       setConfirm(false);
-      if (!data.photo_college_letter) {
-        setError(t(`service${id}-step-two-err.letter`));
-        return;
-      }
+      // if (!data.photo_college_letter) {
+      //   setError(t(`service${id}-step-two-err.letter`));
+      //   return;
+      // }
       if (!data.files_numbers) {
         setError(t(`service${id}-step-two-err.files_numbers`));
         return;
@@ -170,9 +170,9 @@ const Ser3 = ({ ser }) => {
       axios.defaults.withCredentials = true;
       const formData = new FormData();
       formData.append("files_numbers", data.files_numbers);
-      if (data.photo_college_letter?.name) {
-        formData.append("photo_college_letter", data.photo_college_letter);
-      }
+      // if (data.photo_college_letter?.name) {
+      //   formData.append("photo_college_letter", data.photo_college_letter);
+      // }
 
       setProgress((prevState) => ({ ...prevState, started: true }));
       setMsg(t("uploading"));
@@ -256,7 +256,7 @@ const Ser3 = ({ ser }) => {
               <hr style={{ width: "60%" }} />
               <img src={Serimg} alt="" className="ImageServicee" />
 
-              <div className="inputt">
+              <div className="inputt" style={{ gridTemplateColumns: "1fr" }}>
                 <div className="select-img">
                   {(data.files_numbers !== "" || files_numbers !== "") && (
                     <h3>{t(`service${id}-step-two.files_numbers`)}</h3>
@@ -276,7 +276,7 @@ const Ser3 = ({ ser }) => {
                   />
                 </div>
 
-                <div className="select-img">
+                {/* <div className="select-img">
                   <span className="title-upload">{t("letter")}</span>
                   <label className="upload-image" htmlFor="upload-image">
                     <BiImageAdd className="img-icom" />
@@ -329,7 +329,7 @@ const Ser3 = ({ ser }) => {
                       />
                     </div>
                   )}
-                </div>
+                </div> */}
               </div>
 
               {error && (

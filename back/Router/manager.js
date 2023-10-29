@@ -409,7 +409,7 @@ manager.get('/getusermessagesToShow',
             if (result.length > 0) {
                 return res.status(200).json(result);
             } else {
-                error.push("No messages found");
+                error.push("لا يوجد رسائل");
                 return res.status(400).json({ message: error });
             }
         } catch (errors) {

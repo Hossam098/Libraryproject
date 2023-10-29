@@ -90,7 +90,7 @@ const Ser7 = ({ ser }) => {
         setError(t(`service7-step4.3-err`));
         return;
       } else if (data.decision?.name) {
-        const validExtensions = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
+        const validExtensions = /\.(pdf|jpg|jpeg|png|gif|docx|doc)$/i; // Regular expression pattern for valid file extensions
 
         if (!validExtensions.test(data.decision.name)) {
           setError(t(`service7-step4.3-err`));
@@ -333,7 +333,7 @@ const Ser7 = ({ ser }) => {
               <div className="select-img">
                 <span className="title-upload">{t("service7-step3")}</span>
                 <label className="upload-image" htmlFor="upload-image1">
-                  <BsFilePdf className="img-icom" />
+                  <BiImageAdd className="img-icom" />
                   <p>{t("click-here")}</p>
                 </label>
                 <input

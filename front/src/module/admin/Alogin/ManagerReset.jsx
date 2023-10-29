@@ -104,7 +104,7 @@ const ManagerReset = () => {
           </div>
           <div className="main-content">
             <div className="main-content-form">
-              <h3 style={{ marginBottom: "1rem" }}>تسجيل الدخول</h3>
+              <h3 style={{ marginBottom: "1rem" }}>تغير كلمه مرور الموظف</h3>
               <form onSubmit={handleSubmit}>
                 <div
                   className="input-login-container"

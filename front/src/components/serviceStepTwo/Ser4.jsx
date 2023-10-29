@@ -359,7 +359,7 @@ const Ser4 = ({ ser }) => {
                 />
               )}
               <div className="inputt ">
-                <div className="select-img two">
+                <div className="select-img">
                   <span className="title-upload">
                     {t(`service${id}-step-two.payment-photo`)}
                   </span>

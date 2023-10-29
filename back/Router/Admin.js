@@ -312,8 +312,8 @@ Admin.put('/updateManager',
                         password: 12345678,
                     }
                 }
-                const sqlSelect2 = `SELECT * FROM manager WHERE email = ? OR mname = ?`;
-                const value2 = [req.body.email, req.body.mname];
+                const sqlSelect2 = `SELECT * FROM manager WHERE (email = ? OR mname = ?) AND id != ?`;
+                const value2 = [req.body.email, req.body.mname, req.body.id];
                 const result2 = await query(sqlSelect2, value2);
                 if (result2.length > 0) {
                     return res.status(400).json({ message: "يوجد مدير بهذا الايميل او الاسم" });

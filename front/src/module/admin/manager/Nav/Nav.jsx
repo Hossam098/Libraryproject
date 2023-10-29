@@ -61,6 +61,7 @@ const Nav = () => {
                   عرض جميع الطلبات
                 </Link>
               </li>
+            {+manager.service_id !== 9 && 
               <li>
               <Link
                 onClick={() => setActive("CONTACT_active")}
@@ -70,6 +71,7 @@ const Nav = () => {
                 الرسائل
               </Link>
             </li>
+            }
               {+manager.service_id !== 9 && (
                 <li>
                   <Link

@@ -241,6 +241,11 @@ const Ser3 = ({ ser }) => {
       return;
     }
 
+    if (!data.payment_photo) {
+      setError(t(`service${id}-step-two-err.payment-photo`));
+      return;
+    }
+
     const formData = new FormData();
     formData.append("payment_photo", data.payment_photo);
     if (data.puplish_date !== "") {

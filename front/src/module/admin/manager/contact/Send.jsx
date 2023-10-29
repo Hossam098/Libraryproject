@@ -34,7 +34,8 @@ const Send = () => {
                 })
                 .catch((err) => {
                     if (err.status === 401) navigate('/Library/login')
-                    else setErrors(t('errmsg'))
+                    // else setErrors(t('errmsg'))
+                    setLoading(false)
                 })
 
 
@@ -96,7 +97,7 @@ const Send = () => {
 
 
     return (
-        <div className="inst" style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'right', direction: 'rtl' } : { textAlign: 'left', direction: 'ltr' }}>
+        <div className="inst" style={{ display: "block", direction: 'rtl' , textAlign: 'center' }}>
             {!logged && <PopupError message={t('err-Login')} onClose={handleReturn} />}
             {confirm && <PopupConfirmMsg message={t('confirm-msg-contact')} onClose={handleCloseError} onSubmit={hanleSend} />}
             {errors && <PopupError message={errors} onClose={handleCloseError} />}

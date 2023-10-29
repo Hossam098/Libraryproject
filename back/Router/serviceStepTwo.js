@@ -1591,7 +1591,7 @@ serviceStepTwo.post("/StepTwoSer7",
                 return res.status(400).json({ message: error });
             } else {
                 const ext = req.files.decision[0].filename.split(".").pop();
-                if (ext !== "pdf") {
+                if (ext !== "pdf" && ext !== "docx" && ext !== "doc" && ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "gif") {
                     handleDeleteFile7(req);
                     error.push("Please upload image or pdf or word");
                     return res.status(400).json({ message: error });

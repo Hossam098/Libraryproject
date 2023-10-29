@@ -24,7 +24,6 @@ app.use(express.json());
 
 
 
-
 app.use(cors({
   // origin: 'https://eservices.helwan.edu.eg',
   origin: 'http://localhost:3000',

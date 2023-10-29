@@ -32,6 +32,7 @@ const Show = () => {
                 .catch((err) => {
                     if (err.status === 401) navigate('/Library/login')
                     else setErrors(t('errmsg'))
+                    setLoading(false)
                 })
 
 
@@ -57,7 +58,7 @@ const Show = () => {
 
 
     return (
-        <div className="inst" style={{ display: "block", direction: 'rtl' }}>
+        <div className="inst" style={{ display: "block", direction: 'rtl' , textAlign: 'center' }}>
             {!logged && <PopupError message={t('err-Login')} onClose={handleReturn} />}
 
 
@@ -111,6 +112,11 @@ const Show = () => {
                         </div>
                     )
                 }
+                {data.length === 0 && (
+                    <div className="contact-msg" style={{ textAlign: 'center' }}>
+                    <h3>{t('no-msg')}</h3>
+                </div>
+                )}
                 <button
                     className='select-service-btn'
                     style={{ backgroundColor: '#fff', color: '#19355a' }}

@@ -91,11 +91,11 @@ const ShowA = () => {
     html2canvas(inpput).then((canvas) => {
       const imgData = canvas.toDataURL(
         "image/png" ||
-          "image/jpg" ||
-          "image/svg" ||
-          "image/gif" ||
-          "image/jpeg" ||
-          "image/webp"
+        "image/jpg" ||
+        "image/svg" ||
+        "image/gif" ||
+        "image/jpeg" ||
+        "image/webp"
       );
       const pdf = new jspdf("l", "pc", "a4", true);
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -122,11 +122,11 @@ const ShowA = () => {
 
   const [errors, setErrors] = useState();
 
-  const increaseDateByOneDay = (date) => {
-    const currentDate = new Date(date);
-    currentDate.setDate(currentDate.getDate() + 1);
-    return currentDate.toISOString().slice(0, 10);
-  };
+  // const increaseDateByOneDay = (date) => {
+  //   const currentDate = new Date(date);
+  //   currentDate.setDate(currentDate.getDate() + 1);
+  //   return currentDate.toISOString().slice(0, 10);
+  // };
 
   const handleCloseError = () => {
     setErrors("");
@@ -198,6 +198,10 @@ const ShowA = () => {
   };
   const handelAcceptpayment = () => {
     if (payment_code !== "") {
+      if (isNaN(payment_code)) {
+        setErrors("كود الدفع يجب ان يكون رقم");
+        return;
+      }
       const formData = new FormData();
       setErrors("");
       axios.defaults.withCredentials = true;
@@ -336,7 +340,7 @@ const ShowA = () => {
         if (user.role === 1) {
           updatedAction.column = "manager_status";
           updatedAction.status = 2;
-        } else if (user.role === 2) {
+        } else if (user.role === 2 || user.status === 0) {
           updatedAction.column = "status";
           updatedAction.status = 6;
           updatedAction.role = 2;
@@ -746,20 +750,12 @@ const ShowA = () => {
               (user.manager_status == null && user.status == 5) ? (
               <div className="status">
                 <p style={{ background: "rgb(35, 175, 110)" }}>
-                  {" "}
-                  تم قبول الطلب{" "}
+                  تم قبول الطلب
                 </p>
                 <p style={{ background: "rgb(35, 175, 110)" }}>
                   {user.response_text}
                 </p>
-                <button
-                  onClick={() => {
-                    setConfirmE1(true);
-                  }}
-                  className="wait-edit"
-                >
-                  طلب تعديل البيانات
-                </button>
+
                 <input
                   disabled={disabled}
                   type="text"
@@ -769,7 +765,16 @@ const ShowA = () => {
                     setAction({ ...action, reason: e.target.value });
                   }}
                 />
-                 <button
+                <button
+                  onClick={() => {
+                    setConfirmE1(true);
+                  }}
+                  className="wait-edit"
+                >
+                  طلب تعديل البيانات
+                </button>
+                <hr style={{ width: "80%" ,height: "3px" }} />
+                <button
                   onClick={() => {
                     setConfirmW(true);
                   }}
@@ -777,21 +782,14 @@ const ShowA = () => {
                 >
                   عوده لقائمه الانتظار للمراجعه
                 </button>
-                
+
               </div>
 
             ) : null}
             {user.manager_status == null &&
-            (user.status == 2 || user.status == 0) ? (
+              (user.status == 2 || user.status == 0) ? (
               <div className="status">
-                <button
-                  onClick={() => {
-                    setConfirmE1(true);
-                  }}
-                  className="wait-edit"
-                >
-                  طلب تعديل البيانات
-                </button>
+
                 <input
                   disabled={disabled}
                   type="text"
@@ -801,15 +799,16 @@ const ShowA = () => {
                     setAction({ ...action, reason: e.target.value });
                   }}
                 />
-
                 <button
                   onClick={() => {
-                    setConfirmR1(true);
+                    setConfirmE1(true);
                   }}
-                  className="ref"
+                  className="wait-edit"
                 >
-                  رفض
+                  طلب تعديل البيانات
                 </button>
+                <hr style={{ width: "80%" ,height: "3px" }} />
+
                 <input
                   disabled={disabled}
                   type="text"
@@ -820,6 +819,14 @@ const ShowA = () => {
                     setAction({ ...action, reason: e.target.value });
                   }}
                 />
+                <button
+                  onClick={() => {
+                    setConfirmR1(true);
+                  }}
+                  className="ref"
+                >
+                  رفض
+                </button>
               </div>
             ) : user.manager_status == 3 && user.status == 2 ? (
               <div className="status">
@@ -931,25 +938,26 @@ const ShowA = () => {
             <tr>
               <td>تاريخ طلب كود الدفع</td>
               <td>
-                {increaseDateByOneDay(
+                {
                   user.req_code_date ? user.req_code_date?.slice(0, 10) : null
-                )}
+                }
+
               </td>
             </tr>
             <tr>
               <td>تاريخ الطلب</td>
               <td>
-                {increaseDateByOneDay(
+                {
                   user.submit_date ? user.submit_date.slice(0, 10) : null
-                )}
+                }
               </td>
             </tr>
             <tr>
               <td>تاريخ اخر تعديل</td>
               <td>
-                {increaseDateByOneDay(
+                {
                   user.edit_date ? user.edit_date?.slice(0, 10) : null
-                )}
+                }
               </td>
             </tr>
             <tr>
@@ -963,8 +971,8 @@ const ShowA = () => {
                   {user.level == 0
                     ? "ماجستير"
                     : user.level == 1
-                    ? "دكتوراه"
-                    : null}
+                      ? "دكتوراه"
+                      : null}
                 </td>
               </tr>
             )}
@@ -978,6 +986,18 @@ const ShowA = () => {
               <tr>
                 <td> عدد الابحاث </td>
                 <td>{user.files_numbers}</td>
+              </tr>
+            )}
+            {user.publish_date && (
+              <tr>
+                <td> تاريخ النشر </td>
+                <td>{user.publish_date?.slice(0, 10)}</td>
+              </tr>
+            )}
+            {user.accept_date && (
+              <tr>
+                <td> تاريخ قبول النشر </td>
+                <td>{user.accept_date?.slice(0, 10)}</td>
               </tr>
             )}
           </table>
@@ -1303,8 +1323,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           openImage(
-                            `${API_URL}/${user.national_id}/${
-                              user[`research${i + 1}_image_word`]
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
                             }`
                           );
                         }}
@@ -1315,8 +1334,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${
-                              user[`research${i + 1}_image_word`]
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
                             }`
                           );
                         }}
@@ -1337,8 +1355,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           openImage(
-                            `${API_URL}/${user.national_id}/${
-                              user[`research${i + 1}_image_pdf`]
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
                             }`
                           );
                         }}
@@ -1349,8 +1366,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${
-                              user[`research${i + 1}_image_pdf`]
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
                             }`
                           );
                         }}
@@ -1366,8 +1382,7 @@ const ShowA = () => {
                     <tr>
                       <td>
                         {t(
-                          `service${
-                            user.service_id
+                          `service${user.service_id
                           }-step-two.acceptance_letter${i + 1}`
                         )}{" "}
                       </td>
@@ -1375,8 +1390,7 @@ const ShowA = () => {
                         <button
                           onClick={() => {
                             openImage(
-                              `${API_URL}/${user.national_id}/${
-                                user[`acceptance_letter${i + 1}`]
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
                               }`
                             );
                           }}
@@ -1387,8 +1401,7 @@ const ShowA = () => {
                         <button
                           onClick={() => {
                             downloadImage(
-                              `${API_URL}/${user.national_id}/${
-                                user[`acceptance_letter${i + 1}`]
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
                               }`
                             );
                           }}
@@ -1410,7 +1423,7 @@ const ShowA = () => {
             <h2>
               <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
               {user.response_date && user.response_date !== "null"
-                ? increaseDateByOneDay(user.response_date?.slice(0, 10))
+                ? user.response_date?.slice(0, 10)
                 : "لم يتم الرد بعد"}
             </h2>
           </div>
@@ -1441,8 +1454,8 @@ const ShowA = () => {
                 <h2>
                   <span style={{ color: "#19355A" }}>{t("notes")}</span>
                   {user.response_text &&
-                  user.response_text !== "null" &&
-                  user.status !== 0 ? (
+                    user.response_text !== "null" &&
+                    user.status !== 0 ? (
                     user.response_text
                   ) : user.manager_status === null &&
                     user.response_pdf === null &&
@@ -1540,7 +1553,7 @@ const ShowA = () => {
                       )}
                     </div>
                   ) : (user.manager_status !== null &&
-                      user.response_pdf === null) ||
+                    user.response_pdf === null) ||
                     user.status == 0 ? (
                     <h3>لم يتم ارسال ملف الرد بعد</h3>
                   ) : null}

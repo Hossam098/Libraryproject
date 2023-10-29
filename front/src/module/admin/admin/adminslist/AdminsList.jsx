@@ -86,6 +86,32 @@ const AdminsList = () => {
       setError(err);
     }
   };
+  const handleEditSubManager = async (index) => {
+    try {
+      if (subManagers[index].mname == "") return setError("ادخل اسم الموظف");
+      if (subManagers[index].email == "") return setError("ادخل البريد الالكترونى");
+      if (subManagers[index].service_id == "") return setError("اختر الخدمة");
+      let con = window.confirm("هل انت متاكد من التعديل");
+      if (con) {
+        await axios
+          .put(`${API_URL}/admin/updateManager`, subManagers[index], {
+            withCredentials: true,
+          })
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((error) => {
+            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            setError(error.response.data.message[0].msg? error.response.data.message[0].msg : error.response.data.message);
+            // console.log(error.response.data.message
+          });
+      }
+    } catch (err) {
+      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      console.log(err);
+      setError(err);
+    }
+  };
 
   const handleDeleteManger = (index) => {
     try {
@@ -96,7 +122,28 @@ const AdminsList = () => {
             withCredentials: true,
           })
           .then((res) => {
-            window.location.reload();
+            // window.location.reload();
+          })
+          .catch((error) => {
+            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            setError(error.response.data.message[0].msg);
+          });
+      }
+    } catch (err) {
+      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      setError(err);
+    }
+  };
+  const handleDeleteSubManger = (index) => {
+    try {
+      let con = window.confirm("هل انت متاكد من الحذف");
+      if (con) {
+        axios
+          .delete(`${API_URL}/admin/deleteManager/${subManagers[index].id}`, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            // window.location.reload();
           })
           .catch((error) => {
             if (error.response.status === 401) navigate("/Library/AdminLogin");
@@ -351,9 +398,9 @@ const AdminsList = () => {
                 );
               })}
             {subManagers.length > 0 &&
-              subManagers.map((manager, index) => {
+              subManagers.map((manager, index1) => {
                 return (
-                  <tr key={index}>
+                  <tr key={index1}>
                     <td>
                       <input
                         className="input-cell"
@@ -361,12 +408,12 @@ const AdminsList = () => {
                         value={manager.mname}
                         placeholder={manager.mname}
                         onChange={(e) => {
-                          const updatedManagers = [...managers];
-                          updatedManagers[index] = {
+                          const updatedManagers = [...subManagers];
+                          updatedManagers[index1] = {
                             ...manager,
                             mname: e.target.value,
                           };
-                          setManagers(updatedManagers);
+                          setSubManagers(updatedManagers);
                         }}
                       />
                     </td>
@@ -377,12 +424,12 @@ const AdminsList = () => {
                         value={manager.email}
                         placeholder={manager.email}
                         onChange={(e) => {
-                          const updatedManagers = [...managers];
-                          updatedManagers[index] = {
+                          const updatedManagers = [...subManagers];
+                          updatedManagers[index1] = {
                             ...manager,
                             email: e.target.value,
                           };
-                          setManagers(updatedManagers);
+                          setSubManagers(updatedManagers);
                         }}
                       />
                     </td>
@@ -394,7 +441,7 @@ const AdminsList = () => {
                     <td>
                       <button
                         onClick={() => {
-                          handleEditManager(index);
+                          handleEditSubManager(index1);
                         }}
                       >
                         تعديل
@@ -402,7 +449,7 @@ const AdminsList = () => {
                       <button
                         className="delete"
                         onClick={() => {
-                          handleDeleteManger(index);
+                          handleDeleteSubManger(index1);
                         }}
                       >
                         حذف الموظف

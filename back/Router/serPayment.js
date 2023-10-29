@@ -67,7 +67,7 @@ serPayment.post('/payment',
 
             /****     check file type pdf or img      ****/
 
-            if (!req.file) {
+            if (!req.file && req.body.service_id != 3) {
                 error.push("Photo college letter is required");
                 return res.status(400).json({ message: error });
             }
@@ -179,7 +179,7 @@ serPayment.post('/payment',
                 }
 
                 const personal = {
-                    photo_college_letter: req.file.filename,
+                    photo_college_letter: null,
                 }
 
                 const sqlInsert = "INSERT INTO personal_examination_service SET ?";
