@@ -5,15 +5,15 @@ import 'package:graduated_proj/pages/signup.dart';
 
 import 'package:graduated_proj/pages/welcome.dart';
 import 'package:graduated_proj/pages/welcome_aft.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
-// late SharedPreferences sharedpref;
+late SharedPreferences sharedpref;
 
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // sharedpref = await SharedPreferences.getInstance();  
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  sharedpref = await SharedPreferences.getInstance();  
   runApp(const MyApp());
 }
 
@@ -23,7 +23,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/",
+      initialRoute: sharedpref.getString("token") == null ? 
+      "/" :
+      "/welcome_aft",
       routes: {
         "/": (context) => Welcome(),
         "/signup": (context) => const SignUp(),

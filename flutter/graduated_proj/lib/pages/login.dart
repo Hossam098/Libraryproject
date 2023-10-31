@@ -1,13 +1,14 @@
 // ignore_for_file: unused_field, unused_import
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:graduated_proj/back_flutt/crud.dart';
 import 'package:graduated_proj/back_flutt/link.dart';
+import 'package:graduated_proj/main.dart';
 import 'package:graduated_proj/menu/navbar.dart';
 import 'package:graduated_proj/menu/service.dart';
 import 'package:graduated_proj/pages/signup.dart';
 import 'package:graduated_proj/pages/welcome.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:graduated_proj/pages/welcome_aft.dart';
 
 import '../menu/pageroute.dart';
@@ -54,7 +55,7 @@ class _LoginState extends State<Login> {
       if (response != null &&
           response.containsKey('login') &&
           response['login'] == true) {
-        // sharedpref.setString("token", response["token"]);
+        sharedpref.setString("token", response["token"]);
         // sharedpref.setString("name", response['data']['name']);
         // sharedpref.setString("email", response['data']['email']);
 
@@ -73,7 +74,9 @@ class _LoginState extends State<Login> {
                 body: Text(response['message'][0]))
             .show();
       }
+      
     }
+    
   }
 
   bool _validateEmail() {
@@ -239,13 +242,19 @@ class _LoginState extends State<Login> {
                                   ElevatedButton(
                                     onPressed: () async {
                                       // Continue with validation and account creation
-                                      if (_validateEmail() &&
-                                          _validatePassword() &&
-                                          _validateFields()) {
+                                      if (_validateFields() & _validateEmail() & _validatePassword()) {
                                         await login();
 
                                         // Your logic for successful validation and account creation
                                       }
+                                      // else {
+                                      //   setState(() {
+                                      //     _isEmailValid =
+                                      //         _emailController.text.isNotEmpty;
+                                      //     _isPasswordValid = _passwordController
+                                      //         .text.isNotEmpty;
+                                      //   });
+                                      // }
                                     },
                                     child: Text(
                                       'تسجيل دخول',

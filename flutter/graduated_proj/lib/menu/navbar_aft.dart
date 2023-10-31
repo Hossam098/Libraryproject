@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:graduated_proj/back_flutt/crud.dart';
+import 'package:graduated_proj/back_flutt/link.dart';
+import 'package:graduated_proj/main.dart';
 import 'package:graduated_proj/menu/about_liberary.dart';
 import 'package:graduated_proj/menu/service.dart';
 import 'package:graduated_proj/menu/contact.dart';
@@ -72,6 +75,8 @@ class NavbarDrawer extends StatefulWidget {
   @override
   _NavbarDrawerState createState() => _NavbarDrawerState();
 }
+  crud _crud = crud();
+
 
 class _NavbarDrawerState extends State<NavbarDrawer> {
   File? _pickedImage;
@@ -79,6 +84,7 @@ class _NavbarDrawerState extends State<NavbarDrawer> {
   Future<void> _pickImage() async {
   final picker = ImagePicker();
   final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
 
   setState(() {
     if (pickedFile != null) {
@@ -333,7 +339,7 @@ class _NavbarDrawerState extends State<NavbarDrawer> {
               // يمكنك هنا تحديد التصرف عند الضغط على البند
             },
           ),
-   
+
           ListTile(
             title: Text(
               'تسجيل خروج',
@@ -344,7 +350,11 @@ class _NavbarDrawerState extends State<NavbarDrawer> {
               ),
               textAlign: TextAlign.right,
             ),
-            onTap: () {
+            onTap: () async{
+               sharedpref.clear();
+                await _crud.getreq(linkslogout) ;
+
+
               Navigator.pushAndRemoveUntil(
                 context,
                 SlidePageRoute(
