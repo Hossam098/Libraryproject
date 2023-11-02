@@ -1,69 +1,63 @@
-// ignore_for_file: unused_field, unused_import
+// ignore_for_file: unused_import
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:graduated_proj/back_flutt/crud.dart';
 import 'package:graduated_proj/back_flutt/link.dart';
-import 'package:graduated_proj/main.dart';
 import 'package:graduated_proj/menu/navbar.dart';
+import 'package:graduated_proj/menu/pageroute.dart';
 import 'package:graduated_proj/menu/service.dart';
-import 'package:graduated_proj/pages/reset.dart';
-import 'package:graduated_proj/pages/signup.dart';
+import 'package:graduated_proj/pages/login.dart';
 import 'package:graduated_proj/pages/welcome.dart';
-import 'package:graduated_proj/pages/welcome_aft.dart';
 
-import '../menu/pageroute.dart';
-
-class AnimationsRoute extends MaterialPageRoute {
-  AnimationsRoute({required Widget page})
-      : super(builder: (BuildContext context) => page);
-}
-
-class Login extends StatefulWidget {
-  const Login({Key? key});
+class reset extends StatefulWidget {
+  const reset({Key? key});
 
   @override
-  _LoginState createState() => _LoginState();
+  _resetState createState() => _resetState();
 }
 
-class _LoginState extends State<Login> {
-  TextEditingController _nameController = TextEditingController();
-
+class _resetState extends State<reset> {
+  bool _isNationalIdEmpty = false; // Initialize with true
   bool _isPasswordObscured = true;
+  TextEditingController _nationalIdController =
+      TextEditingController(); // Add this
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  // TextEditingController _confirmPasswordController = TextEditingController();
+  TextEditingController _newpasscontroller = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
 
   bool _isEmailValid = true;
   bool _isPasswordValid = true;
-  // bool _isConfirmPasswordValid = true;
-  GlobalKey<FormState> formstate = GlobalKey();
+  bool _isConfirmPasswordValid = true;
+
   crud _crud = crud();
   bool isloading = false;
 
-  login() async {
+  resett() async {
     
       isloading = true;
       setState(() {});
       //   setState(() {
       //   });
-      var response = await _crud.postreq(linkslogin, {
+      var response = await _crud.putreq(linksresett, {
         "email": _emailController.text,
-        "password": _passwordController.text,
+        "national_id": _nationalIdController.text,
+        "newpassword": _newpasscontroller.text,
+        "checkpassword": _confirmPasswordController.text,
       });
       isloading = false;
       setState(() {});
       if (response != null &&
-          response.containsKey('login') &&
-          response['login'] == true) {
-        sharedpref.setString("token", response["token"]);
+          response.containsKey('message') &&
+          response['message'] == "Password changed successfully") {
+        // sharedpref.setString("token", response["token"]);
         // sharedpref.setString("name", response['data']['name']);
         // sharedpref.setString("email", response['data']['email']);
 
         Navigator.pushAndRemoveUntil(
             context,
             SlidePageRoute(
-              page: welcome_aft(),
+              page: Login(),
               animationDuration: Duration(seconds: 2),
               slideFromTop: true,
             ),
@@ -74,10 +68,11 @@ class _LoginState extends State<Login> {
                 title: "warning",
                 body: Text(response['message'][0]))
             .show();
-      }
       
-    
+    }
   }
+
+  GlobalKey<FormState> formstate = GlobalKey();
 
   bool _validateEmail() {
     String email = _emailController.text.trim();
@@ -90,7 +85,7 @@ class _LoginState extends State<Login> {
   }
 
   bool _validatePassword() {
-    String password = _passwordController.text;
+    String password = _newpasscontroller.text;
     bool isValid = password.isNotEmpty && password.length >= 8;
     setState(() {
       _isPasswordValid = isValid;
@@ -98,19 +93,20 @@ class _LoginState extends State<Login> {
     return isValid;
   }
 
-  // bool _validateConfirmPassword() {
-  //   String confirmPassword = _confirmPasswordController.text;
-  //   String password = _passwordController.text;
-  //   bool isValid = confirmPassword.isNotEmpty && confirmPassword == password;
-  //   setState(() {
-  //     _isConfirmPasswordValid = isValid;
-  //   });
-  //   return isValid;
-  // }
+  bool _validateConfirmPassword() {
+    String confirmPassword = _confirmPasswordController.text;
+    String password = _newpasscontroller.text;
+    bool isValid = confirmPassword.isNotEmpty && confirmPassword == password;
+    setState(() {
+      _isConfirmPasswordValid = isValid;
+    });
+    return isValid;
+  }
 
   // Inside your _validateFields() method
   bool _validateFields() {
-    bool isValid = _validateEmail() & _validatePassword();
+    bool isValid =
+        _validateEmail() & _validatePassword() & _validateConfirmPassword();
 
     // if (_emailController.text.isEmpty) {
     //   setState(() {
@@ -118,12 +114,24 @@ class _LoginState extends State<Login> {
     //   });
     //   isValid = false;
     // }
-    // if (_passwordController.text.isEmpty) {
+    // if (_newpasscontroller.text.isEmpty) {
     //   setState(() {
     //     _isPasswordValid = false;
     //   });
     //   isValid = false;
     // }
+    // if (_confirmPasswordController.text.isEmpty) {
+    //   setState(() {
+    //     _isConfirmPasswordValid = false;
+    //   });
+    //   isValid = false;
+    // }
+    if (_nationalIdController.text.isEmpty) {
+      setState(() {
+        _isNationalIdEmpty = true;
+      });
+      isValid = false;
+    }
 
     return isValid;
   }
@@ -134,23 +142,21 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         appBar: Navbar(),
         drawer: NavbarDrawer(),
-        body: Container(
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 255, 255, 255),
-          ),
-          child: Column(
-            children: [
-              Expanded(
-                child: isloading == true
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ListView(
+        body: isloading == true
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView(
                         children: [
-                          // ... الأكواد السابقة للمستطيلات الأخرى
-
                           Form(
-                            key: formstate,
+                            // key: formstate,
                             child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -162,7 +168,7 @@ class _LoginState extends State<Login> {
                                   ),
                                   SizedBox(height: 30),
                                   Text(
-                                    "تسجيل دخول",
+                                    "نسيت كلمة السر",
                                     style: TextStyle(
                                       fontSize: 35,
                                       fontWeight: FontWeight.w600,
@@ -174,7 +180,6 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                           ),
-
                           SizedBox(height: 5),
                           SingleChildScrollView(
                             child: Container(
@@ -189,6 +194,13 @@ class _LoginState extends State<Login> {
                               child: Column(
                                 children: [
                                   SizedBox(height: 20),
+
+                                  // onChanged: (value) {
+                                  //   setState(() {
+                                  //     _isNameEmpty = value.isEmpty;
+                                  //   });
+                                  // },
+
                                   Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: TextField(
@@ -210,10 +222,28 @@ class _LoginState extends State<Login> {
                                   Directionality(
                                     textDirection: TextDirection.rtl,
                                     child: TextField(
-                                      controller: _passwordController,
+                                      controller: _nationalIdController,
+                                      decoration: InputDecoration(
+                                        labelText: 'رقم الهوية الوطنية',
+                                        prefixIcon: Icon(Icons.email),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        errorText: _isNationalIdEmpty
+                                            ? 'من فضلك املأ الحقل'
+                                            : null ,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextField(
+                                      controller: _newpasscontroller,
                                       obscureText: _isPasswordObscured,
                                       decoration: InputDecoration(
-                                        labelText: 'كلمة المرور',
+                                        labelText: 'كلمة المرورالجديدة',
                                         prefixIcon: Icon(Icons.lock),
                                         suffixIcon: GestureDetector(
                                           onTap: () {
@@ -238,26 +268,44 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(height: 20),
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextField(
+                                      controller: _confirmPasswordController,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelText: 'تأكيد كلمة المرور',
+                                        prefixIcon: Icon(Icons.lock),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        errorText: _isConfirmPasswordValid
+                                            ? null
+                                            : 'كلمة المرور غير متطابقة',
+                                      ),
+                                    ),
+                                  ),
                                   SizedBox(height: 50),
                                   ElevatedButton(
                                     onPressed: () async {
+                                      setState(() {
+                                        _isNationalIdEmpty =
+                                            _nationalIdController.text.isEmpty;
+                                      });
+
                                       // Continue with validation and account creation
-                                      if (_validateFields() ) {
-                                        await login();
+                                      if (_validateFields() &&
+                                          !_isNationalIdEmpty) {
+                                        //  !_isotherEmpty&&
+                                        await resett();
 
                                         // Your logic for successful validation and account creation
                                       }
-                                      // else {
-                                      //   setState(() {
-                                      //     _isEmailValid =
-                                      //         _emailController.text.isNotEmpty;
-                                      //     _isPasswordValid = _passwordController
-                                      //         .text.isNotEmpty;
-                                      //   });
-                                      // }
                                     },
                                     child: Text(
-                                      'تسجيل دخول',
+                                      'تغيير كلمة المرور',
                                       style: TextStyle(
                                         fontSize: 24,
                                         color: Colors.white,
@@ -272,47 +320,6 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 16),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        SlidePageRoute(
-                                          page: SignUp(),
-                                          animationDuration:
-                                              Duration(seconds: 2),
-                                          slideFromTop: true,
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'لا تمتلك حساب؟ سجل الآن',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Color(0xFFAD8700),
-                                      ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        SlidePageRoute(
-                                          page: reset(),
-                                          animationDuration:
-                                              Duration(seconds: 2),
-                                          slideFromTop: true,
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'نسيت كلمة المرور',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Color(0xFFAD8700),
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(height: 69),
                                 ],
                               ),
@@ -320,10 +327,10 @@ class _LoginState extends State<Login> {
                           ),
                         ],
                       ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }

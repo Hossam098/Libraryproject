@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduated_proj/menu/service.dart';
 import 'package:graduated_proj/pages/login.dart';
+import 'package:graduated_proj/pages/reset.dart';
 import 'package:graduated_proj/pages/signup.dart';
 
 import 'package:graduated_proj/pages/welcome.dart';
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
         "/login": (context) => const Login(),
         "/service": (context) => const ServiceScreen(),
        "/welcome_aft": (context) =>  welcome_aft(),
+       "/reset": (context) =>  reset(),
+
 
       },
     );

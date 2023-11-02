@@ -355,21 +355,21 @@ class _NavbarDrawerState extends State<NavbarDrawer> {
               );
             },
           ),
-          ListTile(
-            title: Text(
-              'تسجيل خروج',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF003C70),
-              ),
-              textAlign: TextAlign.right,
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              // يمكنك هنا تحديد التصرف عند الضغط على البند
-            },
-          ),
+          // ListTile(
+          //   title: Text(
+          //     'تسجيل خروج',
+          //     style: TextStyle(
+          //       fontSize: 20,
+          //       fontWeight: FontWeight.bold,
+          //       color: Color(0xFF003C70),
+          //     ),
+          //     textAlign: TextAlign.right,
+          //   ),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     // يمكنك هنا تحديد التصرف عند الضغط على البند
+          //   },
+          // ),
           // ... باقي العناصر هنا
         ],
       ),
