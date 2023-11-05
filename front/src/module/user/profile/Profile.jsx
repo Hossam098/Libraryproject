@@ -40,7 +40,7 @@ const Profile = () => {
     }
   }, []);
 
-  const edituser = () => {
+  const edituser = (user) => {
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("email", user.email);
@@ -99,7 +99,19 @@ const Profile = () => {
                 id="p-image"
                 name="p-image"
                 onChange={(e) => {
-                  setUser({ ...user, img: e.target.files[0] });
+                  const selectedFile = e.target.files[0];
+                  const reader = new FileReader();
+
+                  reader.onload = (event) => {
+                    const imageDataURL = event.target.result;
+                    const updatedUser = { ...user, img: selectedFile };
+
+                    // Call the edituser function with the updated user data
+                    edituser(updatedUser);
+                    console.log(updatedUser);
+                  };
+                  
+                  reader.readAsDataURL(selectedFile);
                 }}
               />
             </div>
@@ -109,7 +121,8 @@ const Profile = () => {
               </h1>
             )}
           </div>
-          <h1>{user.name}</h1>
+          <h1 style={{ fontSize: "1.7rem", fontWeight: "bold" }}>
+            {user.name}</h1>
           <div className="subnav-header">
             <button
               className={

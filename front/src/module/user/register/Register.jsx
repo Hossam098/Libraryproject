@@ -18,6 +18,7 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors2, setErrors2] = useState("");
+  const [faculty, setFaculty] = useState([]);
 
   const [user, setUser] = useState({
     name: "",
@@ -30,6 +31,7 @@ const Register = () => {
     university: "",
     other_uni: "",
     faculity: "",
+    faculity_id: "",
     department: "",
   });
 
@@ -64,6 +66,13 @@ const Register = () => {
           setErrors2(err.response.data.message[0]);
         });
     }
+    axios.get(`${API_URL}/user/getAllFaculties`)
+      .then((res) => {
+        setFaculty(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [errors]);
 
   const handleSubmit = (e) => {
@@ -107,8 +116,11 @@ const Register = () => {
         errors.other_uni = `${t("uni-err")}`;
       }
     }
-    if (!values.faculity) {
+    if (!values.faculity && values.university === "0") {
       errors.faculity = `${t("fac-err")}`;
+    }
+    if (!values.faculity_id && values.university === "1") {
+      errors.faculity_id = `${t("fac-err")}`;
     }
     if (!values.department) {
       errors.department = `${t("dep-err")}`;
@@ -294,24 +306,52 @@ const Register = () => {
                   </div>
                 )}
 
-                <div class="input">
-                  <label>{t("fac")} </label>
-                  <input
-                    style={
-                      localStorage.getItem("i18nextLng") == "ar"
-                        ? { direction: "rtl" }
-                        : { direction: "ltr" }
-                    }
-                    type="text"
-                    className={errors.faculity ? "error-in" : ""}
-                    placeholder={t("e-fac")}
-                    value={user.faculity}
-                    onChange={(e) => {
-                      setUser({ ...user, faculity: e.target.value });
-                    }}
-                  />
-                  <p className="error">{errors.faculity}</p>
-                </div>
+                {user.university === "1" && (
+                  <div className="input">
+                    <label>{t("fac")} </label>
+                    <div className="option">
+                      <select
+                        className={errors.faculity_id ? "error-in" : ""}
+                        style={
+                          localStorage.getItem("i18nextLng") == "ar"
+                            ? { direction: "rtl" }
+                            : { direction: "ltr" }
+                        }
+                        value={user.faculity_id}
+                        onChange={(e) => {
+                          setUser({ ...user, faculity_id: e.target.value });
+                        }}
+                      >
+                        <option value="">{t("fac")} </option>
+                        {faculty.map((fac) => (
+                          <option value={fac.faculty_id}>{localStorage.getItem("i18nextLng") == "ar" ? fac.faculty_name_ar : fac.faculty_name}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <p className="error">{errors.faculity_id}</p>
+                  </div>
+                )}
+
+                {user.university === "0" && (
+                  <div class="input">
+                    <label>{t("fac")} </label>
+                    <input
+                      style={
+                        localStorage.getItem("i18nextLng") == "ar"
+                          ? { direction: "rtl" }
+                          : { direction: "ltr" }
+                      }
+                      type="text"
+                      className={errors.faculity ? "error-in" : ""}
+                      placeholder={t("e-fac")}
+                      value={user.faculity}
+                      onChange={(e) => {
+                        setUser({ ...user, faculity: e.target.value });
+                      }}
+                    />
+                    <p className="error">{errors.faculity}</p>
+                  </div>
+                )}
 
                 <div class="input">
                   <label>{t("dep")} </label>
@@ -335,8 +375,7 @@ const Register = () => {
                 <div class="input">
                   <label>{t("pass")} </label>
                   <div
-                    className={`passwordcontainer ${errors.password ? "error-in" : ""
-                      }`}
+                    className={`passwordcontainer ${errors.password ? "error-in" : ""}`}
                     style={
                       localStorage.getItem("i18nextLng") == "ar"
                         ? { direction: "rtl" }
@@ -371,13 +410,14 @@ const Register = () => {
 
                 <div class="input">
                   <label>{t("re-pass")} </label>
+
                   <input
                     style={
                       localStorage.getItem("i18nextLng") == "ar"
                         ? { direction: "rtl" }
                         : { direction: "ltr" }
                     }
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     className={errors.checkpassword ? "error-in" : ""}
                     placeholder={t("e-re-pass")}
                     value={user.checkpassword}
@@ -385,6 +425,7 @@ const Register = () => {
                       setUser({ ...user, checkpassword: e.target.value });
                     }}
                   />
+
                   <p className="error">{errors.checkpassword}</p>
                 </div>
               </div>
