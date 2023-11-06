@@ -66,7 +66,7 @@ const AShow = () => {
         setUser(res.data);
       })
       .catch((error) => {
-        if (error.response.status == 401) navigate("/Library/AdminLOgin");
+        if (error.response.status == 401) window.location.replace("/Library/AdminLOgin");
       });
   }, []);
   const openImage = (url) => {
@@ -165,7 +165,7 @@ const AShow = () => {
           .catch((error) => {
             setDisabled(false);
             setProgress((prevState) => ({ ...prevState, started: false }));
-            if (error.response.status == 401) navigate("/Library/adminLogin");
+            if (error.response.status == 401) window.location.replace("/Library/adminLogin");
             else if (error.response.status == 400)
               setErrors(error.response.data.message);
             else setErrors("حدث خطأ ما");
@@ -213,7 +213,7 @@ const AShow = () => {
           .catch((error) => {
             setDisabled(false);
             setProgress((prevState) => ({ ...prevState, started: false }));
-            if (error.response.status == 401) navigate("/Library/ManagerLogin");
+            if (error.response.status == 401) window.location.replace("/Library/ManagerLogin");
             else if (error.response.status == 400)
               setErrors(error.response.data.message);
             else setErrors("حدث خطأ ما");
@@ -256,13 +256,10 @@ const AShow = () => {
           .catch((error) => {
             setDisabled(false);
             if (error.response && error.response.status === 401) {
-              // Unauthorized, navigate to the login page
-              navigate("/Library/adminLogin");
+              window.location.replace("/Library/adminLogin");
             } else if (error.response && error.response.status === 400) {
-              // Bad request, set the error message
               setErrors(error.response.data.msg);
             } else {
-              // Other errors, set a generic error message
               setErrors("حدث خطأ ما");
             }
           });
@@ -300,7 +297,7 @@ const AShow = () => {
           .catch((error) => {
             setDisabled(false);
             if (error.response && error.response.status === 401) {
-              navigate("/Library/AdminLogin");
+              window.location.replace("/Library/AdminLogin");
             } else if (error.response && error.response.status === 400) {
               setErrors(error.response.data.msg);
             } else {
@@ -344,7 +341,7 @@ const AShow = () => {
         .catch((error) => {
           setDisabled(false);
           if (error.response && error.response.status === 401) {
-            navigate("/Library/AdminLogin");
+            window.location.replace("/Library/AdminLogin");
           } else if (error.response && error.response.status === 400) {
             setErrors(error.response.data.msg);
           } else {

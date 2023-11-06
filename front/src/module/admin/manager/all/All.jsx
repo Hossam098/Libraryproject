@@ -25,8 +25,8 @@ const Reviewed = () => {
           setFilter2(res.data);
         })
         .catch((error) => {
-          if (error.response.status === 401) navigate("/Library/ManagerLogin");
-          navigate("/Library/ManagerLogin");
+          if (error.response.status === 401) window.location.replace("/Library/ManagerLogin");
+          window.location.replace("/Library/ManagerLogin");
         });
     } catch (error) { }
   }, []);
@@ -34,7 +34,50 @@ const Reviewed = () => {
   const [filter, setFilter] = useState(student);
   const [filter2, setFilter2] = useState(student);
 
+  // const sername = (item) => {
+  //   const ser_name =
+  //     item.ser_reg !== null
+  //       ? "ser_reg"
+  //       : item.ser_formation !== null
+  //         ? "ser_formation"
+  //         : item.ser_grant !== null
+  //           ? "ser_grant"
+  //           : item.ser_personal !== null
+  //             ? "ser_personal"
+  //             : item.ser_upgrade !== null
+  //               ? "ser_upgrade"
+  //               : item.ser_knowledge !== null
+  //                 ? "ser_knowledge"
+  //                 : item.ser_magazine !== null
+  //                   ? "ser_magazine"
+  //                   : item.ser_best !== null
+  //                     ? "ser_best"
+  //                     : null;
 
+  //   return ser_name;
+  // };
+  // const app_id = (item) => {
+  //   const appid =
+  //     item.ser_reg !== null
+  //       ? item.ser_reg
+  //       : item.ser_formation !== null
+  //         ? item.ser_formation
+  //         : item.ser_grant !== null
+  //           ? item.ser_grant
+  //           : item.ser_personal !== null
+  //             ? item.ser_personal
+  //             : item.ser_upgrade !== null
+  //               ? item.ser_upgrade
+  //               : item.ser_knowledge !== null
+  //                 ? item.ser_knowledge
+  //                 : item.ser_magazine !== null
+  //                   ? item.ser_magazine
+  //                   : item.ser_best !== null
+  //                     ? item.ser_best
+  //                     : null;
+
+  //   return appid;
+  // };
 
   return (
     <div className="super-container">
@@ -42,7 +85,7 @@ const Reviewed = () => {
 
       <section className="cotainer-stu">
         <div className="navv">
-          <h2>الطلاب</h2>
+          {/* <h2>الطلاب</h2> */}
           <select
             onChange={(e) => {
               const filteredStudents =
@@ -74,6 +117,26 @@ const Reviewed = () => {
               </>
             )}
           </select>
+            
+            <input
+              type="text"
+              style={{ textAlign: "center" }}
+              placeholder="بحث"
+              onChange={(e) => {
+                const searchText = e.target.value;
+                const filteredStudents = searchText === ""
+                  ? student
+                  : student.filter((item) => {
+                    return (item.name && item.name.includes(searchText)) ||
+                      (+item.national_id && +item.national_id.includes(searchText));
+                  });
+                setFilter(filteredStudents);
+                setFilter2(filteredStudents);
+              }}
+            />
+
+
+
           <div className="date-input">
             <label htmlFor="fromDate">من تاريخ</label>
             <input
@@ -105,6 +168,7 @@ const Reviewed = () => {
                   <th> نوع الخدمه </th>
                   <th>تاريخ التقديم</th>
                   <th> حاله الخدمه </th>
+                  {/* <th>التفاصيل</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -156,6 +220,18 @@ const Reviewed = () => {
                                         ? "مرفوض"
                                         : null}
                         </td>
+                        {/* <td>
+                        <button
+                          onClick={() => {
+                            navigate(
+                              `/Library/manager/show/${item.user_id},${item.service_id
+                              },${sername(item)},${app_id(item)}`
+                            );
+                          }}
+                        >
+                          تفاصيل
+                        </button>
+                      </td> */}
                       </tr>
                     ))}
               </tbody>

@@ -115,7 +115,6 @@
 
 .super-container table th {
     font-size: 1.5rem;
-    padding: 1rem;
     text-align: center;
 }
 
@@ -173,7 +172,7 @@ textarea {
 }
 
 .super-container img {
-    width: 12%;
+    width: 8%;
     z-index: -1;
     margin: 1rem auto;
 }
@@ -206,9 +205,6 @@ textarea {
     padding: 8px;
 }
 
-.student-container td,
-.student-container th,
-.student-container tr,
 .input-cell {
     font-size: 1.5rem;
 }
@@ -373,6 +369,11 @@ td button.delete:hover {
     .navv {
         justify-content: flex-start;
         gap: 5px;
+    }
+    .mnav{
+        height: 10% !important;
+        flex-direction :row;
+        padding: .5rem !important;
     }
 
     .student-container table {

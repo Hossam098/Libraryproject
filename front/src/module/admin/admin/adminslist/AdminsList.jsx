@@ -32,8 +32,8 @@ const AdminsList = () => {
         setManagers(res.data);
       })
       .catch((error) => {
-        if (error.response.status === 401) navigate("/Library/AdminLogin");
-        navigate("/Library/AdminLogin");
+        if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
+        window.location.replace("/Library/AdminLogin");
       });
     axios
       .get(`${API_URL}/admin/getallSubManagers`, { withCredentials: true })
@@ -41,8 +41,8 @@ const AdminsList = () => {
         setSubManagers(res.data);
       })
       .catch((error) => {
-        if (error.response.status === 401) navigate("/Library/AdminLogin");
-        navigate("/Library/AdminLogin");
+        if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
+        window.location.replace("/Library/AdminLogin");
       });
     if (error) {
       setConfirm(false);
@@ -75,13 +75,13 @@ const AdminsList = () => {
             window.location.reload();
           })
           .catch((error) => {
-            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
             setError(error.response.data.message[0].msg);
             console.log(error.response.data.message[0].msg);
           });
       }
     } catch (err) {
-      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
       console.log(err);
       setError(err);
     }
@@ -101,13 +101,13 @@ const AdminsList = () => {
             window.location.reload();
           })
           .catch((error) => {
-            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
             setError(error.response.data.message[0].msg? error.response.data.message[0].msg : error.response.data.message);
             // console.log(error.response.data.message
           });
       }
     } catch (err) {
-      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
       console.log(err);
       setError(err);
     }
@@ -125,12 +125,12 @@ const AdminsList = () => {
             // window.location.reload();
           })
           .catch((error) => {
-            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
             setError(error.response.data.message[0].msg);
           });
       }
     } catch (err) {
-      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
       setError(err);
     }
   };
@@ -146,12 +146,12 @@ const AdminsList = () => {
             // window.location.reload();
           })
           .catch((error) => {
-            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
             setError(error.response.data.message[0].msg);
           });
       }
     } catch (err) {
-      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
       setError(err);
     }
   };
@@ -171,7 +171,7 @@ const AdminsList = () => {
             window.location.reload();
           })
           .catch((error) => {
-            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
             setConfirm(false);
             let err = error.response.data?.message || error.response.data?.message[0].msg;
             return setError(err);
@@ -186,7 +186,7 @@ const AdminsList = () => {
 
       }
     } catch (err) {
-      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
       setError(err);
     }
   };
@@ -214,12 +214,12 @@ const AdminsList = () => {
             window.location.reload();
           })
           .catch((error) => {
-            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
             setError(error.response.data.message[0].msg);
           });
       }
     } catch (err) {
-      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
       setError(err);
     }
   };
@@ -237,12 +237,12 @@ const AdminsList = () => {
             window.location.reload();
           })
           .catch((error) => {
-            if (error.response.status === 401) navigate("/Library/AdminLogin");
+            if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
             setError(error.response.data.message[0].msg);
           });
       }
     } catch (err) {
-      if (err.response.status === 401) navigate("/Library/AdminLogin");
+      if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
       setError(err);
     }
   };

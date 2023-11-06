@@ -22,8 +22,8 @@ const AllUsers = () => {
           // setFilter2(res.data)
         })
         .catch((error) => {
-          if (error.response.status === 401) navigate("/Library/AdminLOgin");
-          navigate("/Library/AdminLOgin");
+          if (error.response.status === 401) window.location.replace("/Library/AdminLOgin");
+          window.location.replace("/Library/AdminLOgin");
         });
     } catch (error) { }
   }, []);

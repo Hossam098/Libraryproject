@@ -12,6 +12,7 @@ import { use } from "i18next";
 import ProfileInfo from "./ProfileInfo";
 import ServiceInfo from "./ServiceInfo";
 import { useNavigate } from "react-router-dom";
+import PopupErrorMsg from "../../../components/error/PopupErrorMsg";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [showPersonal, setShowPersonal] = useState(true);
   const [imgUser, setImgUser] = useState("");
+  const [showError, setShowError] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -31,7 +34,7 @@ const Profile = () => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            navigate("/Library");
+            window.location.replace("/Library");
           }
           console.log(err);
         });
@@ -59,9 +62,13 @@ const Profile = () => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            navigate("/Library");
+            window.location.replace("/Library");
           }
-          console.log(err);
+          if (err?.response?.status === 400) {
+            setError(err?.response?.data?.message[0]);
+            setShowError(true);
+          }
+          
         });
     } catch (err) {
       console.log(err);
@@ -70,6 +77,12 @@ const Profile = () => {
 
   return (
     <>
+      {showError && (
+        <PopupErrorMsg
+          message={error}
+          onClose={() => setShowError(false)}
+        />
+      )}
       <div
         className="profile-container"
         style={{
@@ -90,7 +103,7 @@ const Profile = () => {
               />
             </div>
             <div className="editbutton">
-              <label For="p-image">
+              <label For="p-image" style={{ cursor: "pointer" , fontSize:"1.1rem"}}>
                 <MdOutlineModeEdit />
               </label>
               <input

@@ -19,8 +19,8 @@ const Nav = () => {
           setManager(res.data);
         })
         .catch((error) => {
-          if (error.response.status === 401) navigate("/Library/ManagerLogin");
-          navigate("/Library/ManagerLogin");
+          if (error.response.status === 401) window.location.replace("/Library/ManagerLogin");
+          window.location.replace("/Library/ManagerLogin");
         });
     } catch (error) {
       console.log(error);
@@ -42,12 +42,6 @@ const Nav = () => {
   return (
     <div className="dmin">
       <nav className="mnav">
-        <button onClick={logout} className="btn">
-          <Link style={{ color: "white", textDecoration: "none" }}>
-            
-            تسجيل الخروج
-          </Link>
-        </button>
         <ul style={{ direction: "rtl" }}>
           {manager.role === 0 && (
             <>
@@ -109,7 +103,6 @@ const Nav = () => {
             
         </ul>
 
-        <h1 style={{ color: "#19355a", fontWeight: "600" }}>{manager.mname}</h1>
       </nav>
     </div>
   );

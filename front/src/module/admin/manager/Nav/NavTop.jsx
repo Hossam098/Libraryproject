@@ -5,6 +5,19 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../../config";
 
+function Clock() {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalID);
+  }, []);
+
+  return <h1>{time.toLocaleTimeString()}</h1>;
+}
 
 const NavTop = () => {
   const navigate = useNavigate();
@@ -19,8 +32,8 @@ const NavTop = () => {
           setManager(res.data);
         })
         .catch((error) => {
-          if (error.response.status === 401) navigate("/Library/ManagerLogin");
-          navigate("/Library/ManagerLogin");
+          if (error.response.status === 401) window.location.replace("/Library/ManagerLogin");
+          window.location.replace("/Library/ManagerLogin");
         });
     } catch (error) {
       console.log(error);
@@ -40,16 +53,15 @@ const NavTop = () => {
   const [active, setActive] = useState("home_active");
 
   return (
-    <div className="dmin">
-      <nav className="mnav">
-        <button onClick={logout} className="btn">
+    <div className=" dmin">
+      <nav className="topnave mnav">
+        <button onClick={logout} className="logOut">
           <Link style={{ color: "white", textDecoration: "none" }}>
-            
             تسجيل الخروج
           </Link>
         </button>
-        <ul style={{ direction: "rtl" }}>
-          {manager.role === 0 && (
+        {/* <ul style={{ direction: "rtl" }}>
+           {manager.role === 0 && (
             <>
               <li>
                 <Link
@@ -105,11 +117,12 @@ const NavTop = () => {
                 الطلبات التي تمت مراجعتها
               </Link>
             </li>
-          )}
+          )} 
             
-        </ul>
+        </ul> */}
+        <Clock />
 
-        <h1 style={{ color: "#19355a", fontWeight: "600" }}>{manager.mname}</h1>
+        <h1>{manager.mname}</h1>
       </nav>
     </div>
   );

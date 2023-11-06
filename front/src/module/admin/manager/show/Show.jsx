@@ -74,7 +74,7 @@ const ShowA = () => {
         setUser(res.data);
       })
       .catch((error) => {
-        if (error.response.status == 401) navigate("/Library/ManagerLogin");
+        if (error.response.status == 401) window.location.replace("/Library/ManagerLogin");
       });
     axios.get(`${API_URL}/user/getAllFaculties`)
       .then((res) => {
@@ -194,7 +194,7 @@ const ShowA = () => {
           .catch((error) => {
             setDisabled(false);
             setProgress((prevState) => ({ ...prevState, started: false }));
-            if (error.response.status == 401) navigate("/Library/ManagerLogin");
+            if (error.response.status == 401) window.location.replace("/Library/ManagerLogin");
             else if (error.response.status == 400)
               setErrors(error.response.data.message);
             else setErrors("حدث خطأ ما");
@@ -672,89 +672,89 @@ const ShowA = () => {
             setErrors("حدث خطأ ما");
           }
         });
-      } catch (error) {
-        setDisabled(false);
-        setErrors("حدث خطأ ما");
-      }
-
-
+    } catch (error) {
+      setDisabled(false);
+      setErrors("حدث خطأ ما");
     }
 
 
+  }
+
+
   return (
-      <>
-        {confirmE1 && (
-          <PopupConfirmMsg
-            message={"تأكيد طلب التعديل"}
-            onClose={handleCloseError}
-            onSubmit={handleEdit}
-          />
-        )}
-        {confirmR1 && (
-          <PopupConfirmMsg
-            message={"تأكيد الرفض"}
-            onClose={handleCloseError}
-            onSubmit={handelrej}
-          />
-        )}
-        {confirmA1 && (
-          <PopupConfirmMsg
-            message={"تأكيد القبول"}
-            onClose={handleCloseError}
-            onSubmit={handelAccept}
-          />
-        )}
-        {confirmE2 && (
-          <PopupConfirmMsg
-            message={"تأكيد طلب التعديل"}
-            onClose={handleCloseError}
-            onSubmit={handelEdit2}
-          />
-        )}
-        {confirmReturn && (
-          <PopupConfirmMsg
-            message={"تأكيد الرجوع للمراجعه"}
-            onClose={handleCloseError}
-            onSubmit={handleReturn}
-          />
-        )}
-        {confirmA2 && (
-          <PopupConfirmMsg
-            message={"تأكيد القبول"}
-            onClose={handleCloseError}
-            onSubmit={handelAccept2}
-          />
-        )}
-        {confirmR2 && (
-          <PopupConfirmMsg
-            message={"تأكيد الرفض"}
-            onClose={handleCloseError}
-            onSubmit={handelrej2}
-          />
-        )}
-        {confirmP && (
-          <PopupConfirmMsg
-            message={"تأكيد ارسال كود الدفع"}
-            onClose={handleCloseError}
-            onSubmit={handelAcceptpayment}
-          />
-        )}
-        {confirmW && (
-          <PopupConfirmMsg
-            message={"تأكيد العوده لقائمه الانتظار"}
-            onClose={handleCloseError}
-            onSubmit={handewait}
-          />
-        )}
-        {confirmEdit && (
-          <PopupConfirmMsg
-            message={"تأكيد تعديل بيانات الطالب"}
-            onClose={handleCloseError}
-            onSubmit={handleEditUser}
-          />
-        )}
-        <section className="cotainer-data">
-          {/* <div className="navv" style={{ justifyContent: "center" }}>
+    <>
+      {confirmE1 && (
+        <PopupConfirmMsg
+          message={"تأكيد طلب التعديل"}
+          onClose={handleCloseError}
+          onSubmit={handleEdit}
+        />
+      )}
+      {confirmR1 && (
+        <PopupConfirmMsg
+          message={"تأكيد الرفض"}
+          onClose={handleCloseError}
+          onSubmit={handelrej}
+        />
+      )}
+      {confirmA1 && (
+        <PopupConfirmMsg
+          message={"تأكيد القبول"}
+          onClose={handleCloseError}
+          onSubmit={handelAccept}
+        />
+      )}
+      {confirmE2 && (
+        <PopupConfirmMsg
+          message={"تأكيد طلب التعديل"}
+          onClose={handleCloseError}
+          onSubmit={handelEdit2}
+        />
+      )}
+      {confirmReturn && (
+        <PopupConfirmMsg
+          message={"تأكيد الرجوع للمراجعه"}
+          onClose={handleCloseError}
+          onSubmit={handleReturn}
+        />
+      )}
+      {confirmA2 && (
+        <PopupConfirmMsg
+          message={"تأكيد القبول"}
+          onClose={handleCloseError}
+          onSubmit={handelAccept2}
+        />
+      )}
+      {confirmR2 && (
+        <PopupConfirmMsg
+          message={"تأكيد الرفض"}
+          onClose={handleCloseError}
+          onSubmit={handelrej2}
+        />
+      )}
+      {confirmP && (
+        <PopupConfirmMsg
+          message={"تأكيد ارسال كود الدفع"}
+          onClose={handleCloseError}
+          onSubmit={handelAcceptpayment}
+        />
+      )}
+      {confirmW && (
+        <PopupConfirmMsg
+          message={"تأكيد العوده لقائمه الانتظار"}
+          onClose={handleCloseError}
+          onSubmit={handewait}
+        />
+      )}
+      {confirmEdit && (
+        <PopupConfirmMsg
+          message={"تأكيد تعديل بيانات الطالب"}
+          onClose={handleCloseError}
+          onSubmit={handleEditUser}
+        />
+      )}
+      <section className="cotainer-data">
+        {/* <div className="navv" style={{ justifyContent: "center" }}>
           <h2 style={{  fontSize: "2rem" , fontWeight: "bold" }}>
             بيانات الطالب</h2>
           <button onClick={downloadPDF} className="wait-edit">
@@ -763,254 +763,269 @@ const ShowA = () => {
           </button> 
         </div>
         <hr /> */}
-          <div className="data-container" ref={pdfRef}>
-            <div className="image-con">
-              <img src={user.img ? `${API_URL}/${user.national_id}/${user.img}` : pimg}
-                alt="img"
-                className="imagee"
-              />
+        <div className="data-container" ref={pdfRef}>
+          <div className="image-con">
+            <img src={user.img ? `${API_URL}/${user.national_id}/${user.img}` : pimg}
+              alt="img"
+              className="imagee"
+            />
 
-              {user.manager_status == 1 && user.status !== 5 ? (
-                <div className="status">
-                  <h2> تأكيد قبول الطلب </h2>
-                  <div className="atch-btns">
-                    <button
-                      onClick={() => {
-                        setConfirmA2(true);
-                      }}
-                      className="atch-btn"
-                    >
-                      تأكيد
-                    </button>
-                    <button
-                      onClick={() => {
-                        setConfirmReturn(true);
-                      }}
-                      className="atch-btn atch-btn2"
-                    >
-                      يعود للمراجعه مره اخري
-                    </button>
-                  </div>
+            {user.manager_status == 1 && user.status !== 5 ? (
+              <div className="status">
+                <h2> تأكيد قبول الطلب </h2>
+                <div className="atch-btns">
+                  <button
+                    onClick={() => {
+                      setConfirmA2(true);
+                    }}
+                    className="atch-btn"
+                  >
+                    تأكيد
+                  </button>
+                  <button
+                    onClick={() => {
+                      setConfirmReturn(true);
+                    }}
+                    className="atch-btn atch-btn2"
+                  >
+                    يعود للمراجعه مره اخري
+                  </button>
                 </div>
-              ) : (user.manager_status == 1 && user.status == 5) ||
-                (user.manager_status == null && user.status == 5) ? (
-                <div className="status">
-                  <p style={{ background: "rgb(35, 175, 110)" }}>
-                    تم قبول الطلب
-                  </p>
-                  <p style={{ background: "rgb(35, 175, 110)" }}>
-                    {user.response_text}
-                  </p>
+              </div>
+            ) : (user.manager_status == 1 && user.status == 5) ||
+              (user.manager_status == null && user.status == 5) ? (
+              <div className="status">
+                <p style={{ background: "rgb(35, 175, 110)" }}>
+                  تم قبول الطلب
+                </p>
+                <p style={{ background: "rgb(35, 175, 110)" }}>
+                  {user.response_text}
+                </p>
 
+                <input
+                  disabled={disabled}
+                  type="text"
+                  placeholder="سبب التعديل"
+                  className="edit-input"
+                  onChange={(e) => {
+                    setAction({ ...action, reason: e.target.value });
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    setConfirmE1(true);
+                  }}
+                  className="wait-edit"
+                >
+                  طلب تعديل البيانات
+                </button>
+                <hr style={{ width: "80%", height: "3px" }} />
+                <button
+                  onClick={() => {
+                    setConfirmW(true);
+                  }}
+                  className="wait-edit"
+                >
+                  عوده لقائمه الانتظار للمراجعه
+                </button>
+
+              </div>
+
+            ) : null}
+            {user.manager_status == null &&
+              (user.status == 2 || user.status == 0) ? (
+              <div className="status">
+
+                <input
+                  disabled={disabled}
+                  type="text"
+                  placeholder="سبب التعديل"
+                  className="edit-input"
+                  onChange={(e) => {
+                    setAction({ ...action, reason: e.target.value });
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    setConfirmE1(true);
+                  }}
+                  className="wait-edit"
+                >
+                  طلب تعديل البيانات
+                </button>
+                <hr style={{ width: "80%", height: "3px" }} />
+
+                <input
+                  disabled={disabled}
+                  type="text"
+                  placeholder="سبب الرفض"
+                  style={{ border: "2px solid rgb(175, 35, 35)" }}
+                  className="rej-input"
+                  onChange={(e) => {
+                    setAction({ ...action, reason: e.target.value });
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    setConfirmR1(true);
+                  }}
+                  className="ref"
+                >
+                  رفض
+                </button>
+              </div>
+            ) : user.manager_status == 3 && user.status == 2 ? (
+              <div className="status">
+                <h2> تأكيد تعديل الطلب </h2>
+                <div className="atch-btns">
+                  <button
+                    onClick={() => {
+                      setConfirmE2(true);
+                    }}
+                    className="atch-btn"
+                  >
+                    تأكيد
+                  </button>
+                  <button
+                    onClick={() => {
+                      setConfirmReturn(true);
+                    }}
+                    className="atch-btn atch-btn2"
+                  >
+                    يعود للمراجعه مره اخري
+                  </button>
+                </div>
+              </div>
+            ) : (user.manager_status == 3 && user.status == 3) ||
+              (user.manager_status == null &&
+                (user.status == 3 || user.status == 4)) ? (
+              <div className="status">
+                <p style={{ background: "rgb(0, 60, 112)" }}> سبب التعديل </p>
+                <p style={{ background: "rgb(0, 60, 112)" }}>
+                  {" "}
+                  {user.response_text}{" "}
+                </p>
+              </div>
+            ) : null}
+            {user.manager_status == 2 && user.status == 2 ? (
+              <div className="status">
+                <h2 style={{ color: "rgb(175, 35, 35)" }}> تأكيد رفض الطلب </h2>
+                <div className="atch-btns">
+                  <button
+                    onClick={() => {
+                      setConfirmR2(true);
+                    }}
+                    className="atch-btn"
+                  >
+                    تأكيد
+                  </button>
+                  <button
+                    onClick={() => {
+                      setConfirmReturn(true);
+                    }}
+                    className="atch-btn atch-btn2"
+                  >
+                    يعود للمراجعه مره اخري
+                  </button>
+                </div>
+              </div>
+            ) : (user.manager_status == 2 && user.status == 6) ||
+              (user.manager_status == null && user.status == 6) ? (
+              <div className="status">
+                <p style={{ background: "rgb(175, 35, 35)" }}> سبب الرفض </p>
+                <p style={{ background: "rgb(175, 35, 35)" }}>
+                  {" "}
+                  {user.response_text}{" "}
+                </p>
+              </div>
+            ) : null}
+          </div>
+
+          <div className="data-con-table-btn">
+            <table className="data-table" style={{ direction: "rtl" }}>
+              <tr>
+                <th> معلومات اساسيه </th>
+                <th> البيانات </th>
+              </tr>
+
+              <tr>
+                <td>الاسم</td>
+                <td>
                   <input
-                    disabled={disabled}
+                    className="edit-input-user"
                     type="text"
-                    placeholder="سبب التعديل"
-                    className="edit-input"
+                    value={user.name}
                     onChange={(e) => {
-                      setAction({ ...action, reason: e.target.value });
+                      setUser({ ...user, name: e.target.value });
                     }}
                   />
-                  <button
-                    onClick={() => {
-                      setConfirmE1(true);
-                    }}
-                    className="wait-edit"
-                  >
-                    طلب تعديل البيانات
-                  </button>
-                  <hr style={{ width: "80%", height: "3px" }} />
-                  <button
-                    onClick={() => {
-                      setConfirmW(true);
-                    }}
-                    className="wait-edit"
-                  >
-                    عوده لقائمه الانتظار للمراجعه
-                  </button>
-
-                </div>
-
-              ) : null}
-              {user.manager_status == null &&
-                (user.status == 2 || user.status == 0) ? (
-                <div className="status">
-
+                </td>
+              </tr>
+              <tr>
+                <td>الجنسيه</td>
+                {/* <td>{user.nationality}</td> */}
+                <td>
                   <input
-                    disabled={disabled}
+                    className="edit-input-user"
                     type="text"
-                    placeholder="سبب التعديل"
-                    className="edit-input"
+                    value={user.nationality}
                     onChange={(e) => {
-                      setAction({ ...action, reason: e.target.value });
+                      setUser({ ...user, nationality: e.target.value });
                     }}
                   />
-                  <button
-                    onClick={() => {
-                      setConfirmE1(true);
-                    }}
-                    className="wait-edit"
-                  >
-                    طلب تعديل البيانات
-                  </button>
-                  <hr style={{ width: "80%", height: "3px" }} />
-
+                </td>
+              </tr>
+              <tr>
+                <td>البريد الالكترونى</td>
+                {/* <td>{user.email}</td> */}
+                <td>
                   <input
-                    disabled={disabled}
+                    className="edit-input-user"
                     type="text"
-                    placeholder="سبب الرفض"
-                    style={{ border: "2px solid rgb(175, 35, 35)" }}
-                    className="rej-input"
+                    value={user.email}
                     onChange={(e) => {
-                      setAction({ ...action, reason: e.target.value });
+                      setUser({ ...user, email: e.target.value });
                     }}
                   />
-                  <button
-                    onClick={() => {
-                      setConfirmR1(true);
+                </td>
+              </tr>
+              <tr>
+                <td>رقم الهاتف</td>
+                {/* <td>{user.phone}</td> */}
+                <td>
+                  <input
+                    className="edit-input-user"
+                    type="text"
+                    value={user.phone}
+                    onChange={(e) => {
+                      setUser({ ...user, phone: e.target.value });
                     }}
-                    className="ref"
-                  >
-                    رفض
-                  </button>
-                </div>
-              ) : user.manager_status == 3 && user.status == 2 ? (
-                <div className="status">
-                  <h2> تأكيد تعديل الطلب </h2>
-                  <div className="atch-btns">
-                    <button
-                      onClick={() => {
-                        setConfirmE2(true);
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>الرقم القومى</td>
+                <td>{user.national_id}</td>
+              </tr>
+              <tr>
+                <td>الجامعه</td>
+                <td>
+                  {+user.university === 1 ? "جامعه حلوان" : user.university}
+                </td>
+                {/* {+user.university !== 1 ? (
+                  <td>
+                    <input
+                      className="edit-input-user"
+                      type="text"
+                      value={user.university}
+                      onChange={(e) => {
+                        setUser({ ...user, university: e.target.value });
                       }}
-                      className="atch-btn"
-                    >
-                      تأكيد
-                    </button>
-                    <button
-                      onClick={() => {
-                        setConfirmReturn(true);
-                      }}
-                      className="atch-btn atch-btn2"
-                    >
-                      يعود للمراجعه مره اخري
-                    </button>
-                  </div>
-                </div>
-              ) : (user.manager_status == 3 && user.status == 3) ||
-                (user.manager_status == null &&
-                  (user.status == 3 || user.status == 4)) ? (
-                <div className="status">
-                  <p style={{ background: "rgb(0, 60, 112)" }}> سبب التعديل </p>
-                  <p style={{ background: "rgb(0, 60, 112)" }}>
-                    {" "}
-                    {user.response_text}{" "}
-                  </p>
-                </div>
-              ) : null}
-              {user.manager_status == 2 && user.status == 2 ? (
-                <div className="status">
-                  <h2 style={{ color: "rgb(175, 35, 35)" }}> تأكيد رفض الطلب </h2>
-                  <div className="atch-btns">
-                    <button
-                      onClick={() => {
-                        setConfirmR2(true);
-                      }}
-                      className="atch-btn"
-                    >
-                      تأكيد
-                    </button>
-                    <button
-                      onClick={() => {
-                        setConfirmReturn(true);
-                      }}
-                      className="atch-btn atch-btn2"
-                    >
-                      يعود للمراجعه مره اخري
-                    </button>
-                  </div>
-                </div>
-              ) : (user.manager_status == 2 && user.status == 6) ||
-                (user.manager_status == null && user.status == 6) ? (
-                <div className="status">
-                  <p style={{ background: "rgb(175, 35, 35)" }}> سبب الرفض </p>
-                  <p style={{ background: "rgb(175, 35, 35)" }}>
-                    {" "}
-                    {user.response_text}{" "}
-                  </p>
-                </div>
-              ) : null}
-            </div>
+                    />
 
-            <div className="data-con-table-btn">
-              <table className="data-table" style={{ direction: "rtl" }}>
-                <tr>
-                  <th> معلومات اساسيه </th>
-                  <th> البيانات </th>
-                </tr>
-
-                <tr>
-                  <td>الاسم</td>
-                  <td>
-                    <input
-                      className="edit-input-user"
-                      type="text"
-                      value={user.name}
-                      onChange={(e) => {
-                        setUser({ ...user, name: e.target.value });
-                      }}
-                    />
                   </td>
-                </tr>
-                <tr>
-                  <td>الجنسيه</td>
-                  {/* <td>{user.nationality}</td> */}
+                ) :
                   <td>
-                    <input
-                      className="edit-input-user"
-                      type="text"
-                      value={user.nationality}
-                      onChange={(e) => {
-                        setUser({ ...user, nationality: e.target.value });
-                      }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>البريد الالكترونى</td>
-                  {/* <td>{user.email}</td> */}
-                  <td>
-                    <input
-                      className="edit-input-user"
-                      type="text"
-                      value={user.email}
-                      onChange={(e) => {
-                        setUser({ ...user, email: e.target.value });
-                      }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>رقم الهاتف</td>
-                  {/* <td>{user.phone}</td> */}
-                  <td>
-                    <input
-                      className="edit-input-user"
-                      type="text"
-                      value={user.phone}
-                      onChange={(e) => {
-                        setUser({ ...user, phone: e.target.value });
-                      }}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>الرقم القومى</td>
-                  <td>{user.national_id}</td>
-                </tr>
-                <tr>
-                  <td>الجامعه</td>
-                  <td>
-                    {/* {+user.university === 1 ? "جامعه حلوان" : user.university} */}
                     <select
                       className="edit-input-user"
                       value={user.university}
@@ -1022,464 +1037,534 @@ const ShowA = () => {
                       <option value="0">{t("other-uni")} </option>
                     </select>
                   </td>
-                </tr>
-                {user.university == 0 && (
-                  <tr>
-                    <td>الكليه</td>
-                    {/* <td>{user.faculty_name_ar ? user.faculty_name_ar : user.faculity}</td> */}
-                    <td>
-                      <input
-                        className="edit-input-user"
-                        type="text"
-                        value={user.faculity != null ? user.faculity : null}
-                        placeholder=" ادخل اسم الكليه"
-                        onChange={(e) => {
-                          setUser({ ...user, faculity: e.target.value , faculity_id: null});
-                        }}
-                      />
-                    </td>
-                  </tr>
-                )}
-                {user.university == 1 && (
-                  <tr>
-                    <td>الكليه</td>
-                    <td>
-                      <select
-                        className="edit-input-user"
-                        value={user.faculity_id}
-                        onChange={(e) => {
-                          setUser({ ...user, faculity_id: e.target.value , faculity: null});
-                        }}
-                      >
-                        <option value=""> اختر الكليه </option>
-                        {faculty?.map((faculty) => (
-                          <option value={faculty.faculty_id}>
-                            {/* {faculty.faculty_name_ar} - {faculty.faculty_name} */}
-                            {faculty.faculty_name_ar}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                  </tr>
-                )}
+                } */}
+              </tr>
+              {/* {user.university !== 1 && (
                 <tr>
-                  <td>القسم</td>
-                  {/* <td>{user.department}</td> */}
+                  <td>الكليه</td>
                   <td>
                     <input
                       className="edit-input-user"
                       type="text"
-                      value={user.department}
+                      value={user.faculity != null ? user.faculity : null}
+                      placeholder=" ادخل اسم الكليه"
                       onChange={(e) => {
-                        setUser({ ...user, department: e.target.value });
+                        setUser({ ...user, faculity: e.target.value, faculity_id: null });
                       }}
                     />
                   </td>
                 </tr>
+              )}
+              {user.university == 1 && (
                 <tr>
-                  <td>تاريخ طلب كود الدفع</td>
+                  <td>الكليه</td>
                   <td>
-                    {
-                      user.req_code_date ? user.req_code_date?.slice(0, 10) : null
-                    }
-
+                    <select
+                      className="edit-input-user"
+                      value={user.faculity_id}
+                      onChange={(e) => {
+                        setUser({ ...user, faculity_id: e.target.value, faculity: null });
+                      }}
+                    >
+                      <option value=""> اختر الكليه </option>
+                      {faculty?.map((faculty) => (
+                        <option value={faculty.faculty_id}>
+                          {faculty.faculty_name_ar}
+                        </option>
+                      ))}
+                    </select>
                   </td>
                 </tr>
-                {user.submit_date && (
-                  <tr>
-                    <td>تاريخ الطلب</td>
-                    <td>
-                      {
-                        user.submit_date ? user.submit_date.slice(0, 10) : null
-                      }
-                    </td>
-                  </tr>
-                )}
-                {user.edit_date && (
-                  <tr>
-                    <td>تاريخ اخر تعديل</td>
-                    <td>
-                      {
-                        user.edit_date ? user.edit_date?.slice(0, 10) : null
-                      }
-                    </td>
-                  </tr>
-                )}
+              )} */}
+              <tr>
+                <td>الكليه</td>
+                <td>{user.faculty_name_ar ? user.faculty_name_ar : user.faculity}</td>
+              </tr>
+              <tr>
+                <td>القسم</td>
+                {/* <td>{user.department}</td> */}
+                <td>
+                  <input
+                    className="edit-input-user"
+                    type="text"
+                    value={user.department}
+                    onChange={(e) => {
+                      setUser({ ...user, department: e.target.value });
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>تاريخ طلب كود الدفع</td>
+                <td>
+                  {
+                    user.req_code_date ? user.req_code_date?.slice(0, 10) : null
+                  }
+
+                </td>
+              </tr>
+              {user.submit_date && (
                 <tr>
-                  <td> نوع الخدمه </td>
-                  <td>{user.service_name_ar}</td>
+                  <td>تاريخ الطلب</td>
+                  <td>
+                    {
+                      user.submit_date ? user.submit_date.slice(0, 10) : null
+                    }
+                  </td>
                 </tr>
-                {user.level && (
+              )}
+              {user.edit_date && (
+                <tr>
+                  <td>تاريخ اخر تعديل</td>
+                  <td>
+                    {
+                      user.edit_date ? user.edit_date?.slice(0, 10) : null
+                    }
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td> نوع الخدمه </td>
+                <td>{user.service_name_ar}</td>
+              </tr>
+              {user.level && (
+                <tr>
+                  <td> المرحله </td>
+                  <td>
+                    {user.level == 0
+                      ? "ماجستير"
+                      : user.level == 1
+                        ? "دكتوراه"
+                        : null}
+                  </td>
+                </tr>
+              )}
+              {user.academic && (
+                <tr>
+                  <td> الشعبه </td>
+                  <td>{user.academic}</td>
+                </tr>
+              )}
+              {user.files_numbers && (
+                <tr>
+                  <td> عدد الابحاث </td>
+                  <td>{user.files_numbers}</td>
+                </tr>
+              )}
+              {user.publish_date && (
+                <tr>
+                  <td> تاريخ النشر </td>
+                  <td>{user.publish_date?.slice(0, 10)}</td>
+                </tr>
+              )}
+              {user.accept_date && (
+                <tr>
+                  <td> تاريخ قبول النشر </td>
+                  <td>{user.accept_date?.slice(0, 10)}</td>
+                </tr>
+              )}
+            </table>
+            <button
+              className="atch-btn"
+              onClick={() => {
+                setConfirmEdit(true);
+              }}
+              disabled={disabled}
+            >
+              تعديل بيانات الطالب
+              <BiEditAlt />
+            </button>
+          </div>
+        </div>
+
+        <h1>مرفقات الطالب</h1>
+
+        <table class="profile-table">
+          <thead>
+            <th>المرفقات</th>
+            <th>التحكم</th>
+          </thead>
+
+          {user.photo_payment_receipt && (
+            <tr>
+              <td> صوره ايصال الدفع </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.photo_college_letter && (
+            <tr>
+              <td> {t("letter")} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.research_plan_ar_pdf && (
+            <tr>
+              <td> {t("research")} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.research_plan_ar_word && (
+            <tr>
+              <td>{t("research-word")}</td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.research_plan_en_word && (
+            <tr>
+              <td> {t("research-word-en")} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.research_plan_en_pdf && (
+            <tr>
+              <td> {t("research-en")} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.translation_paper && (
+            <tr>
+              <td>{t("translation")}</td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.translation_paper}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.translation_paper}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.message_word_ar && (
+            <tr>
+              <td> {t("service2-step-two.research-word")} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.message_word_ar}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.message_word_ar}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.message_pdf_ar && (
+            <tr>
+              <td> {t("service2-step-two.research")} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.quote_check_form && (
+            <tr>
+              <td> {t("service2-step-two.form")} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.quote_check_form}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.quote_check_form}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.decision && (
+            <tr>
+              <td> {t("service7-step3")} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.decision}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.decision}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.files_numbers &&
+            Array.from(Array(user.files_numbers), (e, i) => (
+              <React.Fragment key={i}>
+                {user[`research${i + 1}_image_word`] && (
                   <tr>
-                    <td> المرحله </td>
                     <td>
-                      {user.level == 0
-                        ? "ماجستير"
-                        : user.level == 1
-                          ? "دكتوراه"
-                          : null}
+                      {" "}
+                      {t(
+                        `service${user.service_id}-step-two.word${i + 1}`
+                      )}{" "}
+                    </td>
+                    <td className="att-row">
+                      <button
+                        onClick={() => {
+                          openImage(
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
+                            }`
+                          );
+                        }}
+                        class="atch-btn"
+                      >
+                        Open
+                      </button>
+                      <button
+                        onClick={() => {
+                          downloadImage(
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
+                            }`
+                          );
+                        }}
+                        class="atch-btn atch-btn2"
+                      >
+                        Download
+                      </button>
                     </td>
                   </tr>
                 )}
-                {user.academic && (
+                {user[`research${i + 1}_image_pdf`] && (
                   <tr>
-                    <td> الشعبه </td>
-                    <td>{user.academic}</td>
+                    <td>
+                      {" "}
+                      {t(`service${user.service_id}-step-two.pdf${i + 1}`)}{" "}
+                    </td>
+                    <td className="att-row">
+                      <button
+                        onClick={() => {
+                          openImage(
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
+                            }`
+                          );
+                        }}
+                        class="atch-btn"
+                      >
+                        Open
+                      </button>
+                      <button
+                        onClick={() => {
+                          downloadImage(
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
+                            }`
+                          );
+                        }}
+                        class="atch-btn atch-btn2"
+                      >
+                        Download
+                      </button>
+                    </td>
                   </tr>
                 )}
-                {user.files_numbers && (
-                  <tr>
-                    <td> عدد الابحاث </td>
-                    <td>{user.files_numbers}</td>
-                  </tr>
-                )}
-                {user.publish_date && (
-                  <tr>
-                    <td> تاريخ النشر </td>
-                    <td>{user.publish_date?.slice(0, 10)}</td>
-                  </tr>
-                )}
-                {user.accept_date && (
-                  <tr>
-                    <td> تاريخ قبول النشر </td>
-                    <td>{user.accept_date?.slice(0, 10)}</td>
-                  </tr>
-                )}
-              </table>
-              <button
-                className="atch-btn"
-                onClick={() => {
-                  setConfirmEdit(true);
-                }}
-                disabled={disabled}
-              >
-                تعديل بيانات الطالب
-                <BiEditAlt />
-              </button>
-            </div>
-          </div>
-
-          <h1>مرفقات الطالب</h1>
-
-          <table class="profile-table">
-            <thead>
-              <th>المرفقات</th>
-              <th>التحكم</th>
-            </thead>
-
-            {user.photo_payment_receipt && (
-              <tr>
-                <td> صوره ايصال الدفع </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.photo_college_letter && (
-              <tr>
-                <td> {t("letter")} </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.photo_college_letter}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.photo_college_letter}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.research_plan_ar_pdf && (
-              <tr>
-                <td> {t("research")} </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.research_plan_ar_word && (
-              <tr>
-                <td>{t("research-word")}</td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.research_plan_en_word && (
-              <tr>
-                <td> {t("research-word-en")} </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.research_plan_en_word}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.research_plan_en_word}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.research_plan_en_pdf && (
-              <tr>
-                <td> {t("research-en")} </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.translation_paper && (
-              <tr>
-                <td>{t("translation")}</td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.translation_paper}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.translation_paper}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.message_word_ar && (
-              <tr>
-                <td> {t("service2-step-two.research-word")} </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.message_word_ar}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.message_word_ar}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.message_pdf_ar && (
-              <tr>
-                <td> {t("service2-step-two.research")} </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.message_pdf_ar}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.message_pdf_ar}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.quote_check_form && (
-              <tr>
-                <td> {t("service2-step-two.form")} </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.quote_check_form}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.quote_check_form}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.decision && (
-              <tr>
-                <td> {t("service7-step3")} </td>
-                <td className="att-row">
-                  <button
-                    onClick={() => {
-                      openImage(
-                        `${API_URL}/${user.national_id}/${user.decision}`
-                      );
-                    }}
-                    class="atch-btn"
-                  >
-                    Open
-                  </button>
-                  <button
-                    onClick={() => {
-                      downloadImage(
-                        `${API_URL}/${user.national_id}/${user.decision}`
-                      );
-                    }}
-                    class="atch-btn atch-btn2"
-                  >
-                    Download
-                  </button>
-                </td>
-              </tr>
-            )}
-            {user.files_numbers &&
-              Array.from(Array(user.files_numbers), (e, i) => (
-                <React.Fragment key={i}>
-                  {user[`research${i + 1}_image_word`] && (
+                {user[`acceptance_letter${i + 1}`] && (
+                  <>
                     <tr>
                       <td>
-                        {" "}
                         {t(
-                          `service${user.service_id}-step-two.word${i + 1}`
+                          `service${user.service_id
+                          }-step-two.acceptance_letter${i + 1}`
                         )}{" "}
                       </td>
                       <td className="att-row">
                         <button
                           onClick={() => {
                             openImage(
-                              `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
                               }`
                             );
                           }}
@@ -1490,7 +1575,7 @@ const ShowA = () => {
                         <button
                           onClick={() => {
                             downloadImage(
-                              `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
                               }`
                             );
                           }}
@@ -1500,266 +1585,199 @@ const ShowA = () => {
                         </button>
                       </td>
                     </tr>
-                  )}
-                  {user[`research${i + 1}_image_pdf`] && (
-                    <tr>
-                      <td>
-                        {" "}
-                        {t(`service${user.service_id}-step-two.pdf${i + 1}`)}{" "}
-                      </td>
-                      <td className="att-row">
-                        <button
-                          onClick={() => {
-                            openImage(
-                              `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
-                              }`
-                            );
-                          }}
-                          class="atch-btn"
-                        >
-                          Open
-                        </button>
-                        <button
-                          onClick={() => {
-                            downloadImage(
-                              `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
-                              }`
-                            );
-                          }}
-                          class="atch-btn atch-btn2"
-                        >
-                          Download
-                        </button>
-                      </td>
-                    </tr>
-                  )}
-                  {user[`acceptance_letter${i + 1}`] && (
-                    <>
-                      <tr>
-                        <td>
-                          {t(
-                            `service${user.service_id
-                            }-step-two.acceptance_letter${i + 1}`
-                          )}{" "}
-                        </td>
-                        <td className="att-row">
-                          <button
-                            onClick={() => {
-                              openImage(
-                                `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
-                                }`
-                              );
-                            }}
-                            class="atch-btn"
-                          >
-                            Open
-                          </button>
-                          <button
-                            onClick={() => {
-                              downloadImage(
-                                `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
-                                }`
-                              );
-                            }}
-                            class="atch-btn atch-btn2"
-                          >
-                            Download
-                          </button>
-                        </td>
-                      </tr>
-                    </>
-                  )}
-                </React.Fragment>
-              ))}
-          </table>
-          <h1>الرد المرسل من المكتبه</h1>
-          <hr style={{ width: "90%", marginBottom: "1rem", height: "3px" }} />
-          <div className="resp-cont">
-            <div className="resp">
-              <h2>
-                <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
-                {user.response_date && user.response_date !== "null"
-                  ? user.response_date?.slice(0, 10)
-                  : "لم يتم الرد بعد"}
-              </h2>
-            </div>
-
-            <div className="resp">
-              <h2>
-                <span style={{ color: "#19355A" }}>{t("res-code")}</span>:{" "}
-                {user.payment_code ? (
-                  user.payment_code
-                ) : user.status == 0 ? (
-                  <input
-                    type="text"
-                    name=""
-                    id=""
-                    placeholder="ادخل كود الدفع"
-                    onChange={(e) => {
-                      setPayment_code(e.target.value);
-                    }}
-                  />
-                ) : (
-                  "لم يتم ارسال كود الدفع بعد"
+                  </>
                 )}
-              </h2>
-            </div>
-            {(+user.status !== 1 || +user.status !== 4) && (
-              <>
-                <div className="resp">
-                  <h2>
-                    <span style={{ color: "#19355A" }}>{t("notes")}</span>
-                    {user.response_text &&
-                      user.response_text !== "null" &&
-                      user.status !== 0 ? (
-                      user.response_text
-                    ) : user.manager_status === null &&
-                      user.response_pdf === null &&
-                      user.status == 0 ? (
-                      <h3>لم يتم ارسال ملاحظات بعد</h3>
-                    ) : (
+              </React.Fragment>
+            ))}
+        </table>
+        <h1>الرد المرسل من المكتبه</h1>
+        <hr style={{ width: "90%", marginBottom: "1rem", height: "3px" }} />
+        <div className="resp-cont">
+          <div className="resp">
+            <h2>
+              <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
+              {user.response_date && user.response_date !== "null"
+                ? user.response_date?.slice(0, 10)
+                : "لم يتم الرد بعد"}
+            </h2>
+          </div>
+
+          <div className="resp">
+            <h2>
+              <span style={{ color: "#19355A" }}>{t("res-code")}</span>:{" "}
+              {user.payment_code ? (
+                user.payment_code
+              ) : user.status == 0 ? (
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="ادخل كود الدفع"
+                  onChange={(e) => {
+                    setPayment_code(e.target.value);
+                  }}
+                />
+              ) : (
+                "لم يتم ارسال كود الدفع بعد"
+              )}
+            </h2>
+          </div>
+          {(+user.status !== 1 || +user.status !== 4) && (
+            <>
+              <div className="resp">
+                <h2>
+                  <span style={{ color: "#19355A" }}>{t("notes")}</span>
+                  {user.response_text &&
+                    user.response_text !== "null" &&
+                    user.status !== 0 ? (
+                    user.response_text
+                  ) : user.manager_status === null &&
+                    user.response_pdf === null &&
+                    user.status == 0 ? (
+                    <h3>لم يتم ارسال ملاحظات بعد</h3>
+                  ) : (
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="ادخل ملاحظاتك"
+                      onChange={(e) => {
+                        setResponse({
+                          ...response,
+                          response_text: e.target.value,
+                        });
+                      }}
+                    />
+                  )}
+                </h2>
+              </div>
+              <div className="resp">
+                <div className="inputt-atch">
+                  {user.response_pdf !== null && user.status !== 0 ? (
+                    <div className="atch-btns">
+                      <button
+                        onClick={() => {
+                          openImage(
+                            `${API_URL}/${user.national_id}/${user.response_pdf}`
+                          );
+                        }}
+                        className="atch-btn"
+                      >
+                        Open
+                      </button>
+                      <button
+                        onClick={() => {
+                          downloadImage(
+                            `${API_URL}/${user.national_id}/${user.response_pdf}`
+                          );
+                        }}
+                        className="atch-btn atch-btn2"
+                      >
+                        Download
+                      </button>
+                    </div>
+                  ) : user.manager_status === null &&
+                    user.response_pdf === null &&
+                    user.status !== 0 ? (
+                    <div className="select-img">
+                      <label className="upload-image" htmlFor="upload-image">
+                        <BiImageAdd className="img-icom" />
+                        <p>{t("click-here")}</p>
+                      </label>
                       <input
-                        type="text"
-                        name=""
-                        id=""
-                        placeholder="ادخل ملاحظاتك"
+                        type="file"
+                        hidden
+                        id="upload-image"
+                        name="upload-image"
                         onChange={(e) => {
                           setResponse({
                             ...response,
-                            response_text: e.target.value,
+                            response_pdf: e.target.files[0],
                           });
                         }}
                       />
-                    )}
+                      {response.response_pdf && (
+                        <div>
+                          <p className="upload-image value">
+                            {response.response_pdf.name
+                              ? response.response_pdf.name
+                              : response.response_pdf}
+                          </p>
+                          <button
+                            className="upload-image openPdf"
+                            onClick={() => {
+                              window.open(
+                                URL.createObjectURL(response.response_pdf)
+                              );
+                            }}
+                          >
+                            {t("open")}
+                          </button>
+                          <AiFillCloseCircle
+                            onClick={() => {
+                              setResponse({ ...response, response_pdf: "" });
+                            }}
+                            style={{
+                              color: "#ad8700",
+                              fontSize: "2rem",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ) : (user.manager_status !== null &&
+                    user.response_pdf === null) ||
+                    user.status == 0 ? (
+                    <h3>لم يتم ارسال ملف الرد بعد</h3>
+                  ) : null}
+                  <h2>
+                    <span style={{ color: "#19355A" }}>{t("att-res")}</span>{" "}
                   </h2>
                 </div>
-                <div className="resp">
-                  <div className="inputt-atch">
-                    {user.response_pdf !== null && user.status !== 0 ? (
-                      <div className="atch-btns">
-                        <button
-                          onClick={() => {
-                            openImage(
-                              `${API_URL}/${user.national_id}/${user.response_pdf}`
-                            );
-                          }}
-                          className="atch-btn"
-                        >
-                          Open
-                        </button>
-                        <button
-                          onClick={() => {
-                            downloadImage(
-                              `${API_URL}/${user.national_id}/${user.response_pdf}`
-                            );
-                          }}
-                          className="atch-btn atch-btn2"
-                        >
-                          Download
-                        </button>
-                      </div>
-                    ) : user.manager_status === null &&
-                      user.response_pdf === null &&
-                      user.status !== 0 ? (
-                      <div className="select-img">
-                        <label className="upload-image" htmlFor="upload-image">
-                          <BiImageAdd className="img-icom" />
-                          <p>{t("click-here")}</p>
-                        </label>
-                        <input
-                          type="file"
-                          hidden
-                          id="upload-image"
-                          name="upload-image"
-                          onChange={(e) => {
-                            setResponse({
-                              ...response,
-                              response_pdf: e.target.files[0],
-                            });
-                          }}
-                        />
-                        {response.response_pdf && (
-                          <div>
-                            <p className="upload-image value">
-                              {response.response_pdf.name
-                                ? response.response_pdf.name
-                                : response.response_pdf}
-                            </p>
-                            <button
-                              className="upload-image openPdf"
-                              onClick={() => {
-                                window.open(
-                                  URL.createObjectURL(response.response_pdf)
-                                );
-                              }}
-                            >
-                              {t("open")}
-                            </button>
-                            <AiFillCloseCircle
-                              onClick={() => {
-                                setResponse({ ...response, response_pdf: "" });
-                              }}
-                              style={{
-                                color: "#ad8700",
-                                fontSize: "2rem",
-                                cursor: "pointer",
-                              }}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    ) : (user.manager_status !== null &&
-                      user.response_pdf === null) ||
-                      user.status == 0 ? (
-                      <h3>لم يتم ارسال ملف الرد بعد</h3>
-                    ) : null}
-                    <h2>
-                      <span style={{ color: "#19355A" }}>{t("att-res")}</span>{" "}
-                    </h2>
-                  </div>
-                </div>
-              </>
+              </div>
+            </>
+          )}
+
+          <div className="progress">
+            {progress.started && (
+              <progress max="100" value={progress.value}></progress>
             )}
-
-            <div className="progress">
-              {progress.started && (
-                <progress max="100" value={progress.value}></progress>
-              )}
-              {msg && <p>{msg}</p>}
-            </div>
-            {response.response_pdf || response.response_text ? (
-              <div className="resp two">
-                <button
-                  disabled={disabled}
-                  className="atch-btn atch-btn2"
-                  style={{ width: "50%" }}
-                  onClick={() => {
-                    setConfirmA1(true);
-                  }}
-                >
-                  ارسال
-                </button>
-              </div>
-            ) : null}
-            {payment_code && user.status == 0 ? (
-              <div className="resp two">
-                <button
-                  disabled={disabled}
-                  className="atch-btn atch-btn2"
-                  style={{ width: "50%" }}
-                  onClick={() => {
-                    setConfirmP(true);
-                  }}
-                >
-                  ارسال كود الدفع
-                </button>
-              </div>
-            ) : null}
+            {msg && <p>{msg}</p>}
           </div>
-        </section>
-        {errors && <PopupErrorMsg message={errors} onClose={handleCloseError} />}
-      </>
-    );
-  };
+          {response.response_pdf || response.response_text ? (
+            <div className="resp two">
+              <button
+                disabled={disabled}
+                className="atch-btn atch-btn2"
+                style={{ width: "50%" }}
+                onClick={() => {
+                  setConfirmA1(true);
+                }}
+              >
+                ارسال
+              </button>
+            </div>
+          ) : null}
+          {payment_code && user.status == 0 ? (
+            <div className="resp two">
+              <button
+                disabled={disabled}
+                className="atch-btn atch-btn2"
+                style={{ width: "50%" }}
+                onClick={() => {
+                  setConfirmP(true);
+                }}
+              >
+                ارسال كود الدفع
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </section>
+      {errors && <PopupErrorMsg message={errors} onClose={handleCloseError} />}
+    </>
+  );
+};
 
-  export default ShowA;
+export default ShowA;
