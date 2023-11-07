@@ -32,7 +32,7 @@ const ProfileInfo = (props) => {
                 <h4 className='h4-profile'>{+props.user.university === 1 ? t('helwan-uni') : props.user.university}</h4>
             </div>
 
-            {props.user.university == 0 && (
+            {props.user.university != 1 && (
                 <div className='subnav-content-item'>
                     <h3>{t('fac')} : </h3>
                     <h4 className='h4-profile'>{props.user.faculity}</h4>

@@ -641,7 +641,7 @@ const ShowA = () => {
         .catch((error) => {
           setDisabled(false);
           if (error.response && error.response.status === 401) {
-            navigate("/Library/AdminLogin");
+            navigate("/Library/ManagerLogin");
           } else if (error.response && error.response.status === 400) {
             setErrors(error.response.data.msg);
           } else {
@@ -658,14 +658,14 @@ const ShowA = () => {
     setDisabled(true);
     try {
       axios.defaults.withCredentials = true;
-      axios.put(`${API_URL}/user/updateUser`, user, { withCredentials: true })
+      axios.put(`${API_URL}/user/updateuserManager`, user, { withCredentials: true })
         .then((res) => {
           window.location.reload();
         })
         .catch((error) => {
           setDisabled(false);
           if (error.response && error.response.status === 401) {
-            navigate("/Library/AdminLogin");
+            navigate("/Library/ManagerLogin");
           } else if (error.response && error.response.status === 400) {
             setErrors(error.response?.data?.errors[0]?.message);
           } else {

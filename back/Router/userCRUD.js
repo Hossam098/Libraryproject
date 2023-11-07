@@ -81,7 +81,7 @@ user.put('/updateuser',
                 }
 
                 if (req.file?.filename) {
-                    if (result[0].img != null) {
+                    if (result[0].img != null && result[0].img != "") {
                         console.log(`./public/imgs/${result[0].national_id}/${result[0].img}`)
                         fs.unlinkSync(`./public/imgs/${result[0].national_id}/${result[0].img}`, (err) => {
                             if (err) {
@@ -121,7 +121,7 @@ user.put('/updateuser',
     }
 );
 
-user.put('/updateuser',
+user.put('/updateuserManager',
     checkmanager,
     body('user_id').notEmpty().withMessage('user_id is required'),
     async (req, res) => {
@@ -201,7 +201,7 @@ user.get('/getuserbyid/:serId/:serNam/:stId/:appId',
                 facultyTable = `,faculty.*`
                 facultyJoin = `JOIN faculty ON users.faculity_id = faculty.faculty_id`
             }
-            const sqlSelect0 = `SELECT * FROM submit WHERE user_id = ? `;
+            const sqlSelect0 = `SELECT * FROM users WHERE id = ? `;
             const result0 = await query(sqlSelect0, [stId]);
             if (result0.length > 0) {
                 if (result0[0].faculity_id != null) {
@@ -209,11 +209,29 @@ user.get('/getuserbyid/:serId/:serNam/:stId/:appId',
                 }
             }
 
+            // const sqlSelect = `SELECT 
+            //  submit.* , users.* , services.* , ${ser_table}.*  ${facultyTable} FROM submit JOIN users ON submit.user_id = users.id JOIN services ON submit.service_id = services.id 
+            //  JOIN ${ser_table} ON submit.${serNam} = ${ser_table}.id  
+            //  ${facultyJoin}
+            //  WHERE submit.${serNam} = ?  AND users.id = ? AND submit.service_id = ? `;
             const sqlSelect = `SELECT 
-             submit.* , users.* , services.* , ${ser_table}.*  ${facultyTable} FROM submit JOIN users ON submit.user_id = users.id JOIN services ON submit.service_id = services.id 
-             JOIN ${ser_table} ON submit.${serNam} = ${ser_table}.id  
-             ${facultyJoin}
-             WHERE submit.${serNam} = ?  AND users.id = ? AND submit.service_id = ? `;
+    submit.*, users.*, services.*, ${ser_table}.*, faculty.*
+FROM 
+    submit
+JOIN 
+    users ON submit.user_id = users.id
+JOIN 
+    services ON submit.service_id = services.id
+JOIN 
+    ${ser_table} ON submit.${serNam} = ${ser_table}.id
+    LEFT JOIN 
+    faculty ON users.faculity_id = faculty.faculty_id
+WHERE 
+    submit.${serNam} = ?  
+    AND users.id = ? 
+    AND submit.service_id = ? 
+    AND (users.faculity_id IS NULL OR users.faculity_id IS NOT NULL)`;
+
             const result = await query(sqlSelect, [appId, stId, serId]);
             if (result.length > 0) {
                 delete result[0].password;
