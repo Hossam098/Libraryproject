@@ -46,7 +46,7 @@ const Send = () => {
           setLoading(false)
         })
         .catch((err) => {
-          if (err.status === 401) navigate('/Library/login')
+          if (err.status === 401) window.location.replace('/Library/login')
           else setErrors(t('errmsg'))
         })
     } catch (err) {
@@ -83,7 +83,7 @@ const Send = () => {
           }
         })
         .catch((err) => {
-          if (err.status === 401) navigate('/Library/login')
+          if (err.status === 401) window.location.replace('/Library/login')
           else setErrors(t('errmsg'))
         })
     } catch (err) {

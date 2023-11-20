@@ -12,6 +12,7 @@ import { use } from "i18next";
 import ProfileInfo from "./ProfileInfo";
 import ServiceInfo from "./ServiceInfo";
 import { useNavigate } from "react-router-dom";
+import PopupErrorMsg from "../../../components/error/PopupErrorMsg";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [showPersonal, setShowPersonal] = useState(true);
   const [imgUser, setImgUser] = useState("");
+  const [showError, setShowError] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -31,7 +34,7 @@ const Profile = () => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            navigate("/Library");
+            window.location.replace("/Library");
           }
           console.log(err);
         });
@@ -40,7 +43,7 @@ const Profile = () => {
     }
   }, []);
 
-  const edituser = () => {
+  const edituser = (user) => {
     const formData = new FormData();
     formData.append("name", user.name);
     formData.append("email", user.email);
@@ -59,9 +62,13 @@ const Profile = () => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            navigate("/Library");
+            window.location.replace("/Library");
           }
-          console.log(err);
+          if (err?.response?.status === 400) {
+            setError(err?.response?.data?.message[0]);
+            setShowError(true);
+          }
+          
         });
     } catch (err) {
       console.log(err);
@@ -70,6 +77,12 @@ const Profile = () => {
 
   return (
     <>
+      {showError && (
+        <PopupErrorMsg
+          message={error}
+          onClose={() => setShowError(false)}
+        />
+      )}
       <div
         className="profile-container"
         style={{
@@ -90,7 +103,7 @@ const Profile = () => {
               />
             </div>
             <div className="editbutton">
-              <label For="p-image">
+              <label For="p-image" style={{ cursor: "pointer" , fontSize:"1.1rem"}}>
                 <MdOutlineModeEdit />
               </label>
               <input
@@ -99,7 +112,19 @@ const Profile = () => {
                 id="p-image"
                 name="p-image"
                 onChange={(e) => {
-                  setUser({ ...user, img: e.target.files[0] });
+                  const selectedFile = e.target.files[0];
+                  const reader = new FileReader();
+
+                  reader.onload = (event) => {
+                    const imageDataURL = event.target.result;
+                    const updatedUser = { ...user, img: selectedFile };
+
+                    // Call the edituser function with the updated user data
+                    edituser(updatedUser);
+                    console.log(updatedUser);
+                  };
+                  
+                  reader.readAsDataURL(selectedFile);
                 }}
               />
             </div>
@@ -109,7 +134,8 @@ const Profile = () => {
               </h1>
             )}
           </div>
-          <h1>{user.name}</h1>
+          <h1 style={{ fontSize: "1.7rem", fontWeight: "bold" }}>
+            {user.name}</h1>
           <div className="subnav-header">
             <button
               className={

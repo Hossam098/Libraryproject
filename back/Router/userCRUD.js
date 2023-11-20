@@ -1,10 +1,10 @@
 import express from "express";
 import query from '../Database/DBConnection.js';
 import { body, validationResult } from "express-validator";
-import e from "express";
 import checkUser from "../MiddleWare/checkUser.js";
 import upload from "../MiddleWare/Uplodeimgs.js";
 import checkmanager from "../MiddleWare/checkManager.js";
+import fs from 'fs';
 
 
 const user = express();
@@ -35,7 +35,11 @@ user.get('/getuser',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = "SELECT * FROM users WHERE id = ?";
+            const sqlSelect = `SELECT users.*, faculty.*
+            FROM users
+            LEFT JOIN faculty ON users.faculity_id = faculty.faculty_id
+            WHERE users.id = ? AND (users.faculity_id IS NULL OR users.faculity_id IS NOT NULL);
+            `;
             const result = await query(sqlSelect, [req.id]);
             if (result.length > 0) {
                 delete result[0].password;
@@ -63,7 +67,30 @@ user.put('/updateuser',
                 let image = result[0].img;
                 if (req.file) {
                     image = req.file.filename;
+
                 }
+                // validate extention
+                if (req.file?.mimetype != 'image/png' && req.file?.mimetype != 'image/jpg' && req.file?.mimetype != 'image/jpeg') {
+                    error.push(" يجب ان تكون الصورة بصيغة png او jpg او jpeg");
+                    return res.status(400).json({ message: error });
+                }
+                // validate size
+                if (req.file?.size > 1024 * 1024 * 5) {
+                    error.push("حجم الصورة كبير جدا .. يجب ان لا يتعدي 5 ميجا");
+                    return res.status(400).json({ message: error });
+                }
+
+                if (req.file?.filename) {
+                    if (result[0].img != null && result[0].img != "") {
+                        console.log(`./public/imgs/${result[0].national_id}/${result[0].img}`)
+                        fs.unlinkSync(`./public/imgs/${result[0].national_id}/${result[0].img}`, (err) => {
+                            if (err) {
+                                console.log(err)
+                            }
+                        })
+                    }
+                }
+                console.log(4);
                 const userDate = {
                     name: req.body.name,
                     email: req.body.email,
@@ -85,6 +112,52 @@ user.put('/updateuser',
                 }
             } else {
                 error.push("No user found");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
+user.put('/updateuserManager',
+    checkmanager,
+    body('user_id').notEmpty().withMessage('user_id is required'),
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM users WHERE id = ?";
+            const result = await query(sqlSelect, [req.body.user_id]);
+            if (result.length > 0) {
+                if (req.body.university == 1 && req.body.faculity_id != null) {
+                    req.body.faculity = null
+                } else if (req.body.university == 0 && req.body.faculity != null) {
+                    req.body.faculity_id = null
+                }
+
+                const userDate = {
+                    name: req.body.name,
+                    email: req.body.email,
+                    img: result[0].img,
+                    phone: req.body.phone,
+                    national_id: req.body.national_id,
+                    university: req.body.university,
+                    faculity: req.body.faculity,
+                    faculity_id: req.body.faculity_id,
+                    department: req.body.department,
+                    nationality: req.body.nationality,
+                }
+                const sqlUpdate = "UPDATE users SET ? WHERE id = ?";
+                const resultUpdate = await query(sqlUpdate, [userDate, req.body.user_id]);
+                if (resultUpdate.affectedRows > 0) {
+                    return res.status(200).json({ message: " تم تعديل بيانات المستخدم بنجاح" });
+                } else {
+                    error.push("لم يتم تعديل بيانات المستخدم");
+                    return res.status(400).json({ message: error });
+                }
+            } else {
+                error.push("لم يتم العثور على المستخدم");
                 return res.status(400).json({ message: error });
             }
         } catch (errors) {
@@ -121,11 +194,47 @@ user.get('/getuserbyid/:serId/:serNam/:stId/:appId',
             } else if (serNam == 'ser_best') {
                 ser_table = 'best_message_service'
             }
+            let facultyFlag = false
+            let facultyTable = ``
+            let facultyJoin = ``
+            if (facultyFlag) {
+                facultyTable = `,faculty.*`
+                facultyJoin = `JOIN faculty ON users.faculity_id = faculty.faculty_id`
+            }
+            const sqlSelect0 = `SELECT * FROM users WHERE id = ? `;
+            const result0 = await query(sqlSelect0, [stId]);
+            if (result0.length > 0) {
+                if (result0[0].faculity_id != null) {
+                    facultyFlag = true
+                }
+            }
 
+            // const sqlSelect = `SELECT 
+            //  submit.* , users.* , services.* , ${ser_table}.*  ${facultyTable} FROM submit JOIN users ON submit.user_id = users.id JOIN services ON submit.service_id = services.id 
+            //  JOIN ${ser_table} ON submit.${serNam} = ${ser_table}.id  
+            //  ${facultyJoin}
+            //  WHERE submit.${serNam} = ?  AND users.id = ? AND submit.service_id = ? `;
+            const sqlSelect = `SELECT 
+    submit.*, users.*, services.*, ${ser_table}.*, faculty.*
+FROM 
+    submit
+JOIN 
+    users ON submit.user_id = users.id
+JOIN 
+    services ON submit.service_id = services.id
+JOIN 
+    ${ser_table} ON submit.${serNam} = ${ser_table}.id
+    LEFT JOIN 
+    faculty ON users.faculity_id = faculty.faculty_id
+WHERE 
+    submit.${serNam} = ?  
+    AND users.id = ? 
+    AND submit.service_id = ? 
+    AND (users.faculity_id IS NULL OR users.faculity_id IS NOT NULL)`;
 
-            const sqlSelect = `SELECT submit.* , users.* , services.* , ${ser_table}.* FROM submit JOIN users ON submit.user_id = users.id JOIN services ON submit.service_id = services.id JOIN ${ser_table} ON submit.${serNam} = ${ser_table}.id WHERE submit.${serNam} = ?  AND users.id = ? AND submit.service_id = ? `;
             const result = await query(sqlSelect, [appId, stId, serId]);
             if (result.length > 0) {
+                delete result[0].password;
                 return res.status(200).json(result[0]);
             } else {
                 return res.status(400).json({ message: "No user found" });
@@ -193,6 +302,24 @@ user.get('/getusermessages',
     }
 );
 
+user.get('/getAllFaculties',
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM faculty";
+            const result = await query(sqlSelect);
+            if (result.length > 0) {
+                return res.status(200).json(result);
+            } else {
+                error.push("No faculties found");
+                return res.status(400).json({ message: error });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
 
 
 export default user;

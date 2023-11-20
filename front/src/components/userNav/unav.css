@@ -14,7 +14,7 @@ nav,
 nav {
     width: 100%;
     justify-content: space-around;
-    padding: .5rem 1rem;
+    padding: 0;
     background-color: #19355A;
     color: #fff;
 
@@ -23,7 +23,7 @@ nav {
 .right,
 .left {
     gap: 2rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .right>li>li {
@@ -65,11 +65,11 @@ ul {
     position: absolute;
     background-color: #19355A;
     padding: 0.5rem;
-    margin: .9rem -3rem;
+    margin: 0.1rem -3rem;
     border-radius: 4px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     white-space: nowrap;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     z-index: 3;
 }
 

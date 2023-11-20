@@ -32,8 +32,8 @@ const ServiceInfo = ({ User }) => {
         })
         .catch((err) => {
           console.log(err);
-          if (err.response.status == 400) {
-            navigate("/Library");
+          if (err.response.status == 401) {
+            window.location.replace("/Library");
           }
         });
     } catch (err) {
@@ -44,6 +44,7 @@ const ServiceInfo = ({ User }) => {
   return (
     <>
       <div className="subnav-contentt" style={{ width: "80%" }}>
+        {services?.length !== 0 ? (
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
@@ -100,6 +101,9 @@ const ServiceInfo = ({ User }) => {
             })}
           </tbody>
         </table>
+        ) : (
+          <h1 style={{ textAlign: "center" }}>{t("no-ser")}</h1>
+        )}
       </div>
       {flag && <Serinfo service={service} User={User} />}
     </>

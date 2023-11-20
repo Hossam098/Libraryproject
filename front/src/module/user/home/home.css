@@ -53,7 +53,7 @@ main {
 
 .service__head h1 {
     color: #000;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     text-align: center;
 }
 
@@ -124,7 +124,7 @@ button.bttn {
 
 .service__list p {
     font-size: 1.2rem;
-    color: #000;
+    color: #000000bd;
 }
 
 .enroll {

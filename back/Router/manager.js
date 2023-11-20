@@ -325,10 +325,13 @@ manager.get('/getallApplicants',
         try {
 
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.service_id = ? ";
+                const sqlSelect = "SELECT submit.* , users.* , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.service_id = ? ";
                 const value = [req.service_id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
+                    for (let i = 0; i < result.length; i++) {
+                        delete result[i].password;
+                    }
                     return res.status(200).json(result);
                 } else {
                     return res.status(200).json({ message: "لا يوجد طلبات" });

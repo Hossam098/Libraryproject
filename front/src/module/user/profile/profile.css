@@ -111,6 +111,20 @@
     grid-template-columns: 35% 65%;
 }
 
+/* .subnav-content-item .h4-profile{
+    font-size: 1.2rem;
+    color: #AD8700;
+} */
+.subnav-content-item .h4-profile{
+    font-size: 1.5rem;
+    color: #AD8700;
+}
+.subnav-content h1{
+    text-align: center;
+    color: #000;
+    margin-top: 1rem;
+}
+
 .profile-container .subnav .subnav-content .subnav-content-item input {
     width: 100%;
     height: 1.5rem;

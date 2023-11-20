@@ -43,7 +43,7 @@ const UserReset = () => {
           })
           .catch((err) => {
             if (err.response.status == 401) {
-              navigate("/Library/login");
+              window.location.replace("/Library/login");
             }
             console.log(err.response.data.message[0]);
             setErrors2(err.response.data.message[0]);

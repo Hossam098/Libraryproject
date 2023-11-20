@@ -45,7 +45,7 @@ const AdminLogin = () => {
           })
           .catch((err) => {
             if (err.response.status == 401) {
-              navigate("/Library/ManagerLogin");
+              window.location.replace("/Library/ManagerLogin");
             }
             console.log(err.response.data.message[0]);
             setErrors2(err.response.data.message[0]);

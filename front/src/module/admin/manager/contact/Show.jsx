@@ -30,7 +30,7 @@ const Show = () => {
                     setLoading(false)
                 })
                 .catch((err) => {
-                    if (err.status === 401) navigate('/Library/login')
+                    if (err.status === 401) window.location.replace('/Library/managerlogin')
                     else setErrors(t('errmsg'))
                     setLoading(false)
                 })

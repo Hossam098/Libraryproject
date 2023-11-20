@@ -22,7 +22,6 @@ userAuth.post('/register',
     body('national_id').notEmpty().withMessage('National ID is required'),
     body('nationality').notEmpty().withMessage('Nationality is required'),
     body('university').notEmpty().withMessage('University is required'),
-    body('faculity').notEmpty().withMessage('faculity is required'),
     body('department').notEmpty().withMessage('department is required'),
     async (req, res) => {
         let error = [];
@@ -50,6 +49,16 @@ userAuth.post('/register',
                 return res.status(400).json({ message: error });
             }
 
+            if (req.body.university == "0" &&  req.body.faculity == "") {
+                error.push("Faculity is required");
+                return res.status(400).json({ message: error });
+            }
+
+            if (req.body.university == "1" &&  req.body.faculity_id == "") {
+                error.push("Faculity is required"); 
+                return res.status(400).json({ message: error });
+            }
+
             const sqlSelect = "SELECT * FROM users WHERE email = ? OR national_id = ?";
             const result = await query(sqlSelect, [req.body.email, req.body.national_id]);
             if (result.length > 0) {
@@ -72,8 +81,9 @@ userAuth.post('/register',
                 national_id: req.body.national_id,
                 nationality: req.body.nationality,
                 university: uni,
-                faculity: req.body.faculity,
+                faculity: req.body.faculity || null,
                 department: req.body.department,
+                faculity_id: req.body.faculity_id || null,
             }
 
             const sqlInsert = "INSERT INTO users SET ?";
@@ -121,7 +131,7 @@ userAuth.post('/login',
                     };
                     const token =jwt.sign(payload, key);
                     req.session.token ="Bearer "+ token;
-                    return res.status(200).json({ login: true, token: token });
+                    return res.status(200).json({ login: true, token: token , user: result[0]});
 
                 } else {
                     error.push("كلمة المرور غير صحيحة");

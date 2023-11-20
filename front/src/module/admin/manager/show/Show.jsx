@@ -14,6 +14,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { API_URL } from "../../../../config";
 import PopupErrorMsg from "../../../../components/error/PopupErrorMsg";
 import PopupConfirmMsg from "../../../../components/error/PopupConfirmMsg";
+import { BiEditAlt } from "react-icons/bi";
 
 const ShowA = () => {
   const { t } = useTranslation();
@@ -35,6 +36,8 @@ const ShowA = () => {
   const [confirmReturn, setConfirmReturn] = useState(false);
   const [confirmP, setConfirmP] = useState(false);
   const [confirmW, setConfirmW] = useState(false);
+  const [faculty, setFaculty] = useState([]);
+  const [confirmEdit, setConfirmEdit] = useState(false);
 
   const dataArray = id.split(",");
   const [response, setResponse] = useState({
@@ -71,7 +74,14 @@ const ShowA = () => {
         setUser(res.data);
       })
       .catch((error) => {
-        if (error.response.status == 401) navigate("/Library/ManagerLogin");
+        if (error.response.status == 401) window.location.replace("/Library/ManagerLogin");
+      });
+    axios.get(`${API_URL}/user/getAllFaculties`)
+      .then((res) => {
+        setFaculty(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
   const openImage = (url) => {
@@ -86,39 +96,39 @@ const ShowA = () => {
     saveAs(url, "image.jpg");
   };
 
-  const downloadPDF = () => {
-    const inpput = pdfRef.current;
-    html2canvas(inpput).then((canvas) => {
-      const imgData = canvas.toDataURL(
-        "image/png" ||
-        "image/jpg" ||
-        "image/svg" ||
-        "image/gif" ||
-        "image/jpeg" ||
-        "image/webp"
-      );
-      const pdf = new jspdf("l", "pc", "a4", true);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgwidth = canvas.width;
-      const imgheight = canvas.height;
-      const ratio =
-        imgwidth / imgheight >= pdfWidth / pdfHeight
-          ? pdfWidth / imgwidth
-          : pdfHeight / imgheight;
-      const imgx = (pdfWidth - imgwidth * ratio) / 2;
-      const imgy = (pdfHeight - imgheight * ratio) / 2;
-      pdf.addImage(
-        imgData,
-        "jpg",
-        imgx,
-        imgy,
-        imgwidth * ratio,
-        imgheight * ratio
-      );
-      pdf.save("download.pdf");
-    });
-  };
+  // const downloadPDF = () => {
+  //   const inpput = pdfRef.current;
+  //   html2canvas(inpput).then((canvas) => {
+  //     const imgData = canvas.toDataURL(
+  //       "image/png" ||
+  //       "image/jpg" ||
+  //       "image/svg" ||
+  //       "image/gif" ||
+  //       "image/jpeg" ||
+  //       "image/webp"
+  //     );
+  //     const pdf = new jspdf("l", "pc", "a4", true);
+  //     const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     const pdfHeight = pdf.internal.pageSize.getHeight();
+  //     const imgwidth = canvas.width;
+  //     const imgheight = canvas.height;
+  //     const ratio =
+  //       imgwidth / imgheight >= pdfWidth / pdfHeight
+  //         ? pdfWidth / imgwidth
+  //         : pdfHeight / imgheight;
+  //     const imgx = (pdfWidth - imgwidth * ratio) / 2;
+  //     const imgy = (pdfHeight - imgheight * ratio) / 2;
+  //     pdf.addImage(
+  //       imgData,
+  //       "jpg",
+  //       imgx,
+  //       imgy,
+  //       imgwidth * ratio,
+  //       imgheight * ratio
+  //     );
+  //     pdf.save("download.pdf");
+  //   });
+  // };
 
   const [errors, setErrors] = useState();
 
@@ -128,6 +138,7 @@ const ShowA = () => {
   //   return currentDate.toISOString().slice(0, 10);
   // };
 
+  console.log(user);
   const handleCloseError = () => {
     setErrors("");
     setConfirm(false);
@@ -140,6 +151,7 @@ const ShowA = () => {
     setConfirmReturn(false);
     setConfirmP(false);
     setConfirmW(false);
+    setConfirmEdit(false);
   };
 
   const handelAccept = () => {
@@ -182,7 +194,7 @@ const ShowA = () => {
           .catch((error) => {
             setDisabled(false);
             setProgress((prevState) => ({ ...prevState, started: false }));
-            if (error.response.status == 401) navigate("/Library/ManagerLogin");
+            if (error.response.status == 401) window.location.replace("/Library/ManagerLogin");
             else if (error.response.status == 400)
               setErrors(error.response.data.message);
             else setErrors("حدث خطأ ما");
@@ -629,7 +641,7 @@ const ShowA = () => {
         .catch((error) => {
           setDisabled(false);
           if (error.response && error.response.status === 401) {
-            navigate("/Library/AdminLogin");
+            navigate("/Library/ManagerLogin");
           } else if (error.response && error.response.status === 400) {
             setErrors(error.response.data.msg);
           } else {
@@ -641,6 +653,34 @@ const ShowA = () => {
       setErrors("حدث خطأ ما");
     }
   };
+
+  const handleEditUser = () => {
+    setDisabled(true);
+    try {
+      axios.defaults.withCredentials = true;
+      axios.put(`${API_URL}/user/updateuserManager`, user, { withCredentials: true })
+        .then((res) => {
+          window.location.reload();
+        })
+        .catch((error) => {
+          setDisabled(false);
+          if (error.response && error.response.status === 401) {
+            navigate("/Library/ManagerLogin");
+          } else if (error.response && error.response.status === 400) {
+            setErrors(error.response?.data?.errors[0]?.message);
+          } else {
+            setErrors("حدث خطأ ما");
+          }
+        });
+    } catch (error) {
+      setDisabled(false);
+      setErrors("حدث خطأ ما");
+    }
+
+
+  }
+
+
   return (
     <>
       {confirmE1 && (
@@ -706,20 +746,26 @@ const ShowA = () => {
           onSubmit={handewait}
         />
       )}
+      {confirmEdit && (
+        <PopupConfirmMsg
+          message={"تأكيد تعديل بيانات الطالب"}
+          onClose={handleCloseError}
+          onSubmit={handleEditUser}
+        />
+      )}
       <section className="cotainer-data">
-        <div className="navv">
-          <h2>بيانات الطالب</h2>
+        {/* <div className="navv" style={{ justifyContent: "center" }}>
+          <h2 style={{  fontSize: "2rem" , fontWeight: "bold" }}>
+            بيانات الطالب</h2>
           <button onClick={downloadPDF} className="wait-edit">
             <BiSolidPrinter />
             طباعه
-          </button>
+          </button> 
         </div>
+        <hr /> */}
         <div className="data-container" ref={pdfRef}>
           <div className="image-con">
-            <img
-              src={
-                user.img ? `${API_URL}/${user.national_id}/${user.img}` : pimg
-              }
+            <img src={user.img ? `${API_URL}/${user.national_id}/${user.img}` : pimg}
               alt="img"
               className="imagee"
             />
@@ -773,7 +819,7 @@ const ShowA = () => {
                 >
                   طلب تعديل البيانات
                 </button>
-                <hr style={{ width: "80%" ,height: "3px" }} />
+                <hr style={{ width: "80%", height: "3px" }} />
                 <button
                   onClick={() => {
                     setConfirmW(true);
@@ -807,7 +853,7 @@ const ShowA = () => {
                 >
                   طلب تعديل البيانات
                 </button>
-                <hr style={{ width: "80%" ,height: "3px" }} />
+                <hr style={{ width: "80%", height: "3px" }} />
 
                 <input
                   disabled={disabled}
@@ -895,112 +941,240 @@ const ShowA = () => {
             ) : null}
           </div>
 
-          <table className="data-table" style={{ direction: "rtl" }}>
-            <tr>
-              <th> معلومات اساسيه </th>
-              <th> البيانات </th>
-            </tr>
-
-            <tr>
-              <td>الاسم</td>
-              <td>{user.name}</td>
-            </tr>
-            <tr>
-              <td>الجنسيه</td>
-              <td>{user.nationality}</td>
-            </tr>
-            <tr>
-              <td>البريد الالكترونى</td>
-              <td>{user.email}</td>
-            </tr>
-            <tr>
-              <td>رقم الهاتف</td>
-              <td>{user.phone}</td>
-            </tr>
-            <tr>
-              <td>الرقم القومى</td>
-              <td>{user.national_id}</td>
-            </tr>
-            <tr>
-              <td>الجامعه</td>
-              <td>
-                {+user.university === 1 ? "جامعه حلوان" : user.university}
-              </td>
-            </tr>
-            <tr>
-              <td>الكليه</td>
-              <td>{user.faculity}</td>
-            </tr>
-            <tr>
-              <td>القسم</td>
-              <td>{user.department}</td>
-            </tr>
-            <tr>
-              <td>تاريخ طلب كود الدفع</td>
-              <td>
-                {
-                  user.req_code_date ? user.req_code_date?.slice(0, 10) : null
-                }
-
-              </td>
-            </tr>
-            <tr>
-              <td>تاريخ الطلب</td>
-              <td>
-                {
-                  user.submit_date ? user.submit_date.slice(0, 10) : null
-                }
-              </td>
-            </tr>
-            <tr>
-              <td>تاريخ اخر تعديل</td>
-              <td>
-                {
-                  user.edit_date ? user.edit_date?.slice(0, 10) : null
-                }
-              </td>
-            </tr>
-            <tr>
-              <td> نوع الخدمه </td>
-              <td>{user.service_name_ar}</td>
-            </tr>
-            {user.level && (
+          <div className="data-con-table-btn">
+            <table className="data-table" style={{ direction: "rtl" }}>
               <tr>
-                <td> المرحله </td>
+                <th> معلومات اساسيه </th>
+                <th> البيانات </th>
+              </tr>
+
+              <tr>
+                <td>الاسم</td>
                 <td>
-                  {user.level == 0
-                    ? "ماجستير"
-                    : user.level == 1
-                      ? "دكتوراه"
-                      : null}
+                  <input
+                    className="edit-input-user"
+                    type="text"
+                    value={user.name}
+                    onChange={(e) => {
+                      setUser({ ...user, name: e.target.value });
+                    }}
+                  />
                 </td>
               </tr>
-            )}
-            {user.academic && (
               <tr>
-                <td> الشعبه </td>
-                <td>{user.academic}</td>
+                <td>الجنسيه</td>
+                {/* <td>{user.nationality}</td> */}
+                <td>
+                  <input
+                    className="edit-input-user"
+                    type="text"
+                    value={user.nationality}
+                    onChange={(e) => {
+                      setUser({ ...user, nationality: e.target.value });
+                    }}
+                  />
+                </td>
               </tr>
-            )}
-            {user.files_numbers && (
               <tr>
-                <td> عدد الابحاث </td>
-                <td>{user.files_numbers}</td>
+                <td>البريد الالكترونى</td>
+                {/* <td>{user.email}</td> */}
+                <td>
+                  <input
+                    className="edit-input-user"
+                    type="text"
+                    value={user.email}
+                    onChange={(e) => {
+                      setUser({ ...user, email: e.target.value });
+                    }}
+                  />
+                </td>
               </tr>
-            )}
-            {user.publish_date && (
               <tr>
-                <td> تاريخ النشر </td>
-                <td>{user.publish_date?.slice(0, 10)}</td>
+                <td>رقم الهاتف</td>
+                {/* <td>{user.phone}</td> */}
+                <td>
+                  <input
+                    className="edit-input-user"
+                    type="text"
+                    value={user.phone}
+                    onChange={(e) => {
+                      setUser({ ...user, phone: e.target.value });
+                    }}
+                  />
+                </td>
               </tr>
-            )}
-            {user.accept_date && (
               <tr>
-                <td> تاريخ قبول النشر </td>
-                <td>{user.accept_date?.slice(0, 10)}</td>
+                <td>الرقم القومى</td>
+                <td>{user.national_id}</td>
               </tr>
-            )}
-          </table>
+              <tr>
+                <td>الجامعه</td>
+                <td>
+                  {+user.university === 1 ? "جامعه حلوان" : user.university}
+                </td>
+                {/* {+user.university !== 1 ? (
+                  <td>
+                    <input
+                      className="edit-input-user"
+                      type="text"
+                      value={user.university}
+                      onChange={(e) => {
+                        setUser({ ...user, university: e.target.value });
+                      }}
+                    />
+
+                  </td>
+                ) :
+                  <td>
+                    <select
+                      className="edit-input-user"
+                      value={user.university}
+                      onChange={(e) => {
+                        setUser({ ...user, university: e.target.value });
+                      }}
+                    >
+                      <option value="1">{t("helwan-uni")} </option>
+                      <option value="0">{t("other-uni")} </option>
+                    </select>
+                  </td>
+                } */}
+              </tr>
+              {/* {user.university !== 1 && (
+                <tr>
+                  <td>الكليه</td>
+                  <td>
+                    <input
+                      className="edit-input-user"
+                      type="text"
+                      value={user.faculity != null ? user.faculity : null}
+                      placeholder=" ادخل اسم الكليه"
+                      onChange={(e) => {
+                        setUser({ ...user, faculity: e.target.value, faculity_id: null });
+                      }}
+                    />
+                  </td>
+                </tr>
+              )}
+              {user.university == 1 && (
+                <tr>
+                  <td>الكليه</td>
+                  <td>
+                    <select
+                      className="edit-input-user"
+                      value={user.faculity_id}
+                      onChange={(e) => {
+                        setUser({ ...user, faculity_id: e.target.value, faculity: null });
+                      }}
+                    >
+                      <option value=""> اختر الكليه </option>
+                      {faculty?.map((faculty) => (
+                        <option value={faculty.faculty_id}>
+                          {faculty.faculty_name_ar}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                </tr>
+              )} */}
+              <tr>
+                <td>الكليه</td>
+                <td>{user.faculty_name_ar ? user.faculty_name_ar : user.faculity}</td>
+              </tr>
+              <tr>
+                <td>القسم</td>
+                {/* <td>{user.department}</td> */}
+                <td>
+                  <input
+                    className="edit-input-user"
+                    type="text"
+                    value={user.department}
+                    onChange={(e) => {
+                      setUser({ ...user, department: e.target.value });
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>تاريخ طلب كود الدفع</td>
+                <td>
+                  {
+                    user.req_code_date ? user.req_code_date?.slice(0, 10) : null
+                  }
+
+                </td>
+              </tr>
+              {user.submit_date && (
+                <tr>
+                  <td>تاريخ الطلب</td>
+                  <td>
+                    {
+                      user.submit_date ? user.submit_date.slice(0, 10) : null
+                    }
+                  </td>
+                </tr>
+              )}
+              {user.edit_date && (
+                <tr>
+                  <td>تاريخ اخر تعديل</td>
+                  <td>
+                    {
+                      user.edit_date ? user.edit_date?.slice(0, 10) : null
+                    }
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td> نوع الخدمه </td>
+                <td>{user.service_name_ar}</td>
+              </tr>
+              {user.level && (
+                <tr>
+                  <td> المرحله </td>
+                  <td>
+                    {user.level == 0
+                      ? "ماجستير"
+                      : user.level == 1
+                        ? "دكتوراه"
+                        : null}
+                  </td>
+                </tr>
+              )}
+              {user.academic && (
+                <tr>
+                  <td> الشعبه </td>
+                  <td>{user.academic}</td>
+                </tr>
+              )}
+              {user.files_numbers && (
+                <tr>
+                  <td> عدد الابحاث </td>
+                  <td>{user.files_numbers}</td>
+                </tr>
+              )}
+              {user.publish_date && (
+                <tr>
+                  <td> تاريخ النشر </td>
+                  <td>{user.publish_date?.slice(0, 10)}</td>
+                </tr>
+              )}
+              {user.accept_date && (
+                <tr>
+                  <td> تاريخ قبول النشر </td>
+                  <td>{user.accept_date?.slice(0, 10)}</td>
+                </tr>
+              )}
+            </table>
+            <button
+              className="atch-btn"
+              onClick={() => {
+                setConfirmEdit(true);
+              }}
+              disabled={disabled}
+            >
+              تعديل بيانات الطالب
+              <BiEditAlt />
+            </button>
+          </div>
         </div>
 
         <h1>مرفقات الطالب</h1>

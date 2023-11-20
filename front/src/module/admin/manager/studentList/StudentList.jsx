@@ -30,8 +30,8 @@ const StudentListadmin = () => {
           // setFilter2(res.data)
         })
         .catch((error) => {
-          if (error.response.status === 401) navigate("/Library/ManagerLogin");
-          navigate("/Library/ManagerLogin");
+          if (error.response.status === 401) window.location.replace("/Library/ManagerLogin");
+          window.location.replace("/Library/ManagerLogin");
         });
 
       axios
@@ -42,8 +42,8 @@ const StudentListadmin = () => {
           // setFilter2(res.data)
         })
         .catch((error) => {
-          if (error.response.status === 401) navigate("/Library/ManagerLogin");
-          navigate("/Library/ManagerLogin");
+          if (error.response.status === 401) window.location.replace("/Library/ManagerLogin");
+          window.location.replace("/Library/ManagerLogin");
         });
     } catch (error) { }
   }, []);

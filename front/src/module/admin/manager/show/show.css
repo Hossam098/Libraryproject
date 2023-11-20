@@ -134,7 +134,8 @@
     color: #fff;
 }
 
-.image-con button {
+.image-con button ,
+.data-con-table-btn button{
     width: 80%;
     margin: auto;
     padding: 8px 6px;
@@ -145,6 +146,16 @@
     transition: ease-in-out 0.5s all;
     border: 2px solid transparent;
     cursor: pointer;
+}
+
+.data-con-table-btn button{
+    background-color: #ad8700;
+}
+
+.data-con-table-btn button:hover{
+    background-color: #fff;
+    color: #ad8700;
+    border: 2px solid #ad8700;
 }
 
 .image-con .acc {
@@ -178,6 +189,20 @@ h2 > input{
     border: 2px solid #19355a;
 }
 
+
+.data-con-table-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+td .edit-input-user{
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    border: transparent;
+}
+
 .status > input{
     width: 80%;
     margin: auto;
@@ -196,17 +221,20 @@ h2 > input{
     .status > input,
     .status > button,
     .status > p{
-        font-size: .5rem;
+        font-size: 1rem;
+    }
+    *{
+        font-size: 85%;
     }
 }
 @media(max-width: 500px) {
     .data-container{
         grid-template-columns: 1fr;
     }
-    .status > input,
+    /* .status > input,
     .status > button,
     .status > p{
         font-size: 1.3rem;
-    }
+    } */
 }
 

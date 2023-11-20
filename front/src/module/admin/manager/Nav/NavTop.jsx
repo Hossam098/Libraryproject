@@ -5,8 +5,21 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../../config";
 
+function Clock() {
+  const [time, setTime] = useState(new Date());
 
-const Nav = () => {
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalID);
+  }, []);
+
+  return <h1>{time.toLocaleTimeString()}</h1>;
+}
+
+const NavTop = () => {
   const navigate = useNavigate();
   const [manager, setManager] = useState([]);
 
@@ -40,10 +53,15 @@ const Nav = () => {
   const [active, setActive] = useState("home_active");
 
   return (
-    <div className="dmin">
-      <nav className="mnav">
-        <ul style={{ direction: "rtl" }}>
-          {manager.role === 0 && (
+    <div className=" dmin">
+      <nav className="topnave mnav">
+        <button onClick={logout} className="logOut">
+          <Link style={{ color: "white", textDecoration: "none" }}>
+            تسجيل الخروج
+          </Link>
+        </button>
+        {/* <ul style={{ direction: "rtl" }}>
+           {manager.role === 0 && (
             <>
               <li>
                 <Link
@@ -99,13 +117,15 @@ const Nav = () => {
                 الطلبات التي تمت مراجعتها
               </Link>
             </li>
-          )}
+          )} 
             
-        </ul>
+        </ul> */}
+        <Clock />
 
+        <h1>{manager.mname}</h1>
       </nav>
     </div>
   );
 };
 
-export default Nav;
+export default NavTop;
