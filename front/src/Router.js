@@ -36,6 +36,7 @@ import Showmsg from "./module/user/contact/Show.jsx";
 import ContactManager from "./module/admin/manager/contact/Contact.jsx";
 import ShowManager from "./module/admin/manager/contact/Show.jsx";
 import SendManager from "./module/admin/manager/contact/Send.jsx";
+import Events from "./module/admin/admin/events/Events.jsx";
 
 
 
@@ -196,6 +197,10 @@ const Router = createBrowserRouter([
           {
             path: "/Library/Admin/admins",
             element: <AdminsList />,
+          },
+          {
+            path: "/Library/Admin/events",
+            element: <Events />,
           },
         ],
       },

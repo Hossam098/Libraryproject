@@ -35,6 +35,9 @@ const ANav = () => {
           <li>
             <NavLink to="/Library/Admin/admins"> لوحة التحكم </NavLink>
           </li>
+          <li>
+            <NavLink to="/Library/Admin/events"> أخبار وفعاليات  </NavLink>
+          </li>
         </ul>
       </nav>
     </div>

@@ -441,6 +441,122 @@ Admin.put('/enableService',
         }
     }
 )
+Admin.get('/getallEvents',
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM events";
+            const result = await query(sqlSelect);
+            if (result.length > 0) {
+                return res.status(200).json(result);
+            } else {
+                return res.status(200).json({ message: "لا يوجد احداث" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
 
+Admin.post('/addEvent',
+    checkAdmin,
+    upload.single('image'),
+    body('title').notEmpty().withMessage('يجب ادخال عنوان الحدث'),
+    body('content').notEmpty().withMessage('يجب ادخال محتوي الحدث'),
+    body('from_date').notEmpty().withMessage('يجب ادخال تاريخ البدايه'),
+    body('to_date').notEmpty().withMessage('يجب ادخال تاريخ النهايه'),
+    body('place').notEmpty().withMessage('يجب ادخال مكان الحدث'),
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: errors.array() });
+            }
+            const Data = {
+                title: req.body.title,
+                content: req.body.content,
+                from_date: req.body.from_date,
+                to_date: req.body.to_date,
+                place: req.body.place,
+                img: req.file ? req.file.filename : null,
+            }
+            const sqlInsert = `INSERT INTO events SET ?`;
+            const result = await query(sqlInsert, Data);
+            if (result.affectedRows > 0) {
+                return res.status(200).json({ message: "تم اضافه الحدث بنجاح" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
 
+Admin.put('/updateEvent/:id',
+    checkAdmin,
+    body('title').notEmpty().withMessage('يجب ادخال عنوان الحدث'),
+    body('content').notEmpty().withMessage('يجب ادخال محتوي الحدث'),
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ message: errors.array() });
+            }
+
+            const sqlSelect = `SELECT * FROM events WHERE id = ?`;
+            const value = [req.params.id];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                const Data = {
+                    title: req.body.title,
+                    content: req.body.content,
+                }
+                const sqlUpdate = `UPDATE events SET ? WHERE id = ?`;
+                const value = [Data, req.params.id];
+                const result = await query(sqlUpdate, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم تعديل الحدث بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            } else {
+                return res.status(400).json({ message: "لا يوجد حدث بهذا الرقم" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+
+Admin.delete('/deleteEvent/:id',
+    checkAdmin,
+    async (req, res) => {
+        let error = [];
+        try {
+            const id = req.params.id;
+            const sqlSelect = `SELECT * FROM events WHERE id = ?`;
+            const value = [id];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                const sqlDelete = `DELETE FROM events WHERE id = ?`;
+                const value = [id];
+                const result = await query(sqlDelete, value);
+                if (result.affectedRows > 0) {
+                    return res.status(200).json({ message: "تم حذف الحدث بنجاح" });
+                } else {
+                    return res.status(400).json({ message: " حدث خطأ ما" });
+                }
+            } else {
+                return res.status(400).json({ message: "لا يوجد حدث بهذا الرقم" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
 export default Admin;

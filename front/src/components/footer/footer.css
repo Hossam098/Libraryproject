@@ -3,7 +3,7 @@ footer {
     grid-template-columns: repeat(3, 1fr);
     background: #19355A;
     color: #fff;
-    height: 300px;
+    height: 250px;
     width: 100%;
 }
 
