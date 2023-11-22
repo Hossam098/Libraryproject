@@ -445,7 +445,7 @@ Admin.get('/getallEvents',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = "SELECT * FROM events";
+            const sqlSelect = "SELECT * FROM events ORDER BY from_date ASC";
             const result = await query(sqlSelect);
             if (result.length > 0) {
                 return res.status(200).json(result);
