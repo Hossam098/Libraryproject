@@ -42,27 +42,50 @@ const diskStorage = multer.diskStorage;
 
 const storage = diskStorage({
     async destination(req, file, cb) {
-        const national_id = req.national_id || req.params.id;
-        if (!national_id) return cb(new Error("national_id is required"));
 
-        if (existsSync(`./public/imgs/${national_id}`)) {
-            cb(null, `./public/imgs/${national_id}`);
+        if (req.type == "admin") {
+            if (existsSync(`./public/imgs/adminsEvents`)) {
+                cb(null, `./public/imgs/adminsEvents`);
+            } else {
+                try {
+                    await mkdir(`./public/imgs/adminsEvents`);
+                    cb(null, `./public/imgs/adminsEvents`);
+                } catch (error) {
+                    cb(error);
+                }
+            }
         } else {
-            try {
-                await mkdir(`./public/imgs/${national_id}`);
+            const national_id = req.national_id || req.params.id;
+            if (!national_id) return cb(new Error("national_id is required"));
+
+            if (existsSync(`./public/imgs/${national_id}`)) {
                 cb(null, `./public/imgs/${national_id}`);
-            } catch (error) {
-                cb(error);
+            } else {
+                try {
+                    await mkdir(`./public/imgs/${national_id}`);
+                    cb(null, `./public/imgs/${national_id}`);
+                } catch (error) {
+                    cb(error);
+                }
             }
         }
     },
     filename(req, file, cb) {
-        return cb(
-            null,
-            `${req.national_id || req.params.id}_${Date.now()}${path.extname(
-                file.originalname
-            )}`
-        );
+        if (req.type === "admin") {
+            return cb(
+                null,
+                `admin_${req.id}_${Date.now()}${path.extname(
+                    file.originalname
+                )}`
+            );
+        } else {
+            return cb(
+                null,
+                `${req.national_id || req.params.id}_${Date.now()}${path.extname(
+                    file.originalname
+                )}`
+            );
+        }
     },
 });
 

@@ -465,5 +465,10 @@
         "pdf10": "You must enter the tenth term pdf"
     },
     "edit-h1" : "To request modification of your personal data, please send a message from the page... regarding any service and clarify the data you wish to modify.",
-    "no-ser": "You have not requested any service yet."
+    "no-ser": "You have not requested any service yet.",
+    "events-title": "News and events of the digital library",
+    "events-info": "The Digital Library Unit holds many activities and events with the aim of supporting scientific research, enhancing academic integrity, and raising information awareness..",
+    "from" : "From",
+    "to" : "To",
+    "place" : "Place"
 }

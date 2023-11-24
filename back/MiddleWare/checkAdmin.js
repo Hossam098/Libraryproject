@@ -24,6 +24,7 @@ const checkAdmin = async (req, res, next) => {
                 if (decoded.type !== "admin") {
                     return res.status(401).json({ admin: false, msg: "Unauthorized" });
                 }
+                req.type = decoded.type;
                 next();
             }
             );

@@ -1,7 +1,7 @@
 import React from 'react'
 import {FaTwitter} from 'react-icons/fa'
 import {BsFacebook, BsInstagram} from 'react-icons/bs'
-import uni_img from '../../images/uni-logo.png' 
+import uni_img from '../../images/librarylog.png' 
 
 import './footer.css'
 
