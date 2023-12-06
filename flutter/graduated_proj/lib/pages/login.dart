@@ -3,6 +3,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:graduated_proj/back_flutt/crud.dart';
+import 'package:graduated_proj/back_flutt/decorationtext.dart/textcustom.dart';
+import 'package:graduated_proj/back_flutt/decorationtext.dart/valid.dart';
 import 'package:graduated_proj/back_flutt/link.dart';
 import 'package:graduated_proj/main.dart';
 import 'package:graduated_proj/menu/navbar.dart';
@@ -34,15 +36,15 @@ class _LoginState extends State<Login> {
   TextEditingController _passwordController = TextEditingController();
   // TextEditingController _confirmPasswordController = TextEditingController();
 
-  bool _isEmailValid = true;
-  bool _isPasswordValid = true;
+  // bool _isEmailValid = true;
+  // bool _isPasswordValid = true;
   // bool _isConfirmPasswordValid = true;
   GlobalKey<FormState> formstate = GlobalKey();
   crud _crud = crud();
   bool isloading = false;
 
   login() async {
-    
+    if (formstate.currentState!.validate()) {
       isloading = true;
       setState(() {});
       //   setState(() {
@@ -75,28 +77,27 @@ class _LoginState extends State<Login> {
                 body: Text(response['message'][0]))
             .show();
       }
-      
-    
+    }
   }
 
-  bool _validateEmail() {
-    String email = _emailController.text.trim();
-    bool isValid = email.isNotEmpty &&
-        RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+eg$').hasMatch(email);
-    setState(() {
-      _isEmailValid = isValid;
-    });
-    return isValid;
-  }
+  // bool _validateEmail() {
+  //   String email = _emailController.text.trim();
+  //   bool isValid = email.isNotEmpty &&
+  //       RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+eg$').hasMatch(email);
+  //   setState(() {
+  //     _isEmailValid = isValid;
+  //   });
+  //   return isValid;
+  // }
 
-  bool _validatePassword() {
-    String password = _passwordController.text;
-    bool isValid = password.isNotEmpty && password.length >= 8;
-    setState(() {
-      _isPasswordValid = isValid;
-    });
-    return isValid;
-  }
+  // bool _validatePassword() {
+  //   String password = _passwordController.text;
+  //   bool isValid = password.isNotEmpty && password.length >= 8;
+  //   setState(() {
+  //     _isPasswordValid = isValid;
+  //   });
+  //   return isValid;
+  // }
 
   // bool _validateConfirmPassword() {
   //   String confirmPassword = _confirmPasswordController.text;
@@ -109,8 +110,8 @@ class _LoginState extends State<Login> {
   // }
 
   // Inside your _validateFields() method
-  bool _validateFields() {
-    bool isValid = _validateEmail() & _validatePassword();
+  // bool _validateFields() {
+  //   bool isValid =  _validatePassword();
 
     // if (_emailController.text.isEmpty) {
     //   setState(() {
@@ -125,8 +126,8 @@ class _LoginState extends State<Login> {
     //   isValid = false;
     // }
 
-    return isValid;
-  }
+  //   return isValid;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -150,9 +151,9 @@ class _LoginState extends State<Login> {
                           // ... الأكواد السابقة للمستطيلات الأخرى
 
                           Form(
-                            key: formstate,
-                            child: Center(
-                              child: Column(
+                              key: formstate,
+                              child: Center(
+                                  child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Image.asset(
@@ -170,154 +171,188 @@ class _LoginState extends State<Login> {
                                       fontFamily: 'Roboto',
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          SizedBox(height: 5),
-                          SingleChildScrollView(
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(40),
-                                  topRight: Radius.circular(40),
-                                ),
-                              ),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 20),
-                                  Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: TextField(
-                                      controller: _emailController,
-                                      decoration: InputDecoration(
-                                        labelText: 'البريد الالكتروني',
-                                        prefixIcon: Icon(Icons.email),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        errorText: _isEmailValid
-                                            ? null
-                                            : 'البريد الإلكتروني غير صالح',
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 20),
-                                  Directionality(
-                                    textDirection: TextDirection.rtl,
-                                    child: TextField(
-                                      controller: _passwordController,
-                                      obscureText: _isPasswordObscured,
-                                      decoration: InputDecoration(
-                                        labelText: 'كلمة المرور',
-                                        prefixIcon: Icon(Icons.lock),
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _isPasswordObscured =
-                                                  !_isPasswordObscured;
-                                            });
-                                          },
-                                          child: Icon(
-                                            _isPasswordObscured
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                          ),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        errorText: _isPasswordValid
-                                            ? null
-                                            : 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل',
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 50),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      // Continue with validation and account creation
-                                      if (_validateFields() ) {
-                                        await login();
-
-                                        // Your logic for successful validation and account creation
-                                      }
-                                      // else {
-                                      //   setState(() {
-                                      //     _isEmailValid =
-                                      //         _emailController.text.isNotEmpty;
-                                      //     _isPasswordValid = _passwordController
-                                      //         .text.isNotEmpty;
-                                      //   });
-                                      // }
-                                    },
-                                    child: Text(
-                                      'تسجيل دخول',
-                                      style: TextStyle(
-                                        fontSize: 24,
+                                  SizedBox(height: 5),
+                                  SingleChildScrollView(
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
                                         color: Colors.white,
-                                      ),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Color(0xFFAD8700),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 100, vertical: 5),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 16),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        SlidePageRoute(
-                                          page: SignUp(),
-                                          animationDuration:
-                                              Duration(seconds: 2),
-                                          slideFromTop: true,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(40),
+                                          topRight: Radius.circular(40),
                                         ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'لا تمتلك حساب؟ سجل الآن',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Color(0xFFAD8700),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(height: 20),
+                                          Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: 
+                                            custtextform(
+                                              valid: (val) {
+                                                return validinput(val!, 5, 30 ,RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+eg$') );
+                                              },
+                                              hint: "البريد الالكترونى",
+                                              mycontroller: _emailController,
+                                                  preicon: Icon(Icons.email),
+
+                                            ),
+                                            // TextField(
+                                            //   controller: _emailController,
+                                            //   decoration: InputDecoration(
+                                            //     labelText: 'البريد الالكتروني',
+                                            //     prefixIcon: Icon(Icons.email),
+                                            //     border: OutlineInputBorder(
+                                            //       borderRadius:
+                                            //           BorderRadius.circular(10),
+                                            //     ),
+                                            //     errorText: _isEmailValid
+                                            //         ? null
+                                            //         : 'البريد الإلكتروني غير صالح',
+                                            //   ),
+                                            // ),
+                                          ),
+                                          SizedBox(height: 20),
+                                          Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: 
+                                             custtextform(
+                                              valid: (val) {
+                                                return validinput(val!, 8, 30 );
+                                              },
+                                              hint: "كلمة المرور",
+                                              mycontroller: _passwordController,
+                                           obstext: _isPasswordObscured,
+
+                                                  preicon: Icon(Icons.lock),
+                                                  suficon: GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _isPasswordObscured =
+                                                          !_isPasswordObscured;
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    _isPasswordObscured
+                                                        ? Icons.visibility_off
+                                                        : Icons.visibility,
+                                                  ),
+                                                ),
+
+                                            ),
+                                            
+                                            // TextField(
+                                            //   controller: _passwordController,
+                                            //   obscureText: _isPasswordObscured,
+                                            //   decoration: InputDecoration(
+                                            //     labelText: 'كلمة المرور',
+                                            //     prefixIcon: Icon(Icons.lock),
+                                            //     suffixIcon: 
+                                            // GestureDetector(
+                                            //       onTap: () {
+                                            //         setState(() {
+                                            //           _isPasswordObscured =
+                                            //               !_isPasswordObscured;
+                                            //         });
+                                            //       },
+                                            //       child: Icon(
+                                            //         _isPasswordObscured
+                                            //             ? Icons.visibility_off
+                                            //             : Icons.visibility,
+                                            //       ),
+                                            //     ),
+                                            //     border: OutlineInputBorder(
+                                            //       borderRadius:
+                                            //           BorderRadius.circular(10),
+                                            //     ),
+                                            //     errorText: _isPasswordValid
+                                            //         ? null
+                                            //         : 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل',
+                                            //   ),
+                                            // ),
+                                          ),
+                                          SizedBox(height: 50),
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              // Continue with validation and account creation
+                                                await login();
+
+                                                // Your logic for successful validation and account creation
+                                            
+                                              // else {
+                                              //   setState(() {
+                                              //     _isEmailValid =
+                                              //         _emailController.text.isNotEmpty;
+                                              //     _isPasswordValid = _passwordController
+                                              //         .text.isNotEmpty;
+                                              //   });
+                                              // }
+                                            },
+                                            child: Text(
+                                              'تسجيل دخول',
+                                              style: TextStyle(
+                                                fontSize: 24,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Color(0xFFAD8700),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 100, vertical: 5),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 16),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                context,
+                                                SlidePageRoute(
+                                                  page: SignUp(),
+                                                  animationDuration:
+                                                      Duration(seconds: 2),
+                                                  slideFromTop: true,
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              'لا تمتلك حساب؟ سجل الآن',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color(0xFFAD8700),
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                SlidePageRoute(
+                                                  page: reset(),
+                                                  animationDuration:
+                                                      Duration(seconds: 2),
+                                                  slideFromTop: true,
+                                                ),
+                                              );
+                                            },
+                                            child: Text(
+                                              'نسيت كلمة المرور',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color(0xFFAD8700),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 69),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        SlidePageRoute(
-                                          page: reset(),
-                                          animationDuration:
-                                              Duration(seconds: 2),
-                                          slideFromTop: true,
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'نسيت كلمة المرور',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Color(0xFFAD8700),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 69),
                                 ],
-                              ),
-                            ),
-                          ),
+                              ))),
                         ],
                       ),
               ),

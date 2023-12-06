@@ -3,6 +3,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:graduated_proj/back_flutt/crud.dart';
+import 'package:graduated_proj/back_flutt/decorationtext.dart/textcustom.dart';
+import 'package:graduated_proj/back_flutt/decorationtext.dart/valid.dart';
 import 'package:graduated_proj/back_flutt/link.dart';
 import 'package:graduated_proj/menu/navbar.dart';
 import 'package:graduated_proj/menu/pageroute.dart';
@@ -18,23 +20,26 @@ class reset extends StatefulWidget {
 }
 
 class _resetState extends State<reset> {
-  bool _isNationalIdEmpty = false; // Initialize with true
+  // bool _isNationalIdEmpty = false; // Initialize with true
   bool _isPasswordObscured = true;
-  TextEditingController _nationalIdController =
-      TextEditingController(); // Add this
+    bool _isPasswordObscured2 = true;
+
+  TextEditingController _nationalIdController =TextEditingController(); // Add this
   TextEditingController _emailController = TextEditingController();
   TextEditingController _newpasscontroller = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
 
-  bool _isEmailValid = true;
-  bool _isPasswordValid = true;
-  bool _isConfirmPasswordValid = true;
+  // bool _isEmailValid = true;
+  // bool _isPasswordValid = true;
+  // bool _isConfirmPasswordValid = true;
 
   crud _crud = crud();
   bool isloading = false;
+  GlobalKey<FormState> formstate = GlobalKey();
 
   resett() async {
-    
+        if (formstate.currentState!.validate()) {
+
       isloading = true;
       setState(() {});
       //   setState(() {
@@ -70,43 +75,43 @@ class _resetState extends State<reset> {
             .show();
       
     }
+        }
   }
 
-  GlobalKey<FormState> formstate = GlobalKey();
 
-  bool _validateEmail() {
-    String email = _emailController.text.trim();
-    bool isValid = email.isNotEmpty &&
-        RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+eg$').hasMatch(email);
-    setState(() {
-      _isEmailValid = isValid;
-    });
-    return isValid;
-  }
+  // bool _validateEmail() {
+  //   String email = _emailController.text.trim();
+  //   bool isValid = email.isNotEmpty &&
+  //       RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+eg$').hasMatch(email);
+  //   setState(() {
+  //     _isEmailValid = isValid;
+  //   });
+  //   return isValid;
+  // }
 
-  bool _validatePassword() {
-    String password = _newpasscontroller.text;
-    bool isValid = password.isNotEmpty && password.length >= 8;
-    setState(() {
-      _isPasswordValid = isValid;
-    });
-    return isValid;
-  }
+  // bool _validatePassword() {
+  //   String password = _newpasscontroller.text;
+  //   bool isValid = password.isNotEmpty && password.length >= 8;
+  //   setState(() {
+  //     _isPasswordValid = isValid;
+  //   });
+  //   return isValid;
+  // }
 
-  bool _validateConfirmPassword() {
-    String confirmPassword = _confirmPasswordController.text;
-    String password = _newpasscontroller.text;
-    bool isValid = confirmPassword.isNotEmpty && confirmPassword == password;
-    setState(() {
-      _isConfirmPasswordValid = isValid;
-    });
-    return isValid;
-  }
+  // bool _validateConfirmPassword() {
+  //   String confirmPassword = _confirmPasswordController.text;
+  //   String password = _newpasscontroller.text;
+  //   bool isValid = confirmPassword.isNotEmpty && confirmPassword == password;
+  //   setState(() {
+  //     _isConfirmPasswordValid = isValid;
+  //   });
+  //   return isValid;
+  // }
 
   // Inside your _validateFields() method
-  bool _validateFields() {
-    bool isValid =
-        _validateEmail() & _validatePassword() & _validateConfirmPassword();
+  // bool _validateFields() {
+    // bool isValid =
+    //     _validateEmail() & _validatePassword() & _validateConfirmPassword();
 
     // if (_emailController.text.isEmpty) {
     //   setState(() {
@@ -126,15 +131,15 @@ class _resetState extends State<reset> {
     //   });
     //   isValid = false;
     // }
-    if (_nationalIdController.text.isEmpty) {
-      setState(() {
-        _isNationalIdEmpty = true;
-      });
-      isValid = false;
-    }
+  //   if (_nationalIdController.text.isEmpty) {
+  //     setState(() {
+  //       _isNationalIdEmpty = true;
+  //     });
+  //     isValid = false;
+  //   }
 
-    return isValid;
-  }
+  //   return isValid;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +161,7 @@ class _resetState extends State<reset> {
                       child: ListView(
                         children: [
                           Form(
-                            // key: formstate,
+                            key: formstate,
                             child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -176,10 +181,7 @@ class _resetState extends State<reset> {
                                       fontFamily: 'Roboto',
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
+                           
                           SizedBox(height: 5),
                           SingleChildScrollView(
                             child: Container(
@@ -203,106 +205,163 @@ class _resetState extends State<reset> {
 
                                   Directionality(
                                     textDirection: TextDirection.rtl,
-                                    child: TextField(
-                                      controller: _emailController,
-                                      decoration: InputDecoration(
-                                        labelText: 'البريد الالكتروني',
-                                        prefixIcon: Icon(Icons.email),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        errorText: _isEmailValid
-                                            ? null
-                                            : 'البريد الإلكتروني غير صالح',
-                                      ),
-                                    ),
+                                    child: 
+                                    custtextform(
+                                              valid: (val) {
+                                                return validinput(val!, 5, 30 ,RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+eg$'));
+                                              },
+                                              hint: "البريد الالكترونى",
+                                              mycontroller: _emailController,
+                                             preicon: Icon(Icons.email),
+
+                                   
+                                            ),
                                   ),
                                   SizedBox(height: 20),
                                   Directionality(
                                     textDirection: TextDirection.rtl,
-                                    child: TextField(
-                                      controller: _nationalIdController,
-                                      decoration: InputDecoration(
-                                        labelText: 'رقم الهوية الوطنية',
-                                        prefixIcon: Icon(Icons.email),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        errorText: _isNationalIdEmpty
-                                            ? 'من فضلك املأ الحقل'
-                                            : null ,
-                                      ),
-                                    ),
+                                    child:
+                                    custtextform(
+                                              valid: (val) {
+                                                return validinput(val!, 10, 30);
+                                              },
+                                              hint: "رقم الهوية الوطنية",
+                                              mycontroller: _nationalIdController,
+                                             preicon: Icon(Icons.credit_card),
+
+                                   
+                                            ),
+                                  
+
+                                    //  TextField(
+                                    //   controller: _nationalIdController,
+                                    //   decoration: InputDecoration(
+                                    //     labelText: 'رقم الهوية الوطنية',
+                                    //     prefixIcon: Icon(Icons.email),
+                                    //     border: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(10),
+                                    //     ),
+                                    //     errorText: _isNationalIdEmpty
+                                    //         ? 'من فضلك املأ الحقل'
+                                    //         : null ,
+                                    //   ),
+                                    // ),
                                   ),
                                   SizedBox(height: 20),
                                   Directionality(
                                     textDirection: TextDirection.rtl,
-                                    child: TextField(
-                                      controller: _newpasscontroller,
-                                      obscureText: _isPasswordObscured,
-                                      decoration: InputDecoration(
-                                        labelText: 'كلمة المرورالجديدة',
-                                        prefixIcon: Icon(Icons.lock),
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _isPasswordObscured =
-                                                  !_isPasswordObscured;
-                                            });
-                                          },
-                                          child: Icon(
-                                            _isPasswordObscured
-                                                ? Icons.visibility_off
-                                                : Icons.visibility,
-                                          ),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        errorText: _isPasswordValid
-                                            ? null
-                                            : 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل',
-                                      ),
-                                    ),
+                                    child:
+                                    custtextform(
+                                              valid: (val) {
+                                                return validinput(val!, 8, 30);
+                                              },
+                                              hint: "كلمة المرور الجديدة",
+                                              mycontroller: _newpasscontroller,
+                                           obstext: _isPasswordObscured,
+
+                                                  preicon: Icon(Icons.lock),
+                                                  suficon: GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _isPasswordObscured =
+                                                          !_isPasswordObscured;
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    _isPasswordObscured
+                                                        ? Icons.visibility_off
+                                                        : Icons.visibility,
+                                                  ),
+                                                ),
+
+                                            ),
+                                    //  TextField(
+                                    //   controller: _newpasscontroller,
+                                    //   obscureText: _isPasswordObscured,
+                                    //   decoration: InputDecoration(
+                                    //     labelText: 'كلمة المرورالجديدة',
+                                    //     prefixIcon: Icon(Icons.lock),
+                                    //     suffixIcon: GestureDetector(
+                                    //       onTap: () {
+                                    //         setState(() {
+                                    //           _isPasswordObscured =
+                                    //               !_isPasswordObscured;
+                                    //         });
+                                    //       },
+                                    //       child: Icon(
+                                    //         _isPasswordObscured
+                                    //             ? Icons.visibility_off
+                                    //             : Icons.visibility,
+                                    //       ),
+                                    //     ),
+                                    //     border: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(10),
+                                    //     ),
+                                    //     errorText: _isPasswordValid
+                                    //         ? null
+                                    //         : 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل',
+                                    //   ),
+                                    // ),
                                   ),
                                   SizedBox(height: 20),
                                   Directionality(
                                     textDirection: TextDirection.rtl,
-                                    child: TextField(
-                                      controller: _confirmPasswordController,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        labelText: 'تأكيد كلمة المرور',
-                                        prefixIcon: Icon(Icons.lock),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        errorText: _isConfirmPasswordValid
-                                            ? null
-                                            : 'كلمة المرور غير متطابقة',
-                                      ),
-                                    ),
+                                    child: 
+                                    custtextform(
+                                              valid: (val) {
+                                                return validinput(val!, 8, 30 ,null , _newpasscontroller.text);
+                                              },
+                                              hint: " تاكيد كلمة المرور",
+                                              mycontroller: _confirmPasswordController,
+                                           obstext: _isPasswordObscured2,
+
+                                                  preicon: Icon(Icons.lock),
+                                                  suficon: GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _isPasswordObscured2 =
+                                                          !_isPasswordObscured2;
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    _isPasswordObscured
+                                                        ? Icons.visibility_off
+                                                        : Icons.visibility,
+                                                  ),
+                                                ),
+
+                                            ),
+                                    // TextField(
+                                    //   controller: _confirmPasswordController,
+                                    //   obscureText: false,
+                                    //   decoration: InputDecoration(
+                                    //     labelText: 'تأكيد كلمة المرور',
+                                    //     prefixIcon: Icon(Icons.lock),
+                                    //     border: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(10),
+                                    //     ),
+                                    //     errorText: _isConfirmPasswordValid
+                                    //         ? null
+                                    //         : 'كلمة المرور غير متطابقة',
+                                    //   ),
+                                    // ),
                                   ),
                                   SizedBox(height: 50),
                                   ElevatedButton(
                                     onPressed: () async {
-                                      setState(() {
-                                        _isNationalIdEmpty =
-                                            _nationalIdController.text.isEmpty;
-                                      });
+                                      // setState(() {
+                                      //   _isNationalIdEmpty =
+                                      //       _nationalIdController.text.isEmpty;
+                                      // });
 
                                       // Continue with validation and account creation
-                                      if (_validateFields() &&
-                                          !_isNationalIdEmpty) {
-                                        //  !_isotherEmpty&&
                                         await resett();
 
-                                        // Your logic for successful validation and account creation
-                                      }
+                                      //   // Your logic for successful validation and account creation
+                                      // // }
                                     },
                                     child: Text(
                                       'تغيير كلمة المرور',
@@ -325,7 +384,12 @@ class _resetState extends State<reset> {
                               ),
                             ),
                           ),
-                        ],
+                                                       ],
+
+                          ),
+                            ),
+                          ),
+                           ],
                       ),
                     ),
                   ],
