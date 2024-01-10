@@ -16,7 +16,7 @@ Admin.get('/getallApplicants',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = `SELECT submit.status, submit.ser_best, submit.ser_magazine ,submit.ser_knowledge ,submit.ser_upgrade ,submit.ser_personal ,submit.ser_grant ,submit.ser_formation ,submit.ser_reg,submit.service_id FROM submit `;
+            const sqlSelect = `SELECT submit.status, submit.ser_best, submit.ser_magazine ,submit.ser_knowledge ,submit.ser_upgrade ,submit.ser_personal ,submit.ser_grant ,submit.ser_formation ,submit.ser_reg,submit.service_id FROM submit order by submit.status ASC`;
             const result = await query(sqlSelect);
             if (result.length > 0) {
                 return res.status(200).json(result);
@@ -344,6 +344,14 @@ Admin.delete('/deleteManager/:id',
         let error = [];
         try {
             const id = req.params.id;
+            const sqlSelect1 = `SELECT * FROM submit WHERE manager_id = ?`;
+            const value1 = [id];
+            const result1 = await query(sqlSelect1, value1);
+            if (result1.length > 0) {
+                error.push("لا يمكن حذف الموظف لانه مسؤول عن طلبات");
+                return res.status(400).json({ message: error });
+
+            }else{
             const sqlSelect = `SELECT * FROM manager WHERE id = ?`;
             const value = [id];
             const result = await query(sqlSelect, value);
@@ -359,6 +367,7 @@ Admin.delete('/deleteManager/:id',
             } else {
                 return res.status(400).json({ message: "لا يوجد مدير بهذا الايميل" });
             }
+        }
         } catch (errors) {
             error.push(errors);
             return res.status(500).json({ message: error });

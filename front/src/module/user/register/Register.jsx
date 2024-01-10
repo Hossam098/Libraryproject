@@ -84,15 +84,17 @@ const Register = () => {
   const validate = (values) => {
     const errors = {};
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-    if (!values.name) {
-      errors.name = `${t("name-err")}`;
-    }
+    
     if (!values.email) {
       errors.email = `${t("email-err")}`;
     } else if (!regex.test(values.email)) {
       errors.email = `${t("email-v-err")}`;
-    } else if (!regex.test(values.email) || !values.email.includes(".edu")) {
-      errors.email = `${t("email-t-err")}`;
+    } 
+    // else if (!regex.test(values.email) || !values.email.includes(".edu")) {
+    //   errors.email = `${t("email-t-err")}`;
+    // }
+    if (!values.name) {
+      errors.name = `${t("name-err")}`;
     }
     if (!values.password) {
       errors.password = `${t("pass-err")}`;

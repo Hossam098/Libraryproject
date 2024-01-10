@@ -189,7 +189,7 @@ const ShowA = () => {
           .then((res) => {
             setProgress((prevState) => ({ ...prevState, started: false }));
             setMsg(res.data.msg);
-            navigate("/Library/manager");
+            window.location.reload();
           })
           .catch((error) => {
             setDisabled(false);
@@ -210,10 +210,10 @@ const ShowA = () => {
   };
   const handelAcceptpayment = () => {
     if (payment_code !== "") {
-      if (isNaN(payment_code)) {
-        setErrors("كود الدفع يجب ان يكون رقم");
-        return;
-      }
+      // if (isNaN(payment_code)) {
+      //   setErrors("كود الدفع يجب ان يكون رقم");
+      //   return;
+      // }
       const formData = new FormData();
       setErrors("");
       axios.defaults.withCredentials = true;
@@ -937,6 +937,33 @@ const ShowA = () => {
                   {" "}
                   {user.response_text}{" "}
                 </p>
+                <input
+                  disabled={disabled}
+                  type="text"
+                  placeholder="سبب التعديل"
+                  className="edit-input"
+                  onChange={(e) => {
+                    setAction({ ...action, reason: e.target.value });
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    setConfirmE1(true);
+                  }}
+                  className="wait-edit"
+                >
+                  طلب تعديل البيانات
+                </button>
+                <hr style={{ width: "80%", height: "3px" }} />
+                <button
+                  onClick={() => {
+                    setConfirmW(true);
+                  }}
+                  className="wait-edit"
+                >
+                  عوده لقائمه الانتظار للمراجعه
+                </button>
+
               </div>
             ) : null}
           </div>
@@ -1148,7 +1175,25 @@ const ShowA = () => {
               {user.files_numbers && (
                 <tr>
                   <td> عدد الابحاث </td>
-                  <td>{user.files_numbers}</td>
+                  <td>
+                    <input
+                      className="edit-input-user"
+                      type="text"
+                      value={user.files_numbers}
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+
+                        // Check if the input is not empty
+                        if (inputValue.trim() !== "") {
+                          setUser({ ...user, files_numbers: inputValue });
+                        } else {
+                          // Display an error or handle it in another way (e.g., show a message)
+                          alert("يجب ادخال رقم");
+                        }
+                      }}
+                    />
+                  </td>
+                  {/* <td>{user.files_numbers}</td> */}
                 </tr>
               )}
               {user.publish_date && (
@@ -1590,6 +1635,7 @@ const ShowA = () => {
               </React.Fragment>
             ))}
         </table>
+
         <h1>الرد المرسل من المكتبه</h1>
         <hr style={{ width: "90%", marginBottom: "1rem", height: "3px" }} />
         <div className="resp-cont">
@@ -1676,6 +1722,10 @@ const ShowA = () => {
                         Download
                       </button>
                     </div>
+                  ) : user.response_pdf === null &&
+                    user.response_text !== null &&
+                    user.status !== 0 ? (
+                    <h3>لم يتم ارسال ملف الرد </h3>
                   ) : user.manager_status === null &&
                     user.response_pdf === null &&
                     user.status !== 0 ? (

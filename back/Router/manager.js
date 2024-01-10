@@ -37,7 +37,7 @@ manager.get('/getallApplicantsWaiting',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 2 AND submit.service_id = ? ";
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 2 AND submit.service_id = ? order by submit.id DESC";
                 // const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar , manager.mname FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id INNER JOIN manager ON submit.manager_id = manager.id WHERE submit.status = 2 AND submit.service_id = ? ";
                 const value = [req.service_id];
                 const result = await query(sqlSelect, value);
@@ -117,7 +117,7 @@ manager.get('/getallApplicantsAssigned',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ?  AND submit.manager_status IS NULL ";
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ?  AND submit.manager_status IS NULL order by submit.id DESC";
                 const value = [req.id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
@@ -147,7 +147,8 @@ manager.get('/getallApplicantsReviewed',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE  submit.service_id  = ? AND submit.manager_status IS NOT NULL "
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE  submit.service_id  = ? AND submit.manager_status IS NOT NULL  order by submit.id DESC";
+                // const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE  submit.service_id  = ? AND submit.manager_status IS NOT NULL "
                 const value = [req.service_id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
@@ -232,7 +233,7 @@ manager.put('/acceptApplicant/:id',
                 if (result.length > 0) {
                     const Data = {
                         response_text: req.body.response_text,
-                        response_pdf: req.file.filename,
+                        response_pdf: req.file ? req.file.filename : null,
                         status: 5,
                         response_date: new Date()
                     }
@@ -325,7 +326,7 @@ manager.get('/getallApplicants',
         try {
 
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.* , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.service_id = ? ";
+                const sqlSelect = "SELECT submit.* , users.* , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.service_id = ? order by submit.id DESC";
                 const value = [req.service_id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
@@ -337,7 +338,8 @@ manager.get('/getallApplicants',
                     return res.status(200).json({ message: "لا يوجد طلبات" });
                 }
             } else if (req.service_id === 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 0 OR submit.status = 4 ";
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id";
+                // const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 0 OR submit.status = 4 ";
                 const result = await query(sqlSelect);
                 if (result.length > 0) {
                     return res.status(200).json(result);
@@ -367,8 +369,8 @@ manager.put('/watingApplicant/:id',
                         fs.unlinkSync(filePath);
                     }
                 }
-                const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
-                const value2 = [req.body.status, req.body.reason, req.body.app_id];
+                const sqlUpdate = `UPDATE submit SET status = ? , response_text = null , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
+                const value2 = [req.body.status, req.body.app_id];
                 const result = await query(sqlUpdate, value2);
                 if (result.affectedRows > 0) {
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });

@@ -571,7 +571,7 @@ const Serinfo = ({ service, User }) => {
       {data.response_date && (
         <h2>
           <span style={{ color: "#AD8700" }}>{t("date-response")} </span> :{" "}
-          {increaseDateByOneDay(data.response_date.slice(0, 10))}
+          {data.response_date?.slice(0, 10)}
         </h2>
       )}
       {data.payment_code && (

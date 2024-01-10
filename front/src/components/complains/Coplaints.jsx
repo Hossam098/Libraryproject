@@ -1,6 +1,6 @@
 import React from 'react'
 import './coplains.css'
-import QR from '../../images/QR.png'
+import QR from '../../images/qrcode.png'
 import { useTranslation } from 'react-i18next'
 const Coplaints = () => {
 
@@ -18,7 +18,10 @@ const Coplaints = () => {
                 <img src={QR} alt="" className='QR' />
 
             </div>
-            <button className="c-button">
+            <button 
+                className="c-button"
+                onClick={() => window.open('https://forms.office.com/r/S3Z2zEANgM')}
+            >
                     {t('click-here')}
                 </button>
         </div>

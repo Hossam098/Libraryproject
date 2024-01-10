@@ -80,6 +80,7 @@ const Instructons = () => {
           >
             {id == 1 || id == 2 || id == 3 || id == 4 || id == 5 || id == 6 ? (
               <>
+              {id != 3 && (
                 <li>
                   1- {t(`service${id}-step1`)}
                   {id == 5 && (
@@ -96,6 +97,7 @@ const Instructons = () => {
                     </Link>
                   )}
                 </li>
+              )}
 
                 {id == 5 ? (
                   <>
@@ -108,11 +110,15 @@ const Instructons = () => {
                     <li>4- {t(`service${id}-step-two.files_numbers`)}</li>
                   </>
                 ) : null}
-                {id == 3 && <li>2- {t("service3-step2")}</li>}
+                {id == 3 && <li>1- {t("service3-step2")}</li>}
                 {id == 1 || id == 2 || id == 7 || id == 8 ? (
                   <li>2- {t("service1-step2")}</li>
                 ) : null}
-                <p>*** {t("service1-step3")} ***</p>
+                {id == 5 ? (
+                <p>*** {t("service5-step0")} ***</p>
+                ) : (
+                  <p>*** {t("service1-step3")} ***</p>
+                )}
               </>
             ) : null}
             {id == 1 ? (
@@ -129,9 +135,9 @@ const Instructons = () => {
               </>
             ) : id == 3 ? (
               <>
-                <li>3- {t("service1-step4")}</li>
-                <li>4- {t("service3-step5")}</li>
-                <li>5- {t("service3-step4")}</li>
+                <li>2- {t("service1-step4")}</li>
+                <li>3- {t("service3-step5")}</li>
+                <li>4- {t("service3-step4")}</li>
               </>
             ) : id == 4 ? (
               <>

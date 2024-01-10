@@ -137,6 +137,50 @@ const StudentListadmin = () => {
       });
   };
 
+  const sername = (item) => {
+    const ser_name =
+      item.ser_reg !== null
+        ? "ser_reg"
+        : item.ser_formation !== null
+          ? "ser_formation"
+          : item.ser_grant !== null
+            ? "ser_grant"
+            : item.ser_personal !== null
+              ? "ser_personal"
+              : item.ser_upgrade !== null
+                ? "ser_upgrade"
+                : item.ser_knowledge !== null
+                  ? "ser_knowledge"
+                  : item.ser_magazine !== null
+                    ? "ser_magazine"
+                    : item.ser_best !== null
+                      ? "ser_best"
+                      : null;
+
+    return ser_name;
+  };
+  const app_id = (item) => {
+    const appid =
+      item.ser_reg !== null
+        ? item.ser_reg
+        : item.ser_formation !== null
+          ? item.ser_formation
+          : item.ser_grant !== null
+            ? item.ser_grant
+            : item.ser_personal !== null
+              ? item.ser_personal
+              : item.ser_upgrade !== null
+                ? item.ser_upgrade
+                : item.ser_knowledge !== null
+                  ? item.ser_knowledge
+                  : item.ser_magazine !== null
+                    ? item.ser_magazine
+                    : item.ser_best !== null
+                      ? item.ser_best
+                      : null;
+
+    return appid;
+  };
   return (
     <div className="super-container">
       <img src={img} alt="img" />
@@ -207,7 +251,7 @@ const StudentListadmin = () => {
                 <th>تاريخ التقديم</th>
                 <th> حاله الخدمه </th>
                 <th>الصلاحيات</th>
-                <th>اختيار موظف</th>
+                <th> الموظف</th>
               </tr>
             </thead>
             <tbody>
@@ -326,7 +370,21 @@ const StudentListadmin = () => {
                             .filter((admin) => admin.id === item.manager_id)
                             .map((admin) => <td>{admin.mname}</td>)
                         ) : (
-                          <td>لا يوجد موظف</td>
+                          <>
+                            <td>لا يوجد موظف</td>
+                            <button
+                              onClick={() => {
+                                navigate(
+                                  `/Library/manager/ShowOnly/${item.user_id},${item.service_id
+                                  },${sername(item)},${app_id(item)}`
+                                );
+                              }}
+                            >
+                              {/* <Link to={`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}> */}
+                              تفاصيل
+                              {/* </Link> */}
+                            </button>
+                          </>
                         )}
                         {item.role !== null && item.role !== "" ? (
                           <td>

@@ -122,16 +122,16 @@ const AdminsList = () => {
             withCredentials: true,
           })
           .then((res) => {
-            // window.location.reload();
+            window.location.reload();
           })
           .catch((error) => {
             if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
-            setError(error.response.data.message[0].msg);
+            setError(error.response.data.message[0]);
           });
       }
     } catch (err) {
       if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
-      setError(err);
+      setError("حدث خطأ ما");
     }
   };
   const handleDeleteSubManger = (index) => {
@@ -143,16 +143,18 @@ const AdminsList = () => {
             withCredentials: true,
           })
           .then((res) => {
-            // window.location.reload();
+            window.location.reload();
           })
           .catch((error) => {
             if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
-            setError(error.response.data.message[0].msg);
+            setError(error.response.data.message[0]);
+            
+
           });
       }
     } catch (err) {
       if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
-      setError(err);
+      setError("حدث خطأ ما");
     }
   };
 

@@ -5,7 +5,7 @@ import { useState } from "react";
 import img from "../../../../images/librarylog.jpg";
 import { API_URL } from "../../../../config";
 
-const Reviewed = () => {
+const AllToCode = () => {
   const navigate = useNavigate();
   const [student, setStudent] = React.useState([]);
   const [fromDate, setFromDate] = useState('');
@@ -104,34 +104,30 @@ const Reviewed = () => {
           {/* <h2>الطلاب</h2> */}
           <select
             onChange={(e) => {
+              const value = e.target.value;
               const filteredStudents =
-                e.target.value === ""
+                value === ""
                   ? student
-                  : student.filter(
-                    (item) => item.status === parseInt(e.target.value)
-                  );
+                  : student.filter((item) => {
+                    if (value === "1") {
+                      return item.status >= 1;
+                    } else {
+                      return item.status === parseInt(value);
+                    }
+                  });
+
               setFilter(filteredStudents);
               setFilter2(filteredStudents);
             }}
+
             className="filter"
             name=""
             id=""
           >
             <option value="">فلتره</option>
-            {(student[0]?.status === 0 || student[0]?.status === 4) && (
-              <>
-                <option value="0"> منظر كود دفع </option>
-                <option value="4"> قيد التعديل </option>
-              </>
-            )}
-            {student[0]?.status !== 0 && student[0]?.status !== 4 && (
-              <>
-                <option value="2"> قيد الانتظار </option>
-                <option value="3"> قيد التعديل </option>
-                <option value="5"> مقبول </option>
-                <option value="6"> مرفوض </option>
-              </>
-            )}
+            <option value="0"> منظر كود دفع </option>
+            <option value="4"> قيد التعديل </option>
+            <option value="1"> حصل علي كود دفع </option>
           </select>
 
           <input
@@ -182,18 +178,18 @@ const Reviewed = () => {
                   <th>التسلسل</th>
                   <th>اسم الطالب</th>
                   <th> نوع الخدمه </th>
-                  <th>تاريخ التقديم</th>
+                  <th>تاريخ الحصول علي كود الدفع </th>
                   <th> حاله الخدمه </th>
-                  <th> الموظف المسؤول </th>
                   <th>التفاصيل</th>
                 </tr>
               </thead>
               <tbody>
                 {filter.length > 0 &&
                   filter.filter((item) => {
-                    const submitDate = new Date(item.submit_date); // Assuming submit_date is in a date format
+                    const submitDate = new Date(item.req_code_date); // Assuming submit_date is in a date format
                     const fromDateObj = new Date(fromDate);
                     const toDateObj = new Date(toDate);
+
 
                     // Check if submitDate is within the selected date range (if dates are selected)
                     if (
@@ -203,46 +199,28 @@ const Reviewed = () => {
                       return true;
                     }
 
-                    // If no date range is selected, display all data
-                    if (!fromDate && !toDate) {
+                    // If no date range is selected, display all data if submitDate is valid
+                    if (!fromDate && !toDate && !isNaN(submitDate.getTime())) {
                       return true;
                     }
 
                     return false;
+
                   }).map((item, index) => (
                     <tr key={item.student_id}>
                       <td>{index + 1}</td>
                       <td>{item.name}</td>
                       <td>{item.service_name_ar}</td>
                       <td>
-                        {item.status === 0 || item.status === 4
-                          ? item.req_code_date?.slice(0, 10)
-                          : item.submit_date?.slice(0, 10)}
+                        {item.req_code_date?.slice(0, 10)}
                       </td>
                       <td>
                         {item.status === 0
                           ? "منتظر كود دفع"
-                          : item.status === 1
-                            ? "في انتظار رفع المرفقات"
-                            : item.status === 2
-                              ? "في انتظار رد المكتبه"
-                              : item.status === 3
-                                ? "قيد التعديل"
-                                : item.status === 4
-                                  ? "قيد التعديل"
-                                  : item.status === 5
-                                    ? "مقبول"
-                                    : item.status === 6
-                                      ? "مرفوض"
-                                      : null}
+                          : item.status === 4
+                            ? "قيد التعديل"
+                            : " حصل علي كود دفع "}
                       </td>
-                      {item.manager_id !== null ? (
-                        admins
-                          .filter((admin) => admin.id === item.manager_id)
-                          .map((admin) => <td key={admin.id}>{admin.mname || "لا يوجد"}</td>)
-                      ) : (
-                        <td>لا يوجد</td>
-                      )}
                       <button
                         onClick={() => {
                           navigate(
@@ -268,4 +246,4 @@ const Reviewed = () => {
   );
 };
 
-export default Reviewed;
+export default AllToCode;

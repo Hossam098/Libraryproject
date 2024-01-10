@@ -150,9 +150,41 @@ user.put('/updateuserManager',
                 }
                 const sqlUpdate = "UPDATE users SET ? WHERE id = ?";
                 const resultUpdate = await query(sqlUpdate, [userDate, req.body.user_id]);
-                if (resultUpdate.affectedRows > 0) {
+                if (resultUpdate.affectedRows > 0 && req.body.files_numbers) {
+                    let columns = "";
+                    if(req.body.ser_reg != null){
+                        columns = "ser_reg"
+                    }else if(req.body.ser_formation != null){
+                        columns = "ser_formation"
+                    }else if(req.body.ser_grant != null){
+                        columns = "ser_grant"
+                    }else if(req.body.ser_personal != null){
+                        columns = "ser_personal"
+                    }else if(req.body.ser_upgrade != null){
+                        columns = "ser_upgrade"
+                    }else if(req.body.ser_knowledge != null){
+                        columns = "ser_knowledge"
+                    }else if(req.body.ser_magazine != null){
+                        columns = "ser_magazine"
+                    }else if(req.body.ser_best != null){
+                        columns = "ser_best"
+                    }
+                    const sqlSelect2 = `SELECT * FROM submit WHERE ${columns} = ? AND user_id = ?`;
+                    const result2 = await query(sqlSelect2, [req.body[columns], req.body.user_id]);
+                    if (result2.length > 0) {
+                        const sqlUpdate2 = `UPDATE submit SET files_numbers = ? WHERE ${columns} = ? AND user_id = ?`;
+                        const resultUpdate2 = await query(sqlUpdate2, [req.body.files_numbers, req.body[columns], req.body.user_id]);
+                        if (resultUpdate2.affectedRows > 0) {
+                            return res.status(200).json({ message: " تم تعديل بيانات المستخدم بنجاح" });
+                        }
+                    } else {
+                        error.push("لم يتم تعديل بيانات المستخدم");
+                        return res.status(400).json({ message: error });
+                    }
+                
+                } else if (resultUpdate.affectedRows > 0) {
                     return res.status(200).json({ message: " تم تعديل بيانات المستخدم بنجاح" });
-                } else {
+                }else {
                     error.push("لم يتم تعديل بيانات المستخدم");
                     return res.status(400).json({ message: error });
                 }
