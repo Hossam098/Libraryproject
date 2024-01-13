@@ -37,7 +37,7 @@ const Nav = () => {
         console.log(error.response);
       });
   };
-  const [active, setActive] = useState("home_active");
+  const [active, setActive] = useState("LIST_active");
 
   return (
     <div className="dmin">

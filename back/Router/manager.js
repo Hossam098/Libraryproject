@@ -81,6 +81,24 @@ manager.get('/getAllManagers',
         }
     }
 )
+manager.get('/getAllManagersToAssign',
+    checkmanager,
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM manager WHERE service_id != 9 ";
+            const result = await query(sqlSelect);
+            if (result.length > 0) {
+                return res.status(200).json(result);
+            } else {
+                return res.status(200).json({ message: "لا يوجد مديرين" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
 
 manager.put('/AssignManager',
     checkmanager,
@@ -283,10 +301,17 @@ manager.put('/acceptApplicantforManager',
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
                 }
             } else if (req.body.reason !== "") {
+                let sqlUpdate = ``
+                let value = []
+                if (req.body.response_date === '') {
+                    sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status} WHERE ${req.body.ser_name} = ?`;
+                    value = [req.body.status, req.body.reason,req.body.app_id];
 
-                const sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status}
-             WHERE ${req.body.ser_name} = ?`;
-                const value = [req.body.status, req.body.reason, req.body.app_id];
+                } else {
+                    sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status} , response_date = ?  WHERE ${req.body.ser_name} = ?`;
+                    value = [req.body.status, req.body.reason, new Date(), req.body.app_id];
+
+                }
                 const result = await query(sqlUpdate, value);
                 if (result.affectedRows > 0) {
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
@@ -369,7 +394,7 @@ manager.put('/watingApplicant/:id',
                         fs.unlinkSync(filePath);
                     }
                 }
-                const sqlUpdate = `UPDATE submit SET status = ? , response_text = null , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
+                const sqlUpdate = `UPDATE submit SET status = ? , response_text = null , response_pdf = null , manager_status = null,response_date = null  WHERE ${req.body.ser_name} = ?`;
                 const value2 = [req.body.status, req.body.app_id];
                 const result = await query(sqlUpdate, value2);
                 if (result.affectedRows > 0) {

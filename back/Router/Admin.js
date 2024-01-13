@@ -269,7 +269,7 @@ Admin.get('/getallManagers',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = "SELECT manager.* , services.service_name_ar FROM manager INNER JOIN services ON manager.service_id = services.id";
+            const sqlSelect = "SELECT manager.* , services.service_name_ar FROM manager INNER JOIN services ON manager.service_id = services.id order by manager.id DESC";
             const result = await query(sqlSelect);
             if (result.length > 0) {
                 for (let i = 0; i < result.length; i++) {
@@ -290,7 +290,7 @@ Admin.get('/getallSubManagers',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = "SELECT * FROM manager WHERE role = 1";
+            const sqlSelect = "SELECT * FROM manager WHERE role = 1 order by manager.id DESC";
             const result = await query(sqlSelect);
             if (result.length > 0) {
                 for (let i = 0; i < result.length; i++) {

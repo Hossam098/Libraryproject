@@ -347,6 +347,7 @@ const ShowA = () => {
           ser_id: dataArray[1],
           ser_name: dataArray[2],
           app_id: dataArray[3],
+          response_date : ''
         };
 
         if (user.role === 1) {
@@ -356,6 +357,7 @@ const ShowA = () => {
           updatedAction.column = "status";
           updatedAction.status = 6;
           updatedAction.role = 2;
+          updatedAction.response_date = new Date()
         }
 
         setAction(updatedAction);

@@ -35,7 +35,7 @@ const StudentListadmin = () => {
         });
 
       axios
-        .get(`${API_URL}/manager/getAllManagers`, { withCredentials: true })
+        .get(`${API_URL}/manager/getAllManagersToAssign`, { withCredentials: true })
         .then((res) => {
           setAdmins(res.data);
           // setFilter(res.data)

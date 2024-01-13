@@ -21,9 +21,10 @@ const AllToCode = () => {
       axios
         .get(`${API_URL}/manager/getallApplicants`, { withCredentials: true })
         .then((res) => {
-          setStudent(res.data);
-          setFilter(res.data);
+          setStudent(res?.data?.length > 0 && res?.data?.filter((item) => item.service_id !== 7 && item.service_id !== 8));
+          setFilter(res?.data?.length > 0 && res?.data?.filter((item) => item.service_id !== 7 && item.service_id !== 8));
           setFilter2(res.data);
+
         })
         .catch((error) => {
           if (error.response.status === 401) window.location.replace("/Library/ManagerLogin");
@@ -106,12 +107,15 @@ const AllToCode = () => {
             onChange={(e) => {
               const value = e.target.value;
               const filteredStudents =
-                value === ""
-                  ? student
-                  : student.filter((item) => {
-                    if (value === "1") {
+                student.filter((item) => {
+                    if (value === "1" && item.payment_code !== null && item.payment_code !== "") {
                       return item.status >= 1;
-                    } else {
+                    }else if (value === "" && item.service_id !== 7 && item.service_id !== 8) {
+                      return item.service_id !== 7 && item.service_id !== 8;
+                    }else if (value === "6" && item.payment_code === null) {
+                      return item.status === 6;
+                    }
+                    else {
                       return item.status === parseInt(value);
                     }
                   });
@@ -124,10 +128,11 @@ const AllToCode = () => {
             name=""
             id=""
           >
-            <option value="">فلتره</option>
+            <option value="" defaultValue>فلتره</option>
             <option value="0"> منظر كود دفع </option>
             <option value="4"> قيد التعديل </option>
             <option value="1"> حصل علي كود دفع </option>
+            <option value="6"> تم الغاء الطلب </option>
           </select>
 
           <input
@@ -215,11 +220,11 @@ const AllToCode = () => {
                         {item.req_code_date?.slice(0, 10)}
                       </td>
                       <td>
-                        {item.status === 0
-                          ? "منتظر كود دفع"
-                          : item.status === 4
-                            ? "قيد التعديل"
-                            : " حصل علي كود دفع "}
+                        {item.status === 0 ? "منتظر كود دفع"
+                          : item.status === 4 ? "قيد التعديل"
+                            : item.status >= 1 && item.payment_code !== null && item.payment_code !== "" ? "حصل علي كود دفع"
+                              : item.status === 6 && item.payment_code === null ? "تم الغاء الطلب"
+                                : null}
                       </td>
                       <button
                         onClick={() => {
