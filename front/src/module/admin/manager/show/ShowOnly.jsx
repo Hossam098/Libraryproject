@@ -781,7 +781,7 @@ const ShowOnly = () => {
           <div className="resp">
             <h2>
               <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
-              {user.response_date && user.response_date !== "null"
+              {user.response_date && user.response_date !== "null" && (user.status == 5 || user.status == 6)
                 ? user.response_date?.slice(0, 10)
                 : "لم يتم الرد بعد"}
             </h2>

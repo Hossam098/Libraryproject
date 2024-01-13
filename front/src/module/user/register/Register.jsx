@@ -90,9 +90,9 @@ const Register = () => {
     } else if (!regex.test(values.email)) {
       errors.email = `${t("email-v-err")}`;
     } 
-    // else if (!regex.test(values.email) || !values.email.includes(".edu")) {
-    //   errors.email = `${t("email-t-err")}`;
-    // }
+    else if (!regex.test(values.email) || !values.email.includes(".edu")) {
+      errors.email = `${t("email-t-err")}`;
+    }
     if (!values.name) {
       errors.name = `${t("name-err")}`;
     }
