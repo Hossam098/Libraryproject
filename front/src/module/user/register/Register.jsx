@@ -301,7 +301,7 @@ const Register = () => {
                       placeholder={t("e-uni")}
                       value={user.other_uni}
                       onChange={(e) => {
-                        setUser({ ...user, other_uni: e.target.value });
+                        setUser({ ...user, other_uni: e.target.value , faculity_id: ""});
                       }}
                     />
                     <p className="error">{errors.other_uni}</p>
@@ -321,7 +321,7 @@ const Register = () => {
                         }
                         value={user.faculity_id}
                         onChange={(e) => {
-                          setUser({ ...user, faculity_id: e.target.value });
+                          setUser({ ...user, faculity_id: e.target.value , other_uni: "" , faculity: ""});
                         }}
                       >
                         <option value="">{t("fac")} </option>

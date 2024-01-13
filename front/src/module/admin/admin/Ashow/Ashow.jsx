@@ -77,8 +77,8 @@ const AShow = () => {
     aTag.click();
     aTag.remove();
   };
-  const downloadImage = (url) => {
-    saveAs(url, "image.jpg");
+  const downloadImage = (url, filename) => {
+    saveAs(url, filename);
   };
 
   const downloadPDF = () => {
@@ -110,11 +110,11 @@ const AShow = () => {
 
   const [errors, setErrors] = useState();
 
-  const increaseDateByOneDay = (date) => {
-    const currentDate = new Date(date);
-    currentDate.setDate(currentDate.getDate() + 1);
-    return currentDate.toISOString().slice(0, 10);
-  };
+  // const increaseDateByOneDay = (date) => {
+  //   const currentDate = new Date(date);
+  //   currentDate.setDate(currentDate.getDate() + 1);
+  //   return currentDate.toISOString().slice(0, 10);
+  // };
 
   const handleCloseError = () => {
     setErrors("");
@@ -531,7 +531,7 @@ const AShow = () => {
               </div>
             ) : null}
             {(user.manager_status == 2 && user.status == 6) ||
-            (user.manager_status == null && user.status == 6) ? (
+              (user.manager_status == null && user.status == 6) ? (
               <div className="status">
                 <p style={{ background: "rgb(175, 35, 35)" }}> سبب الرفض </p>
                 <p style={{ background: "rgb(175, 35, 35)" }}>
@@ -597,37 +597,77 @@ const AShow = () => {
               <td>{user.national_id}</td>
             </tr>
             <tr>
+              <td>الجامعه</td>
+              <td>
+                {+user.university === 1 ? "جامعه حلوان" : user.university}
+              </td>
+              {/* {+user.university !== 1 ? (
+                  <td>
+                    <input
+                      className="edit-input-user"
+                      type="text"
+                      value={user.university}
+                      onChange={(e) => {
+                        setUser({ ...user, university: e.target.value });
+                      }}
+                    />
+
+                  </td>
+                ) :
+                  <td>
+                    <select
+                      className="edit-input-user"
+                      value={user.university}
+                      onChange={(e) => {
+                        setUser({ ...user, university: e.target.value });
+                      }}
+                    >
+                      <option value="1">{t("helwan-uni")} </option>
+                      <option value="0">{t("other-uni")} </option>
+                    </select>
+                  </td>
+                } */}
+            </tr>
+            <tr>
               <td>الكليه</td>
-              <td>{user.faculity}</td>
+              <td>{user.faculty_name_ar ? user.faculty_name_ar : user.faculity}</td>
             </tr>
             <tr>
               <td>القسم</td>
               <td>{user.department}</td>
             </tr>
+            {user.req_code_date && (
             <tr>
-              <td>تاريخ طلب كود الدفع</td>
-              <td>
-                {increaseDateByOneDay(
-                  user.req_code_date ? user.req_code_date?.slice(0, 10) : null
-                )}
-              </td>
+                <td>تاريخ طلب كود الدفع</td>
+                <td>
+                  {
+                    user.req_code_date ? user.req_code_date?.slice(0, 10) : null
+                  }
+                </td>
             </tr>
-            <tr>
-              <td>تاريخ الطلب</td>
-              <td>
-                {increaseDateByOneDay(
-                  user.submit_date ? user.submit_date.slice(0, 10) : null
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>تاريخ اخر تعديل</td>
-              <td>
-                {increaseDateByOneDay(
-                  user.edit_date ? user.edit_date?.slice(0, 10) : null
-                )}
-              </td>
-            </tr>
+            )}
+            {user.submit_date && (
+                <tr>
+                  <td>تاريخ الطلب</td>
+                  <td>
+                    {
+                      user.submit_date ? user.submit_date.slice(0, 10) : null
+                    }
+                  </td>
+                </tr>
+              )}
+
+
+            {user.edit_date && (
+                <tr>
+                  <td>تاريخ اخر تعديل</td>
+                  <td>
+                    {
+                      user.edit_date ? user.edit_date?.slice(0, 10) : null
+                    }
+                  </td>
+                </tr>
+              )}
             <tr>
               <td> نوع الخدمه </td>
               <td>{user.service_name_ar}</td>
@@ -638,8 +678,8 @@ const AShow = () => {
                 {user.level == 0
                   ? "ماجستير"
                   : user.level == 1
-                  ? "دكتوراه"
-                  : null}
+                    ? "دكتوراه"
+                    : null}
               </td>
             </tr>
             {user.academic && (
@@ -676,7 +716,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`
+                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`,`${user.photo_payment_receipt}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -703,7 +743,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`
+                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`,`${user.photo_college_letter}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -730,7 +770,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`,`${user.research_plan_ar_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -757,7 +797,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`,`${user.research_plan_ar_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -784,7 +824,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`,`${user.research_plan_en_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -811,7 +851,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`,`${user.research_plan_en_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -838,7 +878,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.translation_paper}`
+                      `${API_URL}/${user.national_id}/${user.translation_paper}`,`${user.translation_paper}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -865,7 +905,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_word_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_word_ar}`, `${user.message_word_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -892,7 +932,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`,`${user.message_pdf_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -919,7 +959,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.quote_check_form}`
+                      `${API_URL}/${user.national_id}/${user.quote_check_form}`,`${user.quote_check_form}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -946,7 +986,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.decision}`
+                      `${API_URL}/${user.national_id}/${user.decision}`,`${user.decision}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -971,8 +1011,7 @@ const AShow = () => {
                       <button
                         onClick={() => {
                           openImage(
-                            `${API_URL}/${user.national_id}/${
-                              user[`research${i + 1}_image_word`]
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
                             }`
                           );
                         }}
@@ -983,9 +1022,7 @@ const AShow = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${
-                              user[`research${i + 1}_image_word`]
-                            }`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`,`${user[`research${i + 1}_image_word`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1005,8 +1042,7 @@ const AShow = () => {
                       <button
                         onClick={() => {
                           openImage(
-                            `${API_URL}/${user.national_id}/${
-                              user[`research${i + 1}_image_pdf`]
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
                             }`
                           );
                         }}
@@ -1017,9 +1053,7 @@ const AShow = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${
-                              user[`research${i + 1}_image_pdf`]
-                            }`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`,`${user[`research${i + 1}_image_pdf`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1034,8 +1068,7 @@ const AShow = () => {
                     <tr>
                       <td>
                         {t(
-                          `service${
-                            user.service_id
+                          `service${user.service_id
                           }-step-two.acceptance_letter${i + 1}`
                         )}{" "}
                       </td>
@@ -1043,8 +1076,7 @@ const AShow = () => {
                         <button
                           onClick={() => {
                             openImage(
-                              `${API_URL}/${user.national_id}/${
-                                user[`acceptance_letter${i + 1}`]
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
                               }`
                             );
                           }}
@@ -1055,9 +1087,7 @@ const AShow = () => {
                         <button
                           onClick={() => {
                             downloadImage(
-                              `${API_URL}/${user.national_id}/${
-                                user[`acceptance_letter${i + 1}`]
-                              }`
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`,`${user[`acceptance_letter${i + 1}`]}`
                             );
                           }}
                           class="atch-btn atch-btn2"
@@ -1078,7 +1108,7 @@ const AShow = () => {
             <h2>
               <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
               {user.response_date && user.response_date !== "null"
-                ? increaseDateByOneDay(user.response_date?.slice(0, 10))
+                ? user.response_date?.slice(0, 10)
                 : "لم يتم الرد بعد"}
             </h2>
           </div>
@@ -1108,8 +1138,8 @@ const AShow = () => {
             <h2>
               <span style={{ color: "#19355A" }}>{t("notes")}</span>
               {user.response_text &&
-              user.response_text !== "null" &&
-              user.status !== 0 ? (
+                user.response_text !== "null" &&
+                user.status !== 0 ? (
                 user.response_text
               ) : user.response_text === null && +user.status == 0 ? (
                 <h3>لم يتم ارسال ملاحظات بعد</h3>
@@ -1143,7 +1173,7 @@ const AShow = () => {
                   <button
                     onClick={() => {
                       downloadImage(
-                        `${API_URL}/${user.national_id}/${user.response_pdf}`
+                        `${API_URL}/${user.national_id}/${user.response_pdf}`,`${user.response_pdf}`
                       );
                     }}
                     className="atch-btn atch-btn2"

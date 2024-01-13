@@ -92,8 +92,8 @@ const ShowA = () => {
     aTag.click();
     aTag.remove();
   };
-  const downloadImage = (url) => {
-    saveAs(url, "image.jpg");
+  const downloadImage = (url, filename) => {
+    saveAs(url, filename);
   };
 
   // const downloadPDF = () => {
@@ -1127,7 +1127,6 @@ const ShowA = () => {
                   {
                     user.req_code_date ? user.req_code_date?.slice(0, 10) : null
                   }
-
                 </td>
               </tr>
               {user.submit_date && (
@@ -1247,7 +1246,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`
+                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`,`${user.photo_payment_receipt}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1274,7 +1273,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`
+                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`,`${user.photo_college_letter}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1301,7 +1300,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`,`${user.research_plan_ar_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1328,7 +1327,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`,`${user.research_plan_ar_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1355,7 +1354,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`,`${user.research_plan_en_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1382,7 +1381,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`,`${user.research_plan_en_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1409,7 +1408,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.translation_paper}`
+                      `${API_URL}/${user.national_id}/${user.translation_paper}`,`${user.translation_paper}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1436,7 +1435,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_word_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_word_ar}`,`${user.message_word_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1463,7 +1462,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`,`${user.message_pdf_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1490,7 +1489,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.quote_check_form}`
+                      `${API_URL}/${user.national_id}/${user.quote_check_form}`,`${user.quote_check_form}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1517,7 +1516,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.decision}`
+                      `${API_URL}/${user.national_id}/${user.decision}`,`${user.decision}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1553,8 +1552,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
-                            }`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`,`${user[`research${i + 1}_image_word`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1585,8 +1583,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
-                            }`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`,`${user[`research${i + 1}_image_pdf`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1620,8 +1617,7 @@ const ShowA = () => {
                         <button
                           onClick={() => {
                             downloadImage(
-                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
-                              }`
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`,`${user[`acceptance_letter${i + 1}`]}`
                             );
                           }}
                           class="atch-btn atch-btn2"
@@ -1714,7 +1710,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user.response_pdf}`
+                            `${API_URL}/${user.national_id}/${user.response_pdf}`,`${user.response_pdf}`
                           );
                         }}
                         className="atch-btn atch-btn2"

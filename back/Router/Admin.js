@@ -34,7 +34,7 @@ Admin.get('/getallApplicantsShow',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id ";
+            const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id order by submit.id DESC";
             const result = await query(sqlSelect);
             if (result.length > 0) {
                 return res.status(200).json(result);
@@ -47,6 +47,48 @@ Admin.get('/getallApplicantsShow',
         }
     }
 )
+
+// Admin.get('/getuserbyid/:serId/:serNam/:stId/:appId',
+//     checkAdmin,
+//     async (req, res) => {
+//         try {
+//             const serId = req.params.serId
+//             const serNam = req.params.serNam
+//             const stId = req.params.stId
+//             const appId = req.params.appId
+
+//             let ser_table = ""
+//             if (serNam === 'ser_reg') {
+//                 ser_table = "registration_services"
+//             } else if (serNam == 'ser_formation') {
+//                 ser_table = 'formation_service'
+//             } else if (serNam == 'ser_grant') {
+//                 ser_table = 'grant_service'
+//             } else if (serNam == 'ser_personal') {
+//                 ser_table = 'personal_examination_service'
+//             } else if (serNam == 'ser_upgrade') {
+//                 ser_table = 'upgrade_service'
+//             } else if (serNam == 'ser_knowledge') {
+//                 ser_table = 'knowledge_bank_service'
+//             } else if (serNam == 'ser_magazine') {
+//                 ser_table = 'magazine_checking_service'
+//             } else if (serNam == 'ser_best') {
+//                 ser_table = 'best_message_service'
+//             }
+
+
+//             const sqlSelect = `SELECT submit.* , users.* , services.* , ${ser_table}.* FROM submit JOIN users ON submit.user_id = users.id JOIN services ON submit.service_id = services.id JOIN ${ser_table} ON submit.${serNam} = ${ser_table}.id WHERE submit.${serNam} = ?  AND users.id = ? AND submit.service_id = ? `;
+//             const result = await query(sqlSelect, [appId, stId, serId]);
+//             if (result.length > 0) {
+//                 return res.status(200).json(result[0]);
+//             } else {
+//                 return res.status(400).json({ message: "لا يوجد طلبات" });
+//             }
+//         } catch (errors) {
+//             return res.status(500).json({ message: errors });
+//         }
+//     }
+// )
 
 Admin.get('/getuserbyid/:serId/:serNam/:stId/:appId',
     checkAdmin,
@@ -75,14 +117,50 @@ Admin.get('/getuserbyid/:serId/:serNam/:stId/:appId',
             } else if (serNam == 'ser_best') {
                 ser_table = 'best_message_service'
             }
+            let facultyFlag = false
+            let facultyTable = ``
+            let facultyJoin = ``
+            if (facultyFlag) {
+                facultyTable = `,faculty.*`
+                facultyJoin = `JOIN faculty ON users.faculity_id = faculty.faculty_id`
+            }
+            const sqlSelect0 = `SELECT * FROM users WHERE id = ? `;
+            const result0 = await query(sqlSelect0, [stId]);
+            if (result0.length > 0) {
+                if (result0[0].faculity_id != null) {
+                    facultyFlag = true
+                }
+            }
 
+            // const sqlSelect = `SELECT 
+            //  submit.* , users.* , services.* , ${ser_table}.*  ${facultyTable} FROM submit JOIN users ON submit.user_id = users.id JOIN services ON submit.service_id = services.id 
+            //  JOIN ${ser_table} ON submit.${serNam} = ${ser_table}.id  
+            //  ${facultyJoin}
+            //  WHERE submit.${serNam} = ?  AND users.id = ? AND submit.service_id = ? `;
+            const sqlSelect = `SELECT 
+    submit.*, users.*, services.*, ${ser_table}.*, faculty.*
+FROM 
+    submit
+JOIN 
+    users ON submit.user_id = users.id
+JOIN 
+    services ON submit.service_id = services.id
+JOIN 
+    ${ser_table} ON submit.${serNam} = ${ser_table}.id
+    LEFT JOIN 
+    faculty ON users.faculity_id = faculty.faculty_id
+WHERE 
+    submit.${serNam} = ?  
+    AND users.id = ? 
+    AND submit.service_id = ? 
+    AND (users.faculity_id IS NULL OR users.faculity_id IS NOT NULL)`;
 
-            const sqlSelect = `SELECT submit.* , users.* , services.* , ${ser_table}.* FROM submit JOIN users ON submit.user_id = users.id JOIN services ON submit.service_id = services.id JOIN ${ser_table} ON submit.${serNam} = ${ser_table}.id WHERE submit.${serNam} = ?  AND users.id = ? AND submit.service_id = ? `;
             const result = await query(sqlSelect, [appId, stId, serId]);
             if (result.length > 0) {
+                delete result[0].password;
                 return res.status(200).json(result[0]);
             } else {
-                return res.status(400).json({ message: "لا يوجد طلبات" });
+                return res.status(400).json({ message: "No user found" });
             }
         } catch (errors) {
             return res.status(500).json({ message: errors });
