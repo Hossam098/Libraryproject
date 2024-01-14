@@ -27,6 +27,7 @@ const Service = (ID, Ser) => {
     id = ID.ID;
   }
   const ser = ID.Ser;
+  console.log(ser);
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -45,6 +46,7 @@ const Service = (ID, Ser) => {
   }, []);
 
   const Service = (id) => {
+    console.log(id);
     switch (id) {
       case "1":
         return <Ser1 />;

@@ -57,7 +57,7 @@ const ServiceStepTwo = (ID, Ser) => {
       case 6:
         return <Ser6 ser={ser} />;
       case 7:
-        return <Ser7 />;
+        return <Ser7 ser={ser} />;
       case 8:
         return <Ser8 ser={ser} />;
 

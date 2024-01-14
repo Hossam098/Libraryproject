@@ -14,6 +14,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { BsFilePdf, BsFileEarmarkWord } from "react-icons/bs";
 
 const Ser7 = ({ ser }) => {
+  console.log(ser);
   let { id } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -49,7 +50,7 @@ const Ser7 = ({ ser }) => {
           navigate("/Library/login");
         });
 
-      if (status == 4) {
+      if (status == 3) {
         try {
           axios
             .get(`${API_URL}/paymentEdit/${id}/${id2}`, {
@@ -80,7 +81,7 @@ const Ser7 = ({ ser }) => {
     setConfirm(false);
   };
   const handleSubmit = () => {
-    if (status !== 4) {
+    if (status !== 3) {
       setConfirm(false);
       if (!data.level) {
         setError(t(`service2-step-two-err.level`));
@@ -183,7 +184,7 @@ const Ser7 = ({ ser }) => {
         }));
         setDisabled(false);
       }
-    } else if (status == 4) {
+    } else if (status == 3) {
       setConfirm(false);
       if (data.level == "" && data.level !== 0) {
         setError(t(`service2-step-two-err.level`));
@@ -486,7 +487,7 @@ const Ser7 = ({ ser }) => {
               {msg && <p>{msg}</p>}
             </div>
             <button disabled={disabled} onClick={confirmf} className="sub-now">
-              {status !== 4 ? t("sub-now") : t("edit-btn")}
+              {status !== 3 ? t("sub-now") : t("edit-btn")}
             </button>
           </div>
           {confirm && (

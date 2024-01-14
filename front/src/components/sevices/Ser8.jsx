@@ -45,7 +45,7 @@ const Ser8 = ({ ser }) => {
           console.log(err);
           navigate("/Library/login");
         });
-      if (status == 4) {
+      if (status == 3) {
         try {
           axios
             .get(`${API_URL}/paymentEdit/${id}/${id2}`, {
@@ -74,7 +74,7 @@ const Ser8 = ({ ser }) => {
     setConfirm(false);
   };
   const handleSubmit = () => {
-    if (status !== 4) {
+    if (status !== 3) {
       setConfirm(false);
       if (!data.level) {
         setError(t(`service2-step-two-err.level`));
@@ -143,7 +143,7 @@ const Ser8 = ({ ser }) => {
         }));
         setDisabled(false);
       }
-    } else if (status == 4) {
+    } else if (status == 3) {
       setConfirm(false);
 
       if (data.level == "" && data.level !== 0) {
@@ -278,7 +278,7 @@ const Ser8 = ({ ser }) => {
               {msg && <p>{msg}</p>}
             </div>
             <button disabled={disabled} onClick={confirmf} className="sub-now">
-              {status !== 4 ? t("sub-now") : t("edit-btn")}
+              {status !== 3 ? t("sub-now") : t("edit-btn")}
             </button>
           </div>
           {confirm && (

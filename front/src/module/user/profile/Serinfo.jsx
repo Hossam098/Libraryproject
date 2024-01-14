@@ -562,7 +562,7 @@ const Serinfo = ({ service, User }) => {
 
       <h1>{t("response")}</h1>
       <hr style={{ width: "100%" }} />
-      {data.response_date && (
+      {data.response_date &&(data.status == 5 || data.status == 6) && (
         <h2>
           <span style={{ color: "#AD8700" }}>{t("date-response")} </span> :{" "}
           {data.response_date?.slice(0, 10)}
