@@ -927,8 +927,7 @@ const ShowA = () => {
               <div className="status">
                 <p style={{ background: "rgb(0, 60, 112)" }}> سبب التعديل </p>
                 <p style={{ background: "rgb(0, 60, 112)" }}>
-                  {" "}
-                  {user.response_text}{" "}
+                  {user.response_text}
                 </p>
               </div>
             ) : null}
@@ -959,8 +958,7 @@ const ShowA = () => {
               <div className="status">
                 <p style={{ background: "rgb(175, 35, 35)" }}> سبب الرفض </p>
                 <p style={{ background: "rgb(175, 35, 35)" }}>
-                  {" "}
-                  {user.response_text}{" "}
+                  {user.response_text}
                 </p>
                 <input
                   disabled={disabled}
