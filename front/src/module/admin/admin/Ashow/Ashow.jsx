@@ -353,7 +353,29 @@ const AShow = () => {
       setErrors("حدث خطأ ما");
     }
   };
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
   return (
     <>
       {confirmP && (
@@ -637,37 +659,37 @@ const AShow = () => {
               <td>{user.department}</td>
             </tr>
             {user.req_code_date && (
-            <tr>
+              <tr>
                 <td>تاريخ طلب كود الدفع</td>
                 <td>
                   {
-                    user.req_code_date ? user.req_code_date?.slice(0, 10) : null
+                    user.req_code_date ? format(user.req_code_date) : null
                   }
                 </td>
-            </tr>
+              </tr>
             )}
             {user.submit_date && (
-                <tr>
-                  <td>تاريخ الطلب</td>
-                  <td>
-                    {
-                      user.submit_date ? user.submit_date.slice(0, 10) : null
-                    }
-                  </td>
-                </tr>
-              )}
+              <tr>
+                <td>تاريخ الطلب</td>
+                <td>
+                  {
+                    user.submit_date ? format(user.submit_date) : null
+                  }
+                </td>
+              </tr>
+            )}
 
 
             {user.edit_date && (
-                <tr>
-                  <td>تاريخ اخر تعديل</td>
-                  <td>
-                    {
-                      user.edit_date ? user.edit_date?.slice(0, 10) : null
-                    }
-                  </td>
-                </tr>
-              )}
+              <tr>
+                <td>تاريخ اخر تعديل</td>
+                <td>
+                  {
+                    user.edit_date ? format(user.edit_date) : null
+                  }
+                </td>
+              </tr>
+            )}
             <tr>
               <td> نوع الخدمه </td>
               <td>{user.service_name_ar}</td>
@@ -716,7 +738,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`,`${user.photo_payment_receipt}`
+                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`, `${user.photo_payment_receipt}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -743,7 +765,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`,`${user.photo_college_letter}`
+                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`, `${user.photo_college_letter}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -770,7 +792,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`,`${user.research_plan_ar_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`, `${user.research_plan_ar_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -797,7 +819,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`,`${user.research_plan_ar_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`, `${user.research_plan_ar_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -824,7 +846,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`,`${user.research_plan_en_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`, `${user.research_plan_en_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -851,7 +873,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`,`${user.research_plan_en_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`, `${user.research_plan_en_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -878,7 +900,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.translation_paper}`,`${user.translation_paper}`
+                      `${API_URL}/${user.national_id}/${user.translation_paper}`, `${user.translation_paper}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -932,7 +954,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`,`${user.message_pdf_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`, `${user.message_pdf_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -959,7 +981,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.quote_check_form}`,`${user.quote_check_form}`
+                      `${API_URL}/${user.national_id}/${user.quote_check_form}`, `${user.quote_check_form}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -986,7 +1008,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_list}`,`${user.research_list}`
+                      `${API_URL}/${user.national_id}/${user.research_list}`, `${user.research_list}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1013,7 +1035,7 @@ const AShow = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.decision}`,`${user.decision}`
+                      `${API_URL}/${user.national_id}/${user.decision}`, `${user.decision}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1049,7 +1071,7 @@ const AShow = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`,`${user[`research${i + 1}_image_word`]}`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`, `${user[`research${i + 1}_image_word`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1080,7 +1102,7 @@ const AShow = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`,`${user[`research${i + 1}_image_pdf`]}`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`, `${user[`research${i + 1}_image_pdf`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1114,7 +1136,7 @@ const AShow = () => {
                         <button
                           onClick={() => {
                             downloadImage(
-                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`,`${user[`acceptance_letter${i + 1}`]}`
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`, `${user[`acceptance_letter${i + 1}`]}`
                             );
                           }}
                           class="atch-btn atch-btn2"
@@ -1135,7 +1157,7 @@ const AShow = () => {
             <h2>
               <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
               {user.response_date && user.response_date !== "null"
-                ? user.response_date?.slice(0, 10)
+                ? format(user.response_date)
                 : "لم يتم الرد بعد"}
             </h2>
           </div>
@@ -1200,7 +1222,7 @@ const AShow = () => {
                   <button
                     onClick={() => {
                       downloadImage(
-                        `${API_URL}/${user.national_id}/${user.response_pdf}`,`${user.response_pdf}`
+                        `${API_URL}/${user.national_id}/${user.response_pdf}`, `${user.response_pdf}`
                       );
                     }}
                     className="atch-btn atch-btn2"

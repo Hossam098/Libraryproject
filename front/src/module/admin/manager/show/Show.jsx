@@ -138,6 +138,29 @@ const ShowA = () => {
   //   return currentDate.toISOString().slice(0, 10);
   // };
 
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
   console.log(user);
   const handleCloseError = () => {
     setErrors("");
@@ -347,7 +370,7 @@ const ShowA = () => {
           ser_id: dataArray[1],
           ser_name: dataArray[2],
           app_id: dataArray[3],
-          response_date : ''
+          response_date: ''
         };
 
         if (user.role === 1) {
@@ -1127,7 +1150,7 @@ const ShowA = () => {
                 <td>تاريخ طلب كود الدفع</td>
                 <td>
                   {
-                    user.req_code_date ? user.req_code_date?.slice(0, 10) : null
+                    user.req_code_date ? format(user.req_code_date) : null
                   }
                 </td>
               </tr>
@@ -1136,7 +1159,7 @@ const ShowA = () => {
                   <td>تاريخ الطلب</td>
                   <td>
                     {
-                      user.submit_date ? user.submit_date.slice(0, 10) : null
+                      user.submit_date ? format(user.submit_date) : null
                     }
                   </td>
                 </tr>
@@ -1146,7 +1169,7 @@ const ShowA = () => {
                   <td>تاريخ اخر تعديل</td>
                   <td>
                     {
-                      user.edit_date ? user.edit_date?.slice(0, 10) : null
+                      user.edit_date ? format(user.edit_date) : null
                     }
                   </td>
                 </tr>
@@ -1248,7 +1271,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`,`${user.photo_payment_receipt}`
+                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`, `${user.photo_payment_receipt}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1275,7 +1298,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_list}`,`${user.research_list}`
+                      `${API_URL}/${user.national_id}/${user.research_list}`, `${user.research_list}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1302,7 +1325,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`,`${user.photo_college_letter}`
+                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`, `${user.photo_college_letter}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1329,7 +1352,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`,`${user.research_plan_ar_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`, `${user.research_plan_ar_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1356,7 +1379,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`,`${user.research_plan_ar_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`, `${user.research_plan_ar_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1383,7 +1406,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`,`${user.research_plan_en_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`, `${user.research_plan_en_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1410,7 +1433,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`,`${user.research_plan_en_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`, `${user.research_plan_en_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1437,7 +1460,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.translation_paper}`,`${user.translation_paper}`
+                      `${API_URL}/${user.national_id}/${user.translation_paper}`, `${user.translation_paper}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1464,7 +1487,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_word_ar}`,`${user.message_word_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_word_ar}`, `${user.message_word_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1491,7 +1514,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`,`${user.message_pdf_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`, `${user.message_pdf_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1518,7 +1541,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.quote_check_form}`,`${user.quote_check_form}`
+                      `${API_URL}/${user.national_id}/${user.quote_check_form}`, `${user.quote_check_form}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1545,7 +1568,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.decision}`,`${user.decision}`
+                      `${API_URL}/${user.national_id}/${user.decision}`, `${user.decision}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1581,7 +1604,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`,`${user[`research${i + 1}_image_word`]}`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`, `${user[`research${i + 1}_image_word`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1612,7 +1635,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`,`${user[`research${i + 1}_image_pdf`]}`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`, `${user[`research${i + 1}_image_pdf`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1646,7 +1669,7 @@ const ShowA = () => {
                         <button
                           onClick={() => {
                             downloadImage(
-                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`,`${user[`acceptance_letter${i + 1}`]}`
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`, `${user[`acceptance_letter${i + 1}`]}`
                             );
                           }}
                           class="atch-btn atch-btn2"
@@ -1668,7 +1691,7 @@ const ShowA = () => {
             <h2>
               <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
               {user.response_date && user.response_date !== "null" && (user.status == 5 || user.status == 6)
-                ? user.response_date?.slice(0, 10)
+                ? format(user.response_date)
                 : "لم يتم الرد بعد"}
             </h2>
           </div>
@@ -1739,7 +1762,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user.response_pdf}`,`${user.response_pdf}`
+                            `${API_URL}/${user.national_id}/${user.response_pdf}`, `${user.response_pdf}`
                           );
                         }}
                         className="atch-btn atch-btn2"
@@ -1748,7 +1771,7 @@ const ShowA = () => {
                       </button>
                     </div>
                   ) : user.response_pdf === null &&
-                    user.response_text !== null &&
+                    (user.response_text !== null || user.response_text !== "") &&
                     user.status !== 0 ? (
                     <h3>لم يتم ارسال ملف الرد </h3>
                   ) : user.manager_status === null &&

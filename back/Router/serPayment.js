@@ -66,10 +66,10 @@ serPayment.post('/payment',
             }
 
             /****     check if user has already submitted      ****/
-            const sqlSelect2 = "SELECT * FROM submit WHERE user_id = ? AND service_id = ? AND status = 0";
+            const sqlSelect2 = "SELECT * FROM submit WHERE user_id = ? AND service_id = ? AND (status != 5 OR status != 6)";
             const result2 = await query(sqlSelect2, [req.id, req.body.service_id]);
             if (result2.length > 0) {
-                error.push("الرجاء انتظار موافقة الادارة على الطلب السابق");
+                error.push(" لا يمكنك التقديم لهذه الخدمة الان لان لديك طلب  لها بانتظار الرد");
                 handleDeleteFile(req);
                 return res.status(400).json({ message: error });
             }

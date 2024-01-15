@@ -95,7 +95,29 @@ const ShowOnly = () => {
     saveAs(url, "image.jpg");
   };
 
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
 
   const [errors, setErrors] = useState();
 
@@ -263,7 +285,7 @@ const ShowOnly = () => {
                 <td>تاريخ طلب كود الدفع</td>
                 <td>
                   {
-                    user.req_code_date ? user.req_code_date?.slice(0, 10) : null
+                    user.req_code_date ? format(user.req_code_date) : null
                   }
 
                 </td>
@@ -273,7 +295,7 @@ const ShowOnly = () => {
                   <td>تاريخ الطلب</td>
                   <td>
                     {
-                      user.submit_date ? user.submit_date.slice(0, 10) : null
+                      user.submit_date ? format(user.submit_date) : null
                     }
                   </td>
                 </tr>
@@ -283,7 +305,7 @@ const ShowOnly = () => {
                   <td>تاريخ اخر تعديل</td>
                   <td>
                     {
-                      user.edit_date ? user.edit_date?.slice(0, 10) : null
+                      user.edit_date ? format(user.edit_date) : null
                     }
                   </td>
                 </tr>
@@ -809,7 +831,7 @@ const ShowOnly = () => {
             <h2>
               <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
               {user.response_date && user.response_date !== "null" && (user.status == 5 || user.status == 6)
-                ? user.response_date?.slice(0, 10)
+                ?  format(user.response_date)
                 : "لم يتم الرد بعد"}
             </h2>
           </div>

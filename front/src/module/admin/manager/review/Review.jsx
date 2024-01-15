@@ -78,7 +78,29 @@ const Review = () => {
 
     return appid;
   };
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
   return (
     <div className="super-container">
       <img src={img} alt="img" />
@@ -111,8 +133,8 @@ const Review = () => {
                       <td>{item.service_name_ar}</td>
                       <td>
                         {item.status === 0
-                          ? item.req_code_date?.slice(0, 10)
-                          : item.submit_date?.slice(0, 10)}
+                          ? format(item.req_code_date)
+                          : format(item.submit_date)}
                       </td>
                       <td>
                         {item.status === 0

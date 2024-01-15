@@ -47,7 +47,29 @@ const AllToCode = () => {
   const [filter, setFilter] = useState(student);
   const [filter2, setFilter2] = useState(student);
 
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
 
 
   const sername = (item) => {
@@ -217,7 +239,7 @@ const AllToCode = () => {
                       <td>{item.name}</td>
                       <td>{item.service_name_ar}</td>
                       <td>
-                        {item.req_code_date?.slice(0, 10)}
+                        {item.req_code_date ? format(item.req_code_date) : null}
                       </td>
                       <td>
                         {item.status === 0 ? "منتظر كود دفع"
