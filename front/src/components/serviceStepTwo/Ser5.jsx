@@ -105,7 +105,7 @@ const Ser5 = ({ ser }) => {
           .then((res) => {
             setData({
               payment_photo: res.data.photo_payment_receipt,
-              research_list: res.data.research_list,
+              research_list: res.data.research_list !== null ? res.data.research_list : "",
             });
             setwords({
               word1:
@@ -257,10 +257,10 @@ const Ser5 = ({ ser }) => {
       setError(t(`service${id}-step-two-err.payment-photo`));
       return;
     }
-    if (!data.research_list) {
-      setError(t(`service${id}-step-two-err.research_list`));
-      return;
-    }
+    // if (!data.research_list) {
+    //   setError(t(`service${id}-step-two-err.research_list`));
+    //   return;
+    // }
 
     const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
     const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
