@@ -86,7 +86,7 @@ manager.get('/getAllManagersToAssign',
     async (req, res) => {
         let error = [];
         try {
-            const sqlSelect = "SELECT * FROM manager WHERE service_id != 9 ";
+            const sqlSelect = "SELECT * FROM manager ";
             const result = await query(sqlSelect);
             if (result.length > 0) {
                 return res.status(200).json(result);
