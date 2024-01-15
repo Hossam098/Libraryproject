@@ -95,11 +95,11 @@ const ShowOnly = () => {
     saveAs(url, "image.jpg");
   };
 
- 
+
 
   const [errors, setErrors] = useState();
 
-  
+
 
   console.log(user);
   const handleCloseError = () => {
@@ -117,10 +117,10 @@ const ShowOnly = () => {
     setConfirmEdit(false);
   };
 
- 
-  
 
- 
+
+
+
 
 
   const handleEditUser = () => {
@@ -152,7 +152,7 @@ const ShowOnly = () => {
 
   return (
     <>
-    {confirmEdit && (
+      {confirmEdit && (
         <PopupConfirmMsg
           message={"تأكيد تعديل بيانات الطالب"}
           onClose={handleCloseError}
@@ -238,9 +238,9 @@ const ShowOnly = () => {
                 <td>
                   {+user.university === 1 ? "جامعه حلوان" : user.university}
                 </td>
-                
+
               </tr>
-              
+
               <tr>
                 <td>الكليه</td>
                 <td>{user.faculty_name_ar ? user.faculty_name_ar : user.faculity}</td>
@@ -332,6 +332,33 @@ const ShowOnly = () => {
                     />
                   </td>
                   {/* <td>{user.files_numbers}</td> */}
+                </tr>
+              )}
+              {user.research_list && (
+                <tr>
+                  <td> {t(`service5-step-two.research_list`)} </td>
+                  <td className="att-row">
+                    <button
+                      onClick={() => {
+                        openImage(
+                          `${API_URL}/${user.national_id}/${user.research_list}`
+                        );
+                      }}
+                      class="atch-btn"
+                    >
+                      Open
+                    </button>
+                    <button
+                      onClick={() => {
+                        downloadImage(
+                          `${API_URL}/${user.national_id}/${user.research_list}`, `${user.research_list}`
+                        );
+                      }}
+                      class="atch-btn atch-btn2"
+                    >
+                      Download
+                    </button>
+                  </td>
                 </tr>
               )}
               {user.publish_date && (
@@ -774,7 +801,7 @@ const ShowOnly = () => {
             ))}
         </table>
 
-        
+
         <h1>الرد المرسل من المكتبه</h1>
         <hr style={{ width: "90%", marginBottom: "1rem", height: "3px" }} />
         <div className="resp-cont">
@@ -792,56 +819,56 @@ const ShowOnly = () => {
               <span style={{ color: "#19355A" }}>{t("res-code")}</span>:{" "}
               {user.payment_code ? (
                 user.payment_code
-              ): (
+              ) : (
                 "لم يتم ارسال كود الدفع بعد"
               )}
             </h2>
           </div>
-              <div className="resp">
-                <h2>
-                  <span style={{ color: "#19355A" }}>{t("notes")}</span>
-                  {user.response_text && user.response_text !== "null" && user.response_text !== null ? (
-                    user.response_text
-                  ) :  'لم يتم ارسال ملحوظات بعد' }
-                </h2>
-              </div>
-              <div className="resp">
-                <div className="inputt-atch">
-                  {user.response_pdf !== null  ? (
-                    <div className="atch-btns">
-                      <button
-                        onClick={() => {
-                          openImage(
-                            `${API_URL}/${user.national_id}/${user.response_pdf}`
-                          );
-                        }}
-                        className="atch-btn"
-                      >
-                        Open
-                      </button>
-                      <button
-                        onClick={() => {
-                          downloadImage(
-                            `${API_URL}/${user.national_id}/${user.response_pdf}`
-                          );
-                        }}
-                        className="atch-btn atch-btn2"
-                      >
-                        Download
-                      </button>
-                    </div>
-                  ) : user.response_pdf === null  ? (
-                    <h3>لم يتم ارسال ملف الرد </h3>
-                  )  : null}
-                  <h2>
-                    <span style={{ color: "#19355A" }}>{t("att-res")}</span>{" "}
-                  </h2>
+          <div className="resp">
+            <h2>
+              <span style={{ color: "#19355A" }}>{t("notes")}</span>
+              {user.response_text && user.response_text !== "null" && user.response_text !== null ? (
+                user.response_text
+              ) : 'لم يتم ارسال ملحوظات بعد'}
+            </h2>
+          </div>
+          <div className="resp">
+            <div className="inputt-atch">
+              {user.response_pdf !== null ? (
+                <div className="atch-btns">
+                  <button
+                    onClick={() => {
+                      openImage(
+                        `${API_URL}/${user.national_id}/${user.response_pdf}`
+                      );
+                    }}
+                    className="atch-btn"
+                  >
+                    Open
+                  </button>
+                  <button
+                    onClick={() => {
+                      downloadImage(
+                        `${API_URL}/${user.national_id}/${user.response_pdf}`
+                      );
+                    }}
+                    className="atch-btn atch-btn2"
+                  >
+                    Download
+                  </button>
                 </div>
-              </div>
+              ) : user.response_pdf === null ? (
+                <h3>لم يتم ارسال ملف الرد </h3>
+              ) : null}
+              <h2>
+                <span style={{ color: "#19355A" }}>{t("att-res")}</span>{" "}
+              </h2>
+            </div>
+          </div>
 
-          
+
         </div>
-        
+
       </section>
       {errors && <PopupErrorMsg message={errors} onClose={handleCloseError} />}
     </>

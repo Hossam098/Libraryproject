@@ -1107,46 +1107,46 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                             return res.status(400).json({ message: error });
                         }
                     }
-                    for (let i = 1; i <= req.body.files_numbers; i++) {
-                        if (!req.files[`word${i}`]) {
-                            handleDeleteFile5(req);
-                            error.push(`Please upload word${i}`);
-                            return res.status(400).json({ message: error });
-                        } else {
-                            const ext = req.files[`word${i}`][0].filename.split(".").pop();
-                            if (ext !== "docx" && ext !== "doc") {
-                                handleDeleteFile5(req);
-                                error.push(`Please upload word${i}`);
-                                return res.status(400).json({ message: error });
-                            }
-                        }
-                    }
-                    for (let i = 1; i <= req.body.files_numbers; i++) {
-                        if (!req.files[`pdf${i}`]) {
-                            handleDeleteFile5(req);
-                            error.push(`Please upload pdf${i}`);
-                            return res.status(400).json({ message: error });
-                        } else {
-                            const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
-                            if (ext !== "pdf") {
-                                handleDeleteFile5(req);
-                                error.push(`Please upload pdf${i}`);
-                                return res.status(400).json({ message: error });
-                            }
-                        }
-                    }
-                    for (let i = 11; i <= 20; i++) {
+                    // for (let i = 1; i <= req.body.files_numbers; i++) {
+                    //     if (!req.files[`word${i}`]) {
+                    //         handleDeleteFile5(req);
+                    //         error.push(`Please upload word${i}`);
+                    //         return res.status(400).json({ message: error });
+                    //     } else {
+                    //         const ext = req.files[`word${i}`][0].filename.split(".").pop();
+                    //         if (ext !== "docx" && ext !== "doc") {
+                    //             handleDeleteFile5(req);
+                    //             error.push(`Please upload word${i}`);
+                    //             return res.status(400).json({ message: error });
+                    //         }
+                    //     }
+                    // }
+                    // for (let i = 1; i <= req.body.files_numbers; i++) {
+                    //     if (!req.files[`pdf${i}`]) {
+                    //         handleDeleteFile5(req);
+                    //         error.push(`Please upload pdf${i}`);
+                    //         return res.status(400).json({ message: error });
+                    //     } else {
+                    //         const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
+                    //         if (ext !== "pdf") {
+                    //             handleDeleteFile5(req);
+                    //             error.push(`Please upload pdf${i}`);
+                    //             return res.status(400).json({ message: error });
+                    //         }
+                    //     }
+                    // }
+                    // for (let i = 11; i <= 20; i++) {
 
-                        if (req.files[`pdf${i}`]) {
-                            const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
-                            if (ext !== "pdf") {
-                                handleDeleteFile5(req);
-                                error.push(`Please upload acceptance_letter pdf`);
-                                return res.status(400).json({ message: error });
+                    //     if (req.files[`pdf${i}`]) {
+                    //         const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
+                    //         if (ext !== "pdf") {
+                    //             handleDeleteFile5(req);
+                    //             error.push(`Please upload acceptance_letter pdf`);
+                    //             return res.status(400).json({ message: error });
 
-                            }
-                        }
-                    }
+                    //         }
+                    //     }
+                    // }
 
                 }
 

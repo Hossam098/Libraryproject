@@ -268,11 +268,13 @@ const Ser5 = ({ ser }) => {
     for (let i = 0; i < number; i++) {
       const file = words[`word${i + 1}`];
 
-      if (!file) {
-        setError(t(`service${id}-step-two-err.word${i + 1}`));
-        return;
+      // if (!file) {
+      //   setError(t(`service${id}-step-two-err.word${i + 1}`));
+      //   return;
+      // }
+      if (!words[`word${i + 1}`]) {
+        continue;
       }
-
       const fileName = file?.name || file;
       if (!validExtensions.test(fileName)) {
         setError(t(`service${id}-step-two-err.word${i + 1}`));
@@ -282,9 +284,12 @@ const Ser5 = ({ ser }) => {
     for (let i = 0; i < number; i++) {
       const file = pdfs[`pdf${i + 1}`];
 
-      if (!file) {
-        setError(t(`service${id}-step-two-err.pdf${i + 1}`));
-        return;
+      // if (!file) {
+      //   setError(t(`service${id}-step-two-err.pdf${i + 1}`));
+      //   return;
+      // }
+      if (!pdfs[`pdf${i + 1}`]) {
+        continue;
       }
       const fileName = file?.name || file;
       if (!validExtensions2.test(fileName)) {

@@ -16,20 +16,20 @@ const Serinfo = ({ service, User }) => {
     service.ser_upgrade !== null
       ? service.ser_upgrade
       : service.ser_reg !== null
-      ? service.ser_reg
-      : service.ser_formation !== null
-      ? service.ser_formation
-      : service.ser_grant !== null
-      ? service.ser_grant
-      : service.ser_best !== null
-      ? service.ser_best
-      : service.ser_knowledge !== null
-      ? service.ser_knowledge
-      : service.ser_personal !== null
-      ? service.ser_personal
-      : service.ser_magazine !== null
-      ? service.ser_magazine
-      : null;
+        ? service.ser_reg
+        : service.ser_formation !== null
+          ? service.ser_formation
+          : service.ser_grant !== null
+            ? service.ser_grant
+            : service.ser_best !== null
+              ? service.ser_best
+              : service.ser_knowledge !== null
+                ? service.ser_knowledge
+                : service.ser_personal !== null
+                  ? service.ser_personal
+                  : service.ser_magazine !== null
+                    ? service.ser_magazine
+                    : null;
 
   const [data, setData] = useState({});
   const downloadImage = (url, filename) => {
@@ -50,11 +50,11 @@ const Serinfo = ({ service, User }) => {
     try {
       axios
         .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => {})
+        .then((res) => { })
         .catch((err) => {
           navigate("/Library/login");
         });
-    } catch (err) {}
+    } catch (err) { }
 
     try {
       axios
@@ -144,7 +144,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.photo_payment_receipt}`,`${data.photo_payment_receipt}`
+                    `${API_URL}/${User.national_id}/${data.photo_payment_receipt}`, `${data.photo_payment_receipt}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -174,7 +174,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.photo_college_letter}`,`${data.photo_college_letter}`
+                    `${API_URL}/${User.national_id}/${data.photo_college_letter}`, `${data.photo_college_letter}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -204,7 +204,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.research_plan_ar_pdf}`,`${data.research_plan_ar_pdf}`
+                    `${API_URL}/${User.national_id}/${data.research_plan_ar_pdf}`, `${data.research_plan_ar_pdf}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -234,7 +234,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.research_plan_ar_word}`,`${data.research_plan_ar_word}`
+                    `${API_URL}/${User.national_id}/${data.research_plan_ar_word}`, `${data.research_plan_ar_word}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -264,7 +264,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.research_plan_en_word}`,`${data.research_plan_en_word}`
+                    `${API_URL}/${User.national_id}/${data.research_plan_en_word}`, `${data.research_plan_en_word}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -294,7 +294,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.research_plan_en_pdf}`,`${data.research_plan_en_pdf}`
+                    `${API_URL}/${User.national_id}/${data.research_plan_en_pdf}`, `${data.research_plan_en_pdf}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -324,7 +324,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.translation_paper}`,`${data.translation_paper}`
+                    `${API_URL}/${User.national_id}/${data.translation_paper}`, `${data.translation_paper}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -354,7 +354,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.message_word_ar}`,`${data.message_word_ar}`
+                    `${API_URL}/${User.national_id}/${data.message_word_ar}`, `${data.message_word_ar}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -384,7 +384,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.message_pdf_ar}`,`${data.message_pdf_ar}`
+                    `${API_URL}/${User.national_id}/${data.message_pdf_ar}`, `${data.message_pdf_ar}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -414,8 +414,34 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.quote_check_form}`,`${data.quote_check_form}`
+                    `${API_URL}/${User.national_id}/${data.quote_check_form}`, `${data.quote_check_form}`
                   );
+                }}
+                style={{ background: "#AD8700" }}
+                class="atch-btn"
+              >
+                {t("download")}
+              </button>
+            </div>
+          </div>
+        )}
+        {data.research_list && (
+          <div className="inputt-atch">
+            <h3>{t(`service5-step-two.research_list`)}</h3>
+            <div className="atch-btns">
+              <button
+                className="atch-btn-open"
+                onClick={() => {
+                  openImage(`${API_URL}/${User.national_id}/${data.research_list}`);
+                }}
+                style={{ background: "#19355A" }}
+                class="atch-btn"
+              >
+                {t("open")}
+              </button>
+              <button
+                onClick={() => {
+                  downloadImage(`${API_URL}/${User.national_id}/${data.research_list}`, `${data.research_list}`);
                 }}
                 style={{ background: "#AD8700" }}
                 class="atch-btn"
@@ -442,7 +468,7 @@ const Serinfo = ({ service, User }) => {
               <button
                 onClick={() => {
                   downloadImage(
-                    `${API_URL}/${User.national_id}/${data.decision}`,`${data.decision}`
+                    `${API_URL}/${User.national_id}/${data.decision}`, `${data.decision}`
                   );
                 }}
                 style={{ background: "#AD8700" }}
@@ -465,8 +491,7 @@ const Serinfo = ({ service, User }) => {
                       className="atch-btn-open"
                       onClick={() => {
                         openImage(
-                          `${API_URL}/${User.national_id}/${
-                            data[`research${i + 1}_image_word`]
+                          `${API_URL}/${User.national_id}/${data[`research${i + 1}_image_word`]
                           }`
                         );
                       }}
@@ -478,7 +503,7 @@ const Serinfo = ({ service, User }) => {
                     <button
                       onClick={() => {
                         downloadImage(
-                          `${API_URL}/${User.national_id}/${data[`research${i + 1}_image_word`]}`,`${data[`research${i + 1}_image_word`]}`
+                          `${API_URL}/${User.national_id}/${data[`research${i + 1}_image_word`]}`, `${data[`research${i + 1}_image_word`]}`
                         );
                       }}
                       style={{ background: "#AD8700" }}
@@ -496,8 +521,7 @@ const Serinfo = ({ service, User }) => {
                     <button
                       onClick={() => {
                         openImage(
-                          `${API_URL}/${User.national_id}/${
-                            data[`research${i + 1}_image_pdf`]
+                          `${API_URL}/${User.national_id}/${data[`research${i + 1}_image_pdf`]
                           }`
                         );
                       }}
@@ -509,7 +533,7 @@ const Serinfo = ({ service, User }) => {
                     <button
                       onClick={() => {
                         downloadImage(
-                          `${API_URL}/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`,`${data[`research${i + 1}_image_pdf`]}`
+                          `${API_URL}/${User.national_id}/${data[`research${i + 1}_image_pdf`]}`, `${data[`research${i + 1}_image_pdf`]}`
                         );
                       }}
                       style={{ background: "#AD8700" }}
@@ -530,8 +554,7 @@ const Serinfo = ({ service, User }) => {
                       <button
                         onClick={() => {
                           openImage(
-                            `${API_URL}/${User.national_id}/${
-                              data[`acceptance_letter${i + 1}`]
+                            `${API_URL}/${User.national_id}/${data[`acceptance_letter${i + 1}`]
                             }`
                           );
                         }}
@@ -543,7 +566,7 @@ const Serinfo = ({ service, User }) => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`,`${data[`acceptance_letter${i + 1}`]}`
+                            `${API_URL}/${User.national_id}/${data[`acceptance_letter${i + 1}`]}`, `${data[`acceptance_letter${i + 1}`]}`
                           );
                         }}
                         style={{ background: "#AD8700" }}
@@ -562,7 +585,7 @@ const Serinfo = ({ service, User }) => {
 
       <h1>{t("response")}</h1>
       <hr style={{ width: "100%" }} />
-      {data.response_date &&(data.status == 5 || data.status == 6) && (
+      {data.response_date && (data.status == 5 || data.status == 6) && (
         <h2>
           <span style={{ color: "#AD8700" }}>{t("date-response")} </span> :{" "}
           {data.response_date?.slice(0, 10)}
@@ -608,7 +631,7 @@ const Serinfo = ({ service, User }) => {
                   <button
                     onClick={() => {
                       downloadImage(
-                        `${API_URL}/${User.national_id}/${data.response_pdf}` ,`${data.response_pdf}`
+                        `${API_URL}/${User.national_id}/${data.response_pdf}`, `${data.response_pdf}`
                       );
                     }}
                     style={{ background: "#AD8700" }}

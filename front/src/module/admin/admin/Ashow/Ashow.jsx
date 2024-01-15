@@ -969,6 +969,33 @@ const AShow = () => {
               </td>
             </tr>
           )}
+          {user.research_list && (
+            <tr>
+              <td> {t(`service5-step-two.research_list`)} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.research_list}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.research_list}`,`${user.research_list}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
           {user.decision && (
             <tr>
               <td> {t("service7-step3")} </td>
