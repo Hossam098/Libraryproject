@@ -82,7 +82,7 @@ const AdminsList = () => {
       }
     } catch (err) {
       if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
-      console.log(err);
+      // console.log(err);
       setError(err);
     }
   };
@@ -102,13 +102,13 @@ const AdminsList = () => {
           })
           .catch((error) => {
             if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
-            setError(error.response.data.message[0].msg? error.response.data.message[0].msg : error.response.data.message);
+            setError(error.response.data.message[0].msg ? error.response.data.message[0].msg : error.response.data.message);
             // console.log(error.response.data.message
           });
       }
     } catch (err) {
       if (err.response.status === 401) window.location.replace("/Library/AdminLogin");
-      console.log(err);
+      // console.log(err);
       setError(err);
     }
   };
@@ -148,7 +148,7 @@ const AdminsList = () => {
           .catch((error) => {
             if (error.response.status === 401) window.location.replace("/Library/AdminLogin");
             setError(error.response.data.message[0]);
-            
+
 
           });
       }

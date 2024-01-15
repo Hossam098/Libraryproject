@@ -7,15 +7,15 @@ import Footer from '../../../components/footer/Footer';
 
 const Upage = () => {
 
-  useEffect(() => {
-    try {
-      if (!localStorage.getItem('token')) {
+  // useEffect(() => {
+  //   try {
+  //     if (!localStorage.getItem('token')) {
 
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }, [])
+  //     }
+  //   } catch (err) {
+  //     // console.log(err)
+  //   }
+  // }, [])
   return (
     <div className='pageContainer'>
       <Unav />

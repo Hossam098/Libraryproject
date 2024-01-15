@@ -46,11 +46,11 @@ const AdminReset = () => {
             if (err.response.status == 401) {
               window.location.replace("/Library/ManagerLogin");
             }
-            console.log(err.response.data.message[0]);
+            // console.log(err.response.data.message[0]);
             setErrors2(err.response.data.message[0]);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     } else {
       console.log(errors);

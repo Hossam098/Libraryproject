@@ -43,11 +43,11 @@ const Ser5 = ({ ser }) => {
         .get(`${API_URL}/auth/check`, { withCredentials: true })
         .then((res) => { })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           navigate("/Library/login");
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
     if (status == 4) {
       try {
@@ -59,10 +59,10 @@ const Ser5 = ({ ser }) => {
             });
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   }, []);
@@ -118,7 +118,9 @@ const Ser5 = ({ ser }) => {
             navigate(`/Library/Myservices`);
           })
           .catch((err) => {
-            console.log(err.response.data.message[0]);
+            if (err.response.status == 401) {
+              return window.location.replace("/Library/login");
+            }
             setError(err.response.data.message[0]);
             if (
               err &&
@@ -130,7 +132,7 @@ const Ser5 = ({ ser }) => {
                 !err.response.data[0].user &&
                 err.response.data[0].user != undefined
               ) {
-                navigate("/Library/login");
+                return window.location.replace("/Library/login");
               }
             }
             setMsg(null);
@@ -142,7 +144,7 @@ const Ser5 = ({ ser }) => {
             setDisabled(false);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         console.log(err.response.data);
         setMsg(null);
         setProgress((prevState) => ({
@@ -197,7 +199,9 @@ const Ser5 = ({ ser }) => {
             navigate(`/Library`);
           })
           .catch((err) => {
-            console.log(err.response.data.message[0]);
+            if (err.response.status == 401) {
+              return window.location.replace("/Library/login");
+            }
             setError(err.response.data.message[0]);
             if (
               err &&
@@ -209,7 +213,7 @@ const Ser5 = ({ ser }) => {
                 !err.response.data[0].user &&
                 err.response.data[0].user != undefined
               ) {
-                navigate("/Library/login");
+                return window.location.replace("/Library/login");
               }
             }
             setMsg(null);
@@ -221,7 +225,7 @@ const Ser5 = ({ ser }) => {
             setDisabled(false);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         console.log(err.response.data);
         setMsg(null);
         setProgress((prevState) => ({

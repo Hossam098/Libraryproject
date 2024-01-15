@@ -51,7 +51,7 @@ const Register = () => {
         navigate("/Library/");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setLogged(false);
       });
     if (Object.keys(errors).length === 0 && isSubmitting) {
@@ -62,7 +62,7 @@ const Register = () => {
           navigate("/Library/login");
         })
         .catch((err) => {
-          console.log(err.response.data.message[0]);
+          // console.log(err.response.data.message[0]);
           setErrors2(err.response.data.message[0]);
         });
     }
@@ -71,7 +71,7 @@ const Register = () => {
         setFaculty(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [errors]);
 
@@ -84,12 +84,12 @@ const Register = () => {
   const validate = (values) => {
     const errors = {};
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-    
+
     if (!values.email) {
       errors.email = `${t("email-err")}`;
     } else if (!regex.test(values.email)) {
       errors.email = `${t("email-v-err")}`;
-    } 
+    }
     else if (!regex.test(values.email) || !values.email.includes(".edu")) {
       errors.email = `${t("email-t-err")}`;
     }
@@ -301,7 +301,7 @@ const Register = () => {
                       placeholder={t("e-uni")}
                       value={user.other_uni}
                       onChange={(e) => {
-                        setUser({ ...user, other_uni: e.target.value , faculity_id: ""});
+                        setUser({ ...user, other_uni: e.target.value, faculity_id: "" });
                       }}
                     />
                     <p className="error">{errors.other_uni}</p>
@@ -321,7 +321,7 @@ const Register = () => {
                         }
                         value={user.faculity_id}
                         onChange={(e) => {
-                          setUser({ ...user, faculity_id: e.target.value , other_uni: "" , faculity: ""});
+                          setUser({ ...user, faculity_id: e.target.value, other_uni: "", faculity: "" });
                         }}
                       >
                         <option value="">{t("fac")} </option>

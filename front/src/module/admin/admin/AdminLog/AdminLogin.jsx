@@ -51,7 +51,7 @@ const AdminLogin = () => {
             setErrors2(err.response.data.message[0]);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     } else {
       // console.log(errors);

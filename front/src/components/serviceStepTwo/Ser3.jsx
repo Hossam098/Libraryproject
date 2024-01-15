@@ -79,10 +79,10 @@ const Ser3 = ({ ser }) => {
         .then((res) => { })
         .catch((err) => {
           setDisabled(true);
-          navigate("/Library/login");
+          window.location.replace("/Library/login");
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
 
     if (status == 3) {
@@ -184,10 +184,10 @@ const Ser3 = ({ ser }) => {
             });
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   }, []);
@@ -303,7 +303,9 @@ const Ser3 = ({ ser }) => {
           navigate(`/Library`);
         })
         .catch((err) => {
-          console.log(err.response.data.message[0]);
+          if (err.response.status == 401) {
+            return window.location.replace("/Library/login");
+          }
           setError(err.response.data.message[0]);
           if (
             err &&
@@ -315,7 +317,7 @@ const Ser3 = ({ ser }) => {
               !err.response.data[0].user &&
               err.response.data[0].user != undefined
             ) {
-              navigate("/Library/login");
+              return window.location.replace("/Library/login");
             }
           }
           setMsg(null);
@@ -327,7 +329,7 @@ const Ser3 = ({ ser }) => {
           setDisabled(false);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       console.log(err.response.data);
       setDisabled(false);
     }

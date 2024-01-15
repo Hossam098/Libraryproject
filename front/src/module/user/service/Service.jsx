@@ -35,13 +35,13 @@ const Service = (ID, Ser) => {
     try {
       axios
         .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => {})
+        .then((res) => { })
         .catch((err) => {
-          console.log(err);
-          navigate("/Library/login");
+          // console.log(err);
+          window.location.replace("/Library/login");
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 

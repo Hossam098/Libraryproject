@@ -574,16 +574,14 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile2(req);
                             error.push("Please upload image or pdf or word");
                             return res.status(400).json({ message: error });
                         }
                     }
-
+                    
                     if (!req.files.research) {
                         handleDeleteFile2(req);
                         error.push("Please upload research");
@@ -610,23 +608,24 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                         }
                     }
 
-                    if (!req.files.form) {
-                        handleDeleteFile2(req);
-                        error.push("Please upload form");
-                        return res.status(400).json({ message: error });
-                    } else {
-                        const ext = req.files.form[0].filename.split(".").pop();
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile2(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
+                    // if (!req.files.form) {
+                    //     handleDeleteFile2(req);
+                    //     error.push("Please upload form");
+                    //     return res.status(400).json({ message: error });
+                    // } else {
+                    // const ext = req?.files?.form[0]?.filename.split(".").pop();
+                    // if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
+                    //     handleDeleteFile2(req);
+                    //     error.push("Please upload image or pdf or word");
+                    //     return res.status(400).json({ message: error });
+                    // }
+
+
                 }
                 let payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : resultSelect[0].photo_payment_receipt;
                 let research = req.files.research ? req.files.research[0].filename : resultSelect[0].message_pdf_ar;
                 let research_word = req.files.research_word ? req.files.research_word[0].filename : resultSelect[0].message_word_ar;
-                let form = req.files.form ? req.files.form[0].filename : resultSelect[0].quote_check_form;
+                let form = req.files?.form ? req?.files?.form[0]?.filename : resultSelect[0].quote_check_form;
 
 
 

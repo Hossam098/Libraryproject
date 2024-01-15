@@ -41,7 +41,7 @@ const Send = () => {
 
 
         } catch (err) {
-            console.log(err)
+            // console.log(err)
         }
     }, [])
 
@@ -89,7 +89,7 @@ const Send = () => {
                     else setErrors(t('errmsg'))
                 })
         }catch (err) {
-            console.log(err)
+            // console.log(err)
         }
     }
 

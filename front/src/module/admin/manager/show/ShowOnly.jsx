@@ -81,7 +81,7 @@ const ShowOnly = () => {
         setFaculty(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
   const openImage = (url) => {
@@ -831,7 +831,7 @@ const ShowOnly = () => {
             <h2>
               <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
               {user.response_date && user.response_date !== "null" && (user.status == 5 || user.status == 6)
-                ?  format(user.response_date)
+                ? format(user.response_date)
                 : "لم يتم الرد بعد"}
             </h2>
           </div>

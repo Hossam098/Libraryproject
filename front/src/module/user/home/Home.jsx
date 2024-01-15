@@ -36,7 +36,7 @@ const Home = () => {
           setServices(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
 
       axios
@@ -45,10 +45,10 @@ const Home = () => {
           setEvents(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 
@@ -172,74 +172,74 @@ const Home = () => {
       <hr style={{ width: "90%", margin: "auto" }} />
 
       {events.length > 0 && (
-      <section
-        id="services"
-        style={
-          localStorage.getItem("i18nextLng") == "en"
-            ? { direction: "ltr" }
-            : { direction: "rtl" }
-        }
-      >
-        <Fade left duration={1500}>
-          <h2>{t("events-title")}</h2>
-        </Fade>
-        <Fade right duration={1500}>
-          <h2
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "400",
-              lineHeight: "1.5",
-              width: "80%",
-              textAlign: "center",
-              opacity: "0.8",
-            }}
-          >
-            {t("events-info")}
-          </h2>
-        </Fade>
+        <section
+          id="services"
+          style={
+            localStorage.getItem("i18nextLng") == "en"
+              ? { direction: "ltr" }
+              : { direction: "rtl" }
+          }
+        >
+          <Fade left duration={1500}>
+            <h2>{t("events-title")}</h2>
+          </Fade>
+          <Fade right duration={1500}>
+            <h2
+              style={{
+                fontSize: "1.5rem",
+                fontWeight: "400",
+                lineHeight: "1.5",
+                width: "80%",
+                textAlign: "center",
+                opacity: "0.8",
+              }}
+            >
+              {t("events-info")}
+            </h2>
+          </Fade>
 
 
-        <div className="services__container">
-          {Array.isArray(events) &&
-            events.map((event, index) => {
-              return (
-                <Zoom top duration={1700} key={event.id}>
-                  <div className="container-event" 
-                  onClick={(e) => {
-                    setVisible(true);
-                    setEventDetails(event);
-                  }}
-                  style={{ cursor: 'pointer' }}>
-                    <div className="event-img">
-                      <img src={`${API_URL}/adminsEvents/${event.img}`} 
-                      alt="Image" />
+          <div className="services__container">
+            {Array.isArray(events) &&
+              events.map((event, index) => {
+                return (
+                  <Zoom top duration={1700} key={event.id}>
+                    <div className="container-event"
+                      onClick={(e) => {
+                        setVisible(true);
+                        setEventDetails(event);
+                      }}
+                      style={{ cursor: 'pointer' }}>
+                      <div className="event-img">
+                        <img src={`${API_URL}/adminsEvents/${event.img}`}
+                          alt="Image" />
+                      </div>
+                      <div className="event-txt">
+                        <h3>
+                          {event.title}
+                        </h3>
+                        <hr />
+                        <p>
+                          {event.content}
+                        </p>
+                      </div>
+                      <div className="event-date">
+                        <p>
+                          <span>{t("from")} : </span>{event.from_date?.slice(0, 10)}
+                        </p>
+                        <p>
+                          <span>{t("to")} : </span>{event.to_date?.slice(0, 10)}
+                        </p>
+                        <p>
+                          <span>{t("place")} : </span>{event.place}
+                        </p>
+                      </div>
                     </div>
-                    <div className="event-txt">
-                      <h3>
-                        {event.title}
-                      </h3>
-                      <hr />
-                      <p>
-                        {event.content}
-                      </p>
-                    </div>
-                    <div className="event-date">
-                      <p>
-                        <span>{t("from")} : </span>{event.from_date?.slice(0, 10)}
-                      </p>
-                      <p>
-                        <span>{t("to")} : </span>{event.to_date?.slice(0, 10)}
-                      </p>
-                      <p>
-                        <span>{t("place")} : </span>{event.place}
-                      </p>
-                    </div>
-                  </div>
-                </Zoom>
-              ); 
-            })}
-        </div>
-      </section>
+                  </Zoom>
+                );
+              })}
+          </div>
+        </section>
       )}
       <hr style={{ width: "90%", margin: "auto" }} />
       <Profit />

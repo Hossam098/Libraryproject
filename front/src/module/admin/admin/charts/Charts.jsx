@@ -27,7 +27,7 @@ const Charts = () => {
           window.location.replace("/Library/AdminLOgin");
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 
@@ -149,21 +149,21 @@ const Charts = () => {
               {
                 data: [
                   filter?.length >= 0 &&
-                    filter?.filter((item) => item.ser_grant).length,
+                  filter?.filter((item) => item.ser_grant).length,
                   filter?.length >= 0 &&
-                    filter?.filter((item) => item.ser_formation).length,
+                  filter?.filter((item) => item.ser_formation).length,
                   filter?.length >= 0 &&
-                    filter?.filter((item) => item.ser_upgrade).length,
+                  filter?.filter((item) => item.ser_upgrade).length,
                   filter?.length >= 0 &&
-                    filter?.filter((item) => item.ser_reg).length,
+                  filter?.filter((item) => item.ser_reg).length,
                   filter?.length >= 0 &&
-                    filter?.filter((item) => item.ser_best).length,
+                  filter?.filter((item) => item.ser_best).length,
                   filter?.length >= 0 &&
-                    filter?.filter((item) => item.ser_personal).length,
+                  filter?.filter((item) => item.ser_personal).length,
                   filter?.length >= 0 &&
-                    filter?.filter((item) => item.ser_magazine).length,
+                  filter?.filter((item) => item.ser_magazine).length,
                   filter?.length >= 0 &&
-                    filter?.filter((item) => item.ser_knowledge).length,
+                  filter?.filter((item) => item.ser_knowledge).length,
                 ],
               },
             ]}

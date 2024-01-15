@@ -52,7 +52,7 @@ const Serinfo = ({ service, User }) => {
         .get(`${API_URL}/auth/check`, { withCredentials: true })
         .then((res) => { })
         .catch((err) => {
-          navigate("/Library/login");
+          window.location.replace("/Library/login");
         });
     } catch (err) { }
 
@@ -68,7 +68,7 @@ const Serinfo = ({ service, User }) => {
           // console.log(err)
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, [id]);
   const number = data.files_numbers;

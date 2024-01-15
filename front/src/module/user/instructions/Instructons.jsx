@@ -25,11 +25,11 @@ const Instructons = () => {
           setLogged(true);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setLogged(false);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setLogged(false);
     }
   }, []);
@@ -80,24 +80,24 @@ const Instructons = () => {
           >
             {id == 1 || id == 2 || id == 3 || id == 4 || id == 5 || id == 6 ? (
               <>
-              {id != 3 && (
-                <li>
-                  1- {t(`service${id}-step1`)}
-                  {id == 5 && (
-                    <Link
-                      to="https://sso.scu.eg/"
-                      style={{
-                        color: "#ad8700",
-                        textDecoration: "underline",
-                        fontWeight: "bolder",
-                      }}
-                    >
-                      {" "}
-                      https://sso.scu.eg
-                    </Link>
-                  )}
-                </li>
-              )}
+                {id != 3 && (
+                  <li>
+                    1- {t(`service${id}-step1`)}
+                    {id == 5 && (
+                      <Link
+                        to="https://sso.scu.eg/"
+                        style={{
+                          color: "#ad8700",
+                          textDecoration: "underline",
+                          fontWeight: "bolder",
+                        }}
+                      >
+                        {" "}
+                        https://sso.scu.eg
+                      </Link>
+                    )}
+                  </li>
+                )}
 
                 {id == 5 ? (
                   <>
@@ -115,7 +115,7 @@ const Instructons = () => {
                   <li>2- {t("service1-step2")}</li>
                 ) : null}
                 {id == 5 ? (
-                <p>*** {t("service5-step0")} ***</p>
+                  <p>*** {t("service5-step0")} ***</p>
                 ) : (
                   <p>*** {t("service1-step3")} ***</p>
                 )}

@@ -16,7 +16,6 @@ const PopupAddEvent = ({ event, setEvent, onClose }) => {
 
 
   const addEvent = () => {
-    console.log(event);
     if (event.title.length == 0) {
       setError("من فضلك ادخل عنوان الخبر");
     } else if (event.content.length == 0) {
@@ -52,10 +51,9 @@ const PopupAddEvent = ({ event, setEvent, onClose }) => {
           .catch((err) => {
             if (err.response.status == 401)
               window.location.href = "/library/adminLogin";
-            console.log(err);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
 

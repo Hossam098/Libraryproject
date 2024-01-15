@@ -140,20 +140,14 @@ const Reviewed = () => {
             id=""
           >
             <option value="">فلتره</option>
-            {(student[0]?.status === 0 || student[0]?.status === 4) && (
-              <>
-                <option value="0"> منظر كود دفع </option>
-                <option value="4"> قيد التعديل </option>
-              </>
-            )}
-            {student[0]?.status !== 0 && student[0]?.status !== 4 && (
-              <>
-                <option value="2"> قيد الانتظار </option>
-                <option value="3"> قيد التعديل </option>
-                <option value="5"> مقبول </option>
-                <option value="6"> مرفوض </option>
-              </>
-            )}
+            <option value="0"> منتظر كود دفع </option>
+            <option value="1"> منتظر رفع المرفقات </option>
+            <option value="2"> قيد الانتظار </option>
+            <option value="3"> قيد التعديل </option>
+            {/* <option value="4"> قيد التعديل علي مرفقات طلب الكود </option> */}
+            <option value="5"> مقبول </option>
+            <option value="6"> مرفوض </option>
+            
           </select>
 
           <input

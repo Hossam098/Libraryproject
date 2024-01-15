@@ -35,7 +35,7 @@ const Send = () => {
         .get(`${API_URL}/auth/check`, { withCredentials: true })
         .then((res) => { })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setLogged(false)
 
         });
@@ -50,7 +50,7 @@ const Send = () => {
           else setErrors(t('errmsg'))
         })
     } catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }, [])
 
@@ -87,7 +87,7 @@ const Send = () => {
           else setErrors(t('errmsg'))
         })
     } catch (err) {
-      console.log(err)
+      // console.log(err)
       setErrors(t('errmsg'))
     }
   }
