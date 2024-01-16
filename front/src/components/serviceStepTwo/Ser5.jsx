@@ -87,12 +87,12 @@ const Ser5 = ({ ser }) => {
         .get(`${API_URL}/auth/check`, { withCredentials: true })
         .then((res) => { })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setDisabled(true);
-          navigate("/Library/login");
+          window.location.replace("/Library/login");
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
 
     if (status == 3) {
@@ -105,7 +105,7 @@ const Ser5 = ({ ser }) => {
           .then((res) => {
             setData({
               payment_photo: res.data.photo_payment_receipt,
-              research_list: res.data.research_list,
+              research_list: res.data.research_list !== null ? res.data.research_list : "",
             });
             setwords({
               word1:
@@ -233,10 +233,10 @@ const Ser5 = ({ ser }) => {
             });
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   }, []);
@@ -257,10 +257,10 @@ const Ser5 = ({ ser }) => {
       setError(t(`service${id}-step-two-err.payment-photo`));
       return;
     }
-    if (!data.research_list) {
-      setError(t(`service${id}-step-two-err.research_list`));
-      return;
-    }
+    // if (!data.research_list) {
+    //   setError(t(`service${id}-step-two-err.research_list`));
+    //   return;
+    // }
 
     const validExtensions = /\.(doc|docx)$/i; // Regular expression pattern for valid file extensions
     const validExtensions2 = /\.(pdf)$/i; // Regular expression pattern for valid file extensions
@@ -268,11 +268,13 @@ const Ser5 = ({ ser }) => {
     for (let i = 0; i < number; i++) {
       const file = words[`word${i + 1}`];
 
-      if (!file) {
-        setError(t(`service${id}-step-two-err.word${i + 1}`));
-        return;
+      // if (!file) {
+      //   setError(t(`service${id}-step-two-err.word${i + 1}`));
+      //   return;
+      // }
+      if (!words[`word${i + 1}`]) {
+        continue;
       }
-
       const fileName = file?.name || file;
       if (!validExtensions.test(fileName)) {
         setError(t(`service${id}-step-two-err.word${i + 1}`));
@@ -282,9 +284,12 @@ const Ser5 = ({ ser }) => {
     for (let i = 0; i < number; i++) {
       const file = pdfs[`pdf${i + 1}`];
 
-      if (!file) {
-        setError(t(`service${id}-step-two-err.pdf${i + 1}`));
-        return;
+      // if (!file) {
+      //   setError(t(`service${id}-step-two-err.pdf${i + 1}`));
+      //   return;
+      // }
+      if (!pdfs[`pdf${i + 1}`]) {
+        continue;
       }
       const fileName = file?.name || file;
       if (!validExtensions2.test(fileName)) {
@@ -369,7 +374,9 @@ const Ser5 = ({ ser }) => {
           navigate(`/Library`);
         })
         .catch((err) => {
-          console.log(err.response.data.message[0]);
+          if (err.response.status == 401) {
+            return window.location.replace("/Library/login");
+          }
           setError(err.response.data.message[0]);
           if (
             err &&
@@ -381,7 +388,7 @@ const Ser5 = ({ ser }) => {
               !err.response.data[0].user &&
               err.response.data[0].user != undefined
             ) {
-              navigate("/Library/login");
+              return window.location.replace("/Library/login");
             }
           }
           setMsg(null);
@@ -393,7 +400,7 @@ const Ser5 = ({ ser }) => {
           setDisabled(false);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       console.log(err.response.data);
       setDisabled(false);
     }

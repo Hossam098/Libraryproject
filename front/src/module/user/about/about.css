@@ -45,12 +45,12 @@
 .about-cont span {
     color: #19355A;
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
 
 .about-cont p,
 .about ol {
-    margin: 1rem 0;
+    /* margin: 1rem 0; */
     font-size: 1.2rem;
     line-height: 2rem;
 }

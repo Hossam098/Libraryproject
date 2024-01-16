@@ -35,7 +35,7 @@ const StudentListadmin = () => {
         });
 
       axios
-        .get(`${API_URL}/manager/getAllManagers`, { withCredentials: true })
+        .get(`${API_URL}/manager/getAllManagersToAssign`, { withCredentials: true })
         .then((res) => {
           setAdmins(res.data);
           // setFilter(res.data)
@@ -137,6 +137,76 @@ const StudentListadmin = () => {
       });
   };
 
+  const sername = (item) => {
+    const ser_name =
+      item.ser_reg !== null
+        ? "ser_reg"
+        : item.ser_formation !== null
+          ? "ser_formation"
+          : item.ser_grant !== null
+            ? "ser_grant"
+            : item.ser_personal !== null
+              ? "ser_personal"
+              : item.ser_upgrade !== null
+                ? "ser_upgrade"
+                : item.ser_knowledge !== null
+                  ? "ser_knowledge"
+                  : item.ser_magazine !== null
+                    ? "ser_magazine"
+                    : item.ser_best !== null
+                      ? "ser_best"
+                      : null;
+
+    return ser_name;
+  };
+  const app_id = (item) => {
+    const appid =
+      item.ser_reg !== null
+        ? item.ser_reg
+        : item.ser_formation !== null
+          ? item.ser_formation
+          : item.ser_grant !== null
+            ? item.ser_grant
+            : item.ser_personal !== null
+              ? item.ser_personal
+              : item.ser_upgrade !== null
+                ? item.ser_upgrade
+                : item.ser_knowledge !== null
+                  ? item.ser_knowledge
+                  : item.ser_magazine !== null
+                    ? item.ser_magazine
+                    : item.ser_best !== null
+                      ? item.ser_best
+                      : null;
+
+    return appid;
+  };
+
+
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
+
   return (
     <div className="super-container">
       <img src={img} alt="img" />
@@ -207,7 +277,7 @@ const StudentListadmin = () => {
                 <th>تاريخ التقديم</th>
                 <th> حاله الخدمه </th>
                 <th>الصلاحيات</th>
-                <th>اختيار موظف</th>
+                <th> الموظف</th>
               </tr>
             </thead>
             <tbody>
@@ -221,8 +291,8 @@ const StudentListadmin = () => {
                         <td>{item.service_name_ar}</td>
                         <td>
                           {item.status === 0
-                            ? item.req_code_date?.slice(0, 10)
-                            : item.submit_date?.slice(0, 10)}
+                            ? format(item.req_code_date)
+                            : format(item.submit_date)}
                         </td>
                         <td>
                           {item.status === 0
@@ -236,7 +306,7 @@ const StudentListadmin = () => {
                                   : item.status === 4
                                     ? "قيد التعديل"
                                     : item.status === 5
-                                      ? "مقبول"
+                                      ? "تم الارسال"
                                       : item.status === 6
                                         ? "مرفوض"
                                         : null}
@@ -326,7 +396,21 @@ const StudentListadmin = () => {
                             .filter((admin) => admin.id === item.manager_id)
                             .map((admin) => <td>{admin.mname}</td>)
                         ) : (
-                          <td>لا يوجد موظف</td>
+                          <>
+                            <td>لا يوجد موظف</td>
+                            <button
+                              onClick={() => {
+                                navigate(
+                                  `/Library/manager/ShowOnly/${item.user_id},${item.service_id
+                                  },${sername(item)},${app_id(item)}`
+                                );
+                              }}
+                            >
+                              {/* <Link to={`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}> */}
+                              تفاصيل
+                              {/* </Link> */}
+                            </button>
+                          </>
                         )}
                         {item.role !== null && item.role !== "" ? (
                           <td>

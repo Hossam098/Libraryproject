@@ -36,7 +36,7 @@ const Profile = () => {
           if (err.response.status === 401) {
             window.location.replace("/Library");
           }
-          console.log(err);
+          // console.log(err);
         });
     } catch (error) {
       console.log(error);
@@ -68,10 +68,10 @@ const Profile = () => {
             setError(err?.response?.data?.message[0]);
             setShowError(true);
           }
-          
+
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -103,7 +103,7 @@ const Profile = () => {
               />
             </div>
             <div className="editbutton">
-              <label For="p-image" style={{ cursor: "pointer" , fontSize:"1.1rem"}}>
+              <label For="p-image" style={{ cursor: "pointer", fontSize: "1.1rem" }}>
                 <MdOutlineModeEdit />
               </label>
               <input
@@ -123,7 +123,7 @@ const Profile = () => {
                     edituser(updatedUser);
                     console.log(updatedUser);
                   };
-                  
+
                   reader.readAsDataURL(selectedFile);
                 }}
               />

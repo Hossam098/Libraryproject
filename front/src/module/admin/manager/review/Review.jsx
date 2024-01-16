@@ -21,7 +21,7 @@ const Review = () => {
         })
         .then((res) => {
           setStudent(res.data);
-          // setFilter(res.data)
+          setFilter(res.data)
           // setFilter2(res.data)
         })
         .catch((error) => {
@@ -31,7 +31,7 @@ const Review = () => {
     } catch (error) { }
   }, []);
 
-  // const [filter, setFilter] = useState(student);
+  const [filter, setFilter] = useState(student);
   // const [filter2, setFilter2] = useState(student);
 
   const sername = (item) => {
@@ -78,18 +78,65 @@ const Review = () => {
 
     return appid;
   };
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
   return (
     <div className="super-container">
       <img src={img} alt="img" />
 
       <section className="cotainer-stu">
         <div className="navv">
-          <h2>الطلاب</h2>
+          {/* <h2>الطلاب</h2> */}
+          <select
+            onChange={(e) => {
+              const filteredStudents =
+                e.target.value === ""
+                  ? student
+                  : student.filter(
+                    (item) => item.status === parseInt(e.target.value)
+                  );
+              setFilter(filteredStudents);
+              // setFilter2(filteredStudents);
+            }}
+            className="filter"
+            name=""
+            id=""
+          >
+            <option value="">الكل</option>
+            <option value="0"> منتظر كود دفع </option>
+            <option value="1"> منتظر رفع المرفقات </option>
+            <option value="2"> قيد الانتظار </option>
+            <option value="3"> قيد التعديل </option>
+            {/* <option value="4"> قيد التعديل علي مرفقات طلب الكود </option> */}
+            <option value="5"> تم الارسال </option>
+            <option value="6"> مرفوض </option>
+
+          </select>
         </div>
         <div className="student-container">
           {/* {student  && <h2>{student}</h2>} */}
-          {student.length > 0 ? (
+          {filter.length > 0 ? (
             <table className="data-table">
               <thead>
                 <tr>
@@ -111,8 +158,8 @@ const Review = () => {
                       <td>{item.service_name_ar}</td>
                       <td>
                         {item.status === 0
-                          ? item.req_code_date?.slice(0, 10)
-                          : item.submit_date?.slice(0, 10)}
+                          ? format(item.req_code_date)
+                          : format(item.submit_date)}
                       </td>
                       <td>
                         {item.status === 0
@@ -126,7 +173,7 @@ const Review = () => {
                                 : item.status === 4
                                   ? "قيد التعديل"
                                   : item.status === 5
-                                    ? "مقبول"
+                                    ? "تم الارسال"
                                     : item.status === 6
                                       ? "مرفوض"
                                       : null}

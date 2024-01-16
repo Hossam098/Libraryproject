@@ -33,11 +33,11 @@ const Send = () => {
     try {
       axios
         .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => {})
+        .then((res) => { })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setLogged(false)
-        
+
         });
       axios
         .get(`${API_URL}/user/getAllServices`, { withCredentials: true })
@@ -50,7 +50,7 @@ const Send = () => {
           else setErrors(t('errmsg'))
         })
     } catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }, [])
 
@@ -63,13 +63,13 @@ const Send = () => {
 
   const handleSend = () => {
     if (!message || message.length < 5 || message.trim() === '') {
-        setConfirm(false)
+      setConfirm(false)
       setErrors(t('err-msg'))
       return
     }
     const data = {
       service_id: selectedService,
-      selectedReson : selectedReson,
+      selectedReson: selectedReson,
       message: message
     }
     axios.defaults.withCredentials = true
@@ -87,73 +87,74 @@ const Send = () => {
           else setErrors(t('errmsg'))
         })
     } catch (err) {
-      console.log(err)
+      // console.log(err)
       setErrors(t('errmsg'))
     }
   }
 
   const getTranslatedServiceName = (service) => {
     const currentLanguage = localStorage.getItem("i18nextLng");
-    return currentLanguage == "en"
-      ? service.service_name
-      : service.service_name_ar;
+    if (service.id == 9) {
+      return t('code_complaint')
+    } else {
+      return currentLanguage == "en" ? service.service_name : service.service_name_ar;
+    }
   };
 
 
   return (
-    <div className="inst" style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'right' , direction: 'rtl'} : { textAlign: 'left' , direction: 'ltr'}}>
+    <div className="inst" style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'right', direction: 'rtl' } : { textAlign: 'left', direction: 'ltr' }}>
       {errors && <PopupErrorMsg message={errors} onClose={handleCloseError} />}
       {!logged && <PopupError message={t('err-Login')} onClose={handleReturn} />}
-      {confirm && <PopupConfirm message={t('confirm-msg-contact')} onClose={() => {setConfirm(false)}} onSubmit={handleSend} />}
-      
+      {confirm && <PopupConfirm message={t('confirm-msg-contact')} onClose={() => { setConfirm(false) }} onSubmit={handleSend} />}
+
       {!selectedService && !selectedReson ? (
         <>
           <h2 style={{ fontSize: '2.5rem', color: '#19355a', margin: '2rem auto' }}>
             {t('contact-head')}
           </h2>
           <div className="information-service_body" >
-            {loading || !logged ? 
+            {loading || !logged ?
               <Oval />
               : (
-                <div className="service-contact">
-                  {services.length > 0 && services.filter((service) => service.id !== 9)
-                    .map((service) => (
-                      <button
-                        className='select-service-btn'
-                        onClick={() => {
-                          setSelectedService(service.id)
-                        }}
-                      >
-                        {getTranslatedServiceName(service)}
-                      </button>
+                <div className="two service-contact ">
+                  {services.length > 0 && services.map((service) => (
+                    <button
+                      className='select-service-btn'
+                      onClick={() => {
+                        setSelectedService(service.id)
+                      }}
+                    >
+                      {getTranslatedServiceName(service)}
+                    </button>
 
-                    ))}
+                  ))}
                 </div>
               )
             }
             <button
-                className='select-service-btn'
-                style={{backgroundColor: '#fff' , color: '#19355a'}}
-                onClick={() => {
-                  navigate('/Library/contact')
-                }}
-              >
-                {t('returnTo')}
+              className='select-service-btn'
+              style={{ backgroundColor: '#fff', color: '#19355a' }}
+              onClick={() => {
+                navigate('/Library/contact')
+              }}
+            >
+              {t('returnTo')}
             </button>
           </div>
         </>
       ) : selectedService && !selectedReson ? (
         <>
-        <h2 style={{ fontSize: '2.5rem', color: '#19355a', margin: '2rem auto' }}>
-              {t('choose-reson')}
-            </h2>
+          <h2 style={{ fontSize: '2.5rem', color: '#19355a', margin: '2rem auto' }}>
+            {t('choose-reson')}
+          </h2>
           <div className="information-service_body" style={{ width: '100%' }}>
 
-            <h2 style={{ textAlign: 'center'}}>
-              {t('choosed-service')} : {services.filter((service) => service.id === selectedService)[0].service_name_ar}
+            <h2 style={{ textAlign: 'center' }}>
+              {t('choosed-service')} : {services
+                .filter((service) => service.id === selectedService)
+                .map((service1) => (getTranslatedServiceName(service1)))}
             </h2>
-
-
             <div className="service-contact">
               <button
                 className='select-service-btn'
@@ -176,72 +177,75 @@ const Send = () => {
               <textarea
                 className='textAreaReson'
                 placeholder={t('write-message')}
-                // style={{ width: '80%', height: '200px', margin: '2rem auto' }}
+              // style={{ width: '80%', height: '200px', margin: '2rem auto' }}
               />
             ) : null}
             <button
-                className='select-service-btn'
-                style={{backgroundColor: '#fff' , color: '#19355a'}}
-                onClick={() => {
-                  setSelectedService('')
-                }}
-              >
-                {t('returnTo')}
+              className='select-service-btn'
+              style={{ backgroundColor: '#fff', color: '#19355a' }}
+              onClick={() => {
+                setSelectedService('')
+              }}
+            >
+              {t('returnTo')}
             </button>
           </div>
         </>
-      ) : 
-      selectedService && selectedReson ? (
-        <>
-        <h2 style={{ fontSize: '2.5rem', color: '#19355a', margin: '2rem auto' }}>
+      ) :
+        selectedService && selectedReson ? (
+          <>
+            <h2 style={{ fontSize: '2.5rem', color: '#19355a', margin: '2rem auto' }}>
               {t('choose-reson')}
             </h2>
-          <div className="information-service_body" style={{ width: '100%' }}>
+            <div className="information-service_body" style={{ width: '100%' }}>
 
-            <h2 style={{ textAlign: 'center'}}>
-              {t('choosed-service')} : {services.filter((service) => service.id === selectedService)[0].service_name_ar}
-            </h2>
-            <h2 style={{ textAlign: 'center'}}>
-              {t('choosed-reson')} : {selectedReson === '1' ? t('reson1') : t('reson2')}
-            </h2>
+              <h2 style={{ textAlign: 'center' }}>
+                {t('choosed-service')} : {services
+                  .filter((service) => service.id === selectedService)
+                  .map((service1) => (getTranslatedServiceName(service1)))}
+                {/* {t('choosed-service')} : {services.filter((service) => service.id === selectedService)[0].service_name_ar} */}
+              </h2>
+              <h2 style={{ textAlign: 'center' }}>
+                {t('choosed-reson')} : {selectedReson === '1' ? t('reson1') : t('reson2')}
+              </h2>
 
-            <div className="service-contact">
+              <div className="service-contact">
+                <button
+                  className='select-service-btn'
+                  onClick={() => {
+                    setSelectedReson('1')
+                  }}
+                >
+                  {t('reson1')}
+                </button>
+                <button
+                  className='select-service-btn'
+                  onClick={() => {
+                    setSelectedReson('2')
+                  }}
+                >
+                  {t('reson2')}
+                </button>
+              </div>
+              {selectedReson && selectedService ? (
+                <>
+                  <textarea
+                    className='textAreaReson'
+                    placeholder='اكتب رسالتك هنا'
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+                  <button
+                    className='select-service-btn'
+                    onClick={() => { setConfirm(true) }}
+                  >
+                    {t('submet')}
+                  </button>
+
+                </>
+              ) : null}
               <button
                 className='select-service-btn'
-                onClick={() => {
-                  setSelectedReson('1')
-                }}
-              >
-                {t('reson1')}
-              </button>
-              <button
-                className='select-service-btn'
-                onClick={() => {
-                  setSelectedReson('2')
-                }}
-              >
-                {t('reson2')}
-              </button>
-            </div>
-            {selectedReson && selectedService ? (
-              <>
-              <textarea
-                className='textAreaReson'
-                placeholder='اكتب رسالتك هنا'
-                onChange={(e) => setMessage(e.target.value)}
-              />
-              <button
-                className='select-service-btn'
-                onClick={() => {setConfirm(true)}}
-              >
-                {t('submet')}
-              </button>
-
-              </>
-            ) : null}
-            <button
-                className='select-service-btn'
-                style={{backgroundColor: '#fff' , color: '#19355a'}}
+                style={{ backgroundColor: '#fff', color: '#19355a' }}
                 onClick={() => {
                   setSelectedService('')
                   setSelectedReson('')
@@ -249,9 +253,9 @@ const Send = () => {
               >
                 {t('returnTo')}
               </button>
-          </div>
-        </>
-      ) : null}
+            </div>
+          </>
+        ) : null}
 
     </div>
   )

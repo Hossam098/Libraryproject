@@ -20,11 +20,13 @@ import { SuperAdmin } from "./module/admin/SuperAdmin/SuperAdmin.jsx";
 import StudentListadmin from "./module/admin/manager/studentList/StudentList.jsx";
 import Review from "./module/admin/manager/review/Review.jsx";
 import Show from "./module/admin/manager/show/Show.jsx";
+import ShowOnly from "./module/admin/manager/show/ShowOnly.jsx";
 import Reviewed from "./module/admin/manager/reviewed/Reviewed.jsx";
 import AdminLogin from "./module/admin/admin/AdminLog/AdminLogin.jsx";
 import Admin from "./module/admin/admin/Admin.jsx";
 import Charts from "./module/admin/admin/charts/Charts.jsx";
 import All from "./module/admin/manager/all/All.jsx";
+import AllToCode from "./module/admin/manager/all/AllToCode.jsx";
 import AllUsers from "./module/admin/admin/allusers/AllUsers.jsx";
 import AShow from "./module/admin/admin/Ashow/Ashow.jsx";
 import AdminReset from "./module/admin/admin/AdminLog/AdminReset.jsx";
@@ -149,6 +151,10 @@ const Router = createBrowserRouter([
             element: <All />,
           },
           {
+            path: "/Library/manager/AllToCode",
+            element: <AllToCode />,
+          },
+          {
             path: "/Library/manager/reviewed",
             element: <Reviewed />,
           },
@@ -163,6 +169,10 @@ const Router = createBrowserRouter([
           {
             path: "/Library/manager/show/:id",
             element: <Show />,
+          },
+          {
+            path: "/Library/manager/ShowOnly/:id",
+            element: <ShowOnly />,
           },
           {
             path: "/Library/manager/contact",

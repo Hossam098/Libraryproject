@@ -36,9 +36,9 @@ const Myser = () => {
     try {
       axios
         .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => {})
+        .then((res) => { })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           navigate("/Library/login");
         });
       axios
@@ -47,13 +47,13 @@ const Myser = () => {
           setServices(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           if (err.response.status == 400) {
             navigate("/Library");
           }
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 
@@ -77,14 +77,14 @@ const Myser = () => {
       <section id="services">
         <h2>{t("waiting-list")}</h2>
         <h2 style={{
-            fontSize: "1.5rem",
-            fontWeight: "400",
-            lineHeight: "1.5",
-            textAlign: "center",
-            opacity: "0.8",
-            margin: 'auto auto 1rem auto'
-          }}>
-          {t("ser-status-notes")} 
+          fontSize: "1.5rem",
+          fontWeight: "400",
+          lineHeight: "1.5",
+          textAlign: "center",
+          opacity: "0.8",
+          margin: 'auto auto 1rem auto'
+        }}>
+          {t("ser-status-notes")}
         </h2>
         {Array.isArray(services) && services.map((service) => {
           let type = 0;
@@ -139,10 +139,12 @@ const Myser = () => {
                           fontWeight: "500",
                           lineHeight: "1.5",
                           width: "80%",
+                          
                         }}
                       >
                         <GiSandsOfTime />
-                        {t("service1-step3")}
+                        {t("service1-step3-w")}
+
                       </h2>
                     ) : service.status == 1 ? (
                       <>

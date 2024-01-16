@@ -77,6 +77,29 @@ const Reviewed = () => {
 
     return appid;
   };
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
 
   return (
     <div className="super-container">
@@ -97,7 +120,7 @@ const Reviewed = () => {
             name=""
             id=""
           >
-            <option value="">فلتره</option>
+            <option value="">الكل</option>
             <option value="5">مرفوض من الجامعه</option>
             <option value="4">موافقه من الجامعه</option>
             <option value="1">موافقه كليه</option>
@@ -126,8 +149,8 @@ const Reviewed = () => {
                       <td>{item.service_name_ar}</td>
                       <td>
                         {item.status === 0
-                          ? item.req_code_date?.slice(0, 10)
-                          : item.submit_date?.slice(0, 10)}
+                          ? format(item.req_code_date)
+                          : format(item.submit_date)}
                       </td>
                       <td>
                         {item.status === 0
@@ -141,7 +164,7 @@ const Reviewed = () => {
                                 : item.status === 4
                                   ? "قيد التعديل"
                                   : item.status === 5
-                                    ? "مقبول"
+                                    ? "تم الارسال"
                                     : item.status === 6
                                       ? "مرفوض"
                                       : null}

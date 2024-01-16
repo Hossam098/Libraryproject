@@ -31,7 +31,7 @@ const Show = () => {
                     setLogged(true)
                 })
                 .catch((err) => {
-                    console.log(err);
+                    // console.log(err);
                     setLogged(false)
 
                 });
@@ -51,7 +51,7 @@ const Show = () => {
 
 
         } catch (err) {
-            console.log(err)
+            // console.log(err)
         }
     }, [])
 
@@ -68,7 +68,14 @@ const Show = () => {
         return formattedDate;
     }
 
-
+    const getTranslatedServiceName = (service) => {
+        const currentLanguage = localStorage.getItem("i18nextLng");
+        if (service.id == 9) {
+            return t('code_complaint')
+        } else {
+            return currentLanguage == "en" ? service.service_name : service.service_name_ar;
+        }
+    };
 
     return (
         <div className="inst" style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'right', direction: 'rtl' } : { textAlign: 'left', direction: 'ltr' }}>
@@ -87,9 +94,9 @@ const Show = () => {
                             {data.length > 0 && data.map((item, index) => {
                                 return (
                                     <React.Fragment key={index}>
-                                        <div className="contact-msg-head" style={{ textAlign: 'center' ,marginTop:'1rem'}}>
-                                            <h3>{item.service_name_ar}</h3>
-                                            <h3 style={{color : "#ad8700"}}>{item.reson == 1 ? t('reson1') : item.reson == 2 ? t('reson2') : null}</h3>
+                                        <div className="contact-msg-head" style={{ textAlign: 'center', marginTop: '1rem' }}>
+                                            <h3>{getTranslatedServiceName(item)}</h3>
+                                            <h3 style={{ color: "#ad8700" }}>{item.reson == 1 ? t('reson1') : item.reson == 2 ? t('reson2') : null}</h3>
                                         </div>
                                         <hr />
                                         <div className="contact-msg-body">
@@ -98,7 +105,7 @@ const Show = () => {
                                                 {format(item.reson_date)}
                                             </p>
                                         </div>
-                                        {item.response  ? (
+                                        {item.response ? (
                                             <React.Fragment>
                                                 <div className="contact-msg-body">
                                                     <h2 style={{ color: '#ad8700' }}>
@@ -111,9 +118,9 @@ const Show = () => {
                                                 {/* <hr /> */}
                                             </React.Fragment>
                                         ) : (
-                                        <h2 style={{ color: '#ad8700' }}>
-                                            {t('msg-not-replay')}
-                                        </h2>
+                                            <h2 style={{ color: '#ad8700' }}>
+                                                {t('msg-not-replay')}
+                                            </h2>
                                         )}
                                     </React.Fragment>
                                 );
@@ -123,7 +130,7 @@ const Show = () => {
                         </div>
                     )
                 }
-                
+
                 <button
                     className='select-service-btn'
                     style={{ backgroundColor: '#fff', color: '#19355a' }}

@@ -37,15 +37,16 @@ const Nav = () => {
         console.log(error.response);
       });
   };
-  const [active, setActive] = useState("home_active");
+  const [active, setActive] = useState("LIST_active");
 
   return (
     <div className="dmin">
       <nav className="mnav">
         <ul style={{ direction: "rtl" }}>
-          {manager.role === 0 && (
+          {manager.role == 0 && (
             <>
               <li>
+                {manager.service_id !== 9 ? (
                 <Link
                   onClick={() => setActive("all_active")}
                   className={active === "all_active" ? "active" : ""}
@@ -54,8 +55,18 @@ const Nav = () => {
                 >
                   عرض جميع الطلبات
                 </Link>
+                ) : (
+                  <Link
+                  onClick={() => setActive("all_active")}
+                  className={active === "all_active" ? "active" : ""}
+                  exact
+                  to="/Library/manager/AllToCode"
+                >
+                  عرض جميع الطلبات
+                </Link>
+                )}
               </li>
-            {+manager.service_id !== 9 && 
+
               <li>
               <Link
                 onClick={() => setActive("CONTACT_active")}
@@ -65,7 +76,7 @@ const Nav = () => {
                 الرسائل
               </Link>
             </li>
-            }
+            
               {+manager.service_id !== 9 && (
                 <li>
                   <Link
@@ -89,7 +100,7 @@ const Nav = () => {
               الطلبات الموزعة لك
             </Link>
           </li>
-          {manager.role === 0 && manager.service_id !== 9 && (
+          {manager.role == 0 && manager.service_id != 9 && (
             <li>
               <Link
                 onClick={() => setActive("REVIWED_active")}

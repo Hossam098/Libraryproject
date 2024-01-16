@@ -28,14 +28,14 @@ const Contact = () => {
         .get(`${API_URL}/auth/check`, { withCredentials: true })
         .then((res) => { })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setLogged(true)
           setLoading(true)
 
         });
 
     } catch (err) {
-      console.log(err)
+      // console.log(err)
     }
   }, [])
 
@@ -58,7 +58,7 @@ const Contact = () => {
         {t('contact-head')}
       </h2> */}
       <div className="information-service_body" style={{ width: '100%' }}>
-      <img src={img} alt="contact" style={{ width: '80%', height: 'auto' }} />
+        <img src={img} alt="contact" style={{ width: '80%', height: 'auto' }} />
 
         {loading && logged ?
           <Oval />

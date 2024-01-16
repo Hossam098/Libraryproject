@@ -37,7 +37,7 @@ manager.get('/getallApplicantsWaiting',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 2 AND submit.service_id = ? ";
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 2 AND submit.service_id = ? order by submit.id DESC";
                 // const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar , manager.mname FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id INNER JOIN manager ON submit.manager_id = manager.id WHERE submit.status = 2 AND submit.service_id = ? ";
                 const value = [req.service_id];
                 const result = await query(sqlSelect, value);
@@ -64,6 +64,24 @@ manager.get('/getallApplicantsWaiting',
 )
 
 manager.get('/getAllManagers',
+    checkmanager,
+    async (req, res) => {
+        let error = [];
+        try {
+            const sqlSelect = "SELECT * FROM manager ";
+            const result = await query(sqlSelect);
+            if (result.length > 0) {
+                return res.status(200).json(result);
+            } else {
+                return res.status(200).json({ message: "لا يوجد مديرين" });
+            }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+)
+manager.get('/getAllManagersToAssign',
     checkmanager,
     async (req, res) => {
         let error = [];
@@ -117,7 +135,7 @@ manager.get('/getallApplicantsAssigned',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ?  AND submit.manager_status IS NULL ";
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.manager_id = ?  AND submit.manager_status IS NULL order by submit.id DESC";
                 const value = [req.id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
@@ -147,7 +165,8 @@ manager.get('/getallApplicantsReviewed',
         let error = [];
         try {
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE  submit.service_id  = ? AND submit.manager_status IS NOT NULL "
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE  submit.service_id  = ? AND submit.manager_status IS NOT NULL  order by submit.id DESC";
+                // const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE  submit.service_id  = ? AND submit.manager_status IS NOT NULL "
                 const value = [req.service_id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
@@ -232,7 +251,7 @@ manager.put('/acceptApplicant/:id',
                 if (result.length > 0) {
                     const Data = {
                         response_text: req.body.response_text,
-                        response_pdf: req.file.filename,
+                        response_pdf: req.file ? req.file.filename : null,
                         status: 5,
                         response_date: new Date()
                     }
@@ -282,10 +301,17 @@ manager.put('/acceptApplicantforManager',
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
                 }
             } else if (req.body.reason !== "") {
+                let sqlUpdate = ``
+                let value = []
+                if (req.body.response_date === '') {
+                    sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status} WHERE ${req.body.ser_name} = ?`;
+                    value = [req.body.status, req.body.reason, req.body.app_id];
 
-                const sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status}
-             WHERE ${req.body.ser_name} = ?`;
-                const value = [req.body.status, req.body.reason, req.body.app_id];
+                } else {
+                    sqlUpdate = `UPDATE submit SET ${req.body.column} = ? , response_text = ? ${status} , response_date = ?  WHERE ${req.body.ser_name} = ?`;
+                    value = [req.body.status, req.body.reason, new Date(), req.body.app_id];
+
+                }
                 const result = await query(sqlUpdate, value);
                 if (result.affectedRows > 0) {
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
@@ -325,7 +351,7 @@ manager.get('/getallApplicants',
         try {
 
             if (req.service_id !== 9) {
-                const sqlSelect = "SELECT submit.* , users.* , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.service_id = ? ";
+                const sqlSelect = "SELECT submit.* , users.* , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.service_id = ? order by submit.id DESC";
                 const value = [req.service_id];
                 const result = await query(sqlSelect, value);
                 if (result.length > 0) {
@@ -337,7 +363,8 @@ manager.get('/getallApplicants',
                     return res.status(200).json({ message: "لا يوجد طلبات" });
                 }
             } else if (req.service_id === 9) {
-                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 0 OR submit.status = 4 ";
+                const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id";
+                // const sqlSelect = "SELECT submit.* , users.name , services.service_name_ar  FROM submit INNER JOIN users ON submit.user_id = users.id INNER JOIN services ON submit.service_id = services.id WHERE submit.status = 0 OR submit.status = 4 ";
                 const result = await query(sqlSelect);
                 if (result.length > 0) {
                     return res.status(200).json(result);
@@ -367,8 +394,8 @@ manager.put('/watingApplicant/:id',
                         fs.unlinkSync(filePath);
                     }
                 }
-                const sqlUpdate = `UPDATE submit SET status = ? , response_text = ? , response_pdf = null , manager_status = null  WHERE ${req.body.ser_name} = ?`;
-                const value2 = [req.body.status, req.body.reason, req.body.app_id];
+                const sqlUpdate = `UPDATE submit SET status = ? , response_text = null , response_pdf = null , manager_status = null,response_date = null  WHERE ${req.body.ser_name} = ?`;
+                const value2 = [req.body.status, req.body.app_id];
                 const result = await query(sqlUpdate, value2);
                 if (result.affectedRows > 0) {
                     return res.status(200).json({ message: "تم قبول الطلب بنجاح" });
@@ -438,7 +465,7 @@ manager.put('/sendresponse',
                 const result = await query(sqlUpdate, value);
                 if (result.affectedRows > 0) {
                     return res.status(200).json({ message: "تم ارسال الرد بنجاح" });
-                }else{
+                } else {
                     return res.status(400).json({ message: "حدث خطأ ما" });
                 }
             }
@@ -446,6 +473,114 @@ manager.put('/sendresponse',
                 error.push("No messages found");
                 return res.status(400).json({ message: error });
             }
+        } catch (errors) {
+            error.push(errors);
+            return res.status(500).json({ message: error });
+        }
+    }
+);
+
+manager.post('/deleteApplicant',
+    checkmanager,
+    body('student_info').notEmpty().withMessage('يجب ادخال بيانات الطالب'),
+    async (req, res) => {
+        let error = [];
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                handleDeleteFile2(req);
+                errors.array().forEach(element => {
+                    error.push(element.msg);
+                });
+                return res.status(400).json({ message: error });
+            }
+            const service_id = req.body.student_info.service_id;
+
+            let serviceTable = '';
+            let serviceTableId = '';
+            if (service_id == 1) {
+                serviceTable = 'registration_services';
+                serviceTableId = 'ser_reg';
+            } else if (service_id == 2) {
+                serviceTable = 'formation_service';
+                serviceTableId = 'ser_formation';
+            } else if (service_id == 3) {
+                serviceTable = 'personal_examination_service';
+                serviceTableId = 'ser_personal';
+            } else if (service_id == 4) {
+                serviceTable = 'magazine_checking_service';
+                serviceTableId = 'ser_magazine';
+            } else if (service_id == 5) {
+                serviceTable = 'upgrade_service';
+                serviceTableId = 'ser_upgrade';
+            } else if (service_id == 6) {
+                serviceTable = 'best_message_service';
+                serviceTableId = 'ser_best';
+            } else if (service_id == 7) {
+                serviceTable = 'grant_service';
+                serviceTableId = 'ser_grant';
+            } else if (service_id == 8) {
+                serviceTable = 'knowledge_bank_service';
+                serviceTableId = 'ser_knowledge';
+            }
+            const sqlSelect = `SELECT * FROM submit WHERE ${serviceTableId} = ? AND service_id = ? AND user_id = ? `;
+            const value = [req.body.student_info[serviceTableId], req.body.student_info.service_id, req.body.student_info.user_id];
+            const result = await query(sqlSelect, value);
+            if (result.length > 0) {
+                const sqlSelect1 = `SELECT * FROM ${serviceTable} WHERE id = ? `;
+                const value1 = [req.body.student_info[serviceTableId]];
+                const result1 = await query(sqlSelect1, value1);
+                if (result1.length > 0) {
+                    if (service_id !== 3 && service_id !== 7 && service_id !== 8) {
+                        try {
+                            const filePath = `./public/imgs/${req.body.student_info.national_id}/${result1[0].photo_college_letter}`;
+                            if (fs.existsSync(filePath)) {
+                                fs.unlinkSync(filePath);
+                            }
+                        } catch (errors) {
+                            error.push(errors);
+                            return res.status(500).json({ message: error });
+                        }
+                    } else if (service_id == 7) {
+                        const filePath1 = `./public/imgs/${req.body.student_info.national_id}/${result1[0].decision}`;
+                        const filePath2 = `./public/imgs/${req.body.student_info.national_id}/${result1[0].message_word_ar}`;
+                        const filePath3 = `./public/imgs/${req.body.student_info.national_id}/${result1[0].message_pdf_ar}`;
+                        try {
+                            if (fs.existsSync(filePath1)) {
+                                fs.unlinkSync(filePath1);
+                            }
+                            if (fs.existsSync(filePath2)) {
+                                fs.unlinkSync(filePath2);
+                            }
+                            if (fs.existsSync(filePath3)) {
+                                fs.unlinkSync(filePath3);
+                            }
+                        } catch (errors) {
+                            error.push(errors);
+                            return res.status(500).json({ message: error });
+                        }
+                    }
+
+                    const sqlDelete = `DELETE FROM ${serviceTable} WHERE id = ?`;
+                    const value = [req.body.student_info[serviceTableId]];
+                    const result = await query(sqlDelete, value);
+                    if (result.affectedRows > 0) {
+                        return res.status(200).json({ message: "تم حذف الطالب بنجاح" });
+                    } else {
+                        return res.status(400).json({ message: "حدث خطأ ما" });
+                    }
+                } else {
+                    return res.status(400).json({ message: "لا يوجد طالب بهذه البيانات" });
+                }
+            } else {
+                return res.status(400).json({ message: "لا يوجد طلبات" });
+            }
+
+
+
+
+
+
         } catch (errors) {
             error.push(errors);
             return res.status(500).json({ message: error });

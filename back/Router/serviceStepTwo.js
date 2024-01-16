@@ -333,9 +333,20 @@ serviceStepTwo.put("/StepTwoReg/:id/:id2",
                 });
                 return res.status(400).json({ message: error });
             }
-
             const id = req.params.id;
             const id2 = req.params.id2;
+            /*******  check if user has submit this service and his status not 1 or 2 or 3 *******/
+            // const sqlSelect0 = `SELECT * FROM submit WHERE service_id = ? AND user_id = ? AND (status != 5 OR status != 6)`;
+            // const valueSelect0 = [id, req.id];
+            // const resultSelect0 = await query(sqlSelect0, valueSelect0);
+            // if (resultSelect0.length > 0) {
+            //     handleDeleteFile(req);
+            //     error.push(" لا يمكنك التقديم لهذه الخدمة الان لان لديك طلب  لها بانتظار الرد");
+            //     return res.status(400).json({ message: error });
+            // }
+
+
+
 
 
             const sqlSelect = `SELECT submit.* ,registration_services.* FROM submit INNER JOIN registration_services ON submit.ser_reg = registration_services.id WHERE submit.service_id = ? AND submit.ser_reg = ? AND submit.user_id = ?`;
@@ -563,16 +574,14 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                         error.push("Please upload payment_photo");
                         return res.status(400).json({ message: error });
                     } else {
-                        (1);
                         const ext = req.files.payment_photo[0].filename.split(".").pop();
-                        (2);
                         if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
                             handleDeleteFile2(req);
                             error.push("Please upload image or pdf or word");
                             return res.status(400).json({ message: error });
                         }
                     }
-
+                    
                     if (!req.files.research) {
                         handleDeleteFile2(req);
                         error.push("Please upload research");
@@ -599,23 +608,24 @@ serviceStepTwo.put("/StepTwoSer2/:id/:id2",
                         }
                     }
 
-                    if (!req.files.form) {
-                        handleDeleteFile2(req);
-                        error.push("Please upload form");
-                        return res.status(400).json({ message: error });
-                    } else {
-                        const ext = req.files.form[0].filename.split(".").pop();
-                        if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
-                            handleDeleteFile2(req);
-                            error.push("Please upload image or pdf or word");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
+                    // if (!req.files.form) {
+                    //     handleDeleteFile2(req);
+                    //     error.push("Please upload form");
+                    //     return res.status(400).json({ message: error });
+                    // } else {
+                    // const ext = req?.files?.form[0]?.filename.split(".").pop();
+                    // if (ext !== "jpg" && ext !== "png" && ext !== "jpeg" && ext !== "pdf" && ext !== "docx" && ext !== "doc") {
+                    //     handleDeleteFile2(req);
+                    //     error.push("Please upload image or pdf or word");
+                    //     return res.status(400).json({ message: error });
+                    // }
+
+
                 }
                 let payment_photo = req.files.payment_photo ? req.files.payment_photo[0].filename : resultSelect[0].photo_payment_receipt;
                 let research = req.files.research ? req.files.research[0].filename : resultSelect[0].message_pdf_ar;
                 let research_word = req.files.research_word ? req.files.research_word[0].filename : resultSelect[0].message_word_ar;
-                let form = req.files.form ? req.files.form[0].filename : resultSelect[0].quote_check_form;
+                let form = req.files?.form ? req?.files?.form[0]?.filename : resultSelect[0].quote_check_form;
 
 
 
@@ -1095,58 +1105,58 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                             return res.status(400).json({ message: error });
                         }
                     }
-                    if (!req.files.research_list) {
+                    // if (!req.files.research_list) {
+                    //     handleDeleteFile5(req);
+                    //     error.push("Please upload research_list");
+                    //     return res.status(400).json({ message: error });
+                    // } else {
+                    const ext = req.files?.research_list[0]?.filename.split(".").pop();
+                    if (ext !== "pdf" && ext !== "docx" && ext !== "doc" && ext !== "jpg" && ext !== "png" && ext !== "jpeg") {
                         handleDeleteFile5(req);
-                        error.push("Please upload research_list");
+                        error.push("Please upload pdf or word or image");
                         return res.status(400).json({ message: error });
-                    } else {
-                        const ext = req.files.research_list[0].filename.split(".").pop();
-                        if (ext !== "pdf" && ext !== "docx" && ext !== "doc" && ext !== "jpg" && ext !== "png" && ext !== "jpeg") {
-                            handleDeleteFile5(req);
-                            error.push("Please upload pdf or word or image");
-                            return res.status(400).json({ message: error });
-                        }
-                    }
-                    for (let i = 1; i <= req.body.files_numbers; i++) {
-                        if (!req.files[`word${i}`]) {
-                            handleDeleteFile5(req);
-                            error.push(`Please upload word${i}`);
-                            return res.status(400).json({ message: error });
-                        } else {
-                            const ext = req.files[`word${i}`][0].filename.split(".").pop();
-                            if (ext !== "docx" && ext !== "doc") {
-                                handleDeleteFile5(req);
-                                error.push(`Please upload word${i}`);
-                                return res.status(400).json({ message: error });
-                            }
-                        }
-                    }
-                    for (let i = 1; i <= req.body.files_numbers; i++) {
-                        if (!req.files[`pdf${i}`]) {
-                            handleDeleteFile5(req);
-                            error.push(`Please upload pdf${i}`);
-                            return res.status(400).json({ message: error });
-                        } else {
-                            const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
-                            if (ext !== "pdf") {
-                                handleDeleteFile5(req);
-                                error.push(`Please upload pdf${i}`);
-                                return res.status(400).json({ message: error });
-                            }
-                        }
-                    }
-                    for (let i = 11; i <= 20; i++) {
 
-                        if (req.files[`pdf${i}`]) {
-                            const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
-                            if (ext !== "pdf") {
-                                handleDeleteFile5(req);
-                                error.push(`Please upload acceptance_letter pdf`);
-                                return res.status(400).json({ message: error });
-
-                            }
-                        }
                     }
+                    // for (let i = 1; i <= req.body.files_numbers; i++) {
+                    //     if (!req.files[`word${i}`]) {
+                    //         handleDeleteFile5(req);
+                    //         error.push(`Please upload word${i}`);
+                    //         return res.status(400).json({ message: error });
+                    //     } else {
+                    //         const ext = req.files[`word${i}`][0].filename.split(".").pop();
+                    //         if (ext !== "docx" && ext !== "doc") {
+                    //             handleDeleteFile5(req);
+                    //             error.push(`Please upload word${i}`);
+                    //             return res.status(400).json({ message: error });
+                    //         }
+                    //     }
+                    // }
+                    // for (let i = 1; i <= req.body.files_numbers; i++) {
+                    //     if (!req.files[`pdf${i}`]) {
+                    //         handleDeleteFile5(req);
+                    //         error.push(`Please upload pdf${i}`);
+                    //         return res.status(400).json({ message: error });
+                    //     } else {
+                    //         const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
+                    //         if (ext !== "pdf") {
+                    //             handleDeleteFile5(req);
+                    //             error.push(`Please upload pdf${i}`);
+                    //             return res.status(400).json({ message: error });
+                    //         }
+                    //     }
+                    // }
+                    // for (let i = 11; i <= 20; i++) {
+
+                    //     if (req.files[`pdf${i}`]) {
+                    //         const ext = req.files[`pdf${i}`][0].filename.split(".").pop();
+                    //         if (ext !== "pdf") {
+                    //             handleDeleteFile5(req);
+                    //             error.push(`Please upload acceptance_letter pdf`);
+                    //             return res.status(400).json({ message: error });
+
+                    //         }
+                    //     }
+                    // }
 
                 }
 
@@ -1260,7 +1270,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                 for (let i = 1; i <= 10; i++) {
                     if (req.files[`pdf${i}`] && resultSelect[0][`research${i}_image_pdf`] != null) {
                         const path = `./public/imgs/${req.national_id}/${resultSelect[0][`research${i}_image_pdf`]}`;
-                        fs.unlinkSync(path , (err) => {
+                        fs.unlinkSync(path, (err) => {
                             if (err) {
                                 handleDeleteFile5(req);
                                 console.error(err)
@@ -1273,7 +1283,7 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                 for (let i = 11; i <= 20; i++) {
                     if (req.files[`pdf${i}`] && resultSelect[0][`acceptance_letter${i - 10}`] != null) {
                         const path = `./public/imgs/${req.national_id}/${resultSelect[0][`acceptance_letter${i - 10}`]}`;
-                        fs.unlinkSync(path , (err) => {
+                        fs.unlinkSync(path, (err) => {
                             if (err) {
                                 handleDeleteFile5(req);
                                 console.error(err)
@@ -1583,6 +1593,16 @@ serviceStepTwo.post("/StepTwoSer7",
                 return res.status(400).json({ message: error });
             }
 
+            const sqlSelect0 = `SELECT * FROM submit WHERE service_id = ? AND user_id = ? AND (status != 5 OR status != 6)`;
+            const valueSelect0 = [7, req.id];
+            const resultSelect0 = await query(sqlSelect0, valueSelect0);
+            if (resultSelect0.length > 0) {
+                handleDeleteFile7(req);
+                error.push(" لا يمكنك التقديم لهذه الخدمة الان لان لديك طلب  لها بانتظار الرد");
+                return res.status(400).json({ message: error });
+            }
+
+
 
 
             if (!req.files.decision) {
@@ -1722,8 +1742,8 @@ serviceStepTwo.put("/StepTwoSer7edit/:id/:id2",
                 }
                 if (req.files.pdf && resultSelect[0].message_pdf_ar != null) {
                     const path = `./public/imgs/${req.national_id}/${resultSelect[0].message_pdf_ar}`;
-                    fs.unlinkSync(path,(err)=>{
-                        if(err){
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
                             handleDeleteFile7(req);
                             console.error(err)
                             return
@@ -1733,8 +1753,8 @@ serviceStepTwo.put("/StepTwoSer7edit/:id/:id2",
                 }
                 if (req.files.decision && resultSelect[0].decision != null) {
                     const path = `./public/imgs/${req.national_id}/${resultSelect[0].decision}`;
-                    fs.unlinkSync(path,(err)=>{
-                        if(err){
+                    fs.unlinkSync(path, (err) => {
+                        if (err) {
                             handleDeleteFile7(req);
                             console.error(err)
                             return
@@ -1742,9 +1762,9 @@ serviceStepTwo.put("/StepTwoSer7edit/:id/:id2",
                     }
                     )
                 }
-                
 
-                
+
+
                 const sql = `UPDATE grant_service SET ? WHERE id = ? `;
                 const value = [grant, id2];
                 const result = await query(sql, value);
@@ -1795,7 +1815,13 @@ serviceStepTwo.post("/StepTwoSer8",
                 });
                 return res.status(400).json({ message: error });
             }
-
+            const sqlSelect0 = `SELECT * FROM submit WHERE service_id = ? AND user_id = ? AND (status != 5 OR status != 6)`;
+            const valueSelect0 = [8, req.id];
+            const resultSelect0 = await query(sqlSelect0, valueSelect0);
+            if (resultSelect0.length > 0) {
+                error.push(" لا يمكنك التقديم لهذه الخدمة الان لان لديك طلب  لها بانتظار الرد");
+                return res.status(400).json({ message: error });
+            }
 
             const data = {
                 level: req.body.level,

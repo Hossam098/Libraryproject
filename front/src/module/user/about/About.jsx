@@ -25,7 +25,7 @@ const About = () => {
             opacity: "0.8",
             margin: 'auto auto 1rem auto'
           }}>
-          {t('aboutus.p')}
+          {/* {t('aboutus.p')} */}
         </h2>
       </div>
       <section className='grid-3'>
@@ -40,15 +40,24 @@ const About = () => {
           style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl', textAlign: "right" } : { direction: 'ltr', textAlign: "left" }}
         >
           <span></span>
-          <h1>{t('aboutus.our-message')}</h1>
-          <p>
-            <span>{t('aboutus.our-vision')}:</span>
-            {t('aboutus.our-vision-p')}
-          </p>
+          <h1>{t('aboutus.our-vision')}</h1>
           <p>
             <span>{t('aboutus.our-message')} : </span>
-            {t('aboutus.our-message-p')}
           </p>
+          <ol>
+            <li>
+              {t('aboutus.our-vision-p1')}
+            </li>
+            <li>
+              {t('aboutus.our-vision-p2')}
+            </li>
+            <li>
+              {t('aboutus.our-vision-p3')}
+            </li>
+            <li>
+              {t('aboutus.our-vision-p4')}
+            </li>
+          </ol>
         </div>
         <div className="about-cont"
           style={localStorage.getItem('i18nextLng') === 'ar' ? { direction: 'rtl', textAlign: "right" } : { direction: 'ltr', textAlign: "left" }}

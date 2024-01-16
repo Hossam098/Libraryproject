@@ -41,7 +41,7 @@ const Unav = () => {
           setUser(res.data.user);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setLogged(false);
         });
 
@@ -51,10 +51,10 @@ const Unav = () => {
           setServices(res.data);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 
@@ -67,10 +67,10 @@ const Unav = () => {
           navigate("/Library/login");
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
   const handleLogin = () => {

@@ -81,7 +81,7 @@ const ShowA = () => {
         setFaculty(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
   const openImage = (url) => {
@@ -92,8 +92,8 @@ const ShowA = () => {
     aTag.click();
     aTag.remove();
   };
-  const downloadImage = (url) => {
-    saveAs(url, "image.jpg");
+  const downloadImage = (url, filename) => {
+    saveAs(url, filename);
   };
 
   // const downloadPDF = () => {
@@ -138,6 +138,29 @@ const ShowA = () => {
   //   return currentDate.toISOString().slice(0, 10);
   // };
 
+  const format = (date) => {
+    const formattedDate = new Date(date).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    // Extract components from formattedDate
+    const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+    // Convert time to 12-hour format with AM/PM
+    const [hour, minute, second] = time.split(':');
+    const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+    const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+    // Combine components to create the final formatted date
+    const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+    return formattedDateTime;
+  };
   console.log(user);
   const handleCloseError = () => {
     setErrors("");
@@ -189,7 +212,7 @@ const ShowA = () => {
           .then((res) => {
             setProgress((prevState) => ({ ...prevState, started: false }));
             setMsg(res.data.msg);
-            navigate("/Library/manager");
+            window.location.reload();
           })
           .catch((error) => {
             setDisabled(false);
@@ -210,10 +233,10 @@ const ShowA = () => {
   };
   const handelAcceptpayment = () => {
     if (payment_code !== "") {
-      if (isNaN(payment_code)) {
-        setErrors("كود الدفع يجب ان يكون رقم");
-        return;
-      }
+      // if (isNaN(payment_code)) {
+      //   setErrors("كود الدفع يجب ان يكون رقم");
+      //   return;
+      // }
       const formData = new FormData();
       setErrors("");
       axios.defaults.withCredentials = true;
@@ -347,6 +370,7 @@ const ShowA = () => {
           ser_id: dataArray[1],
           ser_name: dataArray[2],
           app_id: dataArray[3],
+          response_date: ''
         };
 
         if (user.role === 1) {
@@ -356,6 +380,7 @@ const ShowA = () => {
           updatedAction.column = "status";
           updatedAction.status = 6;
           updatedAction.role = 2;
+          updatedAction.response_date = new Date()
         }
 
         setAction(updatedAction);
@@ -902,8 +927,7 @@ const ShowA = () => {
               <div className="status">
                 <p style={{ background: "rgb(0, 60, 112)" }}> سبب التعديل </p>
                 <p style={{ background: "rgb(0, 60, 112)" }}>
-                  {" "}
-                  {user.response_text}{" "}
+                  {user.response_text}
                 </p>
               </div>
             ) : null}
@@ -934,9 +958,35 @@ const ShowA = () => {
               <div className="status">
                 <p style={{ background: "rgb(175, 35, 35)" }}> سبب الرفض </p>
                 <p style={{ background: "rgb(175, 35, 35)" }}>
-                  {" "}
-                  {user.response_text}{" "}
+                  {user.response_text}
                 </p>
+                <input
+                  disabled={disabled}
+                  type="text"
+                  placeholder="سبب التعديل"
+                  className="edit-input"
+                  onChange={(e) => {
+                    setAction({ ...action, reason: e.target.value });
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    setConfirmE1(true);
+                  }}
+                  className="wait-edit"
+                >
+                  طلب تعديل البيانات
+                </button>
+                <hr style={{ width: "80%", height: "3px" }} />
+                <button
+                  onClick={() => {
+                    setConfirmW(true);
+                  }}
+                  className="wait-edit"
+                >
+                  عوده لقائمه الانتظار للمراجعه
+                </button>
+
               </div>
             ) : null}
           </div>
@@ -1094,40 +1144,7 @@ const ShowA = () => {
                   />
                 </td>
               </tr>
-              <tr>
-                <td>تاريخ طلب كود الدفع</td>
-                <td>
-                  {
-                    user.req_code_date ? user.req_code_date?.slice(0, 10) : null
-                  }
-
-                </td>
-              </tr>
-              {user.submit_date && (
-                <tr>
-                  <td>تاريخ الطلب</td>
-                  <td>
-                    {
-                      user.submit_date ? user.submit_date.slice(0, 10) : null
-                    }
-                  </td>
-                </tr>
-              )}
-              {user.edit_date && (
-                <tr>
-                  <td>تاريخ اخر تعديل</td>
-                  <td>
-                    {
-                      user.edit_date ? user.edit_date?.slice(0, 10) : null
-                    }
-                  </td>
-                </tr>
-              )}
-              <tr>
-                <td> نوع الخدمه </td>
-                <td>{user.service_name_ar}</td>
-              </tr>
-              {user.level && (
+              {(user.level !== null || user.level !== undefined || user.level !== "") && (
                 <tr>
                   <td> المرحله </td>
                   <td>
@@ -1139,6 +1156,39 @@ const ShowA = () => {
                   </td>
                 </tr>
               )}
+              <tr>
+                <td>تاريخ طلب كود الدفع</td>
+                <td>
+                  {
+                    user.req_code_date ? format(user.req_code_date) : null
+                  }
+                </td>
+              </tr>
+              {user.submit_date && (
+                <tr>
+                  <td>تاريخ الطلب</td>
+                  <td>
+                    {
+                      user.submit_date ? format(user.submit_date) : null
+                    }
+                  </td>
+                </tr>
+              )}
+              {user.edit_date && (
+                <tr>
+                  <td>تاريخ اخر تعديل</td>
+                  <td>
+                    {
+                      user.edit_date ? format(user.edit_date) : null
+                    }
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td> نوع الخدمه </td>
+                <td>{user.service_name_ar}</td>
+              </tr>
+              
               {user.academic && (
                 <tr>
                   <td> الشعبه </td>
@@ -1148,7 +1198,25 @@ const ShowA = () => {
               {user.files_numbers && (
                 <tr>
                   <td> عدد الابحاث </td>
-                  <td>{user.files_numbers}</td>
+                  <td>
+                    <input
+                      className="edit-input-user"
+                      type="text"
+                      value={user.files_numbers}
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+
+                        // Check if the input is not empty
+                        if (inputValue.trim() !== "") {
+                          setUser({ ...user, files_numbers: inputValue });
+                        } else {
+                          // Display an error or handle it in another way (e.g., show a message)
+                          alert("يجب ادخال رقم");
+                        }
+                      }}
+                    />
+                  </td>
+                  {/* <td>{user.files_numbers}</td> */}
                 </tr>
               )}
               {user.publish_date && (
@@ -1202,7 +1270,34 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`
+                      `${API_URL}/${user.national_id}/${user.photo_payment_receipt}`, `${user.photo_payment_receipt}`
+                    );
+                  }}
+                  class="atch-btn atch-btn2"
+                >
+                  Download
+                </button>
+              </td>
+            </tr>
+          )}
+          {user.research_list && (
+            <tr>
+              <td> {t(`service5-step-two.research_list`)} </td>
+              <td className="att-row">
+                <button
+                  onClick={() => {
+                    openImage(
+                      `${API_URL}/${user.national_id}/${user.research_list}`
+                    );
+                  }}
+                  class="atch-btn"
+                >
+                  Open
+                </button>
+                <button
+                  onClick={() => {
+                    downloadImage(
+                      `${API_URL}/${user.national_id}/${user.research_list}`, `${user.research_list}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1229,7 +1324,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`
+                      `${API_URL}/${user.national_id}/${user.photo_college_letter}`, `${user.photo_college_letter}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1256,7 +1351,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_pdf}`, `${user.research_plan_ar_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1283,7 +1378,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_ar_word}`, `${user.research_plan_ar_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1310,7 +1405,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_word}`, `${user.research_plan_en_word}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1337,7 +1432,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`
+                      `${API_URL}/${user.national_id}/${user.research_plan_en_pdf}`, `${user.research_plan_en_pdf}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1364,7 +1459,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.translation_paper}`
+                      `${API_URL}/${user.national_id}/${user.translation_paper}`, `${user.translation_paper}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1391,7 +1486,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_word_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_word_ar}`, `${user.message_word_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1418,7 +1513,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`
+                      `${API_URL}/${user.national_id}/${user.message_pdf_ar}`, `${user.message_pdf_ar}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1445,7 +1540,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.quote_check_form}`
+                      `${API_URL}/${user.national_id}/${user.quote_check_form}`, `${user.quote_check_form}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1472,7 +1567,7 @@ const ShowA = () => {
                 <button
                   onClick={() => {
                     downloadImage(
-                      `${API_URL}/${user.national_id}/${user.decision}`
+                      `${API_URL}/${user.national_id}/${user.decision}`, `${user.decision}`
                     );
                   }}
                   class="atch-btn atch-btn2"
@@ -1508,8 +1603,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]
-                            }`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_word`]}`, `${user[`research${i + 1}_image_word`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1540,8 +1634,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]
-                            }`
+                            `${API_URL}/${user.national_id}/${user[`research${i + 1}_image_pdf`]}`, `${user[`research${i + 1}_image_pdf`]}`
                           );
                         }}
                         class="atch-btn atch-btn2"
@@ -1575,8 +1668,7 @@ const ShowA = () => {
                         <button
                           onClick={() => {
                             downloadImage(
-                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]
-                              }`
+                              `${API_URL}/${user.national_id}/${user[`acceptance_letter${i + 1}`]}`, `${user[`acceptance_letter${i + 1}`]}`
                             );
                           }}
                           class="atch-btn atch-btn2"
@@ -1590,14 +1682,15 @@ const ShowA = () => {
               </React.Fragment>
             ))}
         </table>
+
         <h1>الرد المرسل من المكتبه</h1>
         <hr style={{ width: "90%", marginBottom: "1rem", height: "3px" }} />
         <div className="resp-cont">
           <div className="resp">
             <h2>
               <span style={{ color: "#19355A" }}>{t("date-response")} </span> :{" "}
-              {user.response_date && user.response_date !== "null"
-                ? user.response_date?.slice(0, 10)
+              {user.response_date && user.response_date !== "null" && (user.status == 5 || user.status == 6)
+                ? format(user.response_date)
                 : "لم يتم الرد بعد"}
             </h2>
           </div>
@@ -1668,7 +1761,7 @@ const ShowA = () => {
                       <button
                         onClick={() => {
                           downloadImage(
-                            `${API_URL}/${user.national_id}/${user.response_pdf}`
+                            `${API_URL}/${user.national_id}/${user.response_pdf}`, `${user.response_pdf}`
                           );
                         }}
                         className="atch-btn atch-btn2"
@@ -1676,6 +1769,10 @@ const ShowA = () => {
                         Download
                       </button>
                     </div>
+                  ) : user.response_pdf === null &&
+                    user.response_text !== "" && user.response_text !== null &&
+                    user.status !== 0 ? (
+                    <h3>لم يتم ارسال ملف الرد </h3>
                   ) : user.manager_status === null &&
                     user.response_pdf === null &&
                     user.status !== 0 ? (

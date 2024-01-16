@@ -42,12 +42,13 @@ const Ser2 = ({ ser }) => {
         .get(`${API_URL}/auth/check`, { withCredentials: true })
         .then((res) => { })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setDisabled(true);
-          navigate("/Library/login");
+          window.location.replace("/Library/login");
+
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
 
     if (status == 3) {
@@ -62,14 +63,14 @@ const Ser2 = ({ ser }) => {
               payment_photo: res.data.photo_payment_receipt,
               research: res.data.message_pdf_ar,
               research_word: res.data.message_word_ar,
-              form: res.data.quote_check_form,
+              form: res.data?.quote_check_form ? res.data.quote_check_form : "",
             });
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   }, []);
@@ -111,16 +112,28 @@ const Ser2 = ({ ser }) => {
         return;
       }
     }
-    if (!data.form) {
-      setError(t(`service${id}-step-two-err.form`));
-      return;
+    // if (!data.form) {
+    //   setError(t(`service${id}-step-two-err.form`));
+    //   return;
+    // }
+    // allaow data.form to be empty and if it is not empty check if it is pdf or word or image
+
+    if (data.form?.name) {
+      const validExtensions3 = /\.(pdf|doc|docx|jpg|jpeg|png)$/i; // Regular expression pattern for valid file extensions
+      if (!validExtensions3.test(data.form.name)) {
+        setError(t(`service${id}-step-two-err.form`));
+        return;
+      }
     }
+
 
     const formData = new FormData();
     formData.append("payment_photo", data.payment_photo);
     formData.append("research", data.research);
     formData.append("research_word", data.research_word);
-    formData.append("form", data.form);
+    if (data.form) {
+      formData.append("form", data.form);
+    }
     formData.append("service_id", data.service_id);
     formData.append("application_id", data.application_id);
 
@@ -147,7 +160,9 @@ const Ser2 = ({ ser }) => {
           navigate(`/Library`);
         })
         .catch((err) => {
-          console.log(err.response.data.message[0]);
+          if (err.response.status == 401) {
+            return window.location.replace("/Library/login");
+          }
           setError(err.response.data.message[0]);
           if (
             err &&
@@ -159,7 +174,7 @@ const Ser2 = ({ ser }) => {
               !err.response.data[0].user &&
               err.response.data[0].user != undefined
             ) {
-              navigate("/Library/login");
+              return window.location.replace("/Library/login");
             }
           }
           setMsg(null);
@@ -171,7 +186,7 @@ const Ser2 = ({ ser }) => {
           setDisabled(false);
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       console.log(err.response.data);
       setDisabled(false);
     }

@@ -7,14 +7,15 @@ import { API_URL } from "../../../../config";
 import PopupConfirmMsg from "../../../../components/error/PopupConfirmMsg";
 import PopupErrorMsg from "../../../../components/error/PopupErrorMsg";
 
-const Reviewed = () => {
+const AllToCode = () => {
   const navigate = useNavigate();
   const [student, setStudent] = React.useState([]);
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [admins, setAdmins] = React.useState([]);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [data, setData] = useState([]);
   const [error, setError] = useState('');
-
 
   localStorage.setItem("i18nextLng", "ar");
 
@@ -24,9 +25,10 @@ const Reviewed = () => {
       axios
         .get(`${API_URL}/manager/getallApplicants`, { withCredentials: true })
         .then((res) => {
-          setStudent(res.data);
-          setFilter(res.data);
+          setStudent(res?.data?.length > 0 && res?.data?.filter((item) => item.service_id !== 7 && item.service_id !== 8));
+          setFilter(res?.data?.length > 0 && res?.data?.filter((item) => item.service_id !== 7 && item.service_id !== 8));
           setFilter2(res.data);
+
         })
         .catch((error) => {
           if (error.response.status === 401) window.location.replace("/Library/ManagerLogin");
@@ -48,8 +50,6 @@ const Reviewed = () => {
 
   const [filter, setFilter] = useState(student);
   const [filter2, setFilter2] = useState(student);
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  const [data, setData] = useState([]);
 
   const format = (date) => {
     const formattedDate = new Date(date).toLocaleString('en-GB', {
@@ -120,7 +120,6 @@ const Reviewed = () => {
 
     return appid;
   };
-
   const handleDelete = async () => {
     setConfirmDelete(false);
     let student_info = data;
@@ -151,8 +150,10 @@ const Reviewed = () => {
     setConfirmDelete(false);
     setError('');
   }
+
   return (
     <div className="super-container">
+      <img src={img} alt="img" />
       {confirmDelete && (
         <PopupConfirmMsg
           message={"هل انت متاكد من حذف هذا الطلب؟"}
@@ -166,35 +167,39 @@ const Reviewed = () => {
           onClose={handleCloseError}
         />
       )}
-      <img src={img} alt="img" />
-
       <section className="cotainer-stu">
         <div className="navv">
           {/* <h2>الطلاب</h2> */}
           <select
             onChange={(e) => {
+              const value = e.target.value;
               const filteredStudents =
-                e.target.value === ""
-                  ? student
-                  : student.filter(
-                    (item) => item.status === parseInt(e.target.value)
-                  );
+                student.filter((item) => {
+                  if (value === "1" && item.payment_code !== null && item.payment_code !== "") {
+                    return item.status >= 1;
+                  } else if (value === "" && item.service_id !== 7 && item.service_id !== 8) {
+                    return item.service_id !== 7 && item.service_id !== 8;
+                  } else if (value === "6" && item.payment_code === null) {
+                    return item.status === 6;
+                  }
+                  else {
+                    return item.status === parseInt(value);
+                  }
+                });
+
               setFilter(filteredStudents);
               setFilter2(filteredStudents);
             }}
+
             className="filter"
             name=""
             id=""
           >
-            <option value="">الكل</option>
-            <option value="0"> منتظر كود دفع </option>
-            <option value="1"> منتظر رفع المرفقات </option>
-            <option value="2"> قيد الانتظار </option>
-            <option value="3"> قيد التعديل </option>
-            {/* <option value="4"> قيد التعديل علي مرفقات طلب الكود </option> */}
-            <option value="5"> تم الارسال </option>
-            <option value="6"> مرفوض </option>
-
+            <option value="" defaultValue>الكل</option>
+            <option value="0"> منظر كود دفع </option>
+            <option value="4"> قيد التعديل </option>
+            <option value="1"> حصل علي كود دفع </option>
+            <option value="6"> تم الغاء الطلب </option>
           </select>
 
           <input
@@ -245,18 +250,18 @@ const Reviewed = () => {
                   <th>التسلسل</th>
                   <th>اسم الطالب</th>
                   <th> نوع الخدمه </th>
-                  <th>تاريخ التقديم</th>
+                  <th>تاريخ الحصول علي كود الدفع </th>
                   <th> حاله الخدمه </th>
-                  <th> الموظف المسؤول </th>
                   <th>التفاصيل</th>
                 </tr>
               </thead>
               <tbody>
                 {filter.length > 0 &&
                   filter.filter((item) => {
-                    const submitDate = new Date(item.submit_date); // Assuming submit_date is in a date format
+                    const submitDate = new Date(item.req_code_date); // Assuming submit_date is in a date format
                     const fromDateObj = new Date(fromDate);
                     const toDateObj = new Date(toDate);
+
 
                     // Check if submitDate is within the selected date range (if dates are selected)
                     if (
@@ -266,47 +271,30 @@ const Reviewed = () => {
                       return true;
                     }
 
-                    // If no date range is selected, display all data
-                    if (!fromDate && !toDate) {
+                    // If no date range is selected, display all data if submitDate is valid
+                    if (!fromDate && !toDate && !isNaN(submitDate.getTime())) {
                       return true;
                     }
 
                     return false;
+
                   }).map((item, index) => (
                     <tr key={item.student_id}>
                       <td>{index + 1}</td>
                       <td>{item.name}</td>
                       <td>{item.service_name_ar}</td>
                       <td>
-                        {item.status === 0 || item.status === 4
-                          ? format(item.req_code_date)
-                          : format(item.submit_date)}
+                        {item.req_code_date ? format(item.req_code_date) : null}
                       </td>
                       <td>
-                        {item.status === 0
-                          ? "منتظر كود دفع"
-                          : item.status === 1
-                            ? "في انتظار رفع المرفقات"
-                            : item.status === 2
-                              ? "في انتظار رد المكتبه"
-                              : item.status === 3
-                                ? "قيد التعديل"
-                                : item.status === 4
-                                  ? "قيد التعديل"
-                                  : item.status === 5
-                                    ? "تم الارسال"
-                                    : item.status === 6
-                                      ? "مرفوض"
-                                      : null}
+                        {item.status === 0 ? "منتظر كود دفع"
+                          : item.status === 4 ? "قيد التعديل"
+                            : item.status >= 1 && item.payment_code !== null && item.payment_code !== "" ? "حصل علي كود دفع"
+                              : item.status === 6 && item.payment_code === null ? "تم الغاء الطلب"
+                                : null}
                       </td>
-                      {item.manager_id !== null ? (
-                        admins
-                          .filter((admin) => admin.id === item.manager_id)
-                          .map((admin) => <td key={admin.id}>{admin.mname || "لا يوجد"}</td>)
-                      ) : (
-                        <td>لا يوجد</td>
-                      )}
-                      <td style={{ display: "flex", justifyContent: "space-around" , width: "100%"}}>
+                      <td style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
+
                         <button
                           onClick={() => {
                             navigate(
@@ -343,4 +331,4 @@ const Reviewed = () => {
   );
 };
 
-export default Reviewed;
+export default AllToCode;

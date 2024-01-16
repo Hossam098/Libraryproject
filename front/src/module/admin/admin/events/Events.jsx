@@ -24,10 +24,10 @@ const Events = () => {
                     setAllEvents(res.data);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    // console.log(err);
                 });
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     }, []);
 
@@ -60,11 +60,11 @@ const Events = () => {
     };
 
     const handleEditEvent = (index) => {
-        if(allEvents[index].title.length == 0){
+        if (allEvents[index].title.length == 0) {
             setError("من فضلك ادخل عنوان الخبر");
-        }else if(allEvents[index].content.length == 0){
+        } else if (allEvents[index].content.length == 0) {
             setError("من فضلك ادخل محتوى الخبر");
-        }else{
+        } else {
             axios.defaults.withCredentials = true;
             try {
                 axios
@@ -75,11 +75,11 @@ const Events = () => {
                         window.location.reload();
                     })
                     .catch((err) => {
-                        console.log(err);
+                        // console.log(err);
                     });
-                } catch (err) {
-                    console.log(err);
-                }
+            } catch (err) {
+                // console.log(err);
+            }
         }
     }
 
@@ -94,10 +94,10 @@ const Events = () => {
                     window.location.reload();
                 })
                 .catch((err) => {
-                    console.log(err);
+                    // console.log(err);
                 });
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     }
 
@@ -174,8 +174,8 @@ const Events = () => {
                                         <td>{event.place}</td>
                                         <td>
                                             <button
-                                                onClick={() => {handleEditEvent(index)}}
-                                                    
+                                                onClick={() => { handleEditEvent(index) }}
+
                                                 className="edit"
                                             >
                                                 تعديل
@@ -183,7 +183,7 @@ const Events = () => {
                                         </td>
                                         <td>
                                             <button
-                                                onClick={() => {handleDeleteEvent(event.id)}}
+                                                onClick={() => { handleDeleteEvent(event.id) }}
                                                 className="delete"
                                             >
                                                 حذف

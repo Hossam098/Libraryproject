@@ -32,13 +32,13 @@ const ServiceStepTwo = (ID, Ser) => {
     try {
       axios
         .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => {})
+        .then((res) => { })
         .catch((err) => {
-          console.log(err);
-          navigate("/Library/login");
+          // console.log(err);
+          window.location.replace("/Library/login");
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 
@@ -57,7 +57,7 @@ const ServiceStepTwo = (ID, Ser) => {
       case 6:
         return <Ser6 ser={ser} />;
       case 7:
-        return <Ser7 />;
+        return <Ser7 ser={ser} />;
       case 8:
         return <Ser8 ser={ser} />;
 

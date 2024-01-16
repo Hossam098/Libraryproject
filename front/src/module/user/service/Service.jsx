@@ -27,6 +27,7 @@ const Service = (ID, Ser) => {
     id = ID.ID;
   }
   const ser = ID.Ser;
+  console.log(ser);
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -34,17 +35,18 @@ const Service = (ID, Ser) => {
     try {
       axios
         .get(`${API_URL}/auth/check`, { withCredentials: true })
-        .then((res) => {})
+        .then((res) => { })
         .catch((err) => {
-          console.log(err);
-          navigate("/Library/login");
+          // console.log(err);
+          window.location.replace("/Library/login");
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 
   const Service = (id) => {
+    console.log(id);
     switch (id) {
       case "1":
         return <Ser1 />;
