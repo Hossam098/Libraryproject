@@ -51,32 +51,32 @@ const Show = () => {
 
     const format = (date) => {
         const formattedDate = new Date(date).toLocaleString('en-GB', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
         });
-    
+
         // Extract components from formattedDate
         const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
-    
+
         // Convert time to 12-hour format with AM/PM
         const [hour, minute, second] = time.split(':');
         const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
         const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
-    
+
         // Combine components to create the final formatted date
         const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
-    
+
         return formattedDateTime;
-      };
+    };
 
 
 
     return (
-        <div className="inst" style={{ display: "block", direction: 'rtl' , textAlign: 'center' }}>
+        <div className="inst" style={{ display: "block", direction: 'rtl', textAlign: 'center' }}>
             {!logged && <PopupError message={t('err-Login')} onClose={handleReturn} />}
 
 
@@ -99,9 +99,15 @@ const Show = () => {
                                             <hr />
                                             <div className="contact-msg-body">
                                                 <h2>- {item.message}</h2>
-                                                <p style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'left', direction: 'ltr' } : { textAlign: 'right', direction: 'rtl' }}>
-                                                    {format(item.reson_date)}
-                                                </p>
+                                                <div className='contact-msg-body-date'>
+                                                    <p >
+                                                        {item.name}
+                                                    </p>
+                                                    <p >
+                                                        {format(item.reson_date)}
+                                                    </p>
+
+                                                </div>
                                             </div>
                                             {item.response && (
                                                 <React.Fragment>
@@ -132,8 +138,8 @@ const Show = () => {
                 }
                 {data.length === 0 && (
                     <div className="contact-msg" style={{ textAlign: 'center' }}>
-                    <h3>{t('no-msg')}</h3>
-                </div>
+                        <h3>{t('no-msg')}</h3>
+                    </div>
                 )}
                 <button
                     className='select-service-btn'

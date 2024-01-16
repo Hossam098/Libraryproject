@@ -148,7 +148,7 @@ const Review = () => {
                                 : item.status === 4
                                   ? "قيد التعديل"
                                   : item.status === 5
-                                    ? "مقبول"
+                                    ? "تم الارسال"
                                     : item.status === 6
                                       ? "مرفوض"
                                       : null}

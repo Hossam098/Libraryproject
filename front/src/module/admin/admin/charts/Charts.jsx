@@ -54,7 +54,7 @@ const Charts = () => {
           <article className="widget">
             <div className="widget-header">
               <AiOutlineUser />
-              <p>عدد المقبولين</p>
+              <p>عدد التم الارسالين</p>
             </div>
             <h2>
               {filter?.length >= 0 &&

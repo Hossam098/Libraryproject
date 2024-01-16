@@ -1769,7 +1769,7 @@ const ShowA = () => {
                       </button>
                     </div>
                   ) : user.response_pdf === null &&
-                    (user.response_text !== null || user.response_text !== "") &&
+                     user.response_text !== "" &&
                     user.status !== 0 ? (
                     <h3>لم يتم ارسال ملف الرد </h3>
                   ) : user.manager_status === null &&

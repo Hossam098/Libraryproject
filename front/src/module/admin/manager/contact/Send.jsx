@@ -57,16 +57,35 @@ const Send = () => {
 
 
     const format = (date) => {
-        const formattedDate = new Date(date).toLocaleString();
-        return formattedDate;
-    }
+        const formattedDate = new Date(date).toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        });
+
+        // Extract components from formattedDate
+        const [, day, month, year, time] = /(\d+)\/(\d+)\/(\d+), (.+)/.exec(formattedDate);
+
+        // Convert time to 12-hour format with AM/PM
+        const [hour, minute, second] = time.split(':');
+        const amPm = hour >= 12 ? 'مساءً' : 'صباحا';
+        const formattedTime = `${(hour % 12) || 12}:${minute}:${second} ${amPm}`;
+
+        // Combine components to create the final formatted date
+        const formattedDateTime = `${day}/${month}/${year}, ${formattedTime}`;
+
+        return formattedDateTime;
+    };
 
     const hanleSend = () => {
         setConfirm(false)
         if (response === '' || response.trim() === '' || response.length < 5) {
             setErrors("يجب ان يكون الرد اكثر من 5 حروف")
             setConfirm(false)
-            return  
+            return
         }
 
         console.log(messageSelected)
@@ -88,7 +107,7 @@ const Send = () => {
                     if (err.status === 401) navigate('/Library/login')
                     else setErrors(t('errmsg'))
                 })
-        }catch (err) {
+        } catch (err) {
             // console.log(err)
         }
     }
@@ -97,7 +116,7 @@ const Send = () => {
 
 
     return (
-        <div className="inst" style={{ display: "block", direction: 'rtl' , textAlign: 'center' }}>
+        <div className="inst" style={{ display: "block", direction: 'rtl', textAlign: 'center' }}>
             {!logged && <PopupError message={t('err-Login')} onClose={handleReturn} />}
             {confirm && <PopupConfirmMsg message={t('confirm-msg-contact')} onClose={handleCloseError} onSubmit={hanleSend} />}
             {errors && <PopupError message={errors} onClose={handleCloseError} />}
@@ -110,61 +129,67 @@ const Send = () => {
                 {loading && logged ?
                     <Oval />
                     : (
-                        <div className="contact-msg"  style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'right', direction: 'rtl',width: '100%' } : { textAlign: 'left', direction: 'ltr' ,width: '100%' }}>
+                        <div className="contact-msg" style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'right', direction: 'rtl', width: '100%' } : { textAlign: 'left', direction: 'ltr', width: '100%' }}>
 
                             {data.length > 0 && data.filter((item) => item.response == null)
-                            .map((item, index) => {
-                                return (
-                                    <React.Fragment key={index}>
-                                        <div className="contact-msg-head" style={{ textAlign: 'center' }}>
-                                            <h3>{item.service_name_ar}</h3>
-                                        </div>
-                                        <hr />
-                                        <div className="contact-msg-body">
-                                            <h2>- {item.message}</h2>
-                                            <p style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'left', direction: 'ltr' } : { textAlign: 'right', direction: 'rtl' }}>
-                                                {format(item.reson_date)}
-                                            </p>
-                                        </div>
-                                        {item.response ? (
-                                            <React.Fragment>
-                                                <div className="contact-msg-body">
-                                                    <h2 style={{ color: '#ad8700' }}>
-                                                        ={'>'} {item.response}
-                                                    </h2>
-                                                    <p style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'left', direction: 'ltr' } : { textAlign: 'right', direction: 'rtl' }}>
-                                                        {format(item.response_date)}
-                                                    </p>
-                                                </div>
-                                                {/* <hr /> */}
-                                            </React.Fragment>
-                                        ) : (
-                                            <>
+                                .map((item, index) => {
+                                    return (
+                                        <React.Fragment key={index}>
+                                            <div className="contact-msg-head" style={{ textAlign: 'center' }}>
+                                                <h3>{item.service_name_ar}</h3>
+                                            </div>
+                                            <hr />
                                             <div className="contact-msg-body">
-                                                <textarea
-                                                    className='textAreaResponse'
-                                                    placeholder='اكتب ردك هنا ...'
-                                                    onChange={(e) => {
-                                                        setResponse(e.target.value)
-                                                    }}
-                                                />
-                                                <button
-                                                    className="select-service-btn"
-                                                    onClick={() => {
-                                                        setConfirm(true)
-                                                        setMessageSelected(item)
-                                                    }}
-                                                >
-                                                    ارسال
-                                                </button>
-                                                </div>
-                                                </>
-                                        )}
+                                                <h2>- {item.message}</h2>
+                                                <div className='contact-msg-body-date'>
+                                                    <p >
+                                                        {item.name}
+                                                    </p>
+                                                    <p >
+                                                        {format(item.reson_date)}
+                                                    </p>
 
-                                    </React.Fragment>
-                                );
-                            })}
-                            
+                                                </div>
+                                            </div>
+                                            {item.response ? (
+                                                <React.Fragment>
+                                                    <div className="contact-msg-body">
+                                                        <h2 style={{ color: '#ad8700' }}>
+                                                            ={'>'} {item.response}
+                                                        </h2>
+                                                        <p style={localStorage.getItem('i18nextLng') === 'ar' ? { textAlign: 'left', direction: 'ltr' } : { textAlign: 'right', direction: 'rtl' }}>
+                                                            {format(item.response_date)}
+                                                        </p>
+                                                    </div>
+                                                    {/* <hr /> */}
+                                                </React.Fragment>
+                                            ) : (
+                                                <>
+                                                    <div className="contact-msg-body">
+                                                        <textarea
+                                                            className='textAreaResponse'
+                                                            placeholder='اكتب ردك هنا ...'
+                                                            onChange={(e) => {
+                                                                setResponse(e.target.value)
+                                                            }}
+                                                        />
+                                                        <button
+                                                            className="select-service-btn"
+                                                            onClick={() => {
+                                                                setConfirm(true)
+                                                                setMessageSelected(item)
+                                                            }}
+                                                        >
+                                                            ارسال
+                                                        </button>
+                                                    </div>
+                                                </>
+                                            )}
+
+                                        </React.Fragment>
+                                    );
+                                })}
+
 
                         </div>
                     )

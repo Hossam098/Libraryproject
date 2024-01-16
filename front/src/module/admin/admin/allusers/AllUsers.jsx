@@ -107,7 +107,7 @@ const AllUsers = () => {
               <>
                 <option value="2"> قيد الانتظار </option>
                 <option value="3"> قيد التعديل </option>
-                <option value="5"> مقبول </option>
+                <option value="5"> تم الارسال </option>
                 <option value="6"> مرفوض </option>
               </>
             )}
@@ -149,7 +149,7 @@ const AllUsers = () => {
                                 : item.status === 4
                                   ? "قيد التعديل"
                                   : item.status === 5
-                                    ? "مقبول"
+                                    ? "تم الارسال"
                                     : item.status === 6
                                       ? "مرفوض"
                                       : null}
