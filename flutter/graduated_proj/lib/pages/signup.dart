@@ -221,7 +221,7 @@ class _SignUpState extends State<SignUp> {
                                               },
                                               hint: "الاسم",
                                               mycontroller:
-                                                  _nationalIdController,
+                                                  _nameController,
                                               preicon: Icon(Icons.person),
                                             ),
                                             //  TextField(
@@ -272,9 +272,7 @@ class _SignUpState extends State<SignUp> {
                                               },
                                               hint: "رقم الهوية الوطنية",
                                               mycontroller: _nationalIdController,
-                                               texinp:
-                                                  TextInputType.number,
-                                             preicon: Icon(Icons.credit_card),
+                                            preicon: Icon(Icons.credit_card),
 
                                    
                                             ),
@@ -307,7 +305,7 @@ class _SignUpState extends State<SignUp> {
                                                 return validinput(val!, 10, 30);
                                               },
                                               hint: "رقم الهاتف",
-                                              mycontroller: _nationalIdController,
+                                              mycontroller: _phoneController,
                                                texinp:
                                                   TextInputType.number,
                                              preicon: Icon(Icons.phone),
@@ -340,8 +338,8 @@ class _SignUpState extends State<SignUp> {
                                               valid: (val) {
                                                 return validinput(val!, 10, 30);
                                               },
-                                              hint: "رقم الهاتف",
-                                              mycontroller: _nationalIdController,
+                                              hint: "الجنسية",
+                                              mycontroller: _nationalityController,
                                              preicon: Icon(Icons.flag),
 
                                    
@@ -432,7 +430,7 @@ class _SignUpState extends State<SignUp> {
                                               },
                                               hint: "اسم الجامعة",
                                               mycontroller:
-                                                  _nationalIdController,
+                                                  _other_uni,
                                               preicon: Icon(Icons.maps_home_work),
                                             ),
                                                 ),
@@ -448,7 +446,7 @@ class _SignUpState extends State<SignUp> {
                                               },
                                               hint: "الكلية",
                                               mycontroller:
-                                                  _nationalIdController,
+                                                  _collegeController,
                                               preicon: Icon(Icons.school),
                                             ),
                                           ),
@@ -462,7 +460,7 @@ class _SignUpState extends State<SignUp> {
                                               },
                                               hint: "القسم",
                                               mycontroller:
-                                                  _nationalIdController,
+                                                  _departmentController,
                                               preicon: Icon(Icons.apartment),
                                             ),
                                           ),
