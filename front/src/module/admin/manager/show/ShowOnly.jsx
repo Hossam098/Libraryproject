@@ -281,6 +281,18 @@ const ShowOnly = () => {
                   />
                 </td>
               </tr>
+              {(user.level !== null || user.level !== undefined || user.level !== "") && (
+                <tr>
+                  <td> المرحله </td>
+                  <td>
+                    {user.level == 0
+                      ? "ماجستير"
+                      : user.level == 1
+                        ? "دكتوراه"
+                        : null}
+                  </td>
+                </tr>
+              )}
               <tr>
                 <td>تاريخ طلب كود الدفع</td>
                 <td>

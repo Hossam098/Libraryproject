@@ -1144,6 +1144,18 @@ const ShowA = () => {
                   />
                 </td>
               </tr>
+              {user.level !== null || user.level !== undefined || user.level !== "" && (
+                <tr>
+                  <td> المرحله </td>
+                  <td>
+                    {user.level == 0
+                      ? "ماجستير"
+                      : user.level == 1
+                        ? "دكتوراه"
+                        : null}
+                  </td>
+                </tr>
+              )}
               <tr>
                 <td>تاريخ طلب كود الدفع</td>
                 <td>
@@ -1176,18 +1188,7 @@ const ShowA = () => {
                 <td> نوع الخدمه </td>
                 <td>{user.service_name_ar}</td>
               </tr>
-              {user.level && (
-                <tr>
-                  <td> المرحله </td>
-                  <td>
-                    {user.level == 0
-                      ? "ماجستير"
-                      : user.level == 1
-                        ? "دكتوراه"
-                        : null}
-                  </td>
-                </tr>
-              )}
+              
               {user.academic && (
                 <tr>
                   <td> الشعبه </td>
@@ -1769,7 +1770,7 @@ const ShowA = () => {
                       </button>
                     </div>
                   ) : user.response_pdf === null &&
-                     user.response_text !== "" &&
+                    user.response_text !== "" &&
                     user.status !== 0 ? (
                     <h3>لم يتم ارسال ملف الرد </h3>
                   ) : user.manager_status === null &&

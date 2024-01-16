@@ -658,6 +658,18 @@ const AShow = () => {
               <td>القسم</td>
               <td>{user.department}</td>
             </tr>
+            {(user.level !== null || user.level !== undefined || user.level !== "") && (
+                <tr>
+                  <td> المرحله </td>
+                  <td>
+                    {user.level == 0
+                      ? "ماجستير"
+                      : user.level == 1
+                        ? "دكتوراه"
+                        : null}
+                  </td>
+                </tr>
+              )}
             {user.req_code_date && (
               <tr>
                 <td>تاريخ طلب كود الدفع</td>
