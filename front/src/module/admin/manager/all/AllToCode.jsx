@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import img from "../../../../images/librarylog.jpg";
 import { API_URL } from "../../../../config";
+import PopupConfirmMsg from "../../../../components/error/PopupConfirmMsg";
+import PopupErrorMsg from "../../../../components/error/PopupErrorMsg";
 
 const AllToCode = () => {
   const navigate = useNavigate();
@@ -11,7 +13,9 @@ const AllToCode = () => {
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [admins, setAdmins] = React.useState([]);
-
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState('');
 
   localStorage.setItem("i18nextLng", "ar");
 
@@ -116,12 +120,53 @@ const AllToCode = () => {
 
     return appid;
   };
+  const handleDelete = async () => {
+    setConfirmDelete(false);
+    let student_info = data;
+    if ((student_info.status == 6 || student_info.status == 1 || student_info.status == 0 || student_info.status == 2) &&
+      (student_info.payment_code == null || student_info.payment_code == '')) {
 
+        console.log(student_info.status);
+        console.log(student_info.payment_code);
+
+      axios
+        .post(`${API_URL}/manager/deleteApplicant`, {
+          student_info,
+        })
+        .then((res) => {
+          window.location.reload();
+        })
+        .catch((err) => {
+          if (err.response.status === 401) window.location.replace("/Library/ManagerLogin");
+          window.location.replace("/Library/manager");
+        });
+    } else {
+      setError('لا يمكن حذف هذا الطلب الان');
+      return;
+    }
+  };
+
+  const handleCloseError = () => {
+    setConfirmDelete(false);
+    setError('');
+  }
 
   return (
     <div className="super-container">
       <img src={img} alt="img" />
-
+      {confirmDelete && (
+        <PopupConfirmMsg
+          message={"هل انت متاكد من حذف هذا الطلب؟"}
+          onClose={handleCloseError}
+          onSubmit={handleDelete}
+        />
+      )}
+      {error && (
+        <PopupErrorMsg
+          message={error}
+          onClose={handleCloseError}
+        />
+      )}
       <section className="cotainer-stu">
         <div className="navv">
           {/* <h2>الطلاب</h2> */}
@@ -248,18 +293,31 @@ const AllToCode = () => {
                               : item.status === 6 && item.payment_code === null ? "تم الغاء الطلب"
                                 : null}
                       </td>
-                      <button
-                        onClick={() => {
-                          navigate(
-                            `/Library/manager/ShowOnly/${item.user_id},${item.service_id
-                            },${sername(item)},${app_id(item)}`
-                          );
-                        }}
-                      >
-                        {/* <Link to={`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}> */}
-                        تفاصيل
-                        {/* </Link> */}
-                      </button>
+                      <td style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
+
+                        <button
+                          onClick={() => {
+                            navigate(
+                              `/Library/manager/ShowOnly/${item.user_id},${item.service_id
+                              },${sername(item)},${app_id(item)}`
+                            );
+                          }}
+                        >
+                          {/* <Link to={`/manager/show/${item.user_id},${item.service_id},${sername(item)},${app_id(item)}`}> */}
+                          تفاصيل
+                          {/* </Link> */}
+                        </button>
+                        <button
+                          className="delete"
+                          onClick={() => {
+                            setData(item);
+                            setConfirmDelete(true);
+                            // handleDelete(item);
+                          }}
+                        >
+                          حذف
+                        </button>
+                      </td>
                     </tr>
                   ))}
               </tbody>
