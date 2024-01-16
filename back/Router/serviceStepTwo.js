@@ -1110,13 +1110,13 @@ serviceStepTwo.put("/StepTwoSer5/:id/:id2",
                     //     error.push("Please upload research_list");
                     //     return res.status(400).json({ message: error });
                     // } else {
-                    const ext = req.files?.research_list[0]?.filename.split(".").pop();
-                    if (ext !== "pdf" && ext !== "docx" && ext !== "doc" && ext !== "jpg" && ext !== "png" && ext !== "jpeg") {
-                        handleDeleteFile5(req);
-                        error.push("Please upload pdf or word or image");
-                        return res.status(400).json({ message: error });
+                    // const ext = req.files?.research_list[0]?.filename.split(".").pop();
+                    // if (ext !== "pdf" && ext !== "docx" && ext !== "doc" && ext !== "jpg" && ext !== "png" && ext !== "jpeg") {
+                    //     handleDeleteFile5(req);
+                    //     error.push("Please upload pdf or word or image");
+                    //     return res.status(400).json({ message: error });
 
-                    }
+                    // }
                     // for (let i = 1; i <= req.body.files_numbers; i++) {
                     //     if (!req.files[`word${i}`]) {
                     //         handleDeleteFile5(req);

@@ -377,20 +377,21 @@ const Ser5 = ({ ser }) => {
           if (err.response.status == 401) {
             return window.location.replace("/Library/login");
           }
-          setError(err.response.data.message[0]);
-          if (
-            err &&
-            err.response &&
-            err.response.data &&
-            err.response.data[0]
-          ) {
-            if (
-              !err.response.data[0].user &&
-              err.response.data[0].user != undefined
-            ) {
-              return window.location.replace("/Library/login");
-            }
-          }
+          // setError(err.response.data.message[0]);
+          // if (
+          //   err &&
+          //   err.response &&
+          //   err.response.data &&
+          //   err.response.data[0]
+          // ) {
+          //   if (
+          //     !err.response.data[0].user &&
+          //     err.response.data[0].user != undefined
+          //   ) {
+          //     return window.location.replace("/Library/login");
+          //   }
+          // }
+          setError("حدث خطأ ما يرجى المحاولة مرة أخرى");
           setMsg(null);
           setProgress((prevState) => ({
             ...prevState,
