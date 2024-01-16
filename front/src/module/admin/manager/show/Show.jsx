@@ -1144,7 +1144,7 @@ const ShowA = () => {
                   />
                 </td>
               </tr>
-              {user.level !== null || user.level !== undefined || user.level !== "" && (
+              {(user.level !== null || user.level !== undefined || user.level !== "") && (
                 <tr>
                   <td> المرحله </td>
                   <td>
