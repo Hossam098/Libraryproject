@@ -21,7 +21,7 @@ const Review = () => {
         })
         .then((res) => {
           setStudent(res.data);
-          // setFilter(res.data)
+          setFilter(res.data)
           // setFilter2(res.data)
         })
         .catch((error) => {
@@ -31,7 +31,7 @@ const Review = () => {
     } catch (error) { }
   }, []);
 
-  // const [filter, setFilter] = useState(student);
+  const [filter, setFilter] = useState(student);
   // const [filter2, setFilter2] = useState(student);
 
   const sername = (item) => {
@@ -107,11 +107,36 @@ const Review = () => {
 
       <section className="cotainer-stu">
         <div className="navv">
-          <h2>الطلاب</h2>
+          {/* <h2>الطلاب</h2> */}
+          <select
+            onChange={(e) => {
+              const filteredStudents =
+                e.target.value === ""
+                  ? student
+                  : student.filter(
+                    (item) => item.status === parseInt(e.target.value)
+                  );
+              setFilter(filteredStudents);
+              // setFilter2(filteredStudents);
+            }}
+            className="filter"
+            name=""
+            id=""
+          >
+            <option value="">الكل</option>
+            <option value="0"> منتظر كود دفع </option>
+            <option value="1"> منتظر رفع المرفقات </option>
+            <option value="2"> قيد الانتظار </option>
+            <option value="3"> قيد التعديل </option>
+            {/* <option value="4"> قيد التعديل علي مرفقات طلب الكود </option> */}
+            <option value="5"> تم الارسال </option>
+            <option value="6"> مرفوض </option>
+
+          </select>
         </div>
         <div className="student-container">
           {/* {student  && <h2>{student}</h2>} */}
-          {student.length > 0 ? (
+          {filter.length > 0 ? (
             <table className="data-table">
               <thead>
                 <tr>

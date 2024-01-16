@@ -139,7 +139,7 @@ const Reviewed = () => {
             name=""
             id=""
           >
-            <option value="">فلتره</option>
+            <option value="">الكل</option>
             <option value="0"> منتظر كود دفع </option>
             <option value="1"> منتظر رفع المرفقات </option>
             <option value="2"> قيد الانتظار </option>
@@ -259,6 +259,7 @@ const Reviewed = () => {
                       ) : (
                         <td>لا يوجد</td>
                       )}
+                      <td>
                       <button
                         onClick={() => {
                           navigate(
@@ -271,6 +272,7 @@ const Reviewed = () => {
                         تفاصيل
                         {/* </Link> */}
                       </button>
+                      </td>
                     </tr>
                   ))}
               </tbody>

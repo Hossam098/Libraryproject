@@ -1,4 +1,3 @@
-import { BiSolidPrinter } from "react-icons/bi";
 import "./show.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
-import html2canvas from "html2canvas";
-import jspdf from "jspdf";
 import pimg from "../../../../images/Ellipse 1.png";
-import { BiImageAdd } from "react-icons/bi";
-import { AiFillCloseCircle } from "react-icons/ai";
 import { API_URL } from "../../../../config";
 import PopupErrorMsg from "../../../../components/error/PopupErrorMsg";
 import PopupConfirmMsg from "../../../../components/error/PopupConfirmMsg";
@@ -80,7 +75,7 @@ const ShowOnly = () => {
       .then((res) => {
         setFaculty(res.data);
       })
-      .catch((err) => {
+      .catch(() => {
         // console.log(err);
       });
   }, []);
@@ -326,7 +321,7 @@ const ShowOnly = () => {
                 <td> نوع الخدمه </td>
                 <td>{user.service_name_ar}</td>
               </tr>
-              {user.level && (
+              {/* {user.level && (
                 <tr>
                   <td> المرحله </td>
                   <td>
@@ -337,7 +332,7 @@ const ShowOnly = () => {
                         : null}
                   </td>
                 </tr>
-              )}
+              )} */}
               {user.academic && (
                 <tr>
                   <td> الشعبه </td>

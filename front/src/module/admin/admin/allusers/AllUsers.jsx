@@ -96,7 +96,7 @@ const AllUsers = () => {
             name=""
             id=""
           >
-            <option value=""> فلتره </option>
+            <option value=""> الكل </option>
             {(student[0]?.status === 0 || student[0]?.status === 4) && (
               <>
                 <option value="0"> منظر كود دفع </option>

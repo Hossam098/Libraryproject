@@ -130,17 +130,17 @@ const AllToCode = () => {
               const value = e.target.value;
               const filteredStudents =
                 student.filter((item) => {
-                    if (value === "1" && item.payment_code !== null && item.payment_code !== "") {
-                      return item.status >= 1;
-                    }else if (value === "" && item.service_id !== 7 && item.service_id !== 8) {
-                      return item.service_id !== 7 && item.service_id !== 8;
-                    }else if (value === "6" && item.payment_code === null) {
-                      return item.status === 6;
-                    }
-                    else {
-                      return item.status === parseInt(value);
-                    }
-                  });
+                  if (value === "1" && item.payment_code !== null && item.payment_code !== "") {
+                    return item.status >= 1;
+                  } else if (value === "" && item.service_id !== 7 && item.service_id !== 8) {
+                    return item.service_id !== 7 && item.service_id !== 8;
+                  } else if (value === "6" && item.payment_code === null) {
+                    return item.status === 6;
+                  }
+                  else {
+                    return item.status === parseInt(value);
+                  }
+                });
 
               setFilter(filteredStudents);
               setFilter2(filteredStudents);
@@ -150,7 +150,7 @@ const AllToCode = () => {
             name=""
             id=""
           >
-            <option value="" defaultValue>فلتره</option>
+            <option value="" defaultValue>الكل</option>
             <option value="0"> منظر كود دفع </option>
             <option value="4"> قيد التعديل </option>
             <option value="1"> حصل علي كود دفع </option>

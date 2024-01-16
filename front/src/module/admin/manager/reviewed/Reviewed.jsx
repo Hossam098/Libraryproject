@@ -120,7 +120,7 @@ const Reviewed = () => {
             name=""
             id=""
           >
-            <option value="">فلتره</option>
+            <option value="">الكل</option>
             <option value="5">مرفوض من الجامعه</option>
             <option value="4">موافقه من الجامعه</option>
             <option value="1">موافقه كليه</option>
